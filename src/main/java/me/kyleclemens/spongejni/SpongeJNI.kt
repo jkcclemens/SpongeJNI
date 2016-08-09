@@ -7,8 +7,8 @@ import org.slf4j.Logger
 import org.spongepowered.api.Game
 import org.spongepowered.api.config.DefaultConfig
 import org.spongepowered.api.event.Listener
-import org.spongepowered.api.event.game.state.GameStartedServerEvent
-import org.spongepowered.api.event.game.state.GameStoppingServerEvent
+import org.spongepowered.api.event.Order
+import org.spongepowered.api.event.game.state.GameConstructionEvent
 import org.spongepowered.api.plugin.Plugin
 import java.nio.file.Path
 
@@ -31,8 +31,9 @@ class SpongeJNI {
     @Inject
     private lateinit var game: Game
 
-    @Listener
-    fun onPreInit(event: GameStartedServerEvent) {
+    @Listener(order = Order.FIRST)
+    fun construction(event: GameConstructionEvent) {
+        Event
         with(this.configPath.toFile()) {
             if (!this.exists()) {
                 val parent = this.parentFile
@@ -45,18 +46,15 @@ class SpongeJNI {
         val config = this.configLoader.load()
         val libName = config.getNode("lib").string
         if (libName == null) {
-            this.logger.error("lib was null. disabling JNI")
-            return
+            this.logger.error("lib was null. not enabling JNI")
+        } else {
+            System.loadLibrary(libName)
+            val shim = SpongeJNIShim(this)
+            if (!shim.init(this.game)) {
+                this.logger.warn("lib did not return true for shim")
+            } else {
+                this.game.eventManager.registerListeners(this, shim)
+            }
         }
-        System.loadLibrary(libName)
-        val shim = SpongeJNIShim()
-        if (!shim.jniShim(this.game)) {
-            this.logger.warn("lib did not return true for shim")
-        }
-    }
-
-    @Listener
-    fun disable(event: GameStoppingServerEvent) {
-        // Perform shutdown tasks here
     }
 }
