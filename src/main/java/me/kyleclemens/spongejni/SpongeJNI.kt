@@ -15,7 +15,7 @@ import java.nio.file.Path
 /**
  * A simple sponge plugin
  */
-@Plugin(id = PomData.ARTIFACT_ID, name = PomData.NAME, version = PomData.VERSION)
+@Plugin(id = "spongejni", name = "spongejni", version = "1.0.0-SNAPSHOT")
 class SpongeJNI {
 
     // These are all injected on plugin load for users to work from
