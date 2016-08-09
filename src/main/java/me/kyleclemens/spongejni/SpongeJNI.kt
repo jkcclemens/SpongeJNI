@@ -33,7 +33,6 @@ class SpongeJNI {
 
     @Listener(order = Order.FIRST)
     fun construction(event: GameConstructionEvent) {
-        Event
         with(this.configPath.toFile()) {
             if (!this.exists()) {
                 val parent = this.parentFile
