@@ -1,0 +1,16 @@
+[package]
+name = "spongejni"
+version = "0.1.0"
+authors = ["Kyle Clemens <jkc.clemens@gmail.com>"]
+
+[lib]
+name = "spongejni"
+crate-type = ["dylib"]
+
+[dependencies]
+jni-sys = "0.1.0"
+classreader = "0.2.0"
+Inflector = "0.3.1"
+
+[profile.release]
+lto = true
