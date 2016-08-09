@@ -1,3 +1,5 @@
+#![allow(non_snake_case, non_camel_case_types, unused_variables)]
+
 use jni_sys::{JNIEnv, jvalue, jobject, jclass, jmethodID};
 use std::ffi::CString;
 
