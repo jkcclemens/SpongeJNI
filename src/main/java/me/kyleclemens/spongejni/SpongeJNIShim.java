@@ -1,6 +1,5 @@
 package me.kyleclemens.spongejni;
 
-import org.spongepowered.api.Game;
 import org.spongepowered.api.event.Event;
 import org.spongepowered.api.event.Listener;
 
@@ -12,11 +11,12 @@ public class SpongeJNIShim {
         this.jni = jni;
     }
 
+    @SuppressWarnings("unused")
     private SpongeJNI getJNI() {
         return this.jni;
     }
 
-    native boolean init(final Game game);
+    native boolean init();
 
     @Listener
     public native void eventReceived(final Event event);

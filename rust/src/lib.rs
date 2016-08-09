@@ -1,6 +1,4 @@
 extern crate jni_sys;
-#[macro_use]
-extern crate lazy_static;
 
 use jni_sys::*;
 use std::ffi::{CString, CStr};
@@ -62,7 +60,6 @@ fn get_jni(env: *mut JNIEnv, shim: jobject) -> JNI {
 fn get_game(env: *mut JNIEnv, shim: jobject) -> generated_types::Game {
   let jni = get_jni(env, shim);
   let game = java_field!(env, jni.object, "game", "Lorg/spongepowered/api/Game;", GetObjectField);
-  println!("get_game game: {:p}", game);
   Game {
     env: env,
     object: game
@@ -92,30 +89,33 @@ fn java_string_to_rust_string(env: *mut JNIEnv, string: jstring) -> String {
   }
 }
 
+fn rust_string_to_java_string<'a, S: Into<&'a str>>(env: *mut JNIEnv, string: S) -> jstring {
+  let string = string.into();
+  let pointer = unsafe { CString::new(string).unwrap().as_ptr() };
+  let genv = unwrap_env!(env);
+  unsafe { (genv.NewStringUTF)(env, pointer) }
+}
+
 #[allow(non_snake_case)]
 #[no_mangle]
-pub extern fn Java_me_kyleclemens_spongejni_SpongeJNIShim_init(env: *mut JNIEnv, this: jobject, game: jobject) -> jboolean {
+pub extern fn Java_me_kyleclemens_spongejni_SpongeJNIShim_init(env: *mut JNIEnv, this: jobject) -> jboolean {
   println!("Hello from Rust!");
   return 1;
 }
 
-#[no_mangle]
 #[allow(non_snake_case)]
+#[no_mangle]
 pub extern fn Java_me_kyleclemens_spongejni_SpongeJNIShim_eventReceived(env: *mut JNIEnv, this: jobject, event: jobject) {
   let class_name = get_class_name(env, event);
   if class_name.contains("Join") {
-    on_join(event_entity_living_humanoid_TargetHumanoidEvent {
-      env: env,
-      object: event
-    });
+    on_join(unsafe { event_entity_living_humanoid_TargetHumanoidEvent::from(env, event) });
+  } else if class_name.contains("SendCommandEvent") {
+
   }
 }
 
 fn on_join(event: event_entity_living_humanoid_TargetHumanoidEvent) {
   let player = event.get_target_entity();
-  let user = entity_living_player_User {
-    env: player.env,
-    object: player.object
-  };
+  let user = unsafe { entity_living_player_User::from(player.env, player.object) };
   println!("Rust knows that {} joined... :3", java_string_to_rust_string(event.env, user.get_name()));
 }

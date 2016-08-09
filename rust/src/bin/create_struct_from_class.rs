@@ -19,7 +19,8 @@ struct Method {
   name: String,
   descriptor: String,
   signature: Option<String>,
-  public: bool
+  is_public: bool,
+  is_static: bool
 }
 
 fn generate_class() -> Class {
@@ -69,7 +70,8 @@ fn generate_class() -> Class {
       name: name.clone(),
       descriptor: descriptor.clone(),
       signature: signature.cloned(),
-      public: method.access_flags & 0x0001 == 1
+      is_public: method.access_flags & 0x0001 == 0x0001,
+      is_static: method.access_flags & 0x0008 == 0x0008
     }
   })
   .collect();
@@ -179,15 +181,21 @@ fn sanitize_class_name<'a>(class_name: &'a str) -> String {
   class_name.replace("org/spongepowered/api/", "").replace("/", "_").replace("$", "_")
 }
 
-fn create_params<'a>(descriptor: &'a str, signature: Option<String>) -> String {
-  let mut string = String::from("(&self");
+fn create_params<'a>(descriptor: &'a str, signature: Option<String>, is_static: bool) -> String {
+  let mut string = String::from("(");
+  if !is_static {
+    string.push_str("&self");
+  }
   let split: Vec<&str> = descriptor[1..].split(')').collect();
   let params = &split.get(0).expect("no params in descriptor");
   let return_type = split.get(1).expect("no return type in descriptor");
   let mut param_num = 0;
   for param in get_param_types(params) {
+    if param_num > 0 || !is_static {
+      string.push_str(", ");
+    }
     param_num += 1;
-    string.push_str(&format!(", param_{}: {}", param_num, param));
+    string.push_str(&format!("param_{}: {}", param_num, param));
   }
   string.push(')');
   let return_type = get_return_type(return_type);
@@ -204,7 +212,7 @@ fn create_params<'a>(descriptor: &'a str, signature: Option<String>) -> String {
   string
 }
 
-fn get_call_method<'a>(descriptor: &'a str, params: &'a str) -> String {
+fn get_call_method<'a>(descriptor: &'a str, params: &'a str, is_static: bool) -> String {
   let num_params = params.split(",").collect::<Vec<_>>().len() - 1;
   let return_type = descriptor.split(')').last().expect("no return type");
   let first_letter = return_type.chars().nth(0).expect("no first letter of return type");
@@ -224,6 +232,9 @@ fn get_call_method<'a>(descriptor: &'a str, params: &'a str) -> String {
   }.to_owned();
   if num_params > 0 {
     call_method.push('A');
+  }
+  if is_static {
+    call_method = call_method.replace("Call", "CallStatic");
   }
   // FIXME: varargs
   call_method
@@ -255,38 +266,43 @@ fn get_optional_return_type(signature: String) -> String {
 fn create_method<'a>(class_name: &'a str, method: &Method) -> String {
   let mut string = String::new();
   let snake_case_name = method.name.to_snake_case();
-  let rust_params = create_params(&method.descriptor, method.signature.clone());
+  let rust_params = create_params(&method.descriptor, method.signature.clone(), method.is_static);
   let num_params = rust_params.split(",").collect::<Vec<_>>().len() - 1;
-  let call_method = get_call_method(&method.descriptor, &rust_params);
+  let call_method = get_call_method(&method.descriptor, &rust_params, method.is_static);
   string.push_str(&format!("\n  pub fn {}", snake_case_name));
   string.push_str(&rust_params);
   string.push_str(" {\n");
   string.push_str("    ");
-  if call_method.starts_with("CryInside") {
+  if call_method.ends_with("CryInside") {
     string.push_str("unimplemented!();\n  }");
     return string;
   }
-  if call_method.starts_with("CallObjectMethod") {
+  if call_method.contains("ObjectMethod") {
     string.push_str("let ret = ");
   }
-  string.push_str(&format!(r#"java_method!(self.env, self.object, "{}", "{}", {}"#, method.original_name, method.descriptor, call_method));
+  let possible_object = if method.is_static {
+    ""
+  } else {
+    ", self.object"
+  };
+  string.push_str(&format!(r#"java_method!(self.env{}, "{}", "{}", {}"#, possible_object, method.original_name, method.descriptor, call_method));
   if num_params > 0 {
     for num in 0..num_params {
       string.push_str(&format!(", param_{}", num + 1));
     }
   }
   string.push_str(")");
-  if call_method.starts_with("CallBooleanMethod") {
+  if call_method.contains("BooleanMethod") {
     string.push_str(" == 1");
   }
-  if call_method.starts_with("CallCharMethod") {
+  if call_method.contains("CharMethod") {
     string.push_str(" as u8 as char"); // FIXME
   }
-  if call_method.starts_with("CallVoidMethod") || call_method.starts_with("CallObjectMethod") {
+  if call_method.contains("VoidMethod") || call_method.contains("ObjectMethod") {
     string.push_str(";");
   }
   string.push_str("\n");
-  if call_method.starts_with("CallObjectMethod") {
+  if call_method.contains("ObjectMethod") {
     string.push_str(&format!("    if ret.is_null() {{ panic!(\"{}#{} was null\") }}\n", class_name, method.original_name));
     let return_type = rust_params.split(" -> ").last().expect("no return type");
     if return_type == "jobject" {
@@ -315,11 +331,13 @@ fn create_struct(class: Class) -> String {
     return String::new();
   }
   string.push_str(&format!("#[derive(Debug)]\npub struct {} {{\n  pub env: *mut JNIEnv,\n  pub object: jobject\n}}", end_name));
-  let mut methods: Vec<Method> = class.methods.into_iter().filter(|m| m.public).collect();
-  if methods.len() > 0 {
-    string.push_str(&format!("\n\nimpl {} {{", end_name));
-  }
+  let mut methods: Vec<Method> = class.methods.into_iter().filter(|m| m.is_public).collect();
+  string.push_str(&format!("\n\nimpl {} {{", end_name));
+  string.push_str("\n  pub unsafe fn from(env: *mut JNIEnv, object: jobject) -> Self {\n");
+  string.push_str(&format!("    {} {{\n", end_name));
+  string.push_str("      env: env,\n      object: object\n    }\n  }\n");
   let mut method_count = HashMap::new();
+  method_count.insert("from".to_owned(), 1);
   for method in methods.iter_mut() {
     if method.name == "<init>" {
       method.name = String::from("new");
@@ -342,9 +360,7 @@ fn create_struct(class: Class) -> String {
     string.push_str(&create_method(&class.name, method));
     *entry += 1;
   }
-  if methods.len() > 0 {
-    string.push_str("\n}");
-  }
+  string.push_str("\n}");
   string.push_str("\n");
   string
 }

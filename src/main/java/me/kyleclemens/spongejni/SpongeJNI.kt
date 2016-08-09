@@ -49,7 +49,7 @@ class SpongeJNI {
         } else {
             System.loadLibrary(libName)
             val shim = SpongeJNIShim(this)
-            if (!shim.init(this.game)) {
+            if (!shim.init()) {
                 this.logger.warn("lib did not return true for shim")
             } else {
                 this.game.eventManager.registerListeners(this, shim)
