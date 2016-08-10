@@ -1,10 +1,18 @@
 package me.kyleclemens.spongejni
 
 import com.google.inject.Inject
+import javassist.ClassPool
+import javassist.CtMethod
+import javassist.Modifier
 import ninja.leaping.configurate.commented.CommentedConfigurationNode
 import ninja.leaping.configurate.loader.ConfigurationLoader
 import org.slf4j.Logger
 import org.spongepowered.api.Game
+import org.spongepowered.api.command.CommandException
+import org.spongepowered.api.command.CommandResult
+import org.spongepowered.api.command.CommandSource
+import org.spongepowered.api.command.args.CommandContext
+import org.spongepowered.api.command.spec.CommandExecutor
 import org.spongepowered.api.config.DefaultConfig
 import org.spongepowered.api.event.Listener
 import org.spongepowered.api.event.Order
@@ -55,5 +63,24 @@ class SpongeJNI {
                 this.game.eventManager.registerListeners(this, shim)
             }
         }
+    }
+
+    @Suppress("unused")
+    fun generateCommandExecutor(fqcn: String): CommandExecutor {
+        println("fqcn = [$fqcn]")
+        val pool = ClassPool.getDefault()
+        val cc = pool.makeClass(fqcn)
+        cc.addInterface(pool.get(CommandExecutor::class.java.name))
+        val executeMethod = CtMethod(
+            pool.get(CommandResult::class.java.name),
+            "execute",
+            arrayOf(pool.get(CommandSource::class.java.name), pool.get(CommandContext::class.java.name)),
+            cc
+        )
+        executeMethod.exceptionTypes = arrayOf(pool.get(CommandException::class.java.name))
+        executeMethod.modifiers = Modifier.PUBLIC or Modifier.NATIVE
+        cc.addMethod(executeMethod)
+        val clazz = cc.toClass()
+        return clazz.newInstance() as CommandExecutor
     }
 }

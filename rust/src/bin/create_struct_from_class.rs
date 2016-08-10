@@ -266,13 +266,40 @@ fn create_method<'a>(class_name: &'a str, method: &Method) -> String {
   let mut string = String::new();
   let snake_case_name = method.name.to_snake_case();
   let rust_params = create_params(&method.descriptor, method.signature.clone(), method.is_static);
-  let num_params = rust_params.split(",").collect::<Vec<_>>().len() - 1;
+  let map_params = rust_params
+    .split(", ")
+    .map(|x| {
+      let mut x = x.split(")").next().expect("invalid params 0");
+      if x.starts_with('(') {
+        x = &x[1..];
+      }
+      let mut split = x.split(": ");
+      let name = split.next().expect("invalid param 1");
+      if name == "self" || name == "&self" {
+        return None;
+      }
+      let t = split.next().expect("invalid param 2");
+      if name == "env" && t == "*mut JNIEnv" {
+        None
+      } else {
+        Some((name, t))
+      }
+    })
+    .flat_map(|x| x)
+    .collect::<Vec<_>>();
+  let mut unimplemented = false;
+  if map_params.iter().any(|x| x.1.starts_with("Vec<")) {
+    unimplemented = true;
+  }
   let call_method = get_call_method(&method.descriptor, &rust_params, method.is_static);
   string.push_str(&format!("\n  pub fn {}", snake_case_name));
   string.push_str(&rust_params);
   string.push_str(" {\n");
   string.push_str("    ");
   if call_method.contains("CryInside") {
+    unimplemented = true;
+  }
+  if unimplemented {
     string.push_str("unimplemented!();\n  }");
     return string;
   }
@@ -285,9 +312,15 @@ fn create_method<'a>(class_name: &'a str, method: &Method) -> String {
     ("self.", "", "self.object".to_owned())
   };
   string.push_str(&format!(r#"{}java_method!({}env, {}, "{}", "{}", {}"#, macro_prefix, s, caller, method.original_name, method.descriptor, call_method));
-  if num_params > 0 {
-    for num in 0..num_params {
-      string.push_str(&format!(", param_{}", num + 1));
+  if !map_params.is_empty() {
+    for param in map_params {
+      let (name, t) = param;
+      let obj = if !t.starts_with("Vec<") && t.split("_").last().expect("invalid type").chars().next().expect("invalid type 2").is_uppercase() {
+        ".object"
+      } else {
+        ""
+      };
+      string.push_str(&format!(", {}{}", name, obj));
     }
   }
   string.push_str(")");
