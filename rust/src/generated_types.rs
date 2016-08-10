@@ -57,7 +57,7 @@ impl asset_Asset {
     ret
   }
 
-  pub fn read_bytes(&self) -> &[i8] {
+  pub fn read_bytes(&self) -> Vec<i8> {
     unimplemented!();
   }
 }
@@ -158,10 +158,10 @@ impl block_BlockSnapshot {
     }
   }
 
-  pub fn builder() -> block_BlockSnapshot_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/block/BlockSnapshot$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> block_BlockSnapshot_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/block/BlockSnapshot", "builder", "()Lorg/spongepowered/api/block/BlockSnapshot$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/block/BlockSnapshot#builder was null") }
-    block_BlockSnapshot_Builder { env: self.env, object: ret }
+    block_BlockSnapshot_Builder { env: env, object: ret }
   }
 
   pub fn get_state(&self) -> block_BlockState {
@@ -244,10 +244,10 @@ impl block_BlockState {
     }
   }
 
-  pub fn builder() -> block_BlockState_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/block/BlockState$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> block_BlockState_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/block/BlockState", "builder", "()Lorg/spongepowered/api/block/BlockState$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/block/BlockState#builder was null") }
-    block_BlockState_Builder { env: self.env, object: ret }
+    block_BlockState_Builder { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> block_BlockType {
@@ -1440,10 +1440,10 @@ impl boss_ServerBossBar {
     }
   }
 
-  pub fn builder() -> boss_ServerBossBar_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/boss/ServerBossBar$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> boss_ServerBossBar_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/boss/ServerBossBar", "builder", "()Lorg/spongepowered/api/boss/ServerBossBar$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/boss/ServerBossBar#builder was null") }
-    boss_ServerBossBar_Builder { env: self.env, object: ret }
+    boss_ServerBossBar_Builder { env: env, object: ret }
   }
 
   pub fn set_name(&self, param_1: text_Text) -> boss_ServerBossBar {
@@ -1668,8 +1668,8 @@ impl command_args_ArgUtils {
     }
   }
 
-  pub fn text_to_arg_key(param_1: text_Text) -> jobject {
-    let ret = java_method!(self.env, "textToArgKey", "(Lorg/spongepowered/api/text/Text;)Ljava/lang/String;", CallStaticObjectMethod);
+  pub fn text_to_arg_key(env: *mut JNIEnv, param_1: text_Text) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/ArgUtils", "textToArgKey", "(Lorg/spongepowered/api/text/Text;)Ljava/lang/String;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/ArgUtils#textToArgKey was null") }
     ret
   }
@@ -1703,7 +1703,7 @@ impl command_args_ChildCommandElementExecutor {
     if unwrapped.is_null() { None } else { Some(command_CommandMapping { env: self.env, object: unwrapped }) }
   }
 
-  pub fn register_1(&self, param_1: command_CommandCallable, param_2: &[jobject]) -> Option<command_CommandMapping> {
+  pub fn register_1(&self, param_1: command_CommandCallable, param_2: Vec<jobject>) -> Option<command_CommandMapping> {
     let ret = java_method!(self.env, self.object, "register", "(Lorg/spongepowered/api/command/CommandCallable;[Ljava/lang/String;)Ljava/util/Optional;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/ChildCommandElementExecutor#register was null") }
     let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
@@ -2017,19 +2017,19 @@ impl command_args_CommandFlags_Builder {
     }
   }
 
-  pub fn flag(&self, param_1: &[jobject]) -> command_args_CommandFlags_Builder {
+  pub fn flag(&self, param_1: Vec<jobject>) -> command_args_CommandFlags_Builder {
     let ret = java_method!(self.env, self.object, "flag", "([Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandFlags$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/CommandFlags$Builder#flag was null") }
     command_args_CommandFlags_Builder { env: self.env, object: ret }
   }
 
-  pub fn permission_flag(&self, param_1: jobject, param_2: &[jobject]) -> command_args_CommandFlags_Builder {
+  pub fn permission_flag(&self, param_1: jobject, param_2: Vec<jobject>) -> command_args_CommandFlags_Builder {
     let ret = java_method!(self.env, self.object, "permissionFlag", "(Ljava/lang/String;[Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandFlags$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/CommandFlags$Builder#permissionFlag was null") }
     command_args_CommandFlags_Builder { env: self.env, object: ret }
   }
 
-  pub fn value_flag(&self, param_1: command_args_CommandElement, param_2: &[jobject]) -> command_args_CommandFlags_Builder {
+  pub fn value_flag(&self, param_1: command_args_CommandElement, param_2: Vec<jobject>) -> command_args_CommandFlags_Builder {
     let ret = java_method!(self.env, self.object, "valueFlag", "(Lorg/spongepowered/api/command/args/CommandElement;[Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandFlags$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/CommandFlags$Builder#valueFlag was null") }
     command_args_CommandFlags_Builder { env: self.env, object: ret }
@@ -2081,13 +2081,13 @@ impl command_args_CommandFlags_UnknownFlagBehavior {
     }
   }
 
-  pub fn values() -> &[command_args_CommandFlags_UnknownFlagBehavior] {
+  pub fn values(env: *mut JNIEnv) -> Vec<command_args_CommandFlags_UnknownFlagBehavior> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> command_args_CommandFlags_UnknownFlagBehavior {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandFlags$UnknownFlagBehavior;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> command_args_CommandFlags_UnknownFlagBehavior {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/CommandFlags$UnknownFlagBehavior", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandFlags$UnknownFlagBehavior;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/CommandFlags$UnknownFlagBehavior#valueOf was null") }
-    command_args_CommandFlags_UnknownFlagBehavior { env: self.env, object: ret }
+    command_args_CommandFlags_UnknownFlagBehavior { env: env, object: ret }
   }
 
 }
@@ -2736,226 +2736,226 @@ impl command_args_GenericArguments {
     }
   }
 
-  pub fn none() -> command_args_CommandElement {
-    let ret = java_method!(self.env, "none", "()Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn none(env: *mut JNIEnv) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "none", "()Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#none was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn player_or_source(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "playerOrSource", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn player_or_source(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "playerOrSource", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#playerOrSource was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn player(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "player", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn player(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "player", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#player was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn user(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "user", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn user(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "user", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#user was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn user_or_source(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "userOrSource", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn user_or_source(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "userOrSource", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#userOrSource was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn world(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "world", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn world(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "world", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#world was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn dimension(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "dimension", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn dimension(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "dimension", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#dimension was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn vector_3d(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "vector3d", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn vector_3d(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "vector3d", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#vector3d was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn location(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "location", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn location(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "location", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#location was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn cataloged_element(param_1: text_Text, param_2: jobject) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "catalogedElement", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Class;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
+  pub fn cataloged_element(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "catalogedElement", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Class;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#catalogedElement was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn plugin(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "plugin", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn plugin(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "plugin", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#plugin was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn flags() -> command_args_CommandFlags_Builder {
-    let ret = java_method!(self.env, "flags", "()Lorg/spongepowered/api/command/args/CommandFlags$Builder;", CallStaticObjectMethod);
+  pub fn flags(env: *mut JNIEnv) -> command_args_CommandFlags_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "flags", "()Lorg/spongepowered/api/command/args/CommandFlags$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#flags was null") }
-    command_args_CommandFlags_Builder { env: self.env, object: ret }
+    command_args_CommandFlags_Builder { env: env, object: ret }
   }
 
-  pub fn seq(param_1: &[command_args_CommandElement]) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "seq", "([Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn seq(env: *mut JNIEnv, param_1: Vec<command_args_CommandElement>) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "seq", "([Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#seq was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn choices(param_1: text_Text, param_2: jobject) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "choices", "(Lorg/spongepowered/api/text/Text;Ljava/util/Map;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
+  pub fn choices(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "choices", "(Lorg/spongepowered/api/text/Text;Ljava/util/Map;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#choices was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn choices_1(param_1: text_Text, param_2: jobject, param_3: bool) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "choices", "(Lorg/spongepowered/api/text/Text;Ljava/util/Map;Z)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn choices_1(env: *mut JNIEnv, param_1: text_Text, param_2: jobject, param_3: bool) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "choices", "(Lorg/spongepowered/api/text/Text;Ljava/util/Map;Z)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#choices was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn choices_2(param_1: text_Text, param_2: jobject, param_3: jobject) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "choices", "(Lorg/spongepowered/api/text/Text;Ljava/util/function/Supplier;Ljava/util/function/Function;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn choices_2(env: *mut JNIEnv, param_1: text_Text, param_2: jobject, param_3: jobject) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "choices", "(Lorg/spongepowered/api/text/Text;Ljava/util/function/Supplier;Ljava/util/function/Function;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#choices was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn choices_3(param_1: text_Text, param_2: jobject, param_3: jobject, param_4: bool) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "choices", "(Lorg/spongepowered/api/text/Text;Ljava/util/function/Supplier;Ljava/util/function/Function;Z)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn choices_3(env: *mut JNIEnv, param_1: text_Text, param_2: jobject, param_3: jobject, param_4: bool) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "choices", "(Lorg/spongepowered/api/text/Text;Ljava/util/function/Supplier;Ljava/util/function/Function;Z)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#choices was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn first_parsing(param_1: &[command_args_CommandElement]) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "firstParsing", "([Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn first_parsing(env: *mut JNIEnv, param_1: Vec<command_args_CommandElement>) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "firstParsing", "([Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#firstParsing was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn optional(param_1: command_args_CommandElement) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "optional", "(Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn optional(env: *mut JNIEnv, param_1: command_args_CommandElement) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "optional", "(Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#optional was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn optional_1(param_1: command_args_CommandElement, param_2: jobject) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "optional", "(Lorg/spongepowered/api/command/args/CommandElement;Ljava/lang/Object;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
+  pub fn optional_1(env: *mut JNIEnv, param_1: command_args_CommandElement, param_2: jobject) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "optional", "(Lorg/spongepowered/api/command/args/CommandElement;Ljava/lang/Object;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#optional was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn optional_weak(param_1: command_args_CommandElement) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "optionalWeak", "(Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn optional_weak(env: *mut JNIEnv, param_1: command_args_CommandElement) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "optionalWeak", "(Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#optionalWeak was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn optional_weak_1(param_1: command_args_CommandElement, param_2: jobject) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "optionalWeak", "(Lorg/spongepowered/api/command/args/CommandElement;Ljava/lang/Object;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
+  pub fn optional_weak_1(env: *mut JNIEnv, param_1: command_args_CommandElement, param_2: jobject) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "optionalWeak", "(Lorg/spongepowered/api/command/args/CommandElement;Ljava/lang/Object;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#optionalWeak was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn repeated(param_1: command_args_CommandElement, param_2: i32) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "repeated", "(Lorg/spongepowered/api/command/args/CommandElement;I)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
+  pub fn repeated(env: *mut JNIEnv, param_1: command_args_CommandElement, param_2: i32) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "repeated", "(Lorg/spongepowered/api/command/args/CommandElement;I)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#repeated was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn all_of(param_1: command_args_CommandElement) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "allOf", "(Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn all_of(env: *mut JNIEnv, param_1: command_args_CommandElement) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "allOf", "(Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#allOf was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn string(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "string", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn string(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "string", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#string was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn integer(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "integer", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn integer(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "integer", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#integer was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn long_num(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "longNum", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn long_num(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "longNum", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#longNum was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn double_num(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "doubleNum", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn double_num(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "doubleNum", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#doubleNum was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn bool(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "bool", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn bool(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "bool", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#bool was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn enum_value(param_1: text_Text, param_2: jobject) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "enumValue", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Class;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
+  pub fn enum_value(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "enumValue", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Class;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#enumValue was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn remaining_joined_strings(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "remainingJoinedStrings", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn remaining_joined_strings(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "remainingJoinedStrings", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#remainingJoinedStrings was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn literal(param_1: text_Text, param_2: &[jobject]) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "literal", "(Lorg/spongepowered/api/text/Text;[Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
+  pub fn literal(env: *mut JNIEnv, param_1: text_Text, param_2: Vec<jobject>) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "literal", "(Lorg/spongepowered/api/text/Text;[Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#literal was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn literal_1(param_1: text_Text, param_2: jobject, param_3: &[jobject]) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "literal", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Object;[Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn literal_1(env: *mut JNIEnv, param_1: text_Text, param_2: jobject, param_3: Vec<jobject>) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "literal", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Object;[Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#literal was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn only_one(param_1: command_args_CommandElement) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "onlyOne", "(Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn only_one(env: *mut JNIEnv, param_1: command_args_CommandElement) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "onlyOne", "(Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#onlyOne was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn requiring_permission(param_1: command_args_CommandElement, param_2: jobject) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "requiringPermission", "(Lorg/spongepowered/api/command/args/CommandElement;Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
+  pub fn requiring_permission(env: *mut JNIEnv, param_1: command_args_CommandElement, param_2: jobject) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "requiringPermission", "(Lorg/spongepowered/api/command/args/CommandElement;Ljava/lang/String;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#requiringPermission was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn entity(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "entity", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn entity(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "entity", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#entity was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
-  pub fn entity_or_source(param_1: text_Text) -> command_args_CommandElement {
-    let ret = java_method!(self.env, "entityOrSource", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethod);
+  pub fn entity_or_source(env: *mut JNIEnv, param_1: text_Text) -> command_args_CommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments", "entityOrSource", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/args/CommandElement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments#entityOrSource was null") }
-    command_args_CommandElement { env: self.env, object: ret }
+    command_args_CommandElement { env: env, object: ret }
   }
 
 }
@@ -2975,22 +2975,22 @@ impl command_args_parsing_InputTokenizer {
     }
   }
 
-  pub fn quoted_strings(param_1: bool) -> command_args_parsing_InputTokenizer {
-    let ret = java_method!(self.env, "quotedStrings", "(Z)Lorg/spongepowered/api/command/args/parsing/InputTokenizer;", CallStaticObjectMethod);
+  pub fn quoted_strings(env: *mut JNIEnv, param_1: bool) -> command_args_parsing_InputTokenizer {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/parsing/InputTokenizer", "quotedStrings", "(Z)Lorg/spongepowered/api/command/args/parsing/InputTokenizer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/parsing/InputTokenizer#quotedStrings was null") }
-    command_args_parsing_InputTokenizer { env: self.env, object: ret }
+    command_args_parsing_InputTokenizer { env: env, object: ret }
   }
 
-  pub fn space_split_string() -> command_args_parsing_InputTokenizer {
-    let ret = java_method!(self.env, "spaceSplitString", "()Lorg/spongepowered/api/command/args/parsing/InputTokenizer;", CallStaticObjectMethod);
+  pub fn space_split_string(env: *mut JNIEnv) -> command_args_parsing_InputTokenizer {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/parsing/InputTokenizer", "spaceSplitString", "()Lorg/spongepowered/api/command/args/parsing/InputTokenizer;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/parsing/InputTokenizer#spaceSplitString was null") }
-    command_args_parsing_InputTokenizer { env: self.env, object: ret }
+    command_args_parsing_InputTokenizer { env: env, object: ret }
   }
 
-  pub fn raw_input() -> command_args_parsing_InputTokenizer {
-    let ret = java_method!(self.env, "rawInput", "()Lorg/spongepowered/api/command/args/parsing/InputTokenizer;", CallStaticObjectMethod);
+  pub fn raw_input(env: *mut JNIEnv) -> command_args_parsing_InputTokenizer {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/parsing/InputTokenizer", "rawInput", "()Lorg/spongepowered/api/command/args/parsing/InputTokenizer;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/parsing/InputTokenizer#rawInput was null") }
-    command_args_parsing_InputTokenizer { env: self.env, object: ret }
+    command_args_parsing_InputTokenizer { env: env, object: ret }
   }
 
   pub fn tokenize(&self, param_1: jobject, param_2: bool) -> jobject {
@@ -3320,7 +3320,7 @@ impl command_CommandManager {
     }
   }
 
-  pub fn register(&self, param_1: jobject, param_2: command_CommandCallable, param_3: &[jobject]) -> Option<command_CommandMapping> {
+  pub fn register(&self, param_1: jobject, param_2: command_CommandCallable, param_3: Vec<jobject>) -> Option<command_CommandMapping> {
     let ret = java_method!(self.env, self.object, "register", "(Ljava/lang/Object;Lorg/spongepowered/api/command/CommandCallable;[Ljava/lang/String;)Ljava/util/Optional;", CallObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandManager#register was null") }
     let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
@@ -3433,16 +3433,16 @@ impl command_CommandMessageFormatting {
     }
   }
 
-  pub fn error(param_1: text_Text) -> text_Text {
-    let ret = java_method!(self.env, "error", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethod);
+  pub fn error(env: *mut JNIEnv, param_1: text_Text) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandMessageFormatting", "error", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandMessageFormatting#error was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
-  pub fn debug(param_1: text_Text) -> text_Text {
-    let ret = java_method!(self.env, "debug", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethod);
+  pub fn debug(env: *mut JNIEnv, param_1: text_Text) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandMessageFormatting", "debug", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandMessageFormatting#debug was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
 }
@@ -3581,22 +3581,22 @@ impl command_CommandResult {
     }
   }
 
-  pub fn builder() -> command_CommandResult_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/command/CommandResult$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> command_CommandResult_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandResult", "builder", "()Lorg/spongepowered/api/command/CommandResult$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandResult#builder was null") }
-    command_CommandResult_Builder { env: self.env, object: ret }
+    command_CommandResult_Builder { env: env, object: ret }
   }
 
-  pub fn empty() -> command_CommandResult {
-    let ret = java_method!(self.env, "empty", "()Lorg/spongepowered/api/command/CommandResult;", CallStaticObjectMethod);
+  pub fn empty(env: *mut JNIEnv) -> command_CommandResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandResult", "empty", "()Lorg/spongepowered/api/command/CommandResult;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandResult#empty was null") }
-    command_CommandResult { env: self.env, object: ret }
+    command_CommandResult { env: env, object: ret }
   }
 
-  pub fn success() -> command_CommandResult {
-    let ret = java_method!(self.env, "success", "()Lorg/spongepowered/api/command/CommandResult;", CallStaticObjectMethod);
+  pub fn success(env: *mut JNIEnv) -> command_CommandResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandResult", "success", "()Lorg/spongepowered/api/command/CommandResult;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandResult#success was null") }
-    command_CommandResult { env: self.env, object: ret }
+    command_CommandResult { env: env, object: ret }
   }
 
   pub fn get_success_count(&self) -> Option<jobject> {
@@ -3782,7 +3782,7 @@ impl command_dispatcher_SimpleDispatcher {
     command_dispatcher_SimpleDispatcher { env: self.env, object: ret }
   }
 
-  pub fn register(&self, param_1: command_CommandCallable, param_2: &[jobject]) -> Option<command_CommandMapping> {
+  pub fn register(&self, param_1: command_CommandCallable, param_2: Vec<jobject>) -> Option<command_CommandMapping> {
     let ret = java_method!(self.env, self.object, "register", "(Lorg/spongepowered/api/command/CommandCallable;[Ljava/lang/String;)Ljava/util/Optional;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/dispatcher/SimpleDispatcher#register was null") }
     let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
@@ -3932,7 +3932,7 @@ impl command_ImmutableCommandMapping {
     }
   }
 
-  pub fn new(&self, param_1: command_CommandCallable, param_2: jobject, param_3: &[jobject]) -> command_ImmutableCommandMapping {
+  pub fn new(&self, param_1: command_CommandCallable, param_2: jobject, param_3: Vec<jobject>) -> command_ImmutableCommandMapping {
     let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/command/CommandCallable;Ljava/lang/String;[Ljava/lang/String;)Lorg/spongepowered/api/command/ImmutableCommandMapping", CallObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/command/ImmutableCommandMapping#<init> was null") }
     command_ImmutableCommandMapping { env: self.env, object: ret }
@@ -4200,7 +4200,7 @@ impl command_spec_CommandSpec_Builder {
     command_spec_CommandSpec_Builder { env: self.env, object: ret }
   }
 
-  pub fn child(&self, param_1: command_CommandCallable, param_2: &[jobject]) -> command_spec_CommandSpec_Builder {
+  pub fn child(&self, param_1: command_CommandCallable, param_2: Vec<jobject>) -> command_spec_CommandSpec_Builder {
     let ret = java_method!(self.env, self.object, "child", "(Lorg/spongepowered/api/command/CommandCallable;[Ljava/lang/String;)Lorg/spongepowered/api/command/spec/CommandSpec$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/spec/CommandSpec$Builder#child was null") }
     command_spec_CommandSpec_Builder { env: self.env, object: ret }
@@ -4224,7 +4224,7 @@ impl command_spec_CommandSpec_Builder {
     command_spec_CommandSpec_Builder { env: self.env, object: ret }
   }
 
-  pub fn arguments_1(&self, param_1: &[command_args_CommandElement]) -> command_spec_CommandSpec_Builder {
+  pub fn arguments_1(&self, param_1: Vec<command_args_CommandElement>) -> command_spec_CommandSpec_Builder {
     let ret = java_method!(self.env, self.object, "arguments", "([Lorg/spongepowered/api/command/args/CommandElement;)Lorg/spongepowered/api/command/spec/CommandSpec$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/spec/CommandSpec$Builder#arguments was null") }
     command_spec_CommandSpec_Builder { env: self.env, object: ret }
@@ -4258,10 +4258,10 @@ impl command_spec_CommandSpec {
     }
   }
 
-  pub fn builder() -> command_spec_CommandSpec_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/command/spec/CommandSpec$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> command_spec_CommandSpec_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/spec/CommandSpec", "builder", "()Lorg/spongepowered/api/command/spec/CommandSpec$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/spec/CommandSpec#builder was null") }
-    command_spec_CommandSpec_Builder { env: self.env, object: ret }
+    command_spec_CommandSpec_Builder { env: env, object: ret }
   }
 
   pub fn check_permission(&self, param_1: command_CommandSource) {
@@ -4621,28 +4621,28 @@ impl data_DataQuery {
     }
   }
 
-  pub fn of() -> data_DataQuery {
-    let ret = java_method!(self.env, "of", "()Lorg/spongepowered/api/data/DataQuery;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv) -> data_DataQuery {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataQuery", "of", "()Lorg/spongepowered/api/data/DataQuery;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataQuery#of was null") }
-    data_DataQuery { env: self.env, object: ret }
+    data_DataQuery { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: char, param_2: jobject) -> data_DataQuery {
-    let ret = java_method!(self.env, "of", "(CLjava/lang/String;)Lorg/spongepowered/api/data/DataQuery;", CallStaticObjectMethodA, param_1);
+  pub fn of_1(env: *mut JNIEnv, param_1: char, param_2: jobject) -> data_DataQuery {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataQuery", "of", "(CLjava/lang/String;)Lorg/spongepowered/api/data/DataQuery;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataQuery#of was null") }
-    data_DataQuery { env: self.env, object: ret }
+    data_DataQuery { env: env, object: ret }
   }
 
-  pub fn of_2(param_1: &[jobject]) -> data_DataQuery {
-    let ret = java_method!(self.env, "of", "([Ljava/lang/String;)Lorg/spongepowered/api/data/DataQuery;", CallStaticObjectMethod);
+  pub fn of_2(env: *mut JNIEnv, param_1: Vec<jobject>) -> data_DataQuery {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataQuery", "of", "([Ljava/lang/String;)Lorg/spongepowered/api/data/DataQuery;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataQuery#of was null") }
-    data_DataQuery { env: self.env, object: ret }
+    data_DataQuery { env: env, object: ret }
   }
 
-  pub fn of_3(param_1: jobject) -> data_DataQuery {
-    let ret = java_method!(self.env, "of", "(Ljava/util/List;)Lorg/spongepowered/api/data/DataQuery;", CallStaticObjectMethod);
+  pub fn of_3(env: *mut JNIEnv, param_1: jobject) -> data_DataQuery {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataQuery", "of", "(Ljava/util/List;)Lorg/spongepowered/api/data/DataQuery;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataQuery#of was null") }
-    data_DataQuery { env: self.env, object: ret }
+    data_DataQuery { env: env, object: ret }
   }
 
   pub fn get_parts(&self) -> jobject {
@@ -4837,13 +4837,13 @@ impl data_DataTransactionResult_Type {
     }
   }
 
-  pub fn values() -> &[data_DataTransactionResult_Type] {
+  pub fn values(env: *mut JNIEnv) -> Vec<data_DataTransactionResult_Type> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> data_DataTransactionResult_Type {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/data/DataTransactionResult$Type;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> data_DataTransactionResult_Type {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult$Type", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/data/DataTransactionResult$Type;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult$Type#valueOf was null") }
-    data_DataTransactionResult_Type { env: self.env, object: ret }
+    data_DataTransactionResult_Type { env: env, object: ret }
   }
 
 }
@@ -4862,70 +4862,70 @@ impl data_DataTransactionResult {
     }
   }
 
-  pub fn builder() -> data_DataTransactionResult_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/data/DataTransactionResult$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> data_DataTransactionResult_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "builder", "()Lorg/spongepowered/api/data/DataTransactionResult$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#builder was null") }
-    data_DataTransactionResult_Builder { env: self.env, object: ret }
+    data_DataTransactionResult_Builder { env: env, object: ret }
   }
 
-  pub fn success_no_data() -> data_DataTransactionResult {
-    let ret = java_method!(self.env, "successNoData", "()Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethod);
+  pub fn success_no_data(env: *mut JNIEnv) -> data_DataTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "successNoData", "()Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#successNoData was null") }
-    data_DataTransactionResult { env: self.env, object: ret }
+    data_DataTransactionResult { env: env, object: ret }
   }
 
-  pub fn success_result(param_1: data_value_immutable_ImmutableValue) -> data_DataTransactionResult {
-    let ret = java_method!(self.env, "successResult", "(Lorg/spongepowered/api/data/value/immutable/ImmutableValue;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethod);
+  pub fn success_result(env: *mut JNIEnv, param_1: data_value_immutable_ImmutableValue) -> data_DataTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "successResult", "(Lorg/spongepowered/api/data/value/immutable/ImmutableValue;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#successResult was null") }
-    data_DataTransactionResult { env: self.env, object: ret }
+    data_DataTransactionResult { env: env, object: ret }
   }
 
-  pub fn success_replace_result(param_1: data_value_immutable_ImmutableValue, param_2: data_value_immutable_ImmutableValue) -> data_DataTransactionResult {
-    let ret = java_method!(self.env, "successReplaceResult", "(Lorg/spongepowered/api/data/value/immutable/ImmutableValue;Lorg/spongepowered/api/data/value/immutable/ImmutableValue;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethodA, param_1);
+  pub fn success_replace_result(env: *mut JNIEnv, param_1: data_value_immutable_ImmutableValue, param_2: data_value_immutable_ImmutableValue) -> data_DataTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "successReplaceResult", "(Lorg/spongepowered/api/data/value/immutable/ImmutableValue;Lorg/spongepowered/api/data/value/immutable/ImmutableValue;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#successReplaceResult was null") }
-    data_DataTransactionResult { env: self.env, object: ret }
+    data_DataTransactionResult { env: env, object: ret }
   }
 
-  pub fn success_replace_result_1(param_1: jobject, param_2: jobject) -> data_DataTransactionResult {
-    let ret = java_method!(self.env, "successReplaceResult", "(Ljava/util/Collection;Ljava/util/Collection;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethodA, param_1);
+  pub fn success_replace_result_1(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> data_DataTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "successReplaceResult", "(Ljava/util/Collection;Ljava/util/Collection;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#successReplaceResult was null") }
-    data_DataTransactionResult { env: self.env, object: ret }
+    data_DataTransactionResult { env: env, object: ret }
   }
 
-  pub fn success_remove(param_1: jobject) -> data_DataTransactionResult {
-    let ret = java_method!(self.env, "successRemove", "(Ljava/util/Collection;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethod);
+  pub fn success_remove(env: *mut JNIEnv, param_1: jobject) -> data_DataTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "successRemove", "(Ljava/util/Collection;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#successRemove was null") }
-    data_DataTransactionResult { env: self.env, object: ret }
+    data_DataTransactionResult { env: env, object: ret }
   }
 
-  pub fn success_remove_1(param_1: data_value_immutable_ImmutableValue) -> data_DataTransactionResult {
-    let ret = java_method!(self.env, "successRemove", "(Lorg/spongepowered/api/data/value/immutable/ImmutableValue;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethod);
+  pub fn success_remove_1(env: *mut JNIEnv, param_1: data_value_immutable_ImmutableValue) -> data_DataTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "successRemove", "(Lorg/spongepowered/api/data/value/immutable/ImmutableValue;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#successRemove was null") }
-    data_DataTransactionResult { env: self.env, object: ret }
+    data_DataTransactionResult { env: env, object: ret }
   }
 
-  pub fn fail_result(param_1: data_value_immutable_ImmutableValue) -> data_DataTransactionResult {
-    let ret = java_method!(self.env, "failResult", "(Lorg/spongepowered/api/data/value/immutable/ImmutableValue;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethod);
+  pub fn fail_result(env: *mut JNIEnv, param_1: data_value_immutable_ImmutableValue) -> data_DataTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "failResult", "(Lorg/spongepowered/api/data/value/immutable/ImmutableValue;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#failResult was null") }
-    data_DataTransactionResult { env: self.env, object: ret }
+    data_DataTransactionResult { env: env, object: ret }
   }
 
-  pub fn fail_result_1(param_1: jobject) -> data_DataTransactionResult {
-    let ret = java_method!(self.env, "failResult", "(Ljava/lang/Iterable;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethod);
+  pub fn fail_result_1(env: *mut JNIEnv, param_1: jobject) -> data_DataTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "failResult", "(Ljava/lang/Iterable;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#failResult was null") }
-    data_DataTransactionResult { env: self.env, object: ret }
+    data_DataTransactionResult { env: env, object: ret }
   }
 
-  pub fn fail_no_data() -> data_DataTransactionResult {
-    let ret = java_method!(self.env, "failNoData", "()Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethod);
+  pub fn fail_no_data(env: *mut JNIEnv) -> data_DataTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "failNoData", "()Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#failNoData was null") }
-    data_DataTransactionResult { env: self.env, object: ret }
+    data_DataTransactionResult { env: env, object: ret }
   }
 
-  pub fn error_result(param_1: data_value_immutable_ImmutableValue) -> data_DataTransactionResult {
-    let ret = java_method!(self.env, "errorResult", "(Lorg/spongepowered/api/data/value/immutable/ImmutableValue;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethod);
+  pub fn error_result(env: *mut JNIEnv, param_1: data_value_immutable_ImmutableValue) -> data_DataTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/DataTransactionResult", "errorResult", "(Lorg/spongepowered/api/data/value/immutable/ImmutableValue;)Lorg/spongepowered/api/data/DataTransactionResult;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/DataTransactionResult#errorResult was null") }
-    data_DataTransactionResult { env: self.env, object: ret }
+    data_DataTransactionResult { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> data_DataTransactionResult_Type {
@@ -5019,7 +5019,7 @@ impl data_DataView {
     java_method!(self.env, self.object, "contains", "(Lorg/spongepowered/api/data/DataQuery;)Z", CallBooleanMethodA, param_1) == 1
   }
 
-  pub fn contains_1(&self, param_1: data_DataQuery, param_2: &[data_DataQuery]) -> bool {
+  pub fn contains_1(&self, param_1: data_DataQuery, param_2: Vec<data_DataQuery>) -> bool {
     java_method!(self.env, self.object, "contains", "(Lorg/spongepowered/api/data/DataQuery;[Lorg/spongepowered/api/data/DataQuery;)Z", CallBooleanMethodA, param_1, param_2) == 1
   }
 
@@ -5027,7 +5027,7 @@ impl data_DataView {
     java_method!(self.env, self.object, "contains", "(Lorg/spongepowered/api/data/key/Key;)Z", CallBooleanMethodA, param_1) == 1
   }
 
-  pub fn contains_3(&self, param_1: data_key_Key, param_2: &[data_key_Key]) -> bool {
+  pub fn contains_3(&self, param_1: data_key_Key, param_2: Vec<data_key_Key>) -> bool {
     java_method!(self.env, self.object, "contains", "(Lorg/spongepowered/api/data/key/Key;[Lorg/spongepowered/api/data/key/Key;)Z", CallBooleanMethodA, param_1, param_2) == 1
   }
 
@@ -5630,34 +5630,34 @@ impl data_key_KeyFactory {
     }
   }
 
-  pub fn make_single_key(param_1: jobject, param_2: jobject, param_3: data_DataQuery) -> data_key_Key {
-    let ret = java_method!(self.env, "makeSingleKey", "(Ljava/lang/Class;Ljava/lang/Class;Lorg/spongepowered/api/data/DataQuery;)Lorg/spongepowered/api/data/key/Key;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn make_single_key(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: data_DataQuery) -> data_key_Key {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/key/KeyFactory", "makeSingleKey", "(Ljava/lang/Class;Ljava/lang/Class;Lorg/spongepowered/api/data/DataQuery;)Lorg/spongepowered/api/data/key/Key;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/data/key/KeyFactory#makeSingleKey was null") }
-    data_key_Key { env: self.env, object: ret }
+    data_key_Key { env: env, object: ret }
   }
 
-  pub fn make_list_key(param_1: jobject, param_2: data_DataQuery) -> data_key_Key {
-    let ret = java_method!(self.env, "makeListKey", "(Ljava/lang/Class;Lorg/spongepowered/api/data/DataQuery;)Lorg/spongepowered/api/data/key/Key;", CallStaticObjectMethodA, param_1);
+  pub fn make_list_key(env: *mut JNIEnv, param_1: jobject, param_2: data_DataQuery) -> data_key_Key {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/key/KeyFactory", "makeListKey", "(Ljava/lang/Class;Lorg/spongepowered/api/data/DataQuery;)Lorg/spongepowered/api/data/key/Key;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/data/key/KeyFactory#makeListKey was null") }
-    data_key_Key { env: self.env, object: ret }
+    data_key_Key { env: env, object: ret }
   }
 
-  pub fn make_set_key(param_1: jobject, param_2: data_DataQuery) -> data_key_Key {
-    let ret = java_method!(self.env, "makeSetKey", "(Ljava/lang/Class;Lorg/spongepowered/api/data/DataQuery;)Lorg/spongepowered/api/data/key/Key;", CallStaticObjectMethodA, param_1);
+  pub fn make_set_key(env: *mut JNIEnv, param_1: jobject, param_2: data_DataQuery) -> data_key_Key {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/key/KeyFactory", "makeSetKey", "(Ljava/lang/Class;Lorg/spongepowered/api/data/DataQuery;)Lorg/spongepowered/api/data/key/Key;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/data/key/KeyFactory#makeSetKey was null") }
-    data_key_Key { env: self.env, object: ret }
+    data_key_Key { env: env, object: ret }
   }
 
-  pub fn make_map_key(param_1: jobject, param_2: jobject, param_3: data_DataQuery) -> data_key_Key {
-    let ret = java_method!(self.env, "makeMapKey", "(Ljava/lang/Class;Ljava/lang/Class;Lorg/spongepowered/api/data/DataQuery;)Lorg/spongepowered/api/data/key/Key;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn make_map_key(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: data_DataQuery) -> data_key_Key {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/key/KeyFactory", "makeMapKey", "(Ljava/lang/Class;Ljava/lang/Class;Lorg/spongepowered/api/data/DataQuery;)Lorg/spongepowered/api/data/key/Key;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/data/key/KeyFactory#makeMapKey was null") }
-    data_key_Key { env: self.env, object: ret }
+    data_key_Key { env: env, object: ret }
   }
 
-  pub fn make_optional_key(param_1: jobject, param_2: data_DataQuery) -> data_key_Key {
-    let ret = java_method!(self.env, "makeOptionalKey", "(Ljava/lang/Class;Lorg/spongepowered/api/data/DataQuery;)Lorg/spongepowered/api/data/key/Key;", CallStaticObjectMethodA, param_1);
+  pub fn make_optional_key(env: *mut JNIEnv, param_1: jobject, param_2: data_DataQuery) -> data_key_Key {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/key/KeyFactory", "makeOptionalKey", "(Ljava/lang/Class;Lorg/spongepowered/api/data/DataQuery;)Lorg/spongepowered/api/data/key/Key;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/data/key/KeyFactory#makeOptionalKey was null") }
-    data_key_Key { env: self.env, object: ret }
+    data_key_Key { env: env, object: ret }
   }
 
 }
@@ -5830,7 +5830,7 @@ impl data_manipulator_DataManipulator {
     data_manipulator_DataManipulator { env: self.env, object: ret }
   }
 
-  pub fn set_2(&self, param_1: &[data_value_BaseValue]) -> data_manipulator_DataManipulator {
+  pub fn set_2(&self, param_1: Vec<data_value_BaseValue>) -> data_manipulator_DataManipulator {
     let ret = java_method!(self.env, self.object, "set", "([Lorg/spongepowered/api/data/value/BaseValue;)Lorg/spongepowered/api/data/manipulator/DataManipulator;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/manipulator/DataManipulator#set was null") }
     data_manipulator_DataManipulator { env: self.env, object: ret }
@@ -14481,7 +14481,7 @@ impl data_MemoryDataView {
     java_method!(self.env, self.object, "contains", "(Lorg/spongepowered/api/data/DataQuery;)Z", CallBooleanMethodA, param_1) == 1
   }
 
-  pub fn contains_1(&self, param_1: data_DataQuery, param_2: &[data_DataQuery]) -> bool {
+  pub fn contains_1(&self, param_1: data_DataQuery, param_2: Vec<data_DataQuery>) -> bool {
     java_method!(self.env, self.object, "contains", "(Lorg/spongepowered/api/data/DataQuery;[Lorg/spongepowered/api/data/DataQuery;)Z", CallBooleanMethodA, param_1, param_2) == 1
   }
 
@@ -14952,10 +14952,10 @@ impl data_meta_PatternLayer {
     }
   }
 
-  pub fn of(param_1: data_type_BannerPatternShape, param_2: data_type_DyeColor) -> data_meta_PatternLayer {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/data/type/BannerPatternShape;Lorg/spongepowered/api/data/type/DyeColor;)Lorg/spongepowered/api/data/meta/PatternLayer;", CallStaticObjectMethodA, param_1);
+  pub fn of(env: *mut JNIEnv, param_1: data_type_BannerPatternShape, param_2: data_type_DyeColor) -> data_meta_PatternLayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/meta/PatternLayer", "of", "(Lorg/spongepowered/api/data/type/BannerPatternShape;Lorg/spongepowered/api/data/type/DyeColor;)Lorg/spongepowered/api/data/meta/PatternLayer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/data/meta/PatternLayer#of was null") }
-    data_meta_PatternLayer { env: self.env, object: ret }
+    data_meta_PatternLayer { env: env, object: ret }
   }
 
   pub fn get_shape(&self) -> data_type_BannerPatternShape {
@@ -15577,13 +15577,13 @@ impl data_property_block_MatterProperty_Matter {
     }
   }
 
-  pub fn values() -> &[data_property_block_MatterProperty_Matter] {
+  pub fn values(env: *mut JNIEnv) -> Vec<data_property_block_MatterProperty_Matter> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> data_property_block_MatterProperty_Matter {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/data/property/block/MatterProperty$Matter;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> data_property_block_MatterProperty_Matter {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/MatterProperty$Matter", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/data/property/block/MatterProperty$Matter;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/MatterProperty$Matter#valueOf was null") }
-    data_property_block_MatterProperty_Matter { env: self.env, object: ret }
+    data_property_block_MatterProperty_Matter { env: env, object: ret }
   }
 
 }
@@ -15919,40 +15919,40 @@ impl data_property_BooleanProperty {
     java_method!(self.env, self.object, "compareTo", "(Lorg/spongepowered/api/data/Property;)I", CallIntMethodA, param_1)
   }
 
-  pub fn of(param_1: jobject) -> data_property_BooleanProperty {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> data_property_BooleanProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/BooleanProperty", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/BooleanProperty#of was null") }
-    data_property_BooleanProperty { env: self.env, object: ret }
+    data_property_BooleanProperty { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> data_property_BooleanProperty {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> data_property_BooleanProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/BooleanProperty", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/BooleanProperty#not was null") }
-    data_property_BooleanProperty { env: self.env, object: ret }
+    data_property_BooleanProperty { env: env, object: ret }
   }
 
-  pub fn greater_than(param_1: jobject) -> data_property_BooleanProperty {
-    let ret = java_method!(self.env, "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethod);
+  pub fn greater_than(env: *mut JNIEnv, param_1: jobject) -> data_property_BooleanProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/BooleanProperty", "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/BooleanProperty#greaterThan was null") }
-    data_property_BooleanProperty { env: self.env, object: ret }
+    data_property_BooleanProperty { env: env, object: ret }
   }
 
-  pub fn greater_than_or_equal(param_1: jobject) -> data_property_BooleanProperty {
-    let ret = java_method!(self.env, "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethod);
+  pub fn greater_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> data_property_BooleanProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/BooleanProperty", "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/BooleanProperty#greaterThanOrEqual was null") }
-    data_property_BooleanProperty { env: self.env, object: ret }
+    data_property_BooleanProperty { env: env, object: ret }
   }
 
-  pub fn less_than(param_1: jobject) -> data_property_BooleanProperty {
-    let ret = java_method!(self.env, "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethod);
+  pub fn less_than(env: *mut JNIEnv, param_1: jobject) -> data_property_BooleanProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/BooleanProperty", "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/BooleanProperty#lessThan was null") }
-    data_property_BooleanProperty { env: self.env, object: ret }
+    data_property_BooleanProperty { env: env, object: ret }
   }
 
-  pub fn less_than_or_equal(param_1: jobject) -> data_property_BooleanProperty {
-    let ret = java_method!(self.env, "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethod);
+  pub fn less_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> data_property_BooleanProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/BooleanProperty", "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/BooleanProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/BooleanProperty#lessThanOrEqual was null") }
-    data_property_BooleanProperty { env: self.env, object: ret }
+    data_property_BooleanProperty { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -16056,40 +16056,40 @@ impl data_property_DoubleProperty {
     java_method!(self.env, self.object, "compareTo", "(Lorg/spongepowered/api/data/Property;)I", CallIntMethodA, param_1)
   }
 
-  pub fn of(param_1: jobject) -> data_property_DoubleProperty {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> data_property_DoubleProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DoubleProperty", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DoubleProperty#of was null") }
-    data_property_DoubleProperty { env: self.env, object: ret }
+    data_property_DoubleProperty { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> data_property_DoubleProperty {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> data_property_DoubleProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DoubleProperty", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DoubleProperty#not was null") }
-    data_property_DoubleProperty { env: self.env, object: ret }
+    data_property_DoubleProperty { env: env, object: ret }
   }
 
-  pub fn greater_than(param_1: jobject) -> data_property_DoubleProperty {
-    let ret = java_method!(self.env, "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethod);
+  pub fn greater_than(env: *mut JNIEnv, param_1: jobject) -> data_property_DoubleProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DoubleProperty", "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DoubleProperty#greaterThan was null") }
-    data_property_DoubleProperty { env: self.env, object: ret }
+    data_property_DoubleProperty { env: env, object: ret }
   }
 
-  pub fn greater_than_or_equal(param_1: jobject) -> data_property_DoubleProperty {
-    let ret = java_method!(self.env, "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethod);
+  pub fn greater_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> data_property_DoubleProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DoubleProperty", "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DoubleProperty#greaterThanOrEqual was null") }
-    data_property_DoubleProperty { env: self.env, object: ret }
+    data_property_DoubleProperty { env: env, object: ret }
   }
 
-  pub fn less_than(param_1: jobject) -> data_property_DoubleProperty {
-    let ret = java_method!(self.env, "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethod);
+  pub fn less_than(env: *mut JNIEnv, param_1: jobject) -> data_property_DoubleProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DoubleProperty", "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DoubleProperty#lessThan was null") }
-    data_property_DoubleProperty { env: self.env, object: ret }
+    data_property_DoubleProperty { env: env, object: ret }
   }
 
-  pub fn less_than_or_equal(param_1: jobject) -> data_property_DoubleProperty {
-    let ret = java_method!(self.env, "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethod);
+  pub fn less_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> data_property_DoubleProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DoubleProperty", "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/DoubleProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DoubleProperty#lessThanOrEqual was null") }
-    data_property_DoubleProperty { env: self.env, object: ret }
+    data_property_DoubleProperty { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -16234,40 +16234,40 @@ impl data_property_IntProperty {
     java_method!(self.env, self.object, "compareTo", "(Lorg/spongepowered/api/data/Property;)I", CallIntMethodA, param_1)
   }
 
-  pub fn of(param_1: jobject) -> data_property_IntProperty {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> data_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/IntProperty", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/IntProperty#of was null") }
-    data_property_IntProperty { env: self.env, object: ret }
+    data_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> data_property_IntProperty {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> data_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/IntProperty", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/IntProperty#not was null") }
-    data_property_IntProperty { env: self.env, object: ret }
+    data_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn greater_than(param_1: jobject) -> data_property_IntProperty {
-    let ret = java_method!(self.env, "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethod);
+  pub fn greater_than(env: *mut JNIEnv, param_1: jobject) -> data_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/IntProperty", "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/IntProperty#greaterThan was null") }
-    data_property_IntProperty { env: self.env, object: ret }
+    data_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn greater_than_or_equal(param_1: jobject) -> data_property_IntProperty {
-    let ret = java_method!(self.env, "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethod);
+  pub fn greater_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> data_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/IntProperty", "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/IntProperty#greaterThanOrEqual was null") }
-    data_property_IntProperty { env: self.env, object: ret }
+    data_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn less_than(param_1: jobject) -> data_property_IntProperty {
-    let ret = java_method!(self.env, "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethod);
+  pub fn less_than(env: *mut JNIEnv, param_1: jobject) -> data_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/IntProperty", "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/IntProperty#lessThan was null") }
-    data_property_IntProperty { env: self.env, object: ret }
+    data_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn less_than_or_equal(param_1: jobject) -> data_property_IntProperty {
-    let ret = java_method!(self.env, "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethod);
+  pub fn less_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> data_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/IntProperty", "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/data/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/IntProperty#lessThanOrEqual was null") }
-    data_property_IntProperty { env: self.env, object: ret }
+    data_property_IntProperty { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -16963,23 +16963,23 @@ impl data_Property_Operator {
     }
   }
 
-  pub fn values() -> &[data_Property_Operator] {
+  pub fn values(env: *mut JNIEnv) -> Vec<data_Property_Operator> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> data_Property_Operator {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/data/Property$Operator;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> data_Property_Operator {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/Property$Operator", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/data/Property$Operator;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/Property$Operator#valueOf was null") }
-    data_Property_Operator { env: self.env, object: ret }
+    data_Property_Operator { env: env, object: ret }
   }
 
   pub fn compare(&self, param_1: data_Property, param_2: data_Property) -> bool {
     java_method!(self.env, self.object, "compare", "(Lorg/spongepowered/api/data/Property;Lorg/spongepowered/api/data/Property;)Z", CallBooleanMethodA, param_1, param_2) == 1
   }
 
-  pub fn default_operator() -> data_Property_Operator {
-    let ret = java_method!(self.env, "defaultOperator", "()Lorg/spongepowered/api/data/Property$Operator;", CallStaticObjectMethod);
+  pub fn default_operator(env: *mut JNIEnv) -> data_Property_Operator {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/Property$Operator", "defaultOperator", "()Lorg/spongepowered/api/data/Property$Operator;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/data/Property$Operator#defaultOperator was null") }
-    data_Property_Operator { env: self.env, object: ret }
+    data_Property_Operator { env: env, object: ret }
   }
 
 }
@@ -17135,10 +17135,10 @@ impl data_translator_ConfigurateTranslator {
     }
   }
 
-  pub fn instance() -> data_translator_ConfigurateTranslator {
-    let ret = java_method!(self.env, "instance", "()Lorg/spongepowered/api/data/translator/ConfigurateTranslator;", CallStaticObjectMethod);
+  pub fn instance(env: *mut JNIEnv) -> data_translator_ConfigurateTranslator {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/translator/ConfigurateTranslator", "instance", "()Lorg/spongepowered/api/data/translator/ConfigurateTranslator;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/data/translator/ConfigurateTranslator#instance was null") }
-    data_translator_ConfigurateTranslator { env: self.env, object: ret }
+    data_translator_ConfigurateTranslator { env: env, object: ret }
   }
 
   pub fn translate_data(&self, param_1: data_DataView) -> jobject {
@@ -20592,10 +20592,10 @@ impl effect_particle_BlockParticle {
     }
   }
 
-  pub fn builder() -> effect_particle_BlockParticle_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/effect/particle/BlockParticle$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> effect_particle_BlockParticle_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/effect/particle/BlockParticle", "builder", "()Lorg/spongepowered/api/effect/particle/BlockParticle$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/effect/particle/BlockParticle#builder was null") }
-    effect_particle_BlockParticle_Builder { env: self.env, object: ret }
+    effect_particle_BlockParticle_Builder { env: env, object: ret }
   }
 
   pub fn get_block_state(&self) -> block_BlockState {
@@ -20642,10 +20642,10 @@ impl effect_particle_ColoredParticle {
     }
   }
 
-  pub fn builder() -> effect_particle_ColoredParticle_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/effect/particle/ColoredParticle$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> effect_particle_ColoredParticle_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/effect/particle/ColoredParticle", "builder", "()Lorg/spongepowered/api/effect/particle/ColoredParticle$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/effect/particle/ColoredParticle#builder was null") }
-    effect_particle_ColoredParticle_Builder { env: self.env, object: ret }
+    effect_particle_ColoredParticle_Builder { env: env, object: ret }
   }
 
   pub fn get_color(&self) -> util_Color {
@@ -20692,10 +20692,10 @@ impl effect_particle_ItemParticle {
     }
   }
 
-  pub fn builder() -> effect_particle_ItemParticle_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/effect/particle/ItemParticle$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> effect_particle_ItemParticle_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/effect/particle/ItemParticle", "builder", "()Lorg/spongepowered/api/effect/particle/ItemParticle$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/effect/particle/ItemParticle#builder was null") }
-    effect_particle_ItemParticle_Builder { env: self.env, object: ret }
+    effect_particle_ItemParticle_Builder { env: env, object: ret }
   }
 
   pub fn get_item(&self) -> item_inventory_ItemStackSnapshot {
@@ -20742,10 +20742,10 @@ impl effect_particle_NoteParticle {
     }
   }
 
-  pub fn builder() -> effect_particle_NoteParticle_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/effect/particle/NoteParticle$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> effect_particle_NoteParticle_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/effect/particle/NoteParticle", "builder", "()Lorg/spongepowered/api/effect/particle/NoteParticle$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/effect/particle/NoteParticle#builder was null") }
-    effect_particle_NoteParticle_Builder { env: self.env, object: ret }
+    effect_particle_NoteParticle_Builder { env: env, object: ret }
   }
 
   pub fn get_note(&self) -> data_type_NotePitch {
@@ -20833,10 +20833,10 @@ impl effect_particle_ParticleEffect {
     }
   }
 
-  pub fn builder() -> effect_particle_ParticleEffect_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/effect/particle/ParticleEffect$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> effect_particle_ParticleEffect_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/effect/particle/ParticleEffect", "builder", "()Lorg/spongepowered/api/effect/particle/ParticleEffect$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/effect/particle/ParticleEffect#builder was null") }
-    effect_particle_ParticleEffect_Builder { env: self.env, object: ret }
+    effect_particle_ParticleEffect_Builder { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> effect_particle_ParticleType {
@@ -21043,10 +21043,10 @@ impl effect_particle_ResizableParticle {
     }
   }
 
-  pub fn builder() -> effect_particle_ResizableParticle_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/effect/particle/ResizableParticle$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> effect_particle_ResizableParticle_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/effect/particle/ResizableParticle", "builder", "()Lorg/spongepowered/api/effect/particle/ResizableParticle$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/effect/particle/ResizableParticle#builder was null") }
-    effect_particle_ResizableParticle_Builder { env: self.env, object: ret }
+    effect_particle_ResizableParticle_Builder { env: env, object: ret }
   }
 
   pub fn get_size(&self) -> f32 {
@@ -21158,16 +21158,16 @@ impl effect_potion_PotionEffect {
     }
   }
 
-  pub fn builder() -> effect_potion_PotionEffect_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/effect/potion/PotionEffect$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> effect_potion_PotionEffect_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/effect/potion/PotionEffect", "builder", "()Lorg/spongepowered/api/effect/potion/PotionEffect$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/effect/potion/PotionEffect#builder was null") }
-    effect_potion_PotionEffect_Builder { env: self.env, object: ret }
+    effect_potion_PotionEffect_Builder { env: env, object: ret }
   }
 
-  pub fn of(param_1: effect_potion_PotionEffectType, param_2: i32, param_3: i32) -> effect_potion_PotionEffect {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/effect/potion/PotionEffectType;II)Lorg/spongepowered/api/effect/potion/PotionEffect;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn of(env: *mut JNIEnv, param_1: effect_potion_PotionEffectType, param_2: i32, param_3: i32) -> effect_potion_PotionEffect {
+    let ret = static_java_method!(env, "org/spongepowered/api/effect/potion/PotionEffect", "of", "(Lorg/spongepowered/api/effect/potion/PotionEffectType;II)Lorg/spongepowered/api/effect/potion/PotionEffect;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/effect/potion/PotionEffect#of was null") }
-    effect_potion_PotionEffect { env: self.env, object: ret }
+    effect_potion_PotionEffect { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> effect_potion_PotionEffectType {
@@ -22651,10 +22651,10 @@ impl entity_EntitySnapshot {
     }
   }
 
-  pub fn builder() -> entity_EntitySnapshot_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/entity/EntitySnapshot$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> entity_EntitySnapshot_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/entity/EntitySnapshot", "builder", "()Lorg/spongepowered/api/entity/EntitySnapshot$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/entity/EntitySnapshot#builder was null") }
-    entity_EntitySnapshot_Builder { env: self.env, object: ret }
+    entity_EntitySnapshot_Builder { env: env, object: ret }
   }
 
   pub fn get_unique_id(&self) -> Option<jobject> {
@@ -24605,10 +24605,10 @@ impl entity_living_player_tab_TabListEntry {
     }
   }
 
-  pub fn builder() -> entity_living_player_tab_TabListEntry_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/entity/living/player/tab/TabListEntry$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> entity_living_player_tab_TabListEntry_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/entity/living/player/tab/TabListEntry", "builder", "()Lorg/spongepowered/api/entity/living/player/tab/TabListEntry$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/entity/living/player/tab/TabListEntry#builder was null") }
-    entity_living_player_tab_TabListEntry_Builder { env: self.env, object: ret }
+    entity_living_player_tab_TabListEntry_Builder { env: env, object: ret }
   }
 
   pub fn get_list(&self) -> entity_living_player_tab_TabList {
@@ -26994,34 +26994,34 @@ impl event_cause_Cause {
     }
   }
 
-  pub fn builder() -> event_cause_Cause_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/Cause$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_Cause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/Cause", "builder", "()Lorg/spongepowered/api/event/cause/Cause$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/Cause#builder was null") }
-    event_cause_Cause_Builder { env: self.env, object: ret }
+    event_cause_Cause_Builder { env: env, object: ret }
   }
 
-  pub fn source(param_1: jobject) -> event_cause_Cause_Builder {
-    let ret = java_method!(self.env, "source", "(Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/Cause$Builder;", CallStaticObjectMethod);
+  pub fn source(env: *mut JNIEnv, param_1: jobject) -> event_cause_Cause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/Cause", "source", "(Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/Cause$Builder;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/Cause#source was null") }
-    event_cause_Cause_Builder { env: self.env, object: ret }
+    event_cause_Cause_Builder { env: env, object: ret }
   }
 
-  pub fn of(param_1: event_cause_NamedCause) -> event_cause_Cause {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/event/cause/NamedCause;)Lorg/spongepowered/api/event/cause/Cause;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: event_cause_NamedCause) -> event_cause_Cause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/Cause", "of", "(Lorg/spongepowered/api/event/cause/NamedCause;)Lorg/spongepowered/api/event/cause/Cause;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/Cause#of was null") }
-    event_cause_Cause { env: self.env, object: ret }
+    event_cause_Cause { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: event_cause_NamedCause, param_2: &[event_cause_NamedCause]) -> event_cause_Cause {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/event/cause/NamedCause;[Lorg/spongepowered/api/event/cause/NamedCause;)Lorg/spongepowered/api/event/cause/Cause;", CallStaticObjectMethodA, param_1);
+  pub fn of_1(env: *mut JNIEnv, param_1: event_cause_NamedCause, param_2: Vec<event_cause_NamedCause>) -> event_cause_Cause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/Cause", "of", "(Lorg/spongepowered/api/event/cause/NamedCause;[Lorg/spongepowered/api/event/cause/NamedCause;)Lorg/spongepowered/api/event/cause/Cause;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/Cause#of was null") }
-    event_cause_Cause { env: self.env, object: ret }
+    event_cause_Cause { env: env, object: ret }
   }
 
-  pub fn of_2(param_1: jobject) -> event_cause_Cause {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Iterable;)Lorg/spongepowered/api/event/cause/Cause;", CallStaticObjectMethod);
+  pub fn of_2(env: *mut JNIEnv, param_1: jobject) -> event_cause_Cause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/Cause", "of", "(Ljava/lang/Iterable;)Lorg/spongepowered/api/event/cause/Cause;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/Cause#of was null") }
-    event_cause_Cause { env: self.env, object: ret }
+    event_cause_Cause { env: env, object: ret }
   }
 
   pub fn root(&self) -> jobject {
@@ -27109,7 +27109,7 @@ impl event_cause_Cause {
     ret
   }
 
-  pub fn with(&self, param_1: event_cause_NamedCause, param_2: &[event_cause_NamedCause]) -> event_cause_Cause {
+  pub fn with(&self, param_1: event_cause_NamedCause, param_2: Vec<event_cause_NamedCause>) -> event_cause_Cause {
     let ret = java_method!(self.env, self.object, "with", "(Lorg/spongepowered/api/event/cause/NamedCause;[Lorg/spongepowered/api/event/cause/NamedCause;)Lorg/spongepowered/api/event/cause/Cause;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/Cause#with was null") }
     event_cause_Cause { env: self.env, object: ret }
@@ -27263,10 +27263,10 @@ impl event_cause_entity_damage_DamageModifier {
     }
   }
 
-  pub fn builder() -> event_cause_entity_damage_DamageModifier_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/DamageModifier$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_damage_DamageModifier_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/damage/DamageModifier", "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/DamageModifier$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/damage/DamageModifier#builder was null") }
-    event_cause_entity_damage_DamageModifier_Builder { env: self.env, object: ret }
+    event_cause_entity_damage_DamageModifier_Builder { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> event_cause_entity_damage_DamageModifierType {
@@ -27390,10 +27390,10 @@ impl event_cause_entity_damage_source_BlockDamageSource {
     }
   }
 
-  pub fn builder() -> event_cause_entity_damage_source_BlockDamageSource_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/source/BlockDamageSource$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_damage_source_BlockDamageSource_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/damage/source/BlockDamageSource", "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/source/BlockDamageSource$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/damage/source/BlockDamageSource#builder was null") }
-    event_cause_entity_damage_source_BlockDamageSource_Builder { env: self.env, object: ret }
+    event_cause_entity_damage_source_BlockDamageSource_Builder { env: env, object: ret }
   }
 
   pub fn get_location(&self) -> world_Location {
@@ -27859,10 +27859,10 @@ impl event_cause_entity_damage_source_DamageSource {
     }
   }
 
-  pub fn builder() -> event_cause_entity_damage_source_DamageSource_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/source/DamageSource$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_damage_source_DamageSource_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/damage/source/DamageSource", "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/source/DamageSource$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/damage/source/DamageSource#builder was null") }
-    event_cause_entity_damage_source_DamageSource_Builder { env: self.env, object: ret }
+    event_cause_entity_damage_source_DamageSource_Builder { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> event_cause_entity_damage_DamageType {
@@ -27965,10 +27965,10 @@ impl event_cause_entity_damage_source_EntityDamageSource {
     }
   }
 
-  pub fn builder() -> event_cause_entity_damage_source_EntityDamageSource_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/source/EntityDamageSource$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_damage_source_EntityDamageSource_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/damage/source/EntityDamageSource", "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/source/EntityDamageSource$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/damage/source/EntityDamageSource#builder was null") }
-    event_cause_entity_damage_source_EntityDamageSource_Builder { env: self.env, object: ret }
+    event_cause_entity_damage_source_EntityDamageSource_Builder { env: env, object: ret }
   }
 
   pub fn get_source(&self) -> entity_Entity {
@@ -28015,10 +28015,10 @@ impl event_cause_entity_damage_source_FallingBlockDamageSource {
     }
   }
 
-  pub fn builder() -> event_cause_entity_damage_source_FallingBlockDamageSource_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/source/FallingBlockDamageSource$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_damage_source_FallingBlockDamageSource_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/damage/source/FallingBlockDamageSource", "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/source/FallingBlockDamageSource$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/damage/source/FallingBlockDamageSource#builder was null") }
-    event_cause_entity_damage_source_FallingBlockDamageSource_Builder { env: self.env, object: ret }
+    event_cause_entity_damage_source_FallingBlockDamageSource_Builder { env: env, object: ret }
   }
 
   pub fn get_source(&self) -> entity_FallingBlock {
@@ -28093,10 +28093,10 @@ impl event_cause_entity_damage_source_IndirectEntityDamageSource {
     }
   }
 
-  pub fn builder() -> event_cause_entity_damage_source_IndirectEntityDamageSource_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/source/IndirectEntityDamageSource$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_damage_source_IndirectEntityDamageSource_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/damage/source/IndirectEntityDamageSource", "builder", "()Lorg/spongepowered/api/event/cause/entity/damage/source/IndirectEntityDamageSource$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/damage/source/IndirectEntityDamageSource#builder was null") }
-    event_cause_entity_damage_source_IndirectEntityDamageSource_Builder { env: self.env, object: ret }
+    event_cause_entity_damage_source_IndirectEntityDamageSource_Builder { env: env, object: ret }
   }
 
   pub fn get_indirect_source(&self) -> entity_Entity {
@@ -28228,10 +28228,10 @@ impl event_cause_entity_health_HealthModifier_Builder {
     }
   }
 
-  pub fn builder() -> event_cause_entity_health_HealthModifier_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/health/HealthModifier$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_health_HealthModifier_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/health/HealthModifier$Builder", "builder", "()Lorg/spongepowered/api/event/cause/entity/health/HealthModifier$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/health/HealthModifier$Builder#builder was null") }
-    event_cause_entity_health_HealthModifier_Builder { env: self.env, object: ret }
+    event_cause_entity_health_HealthModifier_Builder { env: env, object: ret }
   }
 
   pub fn type_(&self, param_1: event_cause_entity_health_HealthModifierType) -> event_cause_entity_health_HealthModifier_Builder {
@@ -28292,10 +28292,10 @@ impl event_cause_entity_health_HealthModifier {
     }
   }
 
-  pub fn builder() -> event_cause_entity_health_HealthModifier_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/health/HealthModifier$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_health_HealthModifier_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/health/HealthModifier", "builder", "()Lorg/spongepowered/api/event/cause/entity/health/HealthModifier$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/health/HealthModifier#builder was null") }
-    event_cause_entity_health_HealthModifier_Builder { env: self.env, object: ret }
+    event_cause_entity_health_HealthModifier_Builder { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> event_cause_entity_health_HealthModifierType {
@@ -28387,10 +28387,10 @@ impl event_cause_entity_health_source_BlockHealingSource {
     }
   }
 
-  pub fn builder() -> event_cause_entity_health_source_BlockHealingSource_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/health/source/BlockHealingSource$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_health_source_BlockHealingSource_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/health/source/BlockHealingSource", "builder", "()Lorg/spongepowered/api/event/cause/entity/health/source/BlockHealingSource$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/health/source/BlockHealingSource#builder was null") }
-    event_cause_entity_health_source_BlockHealingSource_Builder { env: self.env, object: ret }
+    event_cause_entity_health_source_BlockHealingSource_Builder { env: env, object: ret }
   }
 
   pub fn get_location(&self) -> world_Location {
@@ -28668,10 +28668,10 @@ impl event_cause_entity_health_source_EntityHealingSource {
     }
   }
 
-  pub fn builder() -> event_cause_entity_health_source_EntityHealingSource_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/health/source/EntityHealingSource$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_health_source_EntityHealingSource_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/health/source/EntityHealingSource", "builder", "()Lorg/spongepowered/api/event/cause/entity/health/source/EntityHealingSource$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/health/source/EntityHealingSource#builder was null") }
-    event_cause_entity_health_source_EntityHealingSource_Builder { env: self.env, object: ret }
+    event_cause_entity_health_source_EntityHealingSource_Builder { env: env, object: ret }
   }
 
   pub fn get_source(&self) -> entity_Entity {
@@ -28752,10 +28752,10 @@ impl event_cause_entity_health_source_HealingSource {
     }
   }
 
-  pub fn builder() -> event_cause_entity_health_source_HealingSource_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/health/source/HealingSource$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_health_source_HealingSource_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/health/source/HealingSource", "builder", "()Lorg/spongepowered/api/event/cause/entity/health/source/HealingSource$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/health/source/HealingSource#builder was null") }
-    event_cause_entity_health_source_HealingSource_Builder { env: self.env, object: ret }
+    event_cause_entity_health_source_HealingSource_Builder { env: env, object: ret }
   }
 
   pub fn get_healing_type(&self) -> event_cause_entity_health_HealingType {
@@ -28842,10 +28842,10 @@ impl event_cause_entity_health_source_IndirectEntityHealingSource {
     }
   }
 
-  pub fn builder() -> event_cause_entity_health_source_IndirectEntityHealingSource_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/health/source/IndirectEntityHealingSource$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_health_source_IndirectEntityHealingSource_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/health/source/IndirectEntityHealingSource", "builder", "()Lorg/spongepowered/api/event/cause/entity/health/source/IndirectEntityHealingSource$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/health/source/IndirectEntityHealingSource#builder was null") }
-    event_cause_entity_health_source_IndirectEntityHealingSource_Builder { env: self.env, object: ret }
+    event_cause_entity_health_source_IndirectEntityHealingSource_Builder { env: env, object: ret }
   }
 
   pub fn get_indirect_source(&self) -> entity_Entity {
@@ -28910,10 +28910,10 @@ impl event_cause_entity_spawn_BlockSpawnCause {
     }
   }
 
-  pub fn builder() -> event_cause_entity_spawn_BlockSpawnCause_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/BlockSpawnCause$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_spawn_BlockSpawnCause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/spawn/BlockSpawnCause", "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/BlockSpawnCause$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/spawn/BlockSpawnCause#builder was null") }
-    event_cause_entity_spawn_BlockSpawnCause_Builder { env: self.env, object: ret }
+    event_cause_entity_spawn_BlockSpawnCause_Builder { env: env, object: ret }
   }
 
   pub fn get_block_snapshot(&self) -> block_BlockSnapshot {
@@ -28960,10 +28960,10 @@ impl event_cause_entity_spawn_BreedingSpawnCause {
     }
   }
 
-  pub fn builder() -> event_cause_entity_spawn_BreedingSpawnCause_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/BreedingSpawnCause$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_spawn_BreedingSpawnCause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/spawn/BreedingSpawnCause", "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/BreedingSpawnCause$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/spawn/BreedingSpawnCause#builder was null") }
-    event_cause_entity_spawn_BreedingSpawnCause_Builder { env: self.env, object: ret }
+    event_cause_entity_spawn_BreedingSpawnCause_Builder { env: env, object: ret }
   }
 
   pub fn get_mate(&self) -> entity_Entity {
@@ -29255,10 +29255,10 @@ impl event_cause_entity_spawn_EntitySpawnCause {
     }
   }
 
-  pub fn builder() -> event_cause_entity_spawn_EntitySpawnCause_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/EntitySpawnCause$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_spawn_EntitySpawnCause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/spawn/EntitySpawnCause", "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/EntitySpawnCause$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/spawn/EntitySpawnCause#builder was null") }
-    event_cause_entity_spawn_EntitySpawnCause_Builder { env: self.env, object: ret }
+    event_cause_entity_spawn_EntitySpawnCause_Builder { env: env, object: ret }
   }
 
   pub fn get_entity(&self) -> entity_Entity {
@@ -29305,10 +29305,10 @@ impl event_cause_entity_spawn_MobSpawnerSpawnCause {
     }
   }
 
-  pub fn builder() -> event_cause_entity_spawn_MobSpawnerSpawnCause_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/MobSpawnerSpawnCause$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_spawn_MobSpawnerSpawnCause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/spawn/MobSpawnerSpawnCause", "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/MobSpawnerSpawnCause$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/spawn/MobSpawnerSpawnCause#builder was null") }
-    event_cause_entity_spawn_MobSpawnerSpawnCause_Builder { env: self.env, object: ret }
+    event_cause_entity_spawn_MobSpawnerSpawnCause_Builder { env: env, object: ret }
   }
 
   pub fn get_mob_spawner_data(&self) -> data_manipulator_immutable_ImmutableMobSpawnerData {
@@ -29378,10 +29378,10 @@ impl event_cause_entity_spawn_SpawnCause {
     }
   }
 
-  pub fn builder() -> event_cause_entity_spawn_SpawnCause_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/SpawnCause$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_spawn_SpawnCause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/spawn/SpawnCause", "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/SpawnCause$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/spawn/SpawnCause#builder was null") }
-    event_cause_entity_spawn_SpawnCause_Builder { env: self.env, object: ret }
+    event_cause_entity_spawn_SpawnCause_Builder { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> event_cause_entity_spawn_SpawnType {
@@ -29460,10 +29460,10 @@ impl event_cause_entity_spawn_WeatherSpawnCause {
     }
   }
 
-  pub fn builder() -> event_cause_entity_spawn_WeatherSpawnCause_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/WeatherSpawnCause$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_spawn_WeatherSpawnCause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/spawn/WeatherSpawnCause", "builder", "()Lorg/spongepowered/api/event/cause/entity/spawn/WeatherSpawnCause$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/spawn/WeatherSpawnCause#builder was null") }
-    event_cause_entity_spawn_WeatherSpawnCause_Builder { env: self.env, object: ret }
+    event_cause_entity_spawn_WeatherSpawnCause_Builder { env: env, object: ret }
   }
 
   pub fn get_weather(&self) -> world_weather_Weather {
@@ -29761,10 +29761,10 @@ impl event_cause_entity_teleport_EntityTeleportCause {
     }
   }
 
-  pub fn builder() -> event_cause_entity_teleport_EntityTeleportCause_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/teleport/EntityTeleportCause$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_teleport_EntityTeleportCause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/teleport/EntityTeleportCause", "builder", "()Lorg/spongepowered/api/event/cause/entity/teleport/EntityTeleportCause$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/teleport/EntityTeleportCause#builder was null") }
-    event_cause_entity_teleport_EntityTeleportCause_Builder { env: self.env, object: ret }
+    event_cause_entity_teleport_EntityTeleportCause_Builder { env: env, object: ret }
   }
 
   pub fn get_teleporter(&self) -> entity_Entity {
@@ -29827,10 +29827,10 @@ impl event_cause_entity_teleport_PortalTeleportCause {
     }
   }
 
-  pub fn builder() -> event_cause_entity_teleport_PortalTeleportCause_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/teleport/PortalTeleportCause$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_teleport_PortalTeleportCause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/teleport/PortalTeleportCause", "builder", "()Lorg/spongepowered/api/event/cause/entity/teleport/PortalTeleportCause$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/teleport/PortalTeleportCause#builder was null") }
-    event_cause_entity_teleport_PortalTeleportCause_Builder { env: self.env, object: ret }
+    event_cause_entity_teleport_PortalTeleportCause_Builder { env: env, object: ret }
   }
 
   pub fn get_teleporter(&self) -> world_PortalAgent {
@@ -29899,10 +29899,10 @@ impl event_cause_entity_teleport_TeleportCause {
     }
   }
 
-  pub fn builder() -> event_cause_entity_teleport_TeleportCause_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/event/cause/entity/teleport/TeleportCause$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> event_cause_entity_teleport_TeleportCause_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/teleport/TeleportCause", "builder", "()Lorg/spongepowered/api/event/cause/entity/teleport/TeleportCause$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/teleport/TeleportCause#builder was null") }
-    event_cause_entity_teleport_TeleportCause_Builder { env: self.env, object: ret }
+    event_cause_entity_teleport_TeleportCause_Builder { env: env, object: ret }
   }
 
   pub fn get_teleport_type(&self) -> event_cause_entity_teleport_TeleportType {
@@ -29959,52 +29959,52 @@ impl event_cause_NamedCause {
     }
   }
 
-  pub fn source(param_1: jobject) -> event_cause_NamedCause {
-    let ret = java_method!(self.env, "source", "(Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethod);
+  pub fn source(env: *mut JNIEnv, param_1: jobject) -> event_cause_NamedCause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/NamedCause", "source", "(Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/NamedCause#source was null") }
-    event_cause_NamedCause { env: self.env, object: ret }
+    event_cause_NamedCause { env: env, object: ret }
   }
 
-  pub fn owner(param_1: jobject) -> event_cause_NamedCause {
-    let ret = java_method!(self.env, "owner", "(Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethod);
+  pub fn owner(env: *mut JNIEnv, param_1: jobject) -> event_cause_NamedCause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/NamedCause", "owner", "(Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/NamedCause#owner was null") }
-    event_cause_NamedCause { env: self.env, object: ret }
+    event_cause_NamedCause { env: env, object: ret }
   }
 
-  pub fn notifier(param_1: jobject) -> event_cause_NamedCause {
-    let ret = java_method!(self.env, "notifier", "(Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethod);
+  pub fn notifier(env: *mut JNIEnv, param_1: jobject) -> event_cause_NamedCause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/NamedCause", "notifier", "(Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/NamedCause#notifier was null") }
-    event_cause_NamedCause { env: self.env, object: ret }
+    event_cause_NamedCause { env: env, object: ret }
   }
 
-  pub fn simulated(param_1: jobject) -> event_cause_NamedCause {
-    let ret = java_method!(self.env, "simulated", "(Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethod);
+  pub fn simulated(env: *mut JNIEnv, param_1: jobject) -> event_cause_NamedCause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/NamedCause", "simulated", "(Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/NamedCause#simulated was null") }
-    event_cause_NamedCause { env: self.env, object: ret }
+    event_cause_NamedCause { env: env, object: ret }
   }
 
-  pub fn simulated_1(param_1: entity_living_player_Player) -> event_cause_NamedCause {
-    let ret = java_method!(self.env, "simulated", "(Lorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethod);
+  pub fn simulated_1(env: *mut JNIEnv, param_1: entity_living_player_Player) -> event_cause_NamedCause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/NamedCause", "simulated", "(Lorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/NamedCause#simulated was null") }
-    event_cause_NamedCause { env: self.env, object: ret }
+    event_cause_NamedCause { env: env, object: ret }
   }
 
-  pub fn simulated_2(param_1: entity_living_player_User) -> event_cause_NamedCause {
-    let ret = java_method!(self.env, "simulated", "(Lorg/spongepowered/api/entity/living/player/User;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethod);
+  pub fn simulated_2(env: *mut JNIEnv, param_1: entity_living_player_User) -> event_cause_NamedCause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/NamedCause", "simulated", "(Lorg/spongepowered/api/entity/living/player/User;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/NamedCause#simulated was null") }
-    event_cause_NamedCause { env: self.env, object: ret }
+    event_cause_NamedCause { env: env, object: ret }
   }
 
-  pub fn simulated_3(param_1: profile_GameProfile) -> event_cause_NamedCause {
-    let ret = java_method!(self.env, "simulated", "(Lorg/spongepowered/api/profile/GameProfile;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethod);
+  pub fn simulated_3(env: *mut JNIEnv, param_1: profile_GameProfile) -> event_cause_NamedCause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/NamedCause", "simulated", "(Lorg/spongepowered/api/profile/GameProfile;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/NamedCause#simulated was null") }
-    event_cause_NamedCause { env: self.env, object: ret }
+    event_cause_NamedCause { env: env, object: ret }
   }
 
-  pub fn of(param_1: jobject, param_2: jobject) -> event_cause_NamedCause {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/String;Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethodA, param_1);
+  pub fn of(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> event_cause_NamedCause {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/NamedCause", "of", "(Ljava/lang/String;Ljava/lang/Object;)Lorg/spongepowered/api/event/cause/NamedCause;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/NamedCause#of was null") }
-    event_cause_NamedCause { env: self.env, object: ret }
+    event_cause_NamedCause { env: env, object: ret }
   }
 
   pub fn get_name(&self) -> jobject {
@@ -31651,13 +31651,13 @@ impl event_entity_living_humanoid_player_ResourcePackStatusEvent_ResourcePackSta
     }
   }
 
-  pub fn values() -> &[event_entity_living_humanoid_player_ResourcePackStatusEvent_ResourcePackStatus] {
+  pub fn values(env: *mut JNIEnv) -> Vec<event_entity_living_humanoid_player_ResourcePackStatusEvent_ResourcePackStatus> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> event_entity_living_humanoid_player_ResourcePackStatusEvent_ResourcePackStatus {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/event/entity/living/humanoid/player/ResourcePackStatusEvent$ResourcePackStatus;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> event_entity_living_humanoid_player_ResourcePackStatusEvent_ResourcePackStatus {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/entity/living/humanoid/player/ResourcePackStatusEvent$ResourcePackStatus", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/event/entity/living/humanoid/player/ResourcePackStatusEvent$ResourcePackStatus;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/entity/living/humanoid/player/ResourcePackStatusEvent$ResourcePackStatus#valueOf was null") }
-    event_entity_living_humanoid_player_ResourcePackStatusEvent_ResourcePackStatus { env: self.env, object: ret }
+    event_entity_living_humanoid_player_ResourcePackStatusEvent_ResourcePackStatus { env: env, object: ret }
   }
 
   pub fn was_successful(&self) -> Option<jobject> {
@@ -32252,7 +32252,7 @@ impl event_filter_cause_After {
     ret
   }
 
-  pub fn type_filter(&self) -> &[jobject] {
+  pub fn type_filter(&self) -> Vec<jobject> {
     unimplemented!();
   }
   pub fn inverse(&self) -> bool {
@@ -32301,7 +32301,7 @@ impl event_filter_cause_Before {
     ret
   }
 
-  pub fn type_filter(&self) -> &[jobject] {
+  pub fn type_filter(&self) -> Vec<jobject> {
     unimplemented!();
   }
   pub fn inverse(&self) -> bool {
@@ -32324,7 +32324,7 @@ impl event_filter_cause_First {
     }
   }
 
-  pub fn type_filter(&self) -> &[jobject] {
+  pub fn type_filter(&self) -> Vec<jobject> {
     unimplemented!();
   }
   pub fn inverse(&self) -> bool {
@@ -32347,7 +32347,7 @@ impl event_filter_cause_Last {
     }
   }
 
-  pub fn type_filter(&self) -> &[jobject] {
+  pub fn type_filter(&self) -> Vec<jobject> {
     unimplemented!();
   }
   pub fn inverse(&self) -> bool {
@@ -32376,7 +32376,7 @@ impl event_filter_cause_Named {
     ret
   }
 
-  pub fn type_filter(&self) -> &[jobject] {
+  pub fn type_filter(&self) -> Vec<jobject> {
     unimplemented!();
   }
   pub fn inverse(&self) -> bool {
@@ -32400,7 +32400,7 @@ impl event_filter_cause_Root {
     }
   }
 
-  pub fn type_filter(&self) -> &[jobject] {
+  pub fn type_filter(&self) -> Vec<jobject> {
     unimplemented!();
   }
   pub fn inverse(&self) -> bool {
@@ -32521,7 +32521,7 @@ impl event_filter_type_Exclude {
     }
   }
 
-  pub fn value(&self) -> &[jobject] {
+  pub fn value(&self) -> Vec<jobject> {
     unimplemented!();
   }
 }
@@ -32540,7 +32540,7 @@ impl event_filter_type_Include {
     }
   }
 
-  pub fn value(&self) -> &[jobject] {
+  pub fn value(&self) -> Vec<jobject> {
     unimplemented!();
   }
 }
@@ -34480,13 +34480,13 @@ impl event_Order {
     }
   }
 
-  pub fn values() -> &[event_Order] {
+  pub fn values(env: *mut JNIEnv) -> Vec<event_Order> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> event_Order {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/event/Order;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> event_Order {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/Order", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/event/Order;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/Order#valueOf was null") }
-    event_Order { env: self.env, object: ret }
+    event_Order { env: env, object: ret }
   }
 
 }
@@ -34802,1264 +34802,1264 @@ impl event_SpongeEventFactory {
     event_SpongeEventFactory { env: self.env, object: ret }
   }
 
-  pub fn create_grant_achievement_event_target_player(param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: statistic_achievement_Achievement, param_5: event_message_MessageEvent_MessageFormatter, param_6: entity_living_player_Player, param_7: bool) -> event_achievement_GrantAchievementEvent_TargetPlayer {
-    let ret = java_method!(self.env, "createGrantAchievementEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/statistic/achievement/Achievement;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/living/player/Player;Z)Lorg/spongepowered/api/event/achievement/GrantAchievementEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
+  pub fn create_grant_achievement_event_target_player(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: statistic_achievement_Achievement, param_5: event_message_MessageEvent_MessageFormatter, param_6: entity_living_player_Player, param_7: bool) -> event_achievement_GrantAchievementEvent_TargetPlayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGrantAchievementEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/statistic/achievement/Achievement;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/living/player/Player;Z)Lorg/spongepowered/api/event/achievement/GrantAchievementEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGrantAchievementEventTargetPlayer was null") }
-    event_achievement_GrantAchievementEvent_TargetPlayer { env: self.env, object: ret }
+    event_achievement_GrantAchievementEvent_TargetPlayer { env: env, object: ret }
   }
 
-  pub fn create_collide_event_impact(param_1: event_cause_Cause, param_2: world_Location) -> event_action_CollideEvent_Impact {
-    let ret = java_method!(self.env, "createCollideEventImpact", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Location;)Lorg/spongepowered/api/event/action/CollideEvent$Impact;", CallStaticObjectMethodA, param_1);
+  pub fn create_collide_event_impact(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_Location) -> event_action_CollideEvent_Impact {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createCollideEventImpact", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Location;)Lorg/spongepowered/api/event/action/CollideEvent$Impact;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createCollideEventImpact was null") }
-    event_action_CollideEvent_Impact { env: self.env, object: ret }
+    event_action_CollideEvent_Impact { env: env, object: ret }
   }
 
-  pub fn create_fishing_event_hook_entity(param_1: event_cause_Cause, param_2: entity_EntitySnapshot, param_3: entity_projectile_FishHook, param_4: entity_Entity) -> event_action_FishingEvent_HookEntity {
-    let ret = java_method!(self.env, "createFishingEventHookEntity", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/EntitySnapshot;Lorg/spongepowered/api/entity/projectile/FishHook;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/action/FishingEvent$HookEntity;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_fishing_event_hook_entity(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_EntitySnapshot, param_3: entity_projectile_FishHook, param_4: entity_Entity) -> event_action_FishingEvent_HookEntity {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createFishingEventHookEntity", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/EntitySnapshot;Lorg/spongepowered/api/entity/projectile/FishHook;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/action/FishingEvent$HookEntity;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createFishingEventHookEntity was null") }
-    event_action_FishingEvent_HookEntity { env: self.env, object: ret }
+    event_action_FishingEvent_HookEntity { env: env, object: ret }
   }
 
-  pub fn create_fishing_event_start(param_1: event_cause_Cause, param_2: entity_EntitySnapshot, param_3: entity_projectile_FishHook) -> event_action_FishingEvent_Start {
-    let ret = java_method!(self.env, "createFishingEventStart", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/EntitySnapshot;Lorg/spongepowered/api/entity/projectile/FishHook;)Lorg/spongepowered/api/event/action/FishingEvent$Start;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_fishing_event_start(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_EntitySnapshot, param_3: entity_projectile_FishHook) -> event_action_FishingEvent_Start {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createFishingEventStart", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/EntitySnapshot;Lorg/spongepowered/api/entity/projectile/FishHook;)Lorg/spongepowered/api/event/action/FishingEvent$Start;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createFishingEventStart was null") }
-    event_action_FishingEvent_Start { env: self.env, object: ret }
+    event_action_FishingEvent_Start { env: env, object: ret }
   }
 
-  pub fn create_fishing_event_stop(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_EntitySnapshot, param_5: entity_projectile_FishHook, param_6: jobject, param_7: entity_Entity) -> event_action_FishingEvent_Stop {
-    let ret = java_method!(self.env, "createFishingEventStop", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/EntitySnapshot;Lorg/spongepowered/api/entity/projectile/FishHook;Ljava/util/List;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/action/FishingEvent$Stop;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
+  pub fn create_fishing_event_stop(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_EntitySnapshot, param_5: entity_projectile_FishHook, param_6: jobject, param_7: entity_Entity) -> event_action_FishingEvent_Stop {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createFishingEventStop", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/EntitySnapshot;Lorg/spongepowered/api/entity/projectile/FishHook;Ljava/util/List;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/action/FishingEvent$Stop;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createFishingEventStop was null") }
-    event_action_FishingEvent_Stop { env: self.env, object: ret }
+    event_action_FishingEvent_Stop { env: env, object: ret }
   }
 
-  pub fn create_interact_event(param_1: event_cause_Cause, param_2: jobject) -> event_action_InteractEvent {
-    let ret = java_method!(self.env, "createInteractEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;)Lorg/spongepowered/api/event/action/InteractEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_interact_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject) -> event_action_InteractEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;)Lorg/spongepowered/api/event/action/InteractEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractEvent was null") }
-    event_action_InteractEvent { env: self.env, object: ret }
+    event_action_InteractEvent { env: env, object: ret }
   }
 
-  pub fn create_lightning_event_post(param_1: event_cause_Cause) -> event_action_LightningEvent_Post {
-    let ret = java_method!(self.env, "createLightningEventPost", "(Lorg/spongepowered/api/event/cause/Cause;)Lorg/spongepowered/api/event/action/LightningEvent$Post;", CallStaticObjectMethod);
+  pub fn create_lightning_event_post(env: *mut JNIEnv, param_1: event_cause_Cause) -> event_action_LightningEvent_Post {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createLightningEventPost", "(Lorg/spongepowered/api/event/cause/Cause;)Lorg/spongepowered/api/event/action/LightningEvent$Post;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createLightningEventPost was null") }
-    event_action_LightningEvent_Post { env: self.env, object: ret }
+    event_action_LightningEvent_Post { env: env, object: ret }
   }
 
-  pub fn create_lightning_event_pre(param_1: event_cause_Cause) -> event_action_LightningEvent_Pre {
-    let ret = java_method!(self.env, "createLightningEventPre", "(Lorg/spongepowered/api/event/cause/Cause;)Lorg/spongepowered/api/event/action/LightningEvent$Pre;", CallStaticObjectMethod);
+  pub fn create_lightning_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause) -> event_action_LightningEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createLightningEventPre", "(Lorg/spongepowered/api/event/cause/Cause;)Lorg/spongepowered/api/event/action/LightningEvent$Pre;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createLightningEventPre was null") }
-    event_action_LightningEvent_Pre { env: self.env, object: ret }
+    event_action_LightningEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_lightning_event_strike(param_1: event_cause_Cause, param_2: jobject, param_3: world_World, param_4: jobject) -> event_action_LightningEvent_Strike {
-    let ret = java_method!(self.env, "createLightningEventStrike", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/action/LightningEvent$Strike;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_lightning_event_strike(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World, param_4: jobject) -> event_action_LightningEvent_Strike {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createLightningEventStrike", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/action/LightningEvent$Strike;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createLightningEventStrike was null") }
-    event_action_LightningEvent_Strike { env: self.env, object: ret }
+    event_action_LightningEvent_Strike { env: env, object: ret }
   }
 
-  pub fn create_sleeping_event_finish(param_1: event_cause_Cause, param_2: block_BlockSnapshot, param_3: entity_Entity) -> event_action_SleepingEvent_Finish {
-    let ret = java_method!(self.env, "createSleepingEventFinish", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/action/SleepingEvent$Finish;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_sleeping_event_finish(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: block_BlockSnapshot, param_3: entity_Entity) -> event_action_SleepingEvent_Finish {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSleepingEventFinish", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/action/SleepingEvent$Finish;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSleepingEventFinish was null") }
-    event_action_SleepingEvent_Finish { env: self.env, object: ret }
+    event_action_SleepingEvent_Finish { env: env, object: ret }
   }
 
-  pub fn create_sleeping_event_post(param_1: event_cause_Cause, param_2: block_BlockSnapshot, param_3: jobject, param_4: entity_Entity, param_5: bool) -> event_action_SleepingEvent_Post {
-    let ret = java_method!(self.env, "createSleepingEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;Z)Lorg/spongepowered/api/event/action/SleepingEvent$Post;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_sleeping_event_post(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: block_BlockSnapshot, param_3: jobject, param_4: entity_Entity, param_5: bool) -> event_action_SleepingEvent_Post {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSleepingEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;Z)Lorg/spongepowered/api/event/action/SleepingEvent$Post;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSleepingEventPost was null") }
-    event_action_SleepingEvent_Post { env: self.env, object: ret }
+    event_action_SleepingEvent_Post { env: env, object: ret }
   }
 
-  pub fn create_sleeping_event_pre(param_1: event_cause_Cause, param_2: block_BlockSnapshot, param_3: entity_Entity) -> event_action_SleepingEvent_Pre {
-    let ret = java_method!(self.env, "createSleepingEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/action/SleepingEvent$Pre;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_sleeping_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: block_BlockSnapshot, param_3: entity_Entity) -> event_action_SleepingEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSleepingEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/action/SleepingEvent$Pre;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSleepingEventPre was null") }
-    event_action_SleepingEvent_Pre { env: self.env, object: ret }
+    event_action_SleepingEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_sleeping_event_tick(param_1: event_cause_Cause, param_2: block_BlockSnapshot, param_3: entity_Entity) -> event_action_SleepingEvent_Tick {
-    let ret = java_method!(self.env, "createSleepingEventTick", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/action/SleepingEvent$Tick;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_sleeping_event_tick(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: block_BlockSnapshot, param_3: entity_Entity) -> event_action_SleepingEvent_Tick {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSleepingEventTick", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/action/SleepingEvent$Tick;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSleepingEventTick was null") }
-    event_action_SleepingEvent_Tick { env: self.env, object: ret }
+    event_action_SleepingEvent_Tick { env: env, object: ret }
   }
 
-  pub fn create_change_block_event_break(param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Break {
-    let ret = java_method!(self.env, "createChangeBlockEventBreak", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Break;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_block_event_break(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Break {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeBlockEventBreak", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Break;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeBlockEventBreak was null") }
-    event_block_ChangeBlockEvent_Break { env: self.env, object: ret }
+    event_block_ChangeBlockEvent_Break { env: env, object: ret }
   }
 
-  pub fn create_change_block_event_decay(param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Decay {
-    let ret = java_method!(self.env, "createChangeBlockEventDecay", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Decay;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_block_event_decay(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Decay {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeBlockEventDecay", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Decay;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeBlockEventDecay was null") }
-    event_block_ChangeBlockEvent_Decay { env: self.env, object: ret }
+    event_block_ChangeBlockEvent_Decay { env: env, object: ret }
   }
 
-  pub fn create_change_block_event_grow(param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Grow {
-    let ret = java_method!(self.env, "createChangeBlockEventGrow", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Grow;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_block_event_grow(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Grow {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeBlockEventGrow", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Grow;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeBlockEventGrow was null") }
-    event_block_ChangeBlockEvent_Grow { env: self.env, object: ret }
+    event_block_ChangeBlockEvent_Grow { env: env, object: ret }
   }
 
-  pub fn create_change_block_event_modify(param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Modify {
-    let ret = java_method!(self.env, "createChangeBlockEventModify", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Modify;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_block_event_modify(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Modify {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeBlockEventModify", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Modify;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeBlockEventModify was null") }
-    event_block_ChangeBlockEvent_Modify { env: self.env, object: ret }
+    event_block_ChangeBlockEvent_Modify { env: env, object: ret }
   }
 
-  pub fn create_change_block_event_place(param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Place {
-    let ret = java_method!(self.env, "createChangeBlockEventPlace", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Place;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_block_event_place(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Place {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeBlockEventPlace", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Place;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeBlockEventPlace was null") }
-    event_block_ChangeBlockEvent_Place { env: self.env, object: ret }
+    event_block_ChangeBlockEvent_Place { env: env, object: ret }
   }
 
-  pub fn create_change_block_event_post(param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Post {
-    let ret = java_method!(self.env, "createChangeBlockEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Post;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_block_event_post(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World, param_3: jobject) -> event_block_ChangeBlockEvent_Post {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeBlockEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Post;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeBlockEventPost was null") }
-    event_block_ChangeBlockEvent_Post { env: self.env, object: ret }
+    event_block_ChangeBlockEvent_Post { env: env, object: ret }
   }
 
-  pub fn create_change_block_event_pre(param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_block_ChangeBlockEvent_Pre {
-    let ret = java_method!(self.env, "createChangeBlockEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Pre;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_block_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_block_ChangeBlockEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeBlockEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/block/ChangeBlockEvent$Pre;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeBlockEventPre was null") }
-    event_block_ChangeBlockEvent_Pre { env: self.env, object: ret }
+    event_block_ChangeBlockEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_collide_block_event(param_1: event_cause_Cause, param_2: block_BlockState, param_3: world_Location, param_4: util_Direction) -> event_block_CollideBlockEvent {
-    let ret = java_method!(self.env, "createCollideBlockEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockState;Lorg/spongepowered/api/world/Location;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/CollideBlockEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_collide_block_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: block_BlockState, param_3: world_Location, param_4: util_Direction) -> event_block_CollideBlockEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createCollideBlockEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockState;Lorg/spongepowered/api/world/Location;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/CollideBlockEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createCollideBlockEvent was null") }
-    event_block_CollideBlockEvent { env: self.env, object: ret }
+    event_block_CollideBlockEvent { env: env, object: ret }
   }
 
-  pub fn create_collide_block_event_impact(param_1: event_cause_Cause, param_2: world_Location, param_3: block_BlockState, param_4: world_Location, param_5: util_Direction) -> event_block_CollideBlockEvent_Impact {
-    let ret = java_method!(self.env, "createCollideBlockEventImpact", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Location;Lorg/spongepowered/api/block/BlockState;Lorg/spongepowered/api/world/Location;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/CollideBlockEvent$Impact;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_collide_block_event_impact(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_Location, param_3: block_BlockState, param_4: world_Location, param_5: util_Direction) -> event_block_CollideBlockEvent_Impact {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createCollideBlockEventImpact", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Location;Lorg/spongepowered/api/block/BlockState;Lorg/spongepowered/api/world/Location;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/CollideBlockEvent$Impact;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createCollideBlockEventImpact was null") }
-    event_block_CollideBlockEvent_Impact { env: self.env, object: ret }
+    event_block_CollideBlockEvent_Impact { env: env, object: ret }
   }
 
-  pub fn create_interact_block_event_primary_main_hand(param_1: event_cause_Cause, param_2: jobject, param_3: block_BlockSnapshot, param_4: util_Direction) -> event_block_InteractBlockEvent_Primary_MainHand {
-    let ret = java_method!(self.env, "createInteractBlockEventPrimaryMainHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/InteractBlockEvent$Primary$MainHand;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_interact_block_event_primary_main_hand(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: block_BlockSnapshot, param_4: util_Direction) -> event_block_InteractBlockEvent_Primary_MainHand {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractBlockEventPrimaryMainHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/InteractBlockEvent$Primary$MainHand;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractBlockEventPrimaryMainHand was null") }
-    event_block_InteractBlockEvent_Primary_MainHand { env: self.env, object: ret }
+    event_block_InteractBlockEvent_Primary_MainHand { env: env, object: ret }
   }
 
-  pub fn create_interact_block_event_primary_off_hand(param_1: event_cause_Cause, param_2: jobject, param_3: block_BlockSnapshot, param_4: util_Direction) -> event_block_InteractBlockEvent_Primary_OffHand {
-    let ret = java_method!(self.env, "createInteractBlockEventPrimaryOffHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/InteractBlockEvent$Primary$OffHand;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_interact_block_event_primary_off_hand(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: block_BlockSnapshot, param_4: util_Direction) -> event_block_InteractBlockEvent_Primary_OffHand {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractBlockEventPrimaryOffHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/InteractBlockEvent$Primary$OffHand;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractBlockEventPrimaryOffHand was null") }
-    event_block_InteractBlockEvent_Primary_OffHand { env: self.env, object: ret }
+    event_block_InteractBlockEvent_Primary_OffHand { env: env, object: ret }
   }
 
-  pub fn create_interact_block_event_secondary_main_hand(param_1: event_cause_Cause, param_2: util_Tristate, param_3: util_Tristate, param_4: util_Tristate, param_5: util_Tristate, param_6: jobject, param_7: block_BlockSnapshot, param_8: util_Direction) -> event_block_InteractBlockEvent_Secondary_MainHand {
-    let ret = java_method!(self.env, "createInteractBlockEventSecondaryMainHand", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Ljava/util/Optional;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/InteractBlockEvent$Secondary$MainHand;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7);
+  pub fn create_interact_block_event_secondary_main_hand(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: util_Tristate, param_3: util_Tristate, param_4: util_Tristate, param_5: util_Tristate, param_6: jobject, param_7: block_BlockSnapshot, param_8: util_Direction) -> event_block_InteractBlockEvent_Secondary_MainHand {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractBlockEventSecondaryMainHand", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Ljava/util/Optional;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/InteractBlockEvent$Secondary$MainHand;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7, param_8);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractBlockEventSecondaryMainHand was null") }
-    event_block_InteractBlockEvent_Secondary_MainHand { env: self.env, object: ret }
+    event_block_InteractBlockEvent_Secondary_MainHand { env: env, object: ret }
   }
 
-  pub fn create_interact_block_event_secondary_off_hand(param_1: event_cause_Cause, param_2: util_Tristate, param_3: util_Tristate, param_4: util_Tristate, param_5: util_Tristate, param_6: jobject, param_7: block_BlockSnapshot, param_8: util_Direction) -> event_block_InteractBlockEvent_Secondary_OffHand {
-    let ret = java_method!(self.env, "createInteractBlockEventSecondaryOffHand", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Ljava/util/Optional;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/InteractBlockEvent$Secondary$OffHand;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7);
+  pub fn create_interact_block_event_secondary_off_hand(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: util_Tristate, param_3: util_Tristate, param_4: util_Tristate, param_5: util_Tristate, param_6: jobject, param_7: block_BlockSnapshot, param_8: util_Direction) -> event_block_InteractBlockEvent_Secondary_OffHand {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractBlockEventSecondaryOffHand", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Lorg/spongepowered/api/util/Tristate;Ljava/util/Optional;Lorg/spongepowered/api/block/BlockSnapshot;Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/event/block/InteractBlockEvent$Secondary$OffHand;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7, param_8);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractBlockEventSecondaryOffHand was null") }
-    event_block_InteractBlockEvent_Secondary_OffHand { env: self.env, object: ret }
+    event_block_InteractBlockEvent_Secondary_OffHand { env: env, object: ret }
   }
 
-  pub fn create_notify_neighbor_block_event(param_1: event_cause_Cause, param_2: jobject, param_3: jobject) -> event_block_NotifyNeighborBlockEvent {
-    let ret = java_method!(self.env, "createNotifyNeighborBlockEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Map;Ljava/util/Map;)Lorg/spongepowered/api/event/block/NotifyNeighborBlockEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_notify_neighbor_block_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject) -> event_block_NotifyNeighborBlockEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createNotifyNeighborBlockEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Map;Ljava/util/Map;)Lorg/spongepowered/api/event/block/NotifyNeighborBlockEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createNotifyNeighborBlockEvent was null") }
-    event_block_NotifyNeighborBlockEvent { env: self.env, object: ret }
+    event_block_NotifyNeighborBlockEvent { env: env, object: ret }
   }
 
-  pub fn create_target_block_event(param_1: event_cause_Cause, param_2: block_BlockSnapshot) -> event_block_TargetBlockEvent {
-    let ret = java_method!(self.env, "createTargetBlockEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;)Lorg/spongepowered/api/event/block/TargetBlockEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_block_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: block_BlockSnapshot) -> event_block_TargetBlockEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetBlockEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;)Lorg/spongepowered/api/event/block/TargetBlockEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetBlockEvent was null") }
-    event_block_TargetBlockEvent { env: self.env, object: ret }
+    event_block_TargetBlockEvent { env: env, object: ret }
   }
 
-  pub fn create_tick_block_event_random(param_1: event_cause_Cause, param_2: block_BlockSnapshot) -> event_block_TickBlockEvent_Random {
-    let ret = java_method!(self.env, "createTickBlockEventRandom", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;)Lorg/spongepowered/api/event/block/TickBlockEvent$Random;", CallStaticObjectMethodA, param_1);
+  pub fn create_tick_block_event_random(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: block_BlockSnapshot) -> event_block_TickBlockEvent_Random {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTickBlockEventRandom", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;)Lorg/spongepowered/api/event/block/TickBlockEvent$Random;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTickBlockEventRandom was null") }
-    event_block_TickBlockEvent_Random { env: self.env, object: ret }
+    event_block_TickBlockEvent_Random { env: env, object: ret }
   }
 
-  pub fn create_tick_block_event_scheduled(param_1: event_cause_Cause, param_2: block_BlockSnapshot) -> event_block_TickBlockEvent_Scheduled {
-    let ret = java_method!(self.env, "createTickBlockEventScheduled", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;)Lorg/spongepowered/api/event/block/TickBlockEvent$Scheduled;", CallStaticObjectMethodA, param_1);
+  pub fn create_tick_block_event_scheduled(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: block_BlockSnapshot) -> event_block_TickBlockEvent_Scheduled {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTickBlockEventScheduled", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/BlockSnapshot;)Lorg/spongepowered/api/event/block/TickBlockEvent$Scheduled;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTickBlockEventScheduled was null") }
-    event_block_TickBlockEvent_Scheduled { env: self.env, object: ret }
+    event_block_TickBlockEvent_Scheduled { env: env, object: ret }
   }
 
-  pub fn create_brewing_event_finish(param_1: event_cause_Cause, param_2: jobject, param_3: item_inventory_ItemStackSnapshot, param_4: block_tileentity_carrier_BrewingStand) -> event_block_tileentity_BrewingEvent_Finish {
-    let ret = java_method!(self.env, "createBrewingEventFinish", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/BrewingStand;)Lorg/spongepowered/api/event/block/tileentity/BrewingEvent$Finish;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_brewing_event_finish(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: item_inventory_ItemStackSnapshot, param_4: block_tileentity_carrier_BrewingStand) -> event_block_tileentity_BrewingEvent_Finish {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createBrewingEventFinish", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/BrewingStand;)Lorg/spongepowered/api/event/block/tileentity/BrewingEvent$Finish;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createBrewingEventFinish was null") }
-    event_block_tileentity_BrewingEvent_Finish { env: self.env, object: ret }
+    event_block_tileentity_BrewingEvent_Finish { env: env, object: ret }
   }
 
-  pub fn create_brewing_event_interrupt(param_1: event_cause_Cause, param_2: jobject, param_3: item_inventory_ItemStackSnapshot, param_4: block_tileentity_carrier_BrewingStand) -> event_block_tileentity_BrewingEvent_Interrupt {
-    let ret = java_method!(self.env, "createBrewingEventInterrupt", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/BrewingStand;)Lorg/spongepowered/api/event/block/tileentity/BrewingEvent$Interrupt;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_brewing_event_interrupt(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: item_inventory_ItemStackSnapshot, param_4: block_tileentity_carrier_BrewingStand) -> event_block_tileentity_BrewingEvent_Interrupt {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createBrewingEventInterrupt", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/BrewingStand;)Lorg/spongepowered/api/event/block/tileentity/BrewingEvent$Interrupt;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createBrewingEventInterrupt was null") }
-    event_block_tileentity_BrewingEvent_Interrupt { env: self.env, object: ret }
+    event_block_tileentity_BrewingEvent_Interrupt { env: env, object: ret }
   }
 
-  pub fn create_brewing_event_start(param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: block_tileentity_carrier_BrewingStand, param_4: jobject) -> event_block_tileentity_BrewingEvent_Start {
-    let ret = java_method!(self.env, "createBrewingEventStart", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/BrewingStand;Ljava/util/List;)Lorg/spongepowered/api/event/block/tileentity/BrewingEvent$Start;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_brewing_event_start(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: block_tileentity_carrier_BrewingStand, param_4: jobject) -> event_block_tileentity_BrewingEvent_Start {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createBrewingEventStart", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/BrewingStand;Ljava/util/List;)Lorg/spongepowered/api/event/block/tileentity/BrewingEvent$Start;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createBrewingEventStart was null") }
-    event_block_tileentity_BrewingEvent_Start { env: self.env, object: ret }
+    event_block_tileentity_BrewingEvent_Start { env: env, object: ret }
   }
 
-  pub fn create_brewing_event_tick(param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: block_tileentity_carrier_BrewingStand, param_4: jobject) -> event_block_tileentity_BrewingEvent_Tick {
-    let ret = java_method!(self.env, "createBrewingEventTick", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/BrewingStand;Ljava/util/List;)Lorg/spongepowered/api/event/block/tileentity/BrewingEvent$Tick;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_brewing_event_tick(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: block_tileentity_carrier_BrewingStand, param_4: jobject) -> event_block_tileentity_BrewingEvent_Tick {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createBrewingEventTick", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/BrewingStand;Ljava/util/List;)Lorg/spongepowered/api/event/block/tileentity/BrewingEvent$Tick;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createBrewingEventTick was null") }
-    event_block_tileentity_BrewingEvent_Tick { env: self.env, object: ret }
+    event_block_tileentity_BrewingEvent_Tick { env: env, object: ret }
   }
 
-  pub fn create_change_sign_event(param_1: event_cause_Cause, param_2: data_manipulator_immutable_tileentity_ImmutableSignData, param_3: data_manipulator_mutable_tileentity_SignData, param_4: block_tileentity_Sign) -> event_block_tileentity_ChangeSignEvent {
-    let ret = java_method!(self.env, "createChangeSignEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/manipulator/immutable/tileentity/ImmutableSignData;Lorg/spongepowered/api/data/manipulator/mutable/tileentity/SignData;Lorg/spongepowered/api/block/tileentity/Sign;)Lorg/spongepowered/api/event/block/tileentity/ChangeSignEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_change_sign_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_manipulator_immutable_tileentity_ImmutableSignData, param_3: data_manipulator_mutable_tileentity_SignData, param_4: block_tileentity_Sign) -> event_block_tileentity_ChangeSignEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeSignEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/manipulator/immutable/tileentity/ImmutableSignData;Lorg/spongepowered/api/data/manipulator/mutable/tileentity/SignData;Lorg/spongepowered/api/block/tileentity/Sign;)Lorg/spongepowered/api/event/block/tileentity/ChangeSignEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeSignEvent was null") }
-    event_block_tileentity_ChangeSignEvent { env: self.env, object: ret }
+    event_block_tileentity_ChangeSignEvent { env: env, object: ret }
   }
 
-  pub fn create_smelt_event_consume_fuel(param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: block_tileentity_carrier_Furnace, param_4: jobject) -> event_block_tileentity_SmeltEvent_ConsumeFuel {
-    let ret = java_method!(self.env, "createSmeltEventConsumeFuel", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/Furnace;Ljava/util/List;)Lorg/spongepowered/api/event/block/tileentity/SmeltEvent$ConsumeFuel;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_smelt_event_consume_fuel(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: block_tileentity_carrier_Furnace, param_4: jobject) -> event_block_tileentity_SmeltEvent_ConsumeFuel {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSmeltEventConsumeFuel", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/Furnace;Ljava/util/List;)Lorg/spongepowered/api/event/block/tileentity/SmeltEvent$ConsumeFuel;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSmeltEventConsumeFuel was null") }
-    event_block_tileentity_SmeltEvent_ConsumeFuel { env: self.env, object: ret }
+    event_block_tileentity_SmeltEvent_ConsumeFuel { env: env, object: ret }
   }
 
-  pub fn create_smelt_event_finish(param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: jobject, param_4: block_tileentity_carrier_Furnace) -> event_block_tileentity_SmeltEvent_Finish {
-    let ret = java_method!(self.env, "createSmeltEventFinish", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Ljava/util/List;Lorg/spongepowered/api/block/tileentity/carrier/Furnace;)Lorg/spongepowered/api/event/block/tileentity/SmeltEvent$Finish;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_smelt_event_finish(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: jobject, param_4: block_tileentity_carrier_Furnace) -> event_block_tileentity_SmeltEvent_Finish {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSmeltEventFinish", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Ljava/util/List;Lorg/spongepowered/api/block/tileentity/carrier/Furnace;)Lorg/spongepowered/api/event/block/tileentity/SmeltEvent$Finish;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSmeltEventFinish was null") }
-    event_block_tileentity_SmeltEvent_Finish { env: self.env, object: ret }
+    event_block_tileentity_SmeltEvent_Finish { env: env, object: ret }
   }
 
-  pub fn create_smelt_event_interrupt(param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: jobject, param_4: block_tileentity_carrier_Furnace) -> event_block_tileentity_SmeltEvent_Interrupt {
-    let ret = java_method!(self.env, "createSmeltEventInterrupt", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Ljava/util/List;Lorg/spongepowered/api/block/tileentity/carrier/Furnace;)Lorg/spongepowered/api/event/block/tileentity/SmeltEvent$Interrupt;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_smelt_event_interrupt(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: jobject, param_4: block_tileentity_carrier_Furnace) -> event_block_tileentity_SmeltEvent_Interrupt {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSmeltEventInterrupt", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Ljava/util/List;Lorg/spongepowered/api/block/tileentity/carrier/Furnace;)Lorg/spongepowered/api/event/block/tileentity/SmeltEvent$Interrupt;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSmeltEventInterrupt was null") }
-    event_block_tileentity_SmeltEvent_Interrupt { env: self.env, object: ret }
+    event_block_tileentity_SmeltEvent_Interrupt { env: env, object: ret }
   }
 
-  pub fn create_smelt_event_start(param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: block_tileentity_carrier_Furnace, param_4: jobject) -> event_block_tileentity_SmeltEvent_Start {
-    let ret = java_method!(self.env, "createSmeltEventStart", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/Furnace;Ljava/util/List;)Lorg/spongepowered/api/event/block/tileentity/SmeltEvent$Start;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_smelt_event_start(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: block_tileentity_carrier_Furnace, param_4: jobject) -> event_block_tileentity_SmeltEvent_Start {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSmeltEventStart", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/Furnace;Ljava/util/List;)Lorg/spongepowered/api/event/block/tileentity/SmeltEvent$Start;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSmeltEventStart was null") }
-    event_block_tileentity_SmeltEvent_Start { env: self.env, object: ret }
+    event_block_tileentity_SmeltEvent_Start { env: env, object: ret }
   }
 
-  pub fn create_smelt_event_tick(param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: block_tileentity_carrier_Furnace, param_4: jobject) -> event_block_tileentity_SmeltEvent_Tick {
-    let ret = java_method!(self.env, "createSmeltEventTick", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/Furnace;Ljava/util/List;)Lorg/spongepowered/api/event/block/tileentity/SmeltEvent$Tick;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_smelt_event_tick(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_ItemStackSnapshot, param_3: block_tileentity_carrier_Furnace, param_4: jobject) -> event_block_tileentity_SmeltEvent_Tick {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSmeltEventTick", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/block/tileentity/carrier/Furnace;Ljava/util/List;)Lorg/spongepowered/api/event/block/tileentity/SmeltEvent$Tick;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSmeltEventTick was null") }
-    event_block_tileentity_SmeltEvent_Tick { env: self.env, object: ret }
+    event_block_tileentity_SmeltEvent_Tick { env: env, object: ret }
   }
 
-  pub fn create_target_tile_entity_event(param_1: event_cause_Cause, param_2: block_tileentity_TileEntity) -> event_block_tileentity_TargetTileEntityEvent {
-    let ret = java_method!(self.env, "createTargetTileEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/tileentity/TileEntity;)Lorg/spongepowered/api/event/block/tileentity/TargetTileEntityEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_tile_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: block_tileentity_TileEntity) -> event_block_tileentity_TargetTileEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetTileEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/block/tileentity/TileEntity;)Lorg/spongepowered/api/event/block/tileentity/TargetTileEntityEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetTileEntityEvent was null") }
-    event_block_tileentity_TargetTileEntityEvent { env: self.env, object: ret }
+    event_block_tileentity_TargetTileEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_send_command_event(param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: command_CommandResult) -> event_command_SendCommandEvent {
-    let ret = java_method!(self.env, "createSendCommandEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/lang/String;Ljava/lang/String;Lorg/spongepowered/api/command/CommandResult;)Lorg/spongepowered/api/event/command/SendCommandEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_send_command_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: command_CommandResult) -> event_command_SendCommandEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSendCommandEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/lang/String;Ljava/lang/String;Lorg/spongepowered/api/command/CommandResult;)Lorg/spongepowered/api/event/command/SendCommandEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSendCommandEvent was null") }
-    event_command_SendCommandEvent { env: self.env, object: ret }
+    event_command_SendCommandEvent { env: env, object: ret }
   }
 
-  pub fn create_tab_complete_event_chat(param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: jobject) -> event_command_TabCompleteEvent_Chat {
-    let ret = java_method!(self.env, "createTabCompleteEventChat", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Ljava/util/List;Ljava/lang/String;)Lorg/spongepowered/api/event/command/TabCompleteEvent$Chat;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_tab_complete_event_chat(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: jobject) -> event_command_TabCompleteEvent_Chat {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTabCompleteEventChat", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Ljava/util/List;Ljava/lang/String;)Lorg/spongepowered/api/event/command/TabCompleteEvent$Chat;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTabCompleteEventChat was null") }
-    event_command_TabCompleteEvent_Chat { env: self.env, object: ret }
+    event_command_TabCompleteEvent_Chat { env: env, object: ret }
   }
 
-  pub fn create_tab_complete_event_command(param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: jobject, param_5: jobject, param_6: jobject) -> event_command_TabCompleteEvent_Command {
-    let ret = java_method!(self.env, "createTabCompleteEventCommand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/spongepowered/api/event/command/TabCompleteEvent$Command;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_tab_complete_event_command(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: jobject, param_5: jobject, param_6: jobject) -> event_command_TabCompleteEvent_Command {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTabCompleteEventCommand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/spongepowered/api/event/command/TabCompleteEvent$Command;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTabCompleteEventCommand was null") }
-    event_command_TabCompleteEvent_Command { env: self.env, object: ret }
+    event_command_TabCompleteEvent_Command { env: env, object: ret }
   }
 
-  pub fn create_change_data_holder_event_value_change(param_1: event_cause_Cause, param_2: data_DataTransactionResult, param_3: data_DataHolder) -> event_data_ChangeDataHolderEvent_ValueChange {
-    let ret = java_method!(self.env, "createChangeDataHolderEventValueChange", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/DataTransactionResult;Lorg/spongepowered/api/data/DataHolder;)Lorg/spongepowered/api/event/data/ChangeDataHolderEvent$ValueChange;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_data_holder_event_value_change(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_DataTransactionResult, param_3: data_DataHolder) -> event_data_ChangeDataHolderEvent_ValueChange {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeDataHolderEventValueChange", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/DataTransactionResult;Lorg/spongepowered/api/data/DataHolder;)Lorg/spongepowered/api/event/data/ChangeDataHolderEvent$ValueChange;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeDataHolderEventValueChange was null") }
-    event_data_ChangeDataHolderEvent_ValueChange { env: self.env, object: ret }
+    event_data_ChangeDataHolderEvent_ValueChange { env: env, object: ret }
   }
 
-  pub fn create_economy_transaction_event(param_1: event_cause_Cause, param_2: service_economy_transaction_TransactionResult) -> event_economy_EconomyTransactionEvent {
-    let ret = java_method!(self.env, "createEconomyTransactionEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/service/economy/transaction/TransactionResult;)Lorg/spongepowered/api/event/economy/EconomyTransactionEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_economy_transaction_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: service_economy_transaction_TransactionResult) -> event_economy_EconomyTransactionEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createEconomyTransactionEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/service/economy/transaction/TransactionResult;)Lorg/spongepowered/api/event/economy/EconomyTransactionEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createEconomyTransactionEvent was null") }
-    event_economy_EconomyTransactionEvent { env: self.env, object: ret }
+    event_economy_EconomyTransactionEvent { env: env, object: ret }
   }
 
-  pub fn create_affect_entity_event(param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_AffectEntityEvent {
-    let ret = java_method!(self.env, "createAffectEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/AffectEntityEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_affect_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_AffectEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createAffectEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/AffectEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createAffectEntityEvent was null") }
-    event_entity_AffectEntityEvent { env: self.env, object: ret }
+    event_entity_AffectEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_attack_entity_event(param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity, param_4: i32, param_5: f64) -> event_entity_AttackEntityEvent {
-    let ret = java_method!(self.env, "createAttackEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/entity/Entity;ID)Lorg/spongepowered/api/event/entity/AttackEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_attack_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity, param_4: i32, param_5: f64) -> event_entity_AttackEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createAttackEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/entity/Entity;ID)Lorg/spongepowered/api/event/entity/AttackEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createAttackEntityEvent was null") }
-    event_entity_AttackEntityEvent { env: self.env, object: ret }
+    event_entity_AttackEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_breed_entity_event_breed(param_1: event_cause_Cause, param_2: jobject, param_3: entity_living_Ageable, param_4: entity_Entity) -> event_entity_BreedEntityEvent_Breed {
-    let ret = java_method!(self.env, "createBreedEntityEventBreed", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/entity/living/Ageable;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/BreedEntityEvent$Breed;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_breed_entity_event_breed(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: entity_living_Ageable, param_4: entity_Entity) -> event_entity_BreedEntityEvent_Breed {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createBreedEntityEventBreed", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/entity/living/Ageable;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/BreedEntityEvent$Breed;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createBreedEntityEventBreed was null") }
-    event_entity_BreedEntityEvent_Breed { env: self.env, object: ret }
+    event_entity_BreedEntityEvent_Breed { env: env, object: ret }
   }
 
-  pub fn create_breed_entity_event_find_mate(param_1: event_cause_Cause, param_2: event_TristateResult_Result, param_3: event_TristateResult_Result, param_4: jobject, param_5: entity_Entity, param_6: bool) -> event_entity_BreedEntityEvent_FindMate {
-    let ret = java_method!(self.env, "createBreedEntityEventFindMate", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/event/TristateResult$Result;Lorg/spongepowered/api/event/TristateResult$Result;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;Z)Lorg/spongepowered/api/event/entity/BreedEntityEvent$FindMate;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_breed_entity_event_find_mate(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: event_TristateResult_Result, param_3: event_TristateResult_Result, param_4: jobject, param_5: entity_Entity, param_6: bool) -> event_entity_BreedEntityEvent_FindMate {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createBreedEntityEventFindMate", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/event/TristateResult$Result;Lorg/spongepowered/api/event/TristateResult$Result;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;Z)Lorg/spongepowered/api/event/entity/BreedEntityEvent$FindMate;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createBreedEntityEventFindMate was null") }
-    event_entity_BreedEntityEvent_FindMate { env: self.env, object: ret }
+    event_entity_BreedEntityEvent_FindMate { env: env, object: ret }
   }
 
-  pub fn create_change_entity_equipment_event(param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: entity_Entity, param_5: item_inventory_Slot) -> event_entity_ChangeEntityEquipmentEvent {
-    let ret = java_method!(self.env, "createChangeEntityEquipmentEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;Lorg/spongepowered/api/item/inventory/Slot;)Lorg/spongepowered/api/event/entity/ChangeEntityEquipmentEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_change_entity_equipment_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: entity_Entity, param_5: item_inventory_Slot) -> event_entity_ChangeEntityEquipmentEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeEntityEquipmentEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;Lorg/spongepowered/api/item/inventory/Slot;)Lorg/spongepowered/api/event/entity/ChangeEntityEquipmentEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeEntityEquipmentEvent was null") }
-    event_entity_ChangeEntityEquipmentEvent { env: self.env, object: ret }
+    event_entity_ChangeEntityEquipmentEvent { env: env, object: ret }
   }
 
-  pub fn create_change_entity_equipment_event_target_humanoid(param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: entity_living_Humanoid, param_5: item_inventory_Slot) -> event_entity_ChangeEntityEquipmentEvent_TargetHumanoid {
-    let ret = java_method!(self.env, "createChangeEntityEquipmentEventTargetHumanoid", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Ljava/util/Optional;Lorg/spongepowered/api/entity/living/Humanoid;Lorg/spongepowered/api/item/inventory/Slot;)Lorg/spongepowered/api/event/entity/ChangeEntityEquipmentEvent$TargetHumanoid;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_change_entity_equipment_event_target_humanoid(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: entity_living_Humanoid, param_5: item_inventory_Slot) -> event_entity_ChangeEntityEquipmentEvent_TargetHumanoid {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeEntityEquipmentEventTargetHumanoid", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Ljava/util/Optional;Lorg/spongepowered/api/entity/living/Humanoid;Lorg/spongepowered/api/item/inventory/Slot;)Lorg/spongepowered/api/event/entity/ChangeEntityEquipmentEvent$TargetHumanoid;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeEntityEquipmentEventTargetHumanoid was null") }
-    event_entity_ChangeEntityEquipmentEvent_TargetHumanoid { env: self.env, object: ret }
+    event_entity_ChangeEntityEquipmentEvent_TargetHumanoid { env: env, object: ret }
   }
 
-  pub fn create_change_entity_equipment_event_target_living(param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: entity_living_Living, param_5: item_inventory_Slot) -> event_entity_ChangeEntityEquipmentEvent_TargetLiving {
-    let ret = java_method!(self.env, "createChangeEntityEquipmentEventTargetLiving", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Ljava/util/Optional;Lorg/spongepowered/api/entity/living/Living;Lorg/spongepowered/api/item/inventory/Slot;)Lorg/spongepowered/api/event/entity/ChangeEntityEquipmentEvent$TargetLiving;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_change_entity_equipment_event_target_living(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: entity_living_Living, param_5: item_inventory_Slot) -> event_entity_ChangeEntityEquipmentEvent_TargetLiving {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeEntityEquipmentEventTargetLiving", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Ljava/util/Optional;Lorg/spongepowered/api/entity/living/Living;Lorg/spongepowered/api/item/inventory/Slot;)Lorg/spongepowered/api/event/entity/ChangeEntityEquipmentEvent$TargetLiving;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeEntityEquipmentEventTargetLiving was null") }
-    event_entity_ChangeEntityEquipmentEvent_TargetLiving { env: self.env, object: ret }
+    event_entity_ChangeEntityEquipmentEvent_TargetLiving { env: env, object: ret }
   }
 
-  pub fn create_change_entity_equipment_event_target_player(param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: entity_living_player_Player, param_5: item_inventory_Slot) -> event_entity_ChangeEntityEquipmentEvent_TargetPlayer {
-    let ret = java_method!(self.env, "createChangeEntityEquipmentEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Ljava/util/Optional;Lorg/spongepowered/api/entity/living/player/Player;Lorg/spongepowered/api/item/inventory/Slot;)Lorg/spongepowered/api/event/entity/ChangeEntityEquipmentEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_change_entity_equipment_event_target_player(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: entity_living_player_Player, param_5: item_inventory_Slot) -> event_entity_ChangeEntityEquipmentEvent_TargetPlayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeEntityEquipmentEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Ljava/util/Optional;Lorg/spongepowered/api/entity/living/player/Player;Lorg/spongepowered/api/item/inventory/Slot;)Lorg/spongepowered/api/event/entity/ChangeEntityEquipmentEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeEntityEquipmentEventTargetPlayer was null") }
-    event_entity_ChangeEntityEquipmentEvent_TargetPlayer { env: self.env, object: ret }
+    event_entity_ChangeEntityEquipmentEvent_TargetPlayer { env: env, object: ret }
   }
 
-  pub fn create_change_entity_experience_event(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_Entity) -> event_entity_ChangeEntityExperienceEvent {
-    let ret = java_method!(self.env, "createChangeEntityExperienceEvent", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/ChangeEntityExperienceEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_change_entity_experience_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_Entity) -> event_entity_ChangeEntityExperienceEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeEntityExperienceEvent", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/ChangeEntityExperienceEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeEntityExperienceEvent was null") }
-    event_entity_ChangeEntityExperienceEvent { env: self.env, object: ret }
+    event_entity_ChangeEntityExperienceEvent { env: env, object: ret }
   }
 
-  pub fn create_change_entity_potion_effect_event_expire(param_1: event_cause_Cause, param_2: jobject, param_3: effect_potion_PotionEffect, param_4: entity_Entity) -> event_entity_ChangeEntityPotionEffectEvent_Expire {
-    let ret = java_method!(self.env, "createChangeEntityPotionEffectEventExpire", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/effect/potion/PotionEffect;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/ChangeEntityPotionEffectEvent$Expire;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_change_entity_potion_effect_event_expire(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: effect_potion_PotionEffect, param_4: entity_Entity) -> event_entity_ChangeEntityPotionEffectEvent_Expire {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeEntityPotionEffectEventExpire", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/effect/potion/PotionEffect;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/ChangeEntityPotionEffectEvent$Expire;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeEntityPotionEffectEventExpire was null") }
-    event_entity_ChangeEntityPotionEffectEvent_Expire { env: self.env, object: ret }
+    event_entity_ChangeEntityPotionEffectEvent_Expire { env: env, object: ret }
   }
 
-  pub fn create_change_entity_potion_effect_event_gain(param_1: event_cause_Cause, param_2: jobject, param_3: effect_potion_PotionEffect, param_4: entity_Entity) -> event_entity_ChangeEntityPotionEffectEvent_Gain {
-    let ret = java_method!(self.env, "createChangeEntityPotionEffectEventGain", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/effect/potion/PotionEffect;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/ChangeEntityPotionEffectEvent$Gain;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_change_entity_potion_effect_event_gain(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: effect_potion_PotionEffect, param_4: entity_Entity) -> event_entity_ChangeEntityPotionEffectEvent_Gain {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeEntityPotionEffectEventGain", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/effect/potion/PotionEffect;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/ChangeEntityPotionEffectEvent$Gain;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeEntityPotionEffectEventGain was null") }
-    event_entity_ChangeEntityPotionEffectEvent_Gain { env: self.env, object: ret }
+    event_entity_ChangeEntityPotionEffectEvent_Gain { env: env, object: ret }
   }
 
-  pub fn create_change_entity_potion_effect_event_remove(param_1: event_cause_Cause, param_2: jobject, param_3: effect_potion_PotionEffect, param_4: entity_Entity) -> event_entity_ChangeEntityPotionEffectEvent_Remove {
-    let ret = java_method!(self.env, "createChangeEntityPotionEffectEventRemove", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/effect/potion/PotionEffect;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/ChangeEntityPotionEffectEvent$Remove;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_change_entity_potion_effect_event_remove(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: effect_potion_PotionEffect, param_4: entity_Entity) -> event_entity_ChangeEntityPotionEffectEvent_Remove {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeEntityPotionEffectEventRemove", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/effect/potion/PotionEffect;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/ChangeEntityPotionEffectEvent$Remove;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeEntityPotionEffectEventRemove was null") }
-    event_entity_ChangeEntityPotionEffectEvent_Remove { env: self.env, object: ret }
+    event_entity_ChangeEntityPotionEffectEvent_Remove { env: env, object: ret }
   }
 
-  pub fn create_collide_entity_event(param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_CollideEntityEvent {
-    let ret = java_method!(self.env, "createCollideEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/CollideEntityEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_collide_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_CollideEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createCollideEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/CollideEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createCollideEntityEvent was null") }
-    event_entity_CollideEntityEvent { env: self.env, object: ret }
+    event_entity_CollideEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_collide_entity_event_impact(param_1: event_cause_Cause, param_2: jobject, param_3: world_Location, param_4: world_World) -> event_entity_CollideEntityEvent_Impact {
-    let ret = java_method!(self.env, "createCollideEntityEventImpact", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/Location;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/CollideEntityEvent$Impact;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_collide_entity_event_impact(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_Location, param_4: world_World) -> event_entity_CollideEntityEvent_Impact {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createCollideEntityEventImpact", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/Location;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/CollideEntityEvent$Impact;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createCollideEntityEventImpact was null") }
-    event_entity_CollideEntityEvent_Impact { env: self.env, object: ret }
+    event_entity_CollideEntityEvent_Impact { env: env, object: ret }
   }
 
-  pub fn create_construct_entity_event_post(param_1: event_cause_Cause, param_2: entity_Entity, param_3: entity_EntityType, param_4: entity_Transform) -> event_entity_ConstructEntityEvent_Post {
-    let ret = java_method!(self.env, "createConstructEntityEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;Lorg/spongepowered/api/entity/EntityType;Lorg/spongepowered/api/entity/Transform;)Lorg/spongepowered/api/event/entity/ConstructEntityEvent$Post;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_construct_entity_event_post(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Entity, param_3: entity_EntityType, param_4: entity_Transform) -> event_entity_ConstructEntityEvent_Post {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createConstructEntityEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;Lorg/spongepowered/api/entity/EntityType;Lorg/spongepowered/api/entity/Transform;)Lorg/spongepowered/api/event/entity/ConstructEntityEvent$Post;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createConstructEntityEventPost was null") }
-    event_entity_ConstructEntityEvent_Post { env: self.env, object: ret }
+    event_entity_ConstructEntityEvent_Post { env: env, object: ret }
   }
 
-  pub fn create_construct_entity_event_pre(param_1: event_cause_Cause, param_2: entity_EntityType, param_3: entity_Transform) -> event_entity_ConstructEntityEvent_Pre {
-    let ret = java_method!(self.env, "createConstructEntityEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/EntityType;Lorg/spongepowered/api/entity/Transform;)Lorg/spongepowered/api/event/entity/ConstructEntityEvent$Pre;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_construct_entity_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_EntityType, param_3: entity_Transform) -> event_entity_ConstructEntityEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createConstructEntityEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/EntityType;Lorg/spongepowered/api/entity/Transform;)Lorg/spongepowered/api/event/entity/ConstructEntityEvent$Pre;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createConstructEntityEventPre was null") }
-    event_entity_ConstructEntityEvent_Pre { env: self.env, object: ret }
+    event_entity_ConstructEntityEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_damage_entity_event(param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity, param_4: f64) -> event_entity_DamageEntityEvent {
-    let ret = java_method!(self.env, "createDamageEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/entity/Entity;D)Lorg/spongepowered/api/event/entity/DamageEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_damage_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity, param_4: f64) -> event_entity_DamageEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDamageEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/entity/Entity;D)Lorg/spongepowered/api/event/entity/DamageEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDamageEntityEvent was null") }
-    event_entity_DamageEntityEvent { env: self.env, object: ret }
+    event_entity_DamageEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_destruct_entity_event(param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: entity_Entity, param_6: bool) -> event_entity_DestructEntityEvent {
-    let ret = java_method!(self.env, "createDestructEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/Entity;Z)Lorg/spongepowered/api/event/entity/DestructEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_destruct_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: entity_Entity, param_6: bool) -> event_entity_DestructEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDestructEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/Entity;Z)Lorg/spongepowered/api/event/entity/DestructEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDestructEntityEvent was null") }
-    event_entity_DestructEntityEvent { env: self.env, object: ret }
+    event_entity_DestructEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_destruct_entity_event_death(param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: entity_living_Living, param_6: bool) -> event_entity_DestructEntityEvent_Death {
-    let ret = java_method!(self.env, "createDestructEntityEventDeath", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/living/Living;Z)Lorg/spongepowered/api/event/entity/DestructEntityEvent$Death;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_destruct_entity_event_death(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: entity_living_Living, param_6: bool) -> event_entity_DestructEntityEvent_Death {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDestructEntityEventDeath", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/living/Living;Z)Lorg/spongepowered/api/event/entity/DestructEntityEvent$Death;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDestructEntityEventDeath was null") }
-    event_entity_DestructEntityEvent_Death { env: self.env, object: ret }
+    event_entity_DestructEntityEvent_Death { env: env, object: ret }
   }
 
-  pub fn create_dismount_entity_event(param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_DismountEntityEvent {
-    let ret = java_method!(self.env, "createDismountEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/DismountEntityEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_dismount_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_DismountEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDismountEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/DismountEntityEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDismountEntityEvent was null") }
-    event_entity_DismountEntityEvent { env: self.env, object: ret }
+    event_entity_DismountEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_expire_entity_event_target_item(param_1: event_cause_Cause, param_2: entity_Item) -> event_entity_ExpireEntityEvent_TargetItem {
-    let ret = java_method!(self.env, "createExpireEntityEventTargetItem", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Item;)Lorg/spongepowered/api/event/entity/ExpireEntityEvent$TargetItem;", CallStaticObjectMethodA, param_1);
+  pub fn create_expire_entity_event_target_item(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Item) -> event_entity_ExpireEntityEvent_TargetItem {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createExpireEntityEventTargetItem", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Item;)Lorg/spongepowered/api/event/entity/ExpireEntityEvent$TargetItem;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createExpireEntityEventTargetItem was null") }
-    event_entity_ExpireEntityEvent_TargetItem { env: self.env, object: ret }
+    event_entity_ExpireEntityEvent_TargetItem { env: env, object: ret }
   }
 
-  pub fn create_harvest_entity_event_target_humanoid(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_living_Humanoid) -> event_entity_HarvestEntityEvent_TargetHumanoid {
-    let ret = java_method!(self.env, "createHarvestEntityEventTargetHumanoid", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/living/Humanoid;)Lorg/spongepowered/api/event/entity/HarvestEntityEvent$TargetHumanoid;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_harvest_entity_event_target_humanoid(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_living_Humanoid) -> event_entity_HarvestEntityEvent_TargetHumanoid {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createHarvestEntityEventTargetHumanoid", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/living/Humanoid;)Lorg/spongepowered/api/event/entity/HarvestEntityEvent$TargetHumanoid;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createHarvestEntityEventTargetHumanoid was null") }
-    event_entity_HarvestEntityEvent_TargetHumanoid { env: self.env, object: ret }
+    event_entity_HarvestEntityEvent_TargetHumanoid { env: env, object: ret }
   }
 
-  pub fn create_harvest_entity_event_target_living(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_living_Living) -> event_entity_HarvestEntityEvent_TargetLiving {
-    let ret = java_method!(self.env, "createHarvestEntityEventTargetLiving", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/living/Living;)Lorg/spongepowered/api/event/entity/HarvestEntityEvent$TargetLiving;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_harvest_entity_event_target_living(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_living_Living) -> event_entity_HarvestEntityEvent_TargetLiving {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createHarvestEntityEventTargetLiving", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/living/Living;)Lorg/spongepowered/api/event/entity/HarvestEntityEvent$TargetLiving;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createHarvestEntityEventTargetLiving was null") }
-    event_entity_HarvestEntityEvent_TargetLiving { env: self.env, object: ret }
+    event_entity_HarvestEntityEvent_TargetLiving { env: env, object: ret }
   }
 
-  pub fn create_harvest_entity_event_target_player(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_living_player_Player, param_5: bool, param_6: bool, param_7: i32) -> event_entity_HarvestEntityEvent_TargetPlayer {
-    let ret = java_method!(self.env, "createHarvestEntityEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/living/player/Player;ZZI)Lorg/spongepowered/api/event/entity/HarvestEntityEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
+  pub fn create_harvest_entity_event_target_player(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_living_player_Player, param_5: bool, param_6: bool, param_7: i32) -> event_entity_HarvestEntityEvent_TargetPlayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createHarvestEntityEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/living/player/Player;ZZI)Lorg/spongepowered/api/event/entity/HarvestEntityEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createHarvestEntityEventTargetPlayer was null") }
-    event_entity_HarvestEntityEvent_TargetPlayer { env: self.env, object: ret }
+    event_entity_HarvestEntityEvent_TargetPlayer { env: env, object: ret }
   }
 
-  pub fn create_heal_entity_event(param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity, param_4: f64) -> event_entity_HealEntityEvent {
-    let ret = java_method!(self.env, "createHealEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/entity/Entity;D)Lorg/spongepowered/api/event/entity/HealEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_heal_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity, param_4: f64) -> event_entity_HealEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createHealEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/entity/Entity;D)Lorg/spongepowered/api/event/entity/HealEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createHealEntityEvent was null") }
-    event_entity_HealEntityEvent { env: self.env, object: ret }
+    event_entity_HealEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_ignite_entity_event(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_Entity) -> event_entity_IgniteEntityEvent {
-    let ret = java_method!(self.env, "createIgniteEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/IgniteEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_ignite_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_Entity) -> event_entity_IgniteEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createIgniteEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/IgniteEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createIgniteEntityEvent was null") }
-    event_entity_IgniteEntityEvent { env: self.env, object: ret }
+    event_entity_IgniteEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_interact_entity_event_primary_main_hand(param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity) -> event_entity_InteractEntityEvent_Primary_MainHand {
-    let ret = java_method!(self.env, "createInteractEntityEventPrimaryMainHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/InteractEntityEvent$Primary$MainHand;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_interact_entity_event_primary_main_hand(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity) -> event_entity_InteractEntityEvent_Primary_MainHand {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractEntityEventPrimaryMainHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/InteractEntityEvent$Primary$MainHand;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractEntityEventPrimaryMainHand was null") }
-    event_entity_InteractEntityEvent_Primary_MainHand { env: self.env, object: ret }
+    event_entity_InteractEntityEvent_Primary_MainHand { env: env, object: ret }
   }
 
-  pub fn create_interact_entity_event_primary_off_hand(param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity) -> event_entity_InteractEntityEvent_Primary_OffHand {
-    let ret = java_method!(self.env, "createInteractEntityEventPrimaryOffHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/InteractEntityEvent$Primary$OffHand;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_interact_entity_event_primary_off_hand(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity) -> event_entity_InteractEntityEvent_Primary_OffHand {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractEntityEventPrimaryOffHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/InteractEntityEvent$Primary$OffHand;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractEntityEventPrimaryOffHand was null") }
-    event_entity_InteractEntityEvent_Primary_OffHand { env: self.env, object: ret }
+    event_entity_InteractEntityEvent_Primary_OffHand { env: env, object: ret }
   }
 
-  pub fn create_interact_entity_event_secondary_main_hand(param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity) -> event_entity_InteractEntityEvent_Secondary_MainHand {
-    let ret = java_method!(self.env, "createInteractEntityEventSecondaryMainHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/InteractEntityEvent$Secondary$MainHand;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_interact_entity_event_secondary_main_hand(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity) -> event_entity_InteractEntityEvent_Secondary_MainHand {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractEntityEventSecondaryMainHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/InteractEntityEvent$Secondary$MainHand;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractEntityEventSecondaryMainHand was null") }
-    event_entity_InteractEntityEvent_Secondary_MainHand { env: self.env, object: ret }
+    event_entity_InteractEntityEvent_Secondary_MainHand { env: env, object: ret }
   }
 
-  pub fn create_interact_entity_event_secondary_off_hand(param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity) -> event_entity_InteractEntityEvent_Secondary_OffHand {
-    let ret = java_method!(self.env, "createInteractEntityEventSecondaryOffHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/InteractEntityEvent$Secondary$OffHand;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_interact_entity_event_secondary_off_hand(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: entity_Entity) -> event_entity_InteractEntityEvent_Secondary_OffHand {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractEntityEventSecondaryOffHand", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/Optional;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/InteractEntityEvent$Secondary$OffHand;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractEntityEventSecondaryOffHand was null") }
-    event_entity_InteractEntityEvent_Secondary_OffHand { env: self.env, object: ret }
+    event_entity_InteractEntityEvent_Secondary_OffHand { env: env, object: ret }
   }
 
-  pub fn create_leash_entity_event(param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_LeashEntityEvent {
-    let ret = java_method!(self.env, "createLeashEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/LeashEntityEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_leash_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_LeashEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createLeashEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/LeashEntityEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createLeashEntityEvent was null") }
-    event_entity_LeashEntityEvent { env: self.env, object: ret }
+    event_entity_LeashEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_mount_entity_event(param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_MountEntityEvent {
-    let ret = java_method!(self.env, "createMountEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/MountEntityEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_mount_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_MountEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createMountEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/MountEntityEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createMountEntityEvent was null") }
-    event_entity_MountEntityEvent { env: self.env, object: ret }
+    event_entity_MountEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_move_entity_event(param_1: event_cause_Cause, param_2: entity_Transform, param_3: entity_Transform, param_4: entity_Entity) -> event_entity_MoveEntityEvent {
-    let ret = java_method!(self.env, "createMoveEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/MoveEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_move_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Transform, param_3: entity_Transform, param_4: entity_Entity) -> event_entity_MoveEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createMoveEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/MoveEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createMoveEntityEvent was null") }
-    event_entity_MoveEntityEvent { env: self.env, object: ret }
+    event_entity_MoveEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_move_entity_event_teleport(param_1: event_cause_Cause, param_2: entity_Transform, param_3: entity_Transform, param_4: entity_Entity) -> event_entity_MoveEntityEvent_Teleport {
-    let ret = java_method!(self.env, "createMoveEntityEventTeleport", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/MoveEntityEvent$Teleport;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_move_entity_event_teleport(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Transform, param_3: entity_Transform, param_4: entity_Entity) -> event_entity_MoveEntityEvent_Teleport {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createMoveEntityEventTeleport", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/MoveEntityEvent$Teleport;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createMoveEntityEventTeleport was null") }
-    event_entity_MoveEntityEvent_Teleport { env: self.env, object: ret }
+    event_entity_MoveEntityEvent_Teleport { env: env, object: ret }
   }
 
-  pub fn create_move_entity_event_teleport_portal(param_1: event_cause_Cause, param_2: entity_Transform, param_3: entity_Transform, param_4: world_PortalAgent, param_5: entity_Entity, param_6: bool) -> event_entity_MoveEntityEvent_Teleport_Portal {
-    let ret = java_method!(self.env, "createMoveEntityEventTeleportPortal", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/world/PortalAgent;Lorg/spongepowered/api/entity/Entity;Z)Lorg/spongepowered/api/event/entity/MoveEntityEvent$Teleport$Portal;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_move_entity_event_teleport_portal(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Transform, param_3: entity_Transform, param_4: world_PortalAgent, param_5: entity_Entity, param_6: bool) -> event_entity_MoveEntityEvent_Teleport_Portal {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createMoveEntityEventTeleportPortal", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/world/PortalAgent;Lorg/spongepowered/api/entity/Entity;Z)Lorg/spongepowered/api/event/entity/MoveEntityEvent$Teleport$Portal;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createMoveEntityEventTeleportPortal was null") }
-    event_entity_MoveEntityEvent_Teleport_Portal { env: self.env, object: ret }
+    event_entity_MoveEntityEvent_Teleport_Portal { env: env, object: ret }
   }
 
-  pub fn create_spawn_entity_event(param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_SpawnEntityEvent {
-    let ret = java_method!(self.env, "createSpawnEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/SpawnEntityEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_spawn_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_SpawnEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSpawnEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/SpawnEntityEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSpawnEntityEvent was null") }
-    event_entity_SpawnEntityEvent { env: self.env, object: ret }
+    event_entity_SpawnEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_spawn_entity_event_chunk_load(param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_SpawnEntityEvent_ChunkLoad {
-    let ret = java_method!(self.env, "createSpawnEntityEventChunkLoad", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/SpawnEntityEvent$ChunkLoad;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_spawn_entity_event_chunk_load(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_SpawnEntityEvent_ChunkLoad {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSpawnEntityEventChunkLoad", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/SpawnEntityEvent$ChunkLoad;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSpawnEntityEventChunkLoad was null") }
-    event_entity_SpawnEntityEvent_ChunkLoad { env: self.env, object: ret }
+    event_entity_SpawnEntityEvent_ChunkLoad { env: env, object: ret }
   }
 
-  pub fn create_spawn_entity_event_custom(param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_SpawnEntityEvent_Custom {
-    let ret = java_method!(self.env, "createSpawnEntityEventCustom", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/SpawnEntityEvent$Custom;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_spawn_entity_event_custom(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_SpawnEntityEvent_Custom {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSpawnEntityEventCustom", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/SpawnEntityEvent$Custom;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSpawnEntityEventCustom was null") }
-    event_entity_SpawnEntityEvent_Custom { env: self.env, object: ret }
+    event_entity_SpawnEntityEvent_Custom { env: env, object: ret }
   }
 
-  pub fn create_spawn_entity_event_spawner(param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_SpawnEntityEvent_Spawner {
-    let ret = java_method!(self.env, "createSpawnEntityEventSpawner", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/SpawnEntityEvent$Spawner;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_spawn_entity_event_spawner(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_entity_SpawnEntityEvent_Spawner {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSpawnEntityEventSpawner", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/entity/SpawnEntityEvent$Spawner;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSpawnEntityEventSpawner was null") }
-    event_entity_SpawnEntityEvent_Spawner { env: self.env, object: ret }
+    event_entity_SpawnEntityEvent_Spawner { env: env, object: ret }
   }
 
-  pub fn create_tame_entity_event(param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_TameEntityEvent {
-    let ret = java_method!(self.env, "createTameEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/TameEntityEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_tame_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_TameEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTameEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/TameEntityEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTameEntityEvent was null") }
-    event_entity_TameEntityEvent { env: self.env, object: ret }
+    event_entity_TameEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_target_entity_event(param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_TargetEntityEvent {
-    let ret = java_method!(self.env, "createTargetEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/TargetEntityEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_TargetEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/TargetEntityEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetEntityEvent was null") }
-    event_entity_TargetEntityEvent { env: self.env, object: ret }
+    event_entity_TargetEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_unleash_entity_event(param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_UnleashEntityEvent {
-    let ret = java_method!(self.env, "createUnleashEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/UnleashEntityEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_unleash_entity_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Entity) -> event_entity_UnleashEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createUnleashEntityEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/event/entity/UnleashEntityEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createUnleashEntityEvent was null") }
-    event_entity_UnleashEntityEvent { env: self.env, object: ret }
+    event_entity_UnleashEntityEvent { env: env, object: ret }
   }
 
-  pub fn create_a_i_task_event_add(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_ai_Goal, param_5: entity_living_Agent, param_6: entity_ai_task_AITask) -> event_entity_ai_AITaskEvent_Add {
-    let ret = java_method!(self.env, "createAITaskEventAdd", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/ai/Goal;Lorg/spongepowered/api/entity/living/Agent;Lorg/spongepowered/api/entity/ai/task/AITask;)Lorg/spongepowered/api/event/entity/ai/AITaskEvent$Add;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_a_i_task_event_add(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_ai_Goal, param_5: entity_living_Agent, param_6: entity_ai_task_AITask) -> event_entity_ai_AITaskEvent_Add {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createAITaskEventAdd", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/ai/Goal;Lorg/spongepowered/api/entity/living/Agent;Lorg/spongepowered/api/entity/ai/task/AITask;)Lorg/spongepowered/api/event/entity/ai/AITaskEvent$Add;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createAITaskEventAdd was null") }
-    event_entity_ai_AITaskEvent_Add { env: self.env, object: ret }
+    event_entity_ai_AITaskEvent_Add { env: env, object: ret }
   }
 
-  pub fn create_a_i_task_event_remove(param_1: event_cause_Cause, param_2: entity_ai_Goal, param_3: entity_living_Agent, param_4: entity_ai_task_AITask, param_5: i32) -> event_entity_ai_AITaskEvent_Remove {
-    let ret = java_method!(self.env, "createAITaskEventRemove", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/ai/Goal;Lorg/spongepowered/api/entity/living/Agent;Lorg/spongepowered/api/entity/ai/task/AITask;I)Lorg/spongepowered/api/event/entity/ai/AITaskEvent$Remove;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_a_i_task_event_remove(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_ai_Goal, param_3: entity_living_Agent, param_4: entity_ai_task_AITask, param_5: i32) -> event_entity_ai_AITaskEvent_Remove {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createAITaskEventRemove", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/ai/Goal;Lorg/spongepowered/api/entity/living/Agent;Lorg/spongepowered/api/entity/ai/task/AITask;I)Lorg/spongepowered/api/event/entity/ai/AITaskEvent$Remove;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createAITaskEventRemove was null") }
-    event_entity_ai_AITaskEvent_Remove { env: self.env, object: ret }
+    event_entity_ai_AITaskEvent_Remove { env: env, object: ret }
   }
 
-  pub fn create_defuse_explosive_event_post(param_1: event_cause_Cause, param_2: entity_explosive_FusedExplosive) -> event_entity_explosive_DefuseExplosiveEvent_Post {
-    let ret = java_method!(self.env, "createDefuseExplosiveEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/FusedExplosive;)Lorg/spongepowered/api/event/entity/explosive/DefuseExplosiveEvent$Post;", CallStaticObjectMethodA, param_1);
+  pub fn create_defuse_explosive_event_post(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_explosive_FusedExplosive) -> event_entity_explosive_DefuseExplosiveEvent_Post {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDefuseExplosiveEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/FusedExplosive;)Lorg/spongepowered/api/event/entity/explosive/DefuseExplosiveEvent$Post;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDefuseExplosiveEventPost was null") }
-    event_entity_explosive_DefuseExplosiveEvent_Post { env: self.env, object: ret }
+    event_entity_explosive_DefuseExplosiveEvent_Post { env: env, object: ret }
   }
 
-  pub fn create_defuse_explosive_event_pre(param_1: event_cause_Cause, param_2: entity_explosive_FusedExplosive) -> event_entity_explosive_DefuseExplosiveEvent_Pre {
-    let ret = java_method!(self.env, "createDefuseExplosiveEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/FusedExplosive;)Lorg/spongepowered/api/event/entity/explosive/DefuseExplosiveEvent$Pre;", CallStaticObjectMethodA, param_1);
+  pub fn create_defuse_explosive_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_explosive_FusedExplosive) -> event_entity_explosive_DefuseExplosiveEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDefuseExplosiveEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/FusedExplosive;)Lorg/spongepowered/api/event/entity/explosive/DefuseExplosiveEvent$Pre;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDefuseExplosiveEventPre was null") }
-    event_entity_explosive_DefuseExplosiveEvent_Pre { env: self.env, object: ret }
+    event_entity_explosive_DefuseExplosiveEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_detonate_explosive_event(param_1: event_cause_Cause, param_2: world_explosion_Explosion_Builder, param_3: world_explosion_Explosion, param_4: entity_explosive_Explosive) -> event_entity_explosive_DetonateExplosiveEvent {
-    let ret = java_method!(self.env, "createDetonateExplosiveEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/explosion/Explosion$Builder;Lorg/spongepowered/api/world/explosion/Explosion;Lorg/spongepowered/api/entity/explosive/Explosive;)Lorg/spongepowered/api/event/entity/explosive/DetonateExplosiveEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_detonate_explosive_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_explosion_Explosion_Builder, param_3: world_explosion_Explosion, param_4: entity_explosive_Explosive) -> event_entity_explosive_DetonateExplosiveEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDetonateExplosiveEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/explosion/Explosion$Builder;Lorg/spongepowered/api/world/explosion/Explosion;Lorg/spongepowered/api/entity/explosive/Explosive;)Lorg/spongepowered/api/event/entity/explosive/DetonateExplosiveEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDetonateExplosiveEvent was null") }
-    event_entity_explosive_DetonateExplosiveEvent { env: self.env, object: ret }
+    event_entity_explosive_DetonateExplosiveEvent { env: env, object: ret }
   }
 
-  pub fn create_prime_explosive_event_post(param_1: event_cause_Cause, param_2: entity_explosive_FusedExplosive) -> event_entity_explosive_PrimeExplosiveEvent_Post {
-    let ret = java_method!(self.env, "createPrimeExplosiveEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/FusedExplosive;)Lorg/spongepowered/api/event/entity/explosive/PrimeExplosiveEvent$Post;", CallStaticObjectMethodA, param_1);
+  pub fn create_prime_explosive_event_post(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_explosive_FusedExplosive) -> event_entity_explosive_PrimeExplosiveEvent_Post {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createPrimeExplosiveEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/FusedExplosive;)Lorg/spongepowered/api/event/entity/explosive/PrimeExplosiveEvent$Post;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createPrimeExplosiveEventPost was null") }
-    event_entity_explosive_PrimeExplosiveEvent_Post { env: self.env, object: ret }
+    event_entity_explosive_PrimeExplosiveEvent_Post { env: env, object: ret }
   }
 
-  pub fn create_prime_explosive_event_pre(param_1: event_cause_Cause, param_2: entity_explosive_FusedExplosive) -> event_entity_explosive_PrimeExplosiveEvent_Pre {
-    let ret = java_method!(self.env, "createPrimeExplosiveEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/FusedExplosive;)Lorg/spongepowered/api/event/entity/explosive/PrimeExplosiveEvent$Pre;", CallStaticObjectMethodA, param_1);
+  pub fn create_prime_explosive_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_explosive_FusedExplosive) -> event_entity_explosive_PrimeExplosiveEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createPrimeExplosiveEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/FusedExplosive;)Lorg/spongepowered/api/event/entity/explosive/PrimeExplosiveEvent$Pre;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createPrimeExplosiveEventPre was null") }
-    event_entity_explosive_PrimeExplosiveEvent_Pre { env: self.env, object: ret }
+    event_entity_explosive_PrimeExplosiveEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_target_explosive_event(param_1: event_cause_Cause, param_2: entity_explosive_Explosive) -> event_entity_explosive_TargetExplosiveEvent {
-    let ret = java_method!(self.env, "createTargetExplosiveEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/Explosive;)Lorg/spongepowered/api/event/entity/explosive/TargetExplosiveEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_explosive_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_explosive_Explosive) -> event_entity_explosive_TargetExplosiveEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetExplosiveEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/Explosive;)Lorg/spongepowered/api/event/entity/explosive/TargetExplosiveEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetExplosiveEvent was null") }
-    event_entity_explosive_TargetExplosiveEvent { env: self.env, object: ret }
+    event_entity_explosive_TargetExplosiveEvent { env: env, object: ret }
   }
 
-  pub fn create_target_fused_explosive_event(param_1: event_cause_Cause, param_2: entity_explosive_FusedExplosive) -> event_entity_explosive_TargetFusedExplosiveEvent {
-    let ret = java_method!(self.env, "createTargetFusedExplosiveEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/FusedExplosive;)Lorg/spongepowered/api/event/entity/explosive/TargetFusedExplosiveEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_fused_explosive_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_explosive_FusedExplosive) -> event_entity_explosive_TargetFusedExplosiveEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetFusedExplosiveEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/explosive/FusedExplosive;)Lorg/spongepowered/api/event/entity/explosive/TargetFusedExplosiveEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetFusedExplosiveEvent was null") }
-    event_entity_explosive_TargetFusedExplosiveEvent { env: self.env, object: ret }
+    event_entity_explosive_TargetFusedExplosiveEvent { env: env, object: ret }
   }
 
-  pub fn create_item_merge_item_event(param_1: event_cause_Cause, param_2: entity_Item, param_3: entity_Item) -> event_entity_item_ItemMergeItemEvent {
-    let ret = java_method!(self.env, "createItemMergeItemEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Item;Lorg/spongepowered/api/entity/Item;)Lorg/spongepowered/api/event/entity/item/ItemMergeItemEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_item_merge_item_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Item, param_3: entity_Item) -> event_entity_item_ItemMergeItemEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createItemMergeItemEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Item;Lorg/spongepowered/api/entity/Item;)Lorg/spongepowered/api/event/entity/item/ItemMergeItemEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createItemMergeItemEvent was null") }
-    event_entity_item_ItemMergeItemEvent { env: self.env, object: ret }
+    event_entity_item_ItemMergeItemEvent { env: env, object: ret }
   }
 
-  pub fn create_target_item_event(param_1: event_cause_Cause, param_2: entity_Item) -> event_entity_item_TargetItemEvent {
-    let ret = java_method!(self.env, "createTargetItemEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Item;)Lorg/spongepowered/api/event/entity/item/TargetItemEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_item_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Item) -> event_entity_item_TargetItemEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetItemEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Item;)Lorg/spongepowered/api/event/entity/item/TargetItemEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetItemEvent was null") }
-    event_entity_item_TargetItemEvent { env: self.env, object: ret }
+    event_entity_item_TargetItemEvent { env: env, object: ret }
   }
 
-  pub fn create_target_agent_event(param_1: event_cause_Cause, param_2: entity_living_Agent) -> event_entity_living_TargetAgentEvent {
-    let ret = java_method!(self.env, "createTargetAgentEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/Agent;)Lorg/spongepowered/api/event/entity/living/TargetAgentEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_agent_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_living_Agent) -> event_entity_living_TargetAgentEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetAgentEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/Agent;)Lorg/spongepowered/api/event/entity/living/TargetAgentEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetAgentEvent was null") }
-    event_entity_living_TargetAgentEvent { env: self.env, object: ret }
+    event_entity_living_TargetAgentEvent { env: env, object: ret }
   }
 
-  pub fn create_target_living_event(param_1: event_cause_Cause, param_2: entity_living_Living) -> event_entity_living_TargetLivingEvent {
-    let ret = java_method!(self.env, "createTargetLivingEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/Living;)Lorg/spongepowered/api/event/entity/living/TargetLivingEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_living_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_living_Living) -> event_entity_living_TargetLivingEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetLivingEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/Living;)Lorg/spongepowered/api/event/entity/living/TargetLivingEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetLivingEvent was null") }
-    event_entity_living_TargetLivingEvent { env: self.env, object: ret }
+    event_entity_living_TargetLivingEvent { env: env, object: ret }
   }
 
-  pub fn create_change_game_mode_event(param_1: event_cause_Cause, param_2: entity_living_player_gamemode_GameMode, param_3: entity_living_player_gamemode_GameMode, param_4: entity_living_Humanoid) -> event_entity_living_humanoid_ChangeGameModeEvent {
-    let ret = java_method!(self.env, "createChangeGameModeEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/player/gamemode/GameMode;Lorg/spongepowered/api/entity/living/player/gamemode/GameMode;Lorg/spongepowered/api/entity/living/Humanoid;)Lorg/spongepowered/api/event/entity/living/humanoid/ChangeGameModeEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_change_game_mode_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_living_player_gamemode_GameMode, param_3: entity_living_player_gamemode_GameMode, param_4: entity_living_Humanoid) -> event_entity_living_humanoid_ChangeGameModeEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeGameModeEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/player/gamemode/GameMode;Lorg/spongepowered/api/entity/living/player/gamemode/GameMode;Lorg/spongepowered/api/entity/living/Humanoid;)Lorg/spongepowered/api/event/entity/living/humanoid/ChangeGameModeEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeGameModeEvent was null") }
-    event_entity_living_humanoid_ChangeGameModeEvent { env: self.env, object: ret }
+    event_entity_living_humanoid_ChangeGameModeEvent { env: env, object: ret }
   }
 
-  pub fn create_change_game_mode_event_target_player(param_1: event_cause_Cause, param_2: entity_living_player_gamemode_GameMode, param_3: entity_living_player_gamemode_GameMode, param_4: entity_living_player_Player) -> event_entity_living_humanoid_ChangeGameModeEvent_TargetPlayer {
-    let ret = java_method!(self.env, "createChangeGameModeEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/player/gamemode/GameMode;Lorg/spongepowered/api/entity/living/player/gamemode/GameMode;Lorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/entity/living/humanoid/ChangeGameModeEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_change_game_mode_event_target_player(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_living_player_gamemode_GameMode, param_3: entity_living_player_gamemode_GameMode, param_4: entity_living_player_Player) -> event_entity_living_humanoid_ChangeGameModeEvent_TargetPlayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeGameModeEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/player/gamemode/GameMode;Lorg/spongepowered/api/entity/living/player/gamemode/GameMode;Lorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/entity/living/humanoid/ChangeGameModeEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeGameModeEventTargetPlayer was null") }
-    event_entity_living_humanoid_ChangeGameModeEvent_TargetPlayer { env: self.env, object: ret }
+    event_entity_living_humanoid_ChangeGameModeEvent_TargetPlayer { env: env, object: ret }
   }
 
-  pub fn create_change_level_event(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_living_Humanoid) -> event_entity_living_humanoid_ChangeLevelEvent {
-    let ret = java_method!(self.env, "createChangeLevelEvent", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/living/Humanoid;)Lorg/spongepowered/api/event/entity/living/humanoid/ChangeLevelEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_change_level_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_living_Humanoid) -> event_entity_living_humanoid_ChangeLevelEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeLevelEvent", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/living/Humanoid;)Lorg/spongepowered/api/event/entity/living/humanoid/ChangeLevelEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeLevelEvent was null") }
-    event_entity_living_humanoid_ChangeLevelEvent { env: self.env, object: ret }
+    event_entity_living_humanoid_ChangeLevelEvent { env: env, object: ret }
   }
 
-  pub fn create_change_level_event_target_player(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_living_player_Player) -> event_entity_living_humanoid_ChangeLevelEvent_TargetPlayer {
-    let ret = java_method!(self.env, "createChangeLevelEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/entity/living/humanoid/ChangeLevelEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_change_level_event_target_player(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: entity_living_player_Player) -> event_entity_living_humanoid_ChangeLevelEvent_TargetPlayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeLevelEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/entity/living/humanoid/ChangeLevelEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeLevelEventTargetPlayer was null") }
-    event_entity_living_humanoid_ChangeLevelEvent_TargetPlayer { env: self.env, object: ret }
+    event_entity_living_humanoid_ChangeLevelEvent_TargetPlayer { env: env, object: ret }
   }
 
-  pub fn create_target_humanoid_event(param_1: event_cause_Cause, param_2: entity_living_Humanoid) -> event_entity_living_humanoid_TargetHumanoidEvent {
-    let ret = java_method!(self.env, "createTargetHumanoidEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/Humanoid;)Lorg/spongepowered/api/event/entity/living/humanoid/TargetHumanoidEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_humanoid_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_living_Humanoid) -> event_entity_living_humanoid_TargetHumanoidEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetHumanoidEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/Humanoid;)Lorg/spongepowered/api/event/entity/living/humanoid/TargetHumanoidEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetHumanoidEvent was null") }
-    event_entity_living_humanoid_TargetHumanoidEvent { env: self.env, object: ret }
+    event_entity_living_humanoid_TargetHumanoidEvent { env: env, object: ret }
   }
 
-  pub fn create_kick_player_event(param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: entity_living_player_Player, param_6: bool) -> event_entity_living_humanoid_player_KickPlayerEvent {
-    let ret = java_method!(self.env, "createKickPlayerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/living/player/Player;Z)Lorg/spongepowered/api/event/entity/living/humanoid/player/KickPlayerEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_kick_player_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: entity_living_player_Player, param_6: bool) -> event_entity_living_humanoid_player_KickPlayerEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createKickPlayerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/living/player/Player;Z)Lorg/spongepowered/api/event/entity/living/humanoid/player/KickPlayerEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createKickPlayerEvent was null") }
-    event_entity_living_humanoid_player_KickPlayerEvent { env: self.env, object: ret }
+    event_entity_living_humanoid_player_KickPlayerEvent { env: env, object: ret }
   }
 
-  pub fn create_player_change_client_settings_event(param_1: event_cause_Cause, param_2: text_chat_ChatVisibility, param_3: jobject, param_4: jobject, param_5: entity_living_player_Player, param_6: bool, param_7: i32) -> event_entity_living_humanoid_player_PlayerChangeClientSettingsEvent {
-    let ret = java_method!(self.env, "createPlayerChangeClientSettingsEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/chat/ChatVisibility;Ljava/util/Set;Ljava/util/Locale;Lorg/spongepowered/api/entity/living/player/Player;ZI)Lorg/spongepowered/api/event/entity/living/humanoid/player/PlayerChangeClientSettingsEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
+  pub fn create_player_change_client_settings_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: text_chat_ChatVisibility, param_3: jobject, param_4: jobject, param_5: entity_living_player_Player, param_6: bool, param_7: i32) -> event_entity_living_humanoid_player_PlayerChangeClientSettingsEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createPlayerChangeClientSettingsEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/chat/ChatVisibility;Ljava/util/Set;Ljava/util/Locale;Lorg/spongepowered/api/entity/living/player/Player;ZI)Lorg/spongepowered/api/event/entity/living/humanoid/player/PlayerChangeClientSettingsEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createPlayerChangeClientSettingsEvent was null") }
-    event_entity_living_humanoid_player_PlayerChangeClientSettingsEvent { env: self.env, object: ret }
+    event_entity_living_humanoid_player_PlayerChangeClientSettingsEvent { env: env, object: ret }
   }
 
-  pub fn create_resource_pack_status_event(param_1: event_cause_Cause, param_2: resourcepack_ResourcePack, param_3: entity_living_player_Player, param_4: event_entity_living_humanoid_player_ResourcePackStatusEvent_ResourcePackStatus) -> event_entity_living_humanoid_player_ResourcePackStatusEvent {
-    let ret = java_method!(self.env, "createResourcePackStatusEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/resourcepack/ResourcePack;Lorg/spongepowered/api/entity/living/player/Player;Lorg/spongepowered/api/event/entity/living/humanoid/player/ResourcePackStatusEvent$ResourcePackStatus;)Lorg/spongepowered/api/event/entity/living/humanoid/player/ResourcePackStatusEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_resource_pack_status_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: resourcepack_ResourcePack, param_3: entity_living_player_Player, param_4: event_entity_living_humanoid_player_ResourcePackStatusEvent_ResourcePackStatus) -> event_entity_living_humanoid_player_ResourcePackStatusEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createResourcePackStatusEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/resourcepack/ResourcePack;Lorg/spongepowered/api/entity/living/player/Player;Lorg/spongepowered/api/event/entity/living/humanoid/player/ResourcePackStatusEvent$ResourcePackStatus;)Lorg/spongepowered/api/event/entity/living/humanoid/player/ResourcePackStatusEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createResourcePackStatusEvent was null") }
-    event_entity_living_humanoid_player_ResourcePackStatusEvent { env: self.env, object: ret }
+    event_entity_living_humanoid_player_ResourcePackStatusEvent { env: env, object: ret }
   }
 
-  pub fn create_respawn_player_event(param_1: event_cause_Cause, param_2: entity_Transform, param_3: entity_Transform, param_4: entity_living_player_Player, param_5: bool) -> event_entity_living_humanoid_player_RespawnPlayerEvent {
-    let ret = java_method!(self.env, "createRespawnPlayerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/living/player/Player;Z)Lorg/spongepowered/api/event/entity/living/humanoid/player/RespawnPlayerEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_respawn_player_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Transform, param_3: entity_Transform, param_4: entity_living_player_Player, param_5: bool) -> event_entity_living_humanoid_player_RespawnPlayerEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createRespawnPlayerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/living/player/Player;Z)Lorg/spongepowered/api/event/entity/living/humanoid/player/RespawnPlayerEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createRespawnPlayerEvent was null") }
-    event_entity_living_humanoid_player_RespawnPlayerEvent { env: self.env, object: ret }
+    event_entity_living_humanoid_player_RespawnPlayerEvent { env: env, object: ret }
   }
 
-  pub fn create_target_player_event(param_1: event_cause_Cause, param_2: entity_living_player_Player) -> event_entity_living_humanoid_player_TargetPlayerEvent {
-    let ret = java_method!(self.env, "createTargetPlayerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/entity/living/humanoid/player/TargetPlayerEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_player_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_living_player_Player) -> event_entity_living_humanoid_player_TargetPlayerEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetPlayerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/entity/living/humanoid/player/TargetPlayerEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetPlayerEvent was null") }
-    event_entity_living_humanoid_player_TargetPlayerEvent { env: self.env, object: ret }
+    event_entity_living_humanoid_player_TargetPlayerEvent { env: env, object: ret }
   }
 
-  pub fn create_launch_projectile_event(param_1: event_cause_Cause, param_2: entity_projectile_Projectile) -> event_entity_projectile_LaunchProjectileEvent {
-    let ret = java_method!(self.env, "createLaunchProjectileEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/projectile/Projectile;)Lorg/spongepowered/api/event/entity/projectile/LaunchProjectileEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_launch_projectile_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_projectile_Projectile) -> event_entity_projectile_LaunchProjectileEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createLaunchProjectileEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/projectile/Projectile;)Lorg/spongepowered/api/event/entity/projectile/LaunchProjectileEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createLaunchProjectileEvent was null") }
-    event_entity_projectile_LaunchProjectileEvent { env: self.env, object: ret }
+    event_entity_projectile_LaunchProjectileEvent { env: env, object: ret }
   }
 
-  pub fn create_target_projectile_event(param_1: event_cause_Cause, param_2: entity_projectile_Projectile) -> event_entity_projectile_TargetProjectileEvent {
-    let ret = java_method!(self.env, "createTargetProjectileEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/projectile/Projectile;)Lorg/spongepowered/api/event/entity/projectile/TargetProjectileEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_projectile_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_projectile_Projectile) -> event_entity_projectile_TargetProjectileEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetProjectileEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/projectile/Projectile;)Lorg/spongepowered/api/event/entity/projectile/TargetProjectileEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetProjectileEvent was null") }
-    event_entity_projectile_TargetProjectileEvent { env: self.env, object: ret }
+    event_entity_projectile_TargetProjectileEvent { env: env, object: ret }
   }
 
-  pub fn create_game_reload_event(param_1: event_cause_Cause) -> event_game_GameReloadEvent {
-    let ret = java_method!(self.env, "createGameReloadEvent", "(Lorg/spongepowered/api/event/cause/Cause;)Lorg/spongepowered/api/event/game/GameReloadEvent;", CallStaticObjectMethod);
+  pub fn create_game_reload_event(env: *mut JNIEnv, param_1: event_cause_Cause) -> event_game_GameReloadEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameReloadEvent", "(Lorg/spongepowered/api/event/cause/Cause;)Lorg/spongepowered/api/event/game/GameReloadEvent;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameReloadEvent was null") }
-    event_game_GameReloadEvent { env: self.env, object: ret }
+    event_game_GameReloadEvent { env: env, object: ret }
   }
 
-  pub fn create_game_about_to_start_server_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameAboutToStartServerEvent {
-    let ret = java_method!(self.env, "createGameAboutToStartServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameAboutToStartServerEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_about_to_start_server_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameAboutToStartServerEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameAboutToStartServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameAboutToStartServerEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameAboutToStartServerEvent was null") }
-    event_game_state_GameAboutToStartServerEvent { env: self.env, object: ret }
+    event_game_state_GameAboutToStartServerEvent { env: env, object: ret }
   }
 
-  pub fn create_game_construction_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameConstructionEvent {
-    let ret = java_method!(self.env, "createGameConstructionEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameConstructionEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_construction_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameConstructionEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameConstructionEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameConstructionEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameConstructionEvent was null") }
-    event_game_state_GameConstructionEvent { env: self.env, object: ret }
+    event_game_state_GameConstructionEvent { env: env, object: ret }
   }
 
-  pub fn create_game_initialization_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameInitializationEvent {
-    let ret = java_method!(self.env, "createGameInitializationEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameInitializationEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_initialization_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameInitializationEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameInitializationEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameInitializationEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameInitializationEvent was null") }
-    event_game_state_GameInitializationEvent { env: self.env, object: ret }
+    event_game_state_GameInitializationEvent { env: env, object: ret }
   }
 
-  pub fn create_game_load_complete_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameLoadCompleteEvent {
-    let ret = java_method!(self.env, "createGameLoadCompleteEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameLoadCompleteEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_load_complete_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameLoadCompleteEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameLoadCompleteEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameLoadCompleteEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameLoadCompleteEvent was null") }
-    event_game_state_GameLoadCompleteEvent { env: self.env, object: ret }
+    event_game_state_GameLoadCompleteEvent { env: env, object: ret }
   }
 
-  pub fn create_game_post_initialization_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GamePostInitializationEvent {
-    let ret = java_method!(self.env, "createGamePostInitializationEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GamePostInitializationEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_post_initialization_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GamePostInitializationEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGamePostInitializationEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GamePostInitializationEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGamePostInitializationEvent was null") }
-    event_game_state_GamePostInitializationEvent { env: self.env, object: ret }
+    event_game_state_GamePostInitializationEvent { env: env, object: ret }
   }
 
-  pub fn create_game_pre_initialization_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GamePreInitializationEvent {
-    let ret = java_method!(self.env, "createGamePreInitializationEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GamePreInitializationEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_pre_initialization_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GamePreInitializationEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGamePreInitializationEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GamePreInitializationEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGamePreInitializationEvent was null") }
-    event_game_state_GamePreInitializationEvent { env: self.env, object: ret }
+    event_game_state_GamePreInitializationEvent { env: env, object: ret }
   }
 
-  pub fn create_game_started_server_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStartedServerEvent {
-    let ret = java_method!(self.env, "createGameStartedServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStartedServerEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_started_server_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStartedServerEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameStartedServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStartedServerEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameStartedServerEvent was null") }
-    event_game_state_GameStartedServerEvent { env: self.env, object: ret }
+    event_game_state_GameStartedServerEvent { env: env, object: ret }
   }
 
-  pub fn create_game_starting_server_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStartingServerEvent {
-    let ret = java_method!(self.env, "createGameStartingServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStartingServerEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_starting_server_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStartingServerEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameStartingServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStartingServerEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameStartingServerEvent was null") }
-    event_game_state_GameStartingServerEvent { env: self.env, object: ret }
+    event_game_state_GameStartingServerEvent { env: env, object: ret }
   }
 
-  pub fn create_game_state_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStateEvent {
-    let ret = java_method!(self.env, "createGameStateEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStateEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_state_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStateEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameStateEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStateEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameStateEvent was null") }
-    event_game_state_GameStateEvent { env: self.env, object: ret }
+    event_game_state_GameStateEvent { env: env, object: ret }
   }
 
-  pub fn create_game_stopped_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStoppedEvent {
-    let ret = java_method!(self.env, "createGameStoppedEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStoppedEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_stopped_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStoppedEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameStoppedEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStoppedEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameStoppedEvent was null") }
-    event_game_state_GameStoppedEvent { env: self.env, object: ret }
+    event_game_state_GameStoppedEvent { env: env, object: ret }
   }
 
-  pub fn create_game_stopped_server_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStoppedServerEvent {
-    let ret = java_method!(self.env, "createGameStoppedServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStoppedServerEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_stopped_server_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStoppedServerEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameStoppedServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStoppedServerEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameStoppedServerEvent was null") }
-    event_game_state_GameStoppedServerEvent { env: self.env, object: ret }
+    event_game_state_GameStoppedServerEvent { env: env, object: ret }
   }
 
-  pub fn create_game_stopping_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStoppingEvent {
-    let ret = java_method!(self.env, "createGameStoppingEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStoppingEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_stopping_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStoppingEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameStoppingEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStoppingEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameStoppingEvent was null") }
-    event_game_state_GameStoppingEvent { env: self.env, object: ret }
+    event_game_state_GameStoppingEvent { env: env, object: ret }
   }
 
-  pub fn create_game_stopping_server_event(param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStoppingServerEvent {
-    let ret = java_method!(self.env, "createGameStoppingServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStoppingServerEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_game_stopping_server_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: GameState) -> event_game_state_GameStoppingServerEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGameStoppingServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/GameState;)Lorg/spongepowered/api/event/game/state/GameStoppingServerEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGameStoppingServerEvent was null") }
-    event_game_state_GameStoppingServerEvent { env: self.env, object: ret }
+    event_game_state_GameStoppingServerEvent { env: env, object: ret }
   }
 
-  pub fn create_affect_item_stack_event(param_1: event_cause_Cause, param_2: jobject) -> event_item_inventory_AffectItemStackEvent {
-    let ret = java_method!(self.env, "createAffectItemStackEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/AffectItemStackEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_affect_item_stack_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject) -> event_item_inventory_AffectItemStackEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createAffectItemStackEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/AffectItemStackEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createAffectItemStackEvent was null") }
-    event_item_inventory_AffectItemStackEvent { env: self.env, object: ret }
+    event_item_inventory_AffectItemStackEvent { env: env, object: ret }
   }
 
-  pub fn create_affect_slot_event(param_1: event_cause_Cause, param_2: jobject) -> event_item_inventory_AffectSlotEvent {
-    let ret = java_method!(self.env, "createAffectSlotEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/AffectSlotEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_affect_slot_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject) -> event_item_inventory_AffectSlotEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createAffectSlotEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/AffectSlotEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createAffectSlotEvent was null") }
-    event_item_inventory_AffectSlotEvent { env: self.env, object: ret }
+    event_item_inventory_AffectSlotEvent { env: env, object: ret }
   }
 
-  pub fn create_change_inventory_event_equipment(param_1: event_cause_Cause, param_2: item_inventory_Inventory, param_3: jobject) -> event_item_inventory_ChangeInventoryEvent_Equipment {
-    let ret = java_method!(self.env, "createChangeInventoryEventEquipment", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ChangeInventoryEvent$Equipment;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_inventory_event_equipment(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_Inventory, param_3: jobject) -> event_item_inventory_ChangeInventoryEvent_Equipment {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeInventoryEventEquipment", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ChangeInventoryEvent$Equipment;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeInventoryEventEquipment was null") }
-    event_item_inventory_ChangeInventoryEvent_Equipment { env: self.env, object: ret }
+    event_item_inventory_ChangeInventoryEvent_Equipment { env: env, object: ret }
   }
 
-  pub fn create_change_inventory_event_held(param_1: event_cause_Cause, param_2: item_inventory_Inventory, param_3: jobject) -> event_item_inventory_ChangeInventoryEvent_Held {
-    let ret = java_method!(self.env, "createChangeInventoryEventHeld", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ChangeInventoryEvent$Held;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_inventory_event_held(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_Inventory, param_3: jobject) -> event_item_inventory_ChangeInventoryEvent_Held {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeInventoryEventHeld", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ChangeInventoryEvent$Held;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeInventoryEventHeld was null") }
-    event_item_inventory_ChangeInventoryEvent_Held { env: self.env, object: ret }
+    event_item_inventory_ChangeInventoryEvent_Held { env: env, object: ret }
   }
 
-  pub fn create_change_inventory_event_pickup(param_1: event_cause_Cause, param_2: item_inventory_Inventory, param_3: jobject) -> event_item_inventory_ChangeInventoryEvent_Pickup {
-    let ret = java_method!(self.env, "createChangeInventoryEventPickup", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ChangeInventoryEvent$Pickup;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_inventory_event_pickup(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_Inventory, param_3: jobject) -> event_item_inventory_ChangeInventoryEvent_Pickup {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeInventoryEventPickup", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ChangeInventoryEvent$Pickup;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeInventoryEventPickup was null") }
-    event_item_inventory_ChangeInventoryEvent_Pickup { env: self.env, object: ret }
+    event_item_inventory_ChangeInventoryEvent_Pickup { env: env, object: ret }
   }
 
-  pub fn create_change_inventory_event_transfer(param_1: event_cause_Cause, param_2: item_inventory_Inventory, param_3: jobject) -> event_item_inventory_ChangeInventoryEvent_Transfer {
-    let ret = java_method!(self.env, "createChangeInventoryEventTransfer", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ChangeInventoryEvent$Transfer;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_inventory_event_transfer(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_Inventory, param_3: jobject) -> event_item_inventory_ChangeInventoryEvent_Transfer {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeInventoryEventTransfer", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ChangeInventoryEvent$Transfer;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeInventoryEventTransfer was null") }
-    event_item_inventory_ChangeInventoryEvent_Transfer { env: self.env, object: ret }
+    event_item_inventory_ChangeInventoryEvent_Transfer { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_creative(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Creative {
-    let ret = java_method!(self.env, "createClickInventoryEventCreative", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Creative;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_click_inventory_event_creative(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Creative {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventCreative", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Creative;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventCreative was null") }
-    event_item_inventory_ClickInventoryEvent_Creative { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Creative { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_double(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Double {
-    let ret = java_method!(self.env, "createClickInventoryEventDouble", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Double;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_click_inventory_event_double(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Double {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventDouble", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Double;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventDouble was null") }
-    event_item_inventory_ClickInventoryEvent_Double { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Double { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_drag_primary(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Drag_Primary {
-    let ret = java_method!(self.env, "createClickInventoryEventDragPrimary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drag$Primary;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_click_inventory_event_drag_primary(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Drag_Primary {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventDragPrimary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drag$Primary;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventDragPrimary was null") }
-    event_item_inventory_ClickInventoryEvent_Drag_Primary { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Drag_Primary { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_drag_secondary(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Drag_Secondary {
-    let ret = java_method!(self.env, "createClickInventoryEventDragSecondary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drag$Secondary;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_click_inventory_event_drag_secondary(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Drag_Secondary {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventDragSecondary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drag$Secondary;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventDragSecondary was null") }
-    event_item_inventory_ClickInventoryEvent_Drag_Secondary { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Drag_Secondary { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_drop_full(param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_ClickInventoryEvent_Drop_Full {
-    let ret = java_method!(self.env, "createClickInventoryEventDropFull", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drop$Full;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_click_inventory_event_drop_full(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_ClickInventoryEvent_Drop_Full {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventDropFull", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drop$Full;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventDropFull was null") }
-    event_item_inventory_ClickInventoryEvent_Drop_Full { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Drop_Full { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_drop_outside_primary(param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_ClickInventoryEvent_Drop_Outside_Primary {
-    let ret = java_method!(self.env, "createClickInventoryEventDropOutsidePrimary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drop$Outside$Primary;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_click_inventory_event_drop_outside_primary(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_ClickInventoryEvent_Drop_Outside_Primary {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventDropOutsidePrimary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drop$Outside$Primary;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventDropOutsidePrimary was null") }
-    event_item_inventory_ClickInventoryEvent_Drop_Outside_Primary { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Drop_Outside_Primary { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_drop_outside_secondary(param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_ClickInventoryEvent_Drop_Outside_Secondary {
-    let ret = java_method!(self.env, "createClickInventoryEventDropOutsideSecondary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drop$Outside$Secondary;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_click_inventory_event_drop_outside_secondary(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_ClickInventoryEvent_Drop_Outside_Secondary {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventDropOutsideSecondary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drop$Outside$Secondary;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventDropOutsideSecondary was null") }
-    event_item_inventory_ClickInventoryEvent_Drop_Outside_Secondary { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Drop_Outside_Secondary { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_drop_single(param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_ClickInventoryEvent_Drop_Single {
-    let ret = java_method!(self.env, "createClickInventoryEventDropSingle", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drop$Single;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_click_inventory_event_drop_single(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_ClickInventoryEvent_Drop_Single {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventDropSingle", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Drop$Single;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventDropSingle was null") }
-    event_item_inventory_ClickInventoryEvent_Drop_Single { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Drop_Single { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_middle(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Middle {
-    let ret = java_method!(self.env, "createClickInventoryEventMiddle", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Middle;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_click_inventory_event_middle(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Middle {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventMiddle", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Middle;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventMiddle was null") }
-    event_item_inventory_ClickInventoryEvent_Middle { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Middle { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_number_press(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject, param_5: i32) -> event_item_inventory_ClickInventoryEvent_NumberPress {
-    let ret = java_method!(self.env, "createClickInventoryEventNumberPress", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;I)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$NumberPress;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_click_inventory_event_number_press(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject, param_5: i32) -> event_item_inventory_ClickInventoryEvent_NumberPress {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventNumberPress", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;I)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$NumberPress;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventNumberPress was null") }
-    event_item_inventory_ClickInventoryEvent_NumberPress { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_NumberPress { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_primary(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Primary {
-    let ret = java_method!(self.env, "createClickInventoryEventPrimary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Primary;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_click_inventory_event_primary(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Primary {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventPrimary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Primary;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventPrimary was null") }
-    event_item_inventory_ClickInventoryEvent_Primary { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Primary { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_secondary(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Secondary {
-    let ret = java_method!(self.env, "createClickInventoryEventSecondary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Secondary;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_click_inventory_event_secondary(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Secondary {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventSecondary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Secondary;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventSecondary was null") }
-    event_item_inventory_ClickInventoryEvent_Secondary { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Secondary { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_shift_primary(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Shift_Primary {
-    let ret = java_method!(self.env, "createClickInventoryEventShiftPrimary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Shift$Primary;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_click_inventory_event_shift_primary(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Shift_Primary {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventShiftPrimary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Shift$Primary;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventShiftPrimary was null") }
-    event_item_inventory_ClickInventoryEvent_Shift_Primary { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Shift_Primary { env: env, object: ret }
   }
 
-  pub fn create_click_inventory_event_shift_secondary(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Shift_Secondary {
-    let ret = java_method!(self.env, "createClickInventoryEventShiftSecondary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Shift$Secondary;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_click_inventory_event_shift_secondary(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_ClickInventoryEvent_Shift_Secondary {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventShiftSecondary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Shift$Secondary;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventShiftSecondary was null") }
-    event_item_inventory_ClickInventoryEvent_Shift_Secondary { env: self.env, object: ret }
+    event_item_inventory_ClickInventoryEvent_Shift_Secondary { env: env, object: ret }
   }
 
-  pub fn create_creative_inventory_event_click(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_CreativeInventoryEvent_Click {
-    let ret = java_method!(self.env, "createCreativeInventoryEventClick", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/CreativeInventoryEvent$Click;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_creative_inventory_event_click(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_CreativeInventoryEvent_Click {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createCreativeInventoryEventClick", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/CreativeInventoryEvent$Click;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createCreativeInventoryEventClick was null") }
-    event_item_inventory_CreativeInventoryEvent_Click { env: self.env, object: ret }
+    event_item_inventory_CreativeInventoryEvent_Click { env: env, object: ret }
   }
 
-  pub fn create_creative_inventory_event_drop(param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_CreativeInventoryEvent_Drop {
-    let ret = java_method!(self.env, "createCreativeInventoryEventDrop", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/CreativeInventoryEvent$Drop;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_creative_inventory_event_drop(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_CreativeInventoryEvent_Drop {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createCreativeInventoryEventDrop", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/CreativeInventoryEvent$Drop;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createCreativeInventoryEventDrop was null") }
-    event_item_inventory_CreativeInventoryEvent_Drop { env: self.env, object: ret }
+    event_item_inventory_CreativeInventoryEvent_Drop { env: env, object: ret }
   }
 
-  pub fn create_drop_item_event_custom(param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_item_inventory_DropItemEvent_Custom {
-    let ret = java_method!(self.env, "createDropItemEventCustom", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/item/inventory/DropItemEvent$Custom;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_drop_item_event_custom(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_item_inventory_DropItemEvent_Custom {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDropItemEventCustom", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/item/inventory/DropItemEvent$Custom;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDropItemEventCustom was null") }
-    event_item_inventory_DropItemEvent_Custom { env: self.env, object: ret }
+    event_item_inventory_DropItemEvent_Custom { env: env, object: ret }
   }
 
-  pub fn create_drop_item_event_destruct(param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_item_inventory_DropItemEvent_Destruct {
-    let ret = java_method!(self.env, "createDropItemEventDestruct", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/item/inventory/DropItemEvent$Destruct;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_drop_item_event_destruct(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_item_inventory_DropItemEvent_Destruct {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDropItemEventDestruct", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/item/inventory/DropItemEvent$Destruct;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDropItemEventDestruct was null") }
-    event_item_inventory_DropItemEvent_Destruct { env: self.env, object: ret }
+    event_item_inventory_DropItemEvent_Destruct { env: env, object: ret }
   }
 
-  pub fn create_drop_item_event_dispense(param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_item_inventory_DropItemEvent_Dispense {
-    let ret = java_method!(self.env, "createDropItemEventDispense", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/item/inventory/DropItemEvent$Dispense;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_drop_item_event_dispense(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_item_inventory_DropItemEvent_Dispense {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDropItemEventDispense", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/item/inventory/DropItemEvent$Dispense;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDropItemEventDispense was null") }
-    event_item_inventory_DropItemEvent_Dispense { env: self.env, object: ret }
+    event_item_inventory_DropItemEvent_Dispense { env: env, object: ret }
   }
 
-  pub fn create_drop_item_event_pre(param_1: event_cause_Cause, param_2: jobject, param_3: jobject) -> event_item_inventory_DropItemEvent_Pre {
-    let ret = java_method!(self.env, "createDropItemEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/DropItemEvent$Pre;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_drop_item_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject) -> event_item_inventory_DropItemEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createDropItemEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/DropItemEvent$Pre;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createDropItemEventPre was null") }
-    event_item_inventory_DropItemEvent_Pre { env: self.env, object: ret }
+    event_item_inventory_DropItemEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_interact_inventory_event_close(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container) -> event_item_inventory_InteractInventoryEvent_Close {
-    let ret = java_method!(self.env, "createInteractInventoryEventClose", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;)Lorg/spongepowered/api/event/item/inventory/InteractInventoryEvent$Close;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_interact_inventory_event_close(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container) -> event_item_inventory_InteractInventoryEvent_Close {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractInventoryEventClose", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;)Lorg/spongepowered/api/event/item/inventory/InteractInventoryEvent$Close;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractInventoryEventClose was null") }
-    event_item_inventory_InteractInventoryEvent_Close { env: self.env, object: ret }
+    event_item_inventory_InteractInventoryEvent_Close { env: env, object: ret }
   }
 
-  pub fn create_interact_inventory_event_open(param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container) -> event_item_inventory_InteractInventoryEvent_Open {
-    let ret = java_method!(self.env, "createInteractInventoryEventOpen", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;)Lorg/spongepowered/api/event/item/inventory/InteractInventoryEvent$Open;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_interact_inventory_event_open(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container) -> event_item_inventory_InteractInventoryEvent_Open {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createInteractInventoryEventOpen", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;)Lorg/spongepowered/api/event/item/inventory/InteractInventoryEvent$Open;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createInteractInventoryEventOpen was null") }
-    event_item_inventory_InteractInventoryEvent_Open { env: self.env, object: ret }
+    event_item_inventory_InteractInventoryEvent_Open { env: env, object: ret }
   }
 
-  pub fn create_target_container_event(param_1: event_cause_Cause, param_2: item_inventory_Container) -> event_item_inventory_TargetContainerEvent {
-    let ret = java_method!(self.env, "createTargetContainerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Container;)Lorg/spongepowered/api/event/item/inventory/TargetContainerEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_container_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_Container) -> event_item_inventory_TargetContainerEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetContainerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Container;)Lorg/spongepowered/api/event/item/inventory/TargetContainerEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetContainerEvent was null") }
-    event_item_inventory_TargetContainerEvent { env: self.env, object: ret }
+    event_item_inventory_TargetContainerEvent { env: env, object: ret }
   }
 
-  pub fn create_target_inventory_event(param_1: event_cause_Cause, param_2: item_inventory_Inventory) -> event_item_inventory_TargetInventoryEvent {
-    let ret = java_method!(self.env, "createTargetInventoryEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;)Lorg/spongepowered/api/event/item/inventory/TargetInventoryEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_inventory_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_Inventory) -> event_item_inventory_TargetInventoryEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetInventoryEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;)Lorg/spongepowered/api/event/item/inventory/TargetInventoryEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetInventoryEvent was null") }
-    event_item_inventory_TargetInventoryEvent { env: self.env, object: ret }
+    event_item_inventory_TargetInventoryEvent { env: env, object: ret }
   }
 
-  pub fn create_use_item_stack_event_finish(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot) -> event_item_inventory_UseItemStackEvent_Finish {
-    let ret = java_method!(self.env, "createUseItemStackEventFinish", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Finish;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_use_item_stack_event_finish(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot) -> event_item_inventory_UseItemStackEvent_Finish {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createUseItemStackEventFinish", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Finish;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createUseItemStackEventFinish was null") }
-    event_item_inventory_UseItemStackEvent_Finish { env: self.env, object: ret }
+    event_item_inventory_UseItemStackEvent_Finish { env: env, object: ret }
   }
 
-  pub fn create_use_item_stack_event_replace(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot, param_5: data_Transaction) -> event_item_inventory_UseItemStackEvent_Replace {
-    let ret = java_method!(self.env, "createUseItemStackEventReplace", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/data/Transaction;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Replace;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_use_item_stack_event_replace(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot, param_5: data_Transaction) -> event_item_inventory_UseItemStackEvent_Replace {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createUseItemStackEventReplace", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/data/Transaction;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Replace;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createUseItemStackEventReplace was null") }
-    event_item_inventory_UseItemStackEvent_Replace { env: self.env, object: ret }
+    event_item_inventory_UseItemStackEvent_Replace { env: env, object: ret }
   }
 
-  pub fn create_use_item_stack_event_reset(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot) -> event_item_inventory_UseItemStackEvent_Reset {
-    let ret = java_method!(self.env, "createUseItemStackEventReset", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Reset;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_use_item_stack_event_reset(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot) -> event_item_inventory_UseItemStackEvent_Reset {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createUseItemStackEventReset", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Reset;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createUseItemStackEventReset was null") }
-    event_item_inventory_UseItemStackEvent_Reset { env: self.env, object: ret }
+    event_item_inventory_UseItemStackEvent_Reset { env: env, object: ret }
   }
 
-  pub fn create_use_item_stack_event_start(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot) -> event_item_inventory_UseItemStackEvent_Start {
-    let ret = java_method!(self.env, "createUseItemStackEventStart", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Start;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_use_item_stack_event_start(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot) -> event_item_inventory_UseItemStackEvent_Start {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createUseItemStackEventStart", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Start;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createUseItemStackEventStart was null") }
-    event_item_inventory_UseItemStackEvent_Start { env: self.env, object: ret }
+    event_item_inventory_UseItemStackEvent_Start { env: env, object: ret }
   }
 
-  pub fn create_use_item_stack_event_stop(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot) -> event_item_inventory_UseItemStackEvent_Stop {
-    let ret = java_method!(self.env, "createUseItemStackEventStop", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Stop;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_use_item_stack_event_stop(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot) -> event_item_inventory_UseItemStackEvent_Stop {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createUseItemStackEventStop", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Stop;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createUseItemStackEventStop was null") }
-    event_item_inventory_UseItemStackEvent_Stop { env: self.env, object: ret }
+    event_item_inventory_UseItemStackEvent_Stop { env: env, object: ret }
   }
 
-  pub fn create_use_item_stack_event_tick(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot) -> event_item_inventory_UseItemStackEvent_Tick {
-    let ret = java_method!(self.env, "createUseItemStackEventTick", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Tick;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_use_item_stack_event_tick(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: item_inventory_ItemStackSnapshot) -> event_item_inventory_UseItemStackEvent_Tick {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createUseItemStackEventTick", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/event/item/inventory/UseItemStackEvent$Tick;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createUseItemStackEventTick was null") }
-    event_item_inventory_UseItemStackEvent_Tick { env: self.env, object: ret }
+    event_item_inventory_UseItemStackEvent_Tick { env: env, object: ret }
   }
 
-  pub fn create_message_channel_event(param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: bool) -> event_message_MessageChannelEvent {
-    let ret = java_method!(self.env, "createMessageChannelEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Z)Lorg/spongepowered/api/event/message/MessageChannelEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_message_channel_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: bool) -> event_message_MessageChannelEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createMessageChannelEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Z)Lorg/spongepowered/api/event/message/MessageChannelEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createMessageChannelEvent was null") }
-    event_message_MessageChannelEvent { env: self.env, object: ret }
+    event_message_MessageChannelEvent { env: env, object: ret }
   }
 
-  pub fn create_message_channel_event_chat(param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: text_Text, param_6: bool) -> event_message_MessageChannelEvent_Chat {
-    let ret = java_method!(self.env, "createMessageChannelEventChat", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/text/Text;Z)Lorg/spongepowered/api/event/message/MessageChannelEvent$Chat;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_message_channel_event_chat(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: text_Text, param_6: bool) -> event_message_MessageChannelEvent_Chat {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createMessageChannelEventChat", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/text/Text;Z)Lorg/spongepowered/api/event/message/MessageChannelEvent$Chat;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createMessageChannelEventChat was null") }
-    event_message_MessageChannelEvent_Chat { env: self.env, object: ret }
+    event_message_MessageChannelEvent_Chat { env: env, object: ret }
   }
 
-  pub fn create_ban_ip_event(param_1: event_cause_Cause, param_2: util_ban_Ban_Ip) -> event_network_BanIpEvent {
-    let ret = java_method!(self.env, "createBanIpEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Ip;)Lorg/spongepowered/api/event/network/BanIpEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_ban_ip_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: util_ban_Ban_Ip) -> event_network_BanIpEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createBanIpEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Ip;)Lorg/spongepowered/api/event/network/BanIpEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createBanIpEvent was null") }
-    event_network_BanIpEvent { env: self.env, object: ret }
+    event_network_BanIpEvent { env: env, object: ret }
   }
 
-  pub fn create_channel_registration_event_register(param_1: event_cause_Cause, param_2: jobject) -> event_network_ChannelRegistrationEvent_Register {
-    let ret = java_method!(self.env, "createChannelRegistrationEventRegister", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/lang/String;)Lorg/spongepowered/api/event/network/ChannelRegistrationEvent$Register;", CallStaticObjectMethodA, param_1);
+  pub fn create_channel_registration_event_register(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject) -> event_network_ChannelRegistrationEvent_Register {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChannelRegistrationEventRegister", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/lang/String;)Lorg/spongepowered/api/event/network/ChannelRegistrationEvent$Register;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChannelRegistrationEventRegister was null") }
-    event_network_ChannelRegistrationEvent_Register { env: self.env, object: ret }
+    event_network_ChannelRegistrationEvent_Register { env: env, object: ret }
   }
 
-  pub fn create_channel_registration_event_unregister(param_1: event_cause_Cause, param_2: jobject) -> event_network_ChannelRegistrationEvent_Unregister {
-    let ret = java_method!(self.env, "createChannelRegistrationEventUnregister", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/lang/String;)Lorg/spongepowered/api/event/network/ChannelRegistrationEvent$Unregister;", CallStaticObjectMethodA, param_1);
+  pub fn create_channel_registration_event_unregister(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject) -> event_network_ChannelRegistrationEvent_Unregister {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChannelRegistrationEventUnregister", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/lang/String;)Lorg/spongepowered/api/event/network/ChannelRegistrationEvent$Unregister;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChannelRegistrationEventUnregister was null") }
-    event_network_ChannelRegistrationEvent_Unregister { env: self.env, object: ret }
+    event_network_ChannelRegistrationEvent_Unregister { env: env, object: ret }
   }
 
-  pub fn create_client_connection_event_auth(param_1: event_cause_Cause, param_2: network_RemoteConnection, param_3: event_message_MessageEvent_MessageFormatter, param_4: profile_GameProfile, param_5: bool) -> event_network_ClientConnectionEvent_Auth {
-    let ret = java_method!(self.env, "createClientConnectionEventAuth", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/network/RemoteConnection;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/profile/GameProfile;Z)Lorg/spongepowered/api/event/network/ClientConnectionEvent$Auth;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_client_connection_event_auth(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: network_RemoteConnection, param_3: event_message_MessageEvent_MessageFormatter, param_4: profile_GameProfile, param_5: bool) -> event_network_ClientConnectionEvent_Auth {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClientConnectionEventAuth", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/network/RemoteConnection;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/profile/GameProfile;Z)Lorg/spongepowered/api/event/network/ClientConnectionEvent$Auth;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClientConnectionEventAuth was null") }
-    event_network_ClientConnectionEvent_Auth { env: self.env, object: ret }
+    event_network_ClientConnectionEvent_Auth { env: env, object: ret }
   }
 
-  pub fn create_client_connection_event_disconnect(param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: entity_living_player_Player, param_6: bool) -> event_network_ClientConnectionEvent_Disconnect {
-    let ret = java_method!(self.env, "createClientConnectionEventDisconnect", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/living/player/Player;Z)Lorg/spongepowered/api/event/network/ClientConnectionEvent$Disconnect;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_client_connection_event_disconnect(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: entity_living_player_Player, param_6: bool) -> event_network_ClientConnectionEvent_Disconnect {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClientConnectionEventDisconnect", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/living/player/Player;Z)Lorg/spongepowered/api/event/network/ClientConnectionEvent$Disconnect;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClientConnectionEventDisconnect was null") }
-    event_network_ClientConnectionEvent_Disconnect { env: self.env, object: ret }
+    event_network_ClientConnectionEvent_Disconnect { env: env, object: ret }
   }
 
-  pub fn create_client_connection_event_join(param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: entity_living_player_Player, param_6: bool) -> event_network_ClientConnectionEvent_Join {
-    let ret = java_method!(self.env, "createClientConnectionEventJoin", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/living/player/Player;Z)Lorg/spongepowered/api/event/network/ClientConnectionEvent$Join;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn create_client_connection_event_join(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: event_message_MessageEvent_MessageFormatter, param_5: entity_living_player_Player, param_6: bool) -> event_network_ClientConnectionEvent_Join {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClientConnectionEventJoin", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/text/channel/MessageChannel;Ljava/util/Optional;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/entity/living/player/Player;Z)Lorg/spongepowered/api/event/network/ClientConnectionEvent$Join;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClientConnectionEventJoin was null") }
-    event_network_ClientConnectionEvent_Join { env: self.env, object: ret }
+    event_network_ClientConnectionEvent_Join { env: env, object: ret }
   }
 
-  pub fn create_client_connection_event_login(param_1: event_cause_Cause, param_2: entity_Transform, param_3: entity_Transform, param_4: network_RemoteConnection, param_5: event_message_MessageEvent_MessageFormatter, param_6: profile_GameProfile, param_7: entity_living_player_User, param_8: bool) -> event_network_ClientConnectionEvent_Login {
-    let ret = java_method!(self.env, "createClientConnectionEventLogin", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/network/RemoteConnection;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/profile/GameProfile;Lorg/spongepowered/api/entity/living/player/User;Z)Lorg/spongepowered/api/event/network/ClientConnectionEvent$Login;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7);
+  pub fn create_client_connection_event_login(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Transform, param_3: entity_Transform, param_4: network_RemoteConnection, param_5: event_message_MessageEvent_MessageFormatter, param_6: profile_GameProfile, param_7: entity_living_player_User, param_8: bool) -> event_network_ClientConnectionEvent_Login {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClientConnectionEventLogin", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/entity/Transform;Lorg/spongepowered/api/network/RemoteConnection;Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter;Lorg/spongepowered/api/profile/GameProfile;Lorg/spongepowered/api/entity/living/player/User;Z)Lorg/spongepowered/api/event/network/ClientConnectionEvent$Login;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7, param_8);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClientConnectionEventLogin was null") }
-    event_network_ClientConnectionEvent_Login { env: self.env, object: ret }
+    event_network_ClientConnectionEvent_Login { env: env, object: ret }
   }
 
-  pub fn create_pardon_ip_event(param_1: event_cause_Cause, param_2: util_ban_Ban_Ip) -> event_network_PardonIpEvent {
-    let ret = java_method!(self.env, "createPardonIpEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Ip;)Lorg/spongepowered/api/event/network/PardonIpEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_pardon_ip_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: util_ban_Ban_Ip) -> event_network_PardonIpEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createPardonIpEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Ip;)Lorg/spongepowered/api/event/network/PardonIpEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createPardonIpEvent was null") }
-    event_network_PardonIpEvent { env: self.env, object: ret }
+    event_network_PardonIpEvent { env: env, object: ret }
   }
 
-  pub fn create_rcon_connection_event_connect(param_1: event_cause_Cause, param_2: command_source_RconSource) -> event_network_rcon_RconConnectionEvent_Connect {
-    let ret = java_method!(self.env, "createRconConnectionEventConnect", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/command/source/RconSource;)Lorg/spongepowered/api/event/network/rcon/RconConnectionEvent$Connect;", CallStaticObjectMethodA, param_1);
+  pub fn create_rcon_connection_event_connect(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: command_source_RconSource) -> event_network_rcon_RconConnectionEvent_Connect {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createRconConnectionEventConnect", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/command/source/RconSource;)Lorg/spongepowered/api/event/network/rcon/RconConnectionEvent$Connect;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createRconConnectionEventConnect was null") }
-    event_network_rcon_RconConnectionEvent_Connect { env: self.env, object: ret }
+    event_network_rcon_RconConnectionEvent_Connect { env: env, object: ret }
   }
 
-  pub fn create_rcon_connection_event_disconnect(param_1: event_cause_Cause, param_2: command_source_RconSource) -> event_network_rcon_RconConnectionEvent_Disconnect {
-    let ret = java_method!(self.env, "createRconConnectionEventDisconnect", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/command/source/RconSource;)Lorg/spongepowered/api/event/network/rcon/RconConnectionEvent$Disconnect;", CallStaticObjectMethodA, param_1);
+  pub fn create_rcon_connection_event_disconnect(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: command_source_RconSource) -> event_network_rcon_RconConnectionEvent_Disconnect {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createRconConnectionEventDisconnect", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/command/source/RconSource;)Lorg/spongepowered/api/event/network/rcon/RconConnectionEvent$Disconnect;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createRconConnectionEventDisconnect was null") }
-    event_network_rcon_RconConnectionEvent_Disconnect { env: self.env, object: ret }
+    event_network_rcon_RconConnectionEvent_Disconnect { env: env, object: ret }
   }
 
-  pub fn create_rcon_connection_event_login(param_1: event_cause_Cause, param_2: command_source_RconSource) -> event_network_rcon_RconConnectionEvent_Login {
-    let ret = java_method!(self.env, "createRconConnectionEventLogin", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/command/source/RconSource;)Lorg/spongepowered/api/event/network/rcon/RconConnectionEvent$Login;", CallStaticObjectMethodA, param_1);
+  pub fn create_rcon_connection_event_login(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: command_source_RconSource) -> event_network_rcon_RconConnectionEvent_Login {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createRconConnectionEventLogin", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/command/source/RconSource;)Lorg/spongepowered/api/event/network/rcon/RconConnectionEvent$Login;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createRconConnectionEventLogin was null") }
-    event_network_rcon_RconConnectionEvent_Login { env: self.env, object: ret }
+    event_network_rcon_RconConnectionEvent_Login { env: env, object: ret }
   }
 
-  pub fn create_client_ping_server_event(param_1: event_cause_Cause, param_2: network_status_StatusClient, param_3: event_server_ClientPingServerEvent_Response) -> event_server_ClientPingServerEvent {
-    let ret = java_method!(self.env, "createClientPingServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/network/status/StatusClient;Lorg/spongepowered/api/event/server/ClientPingServerEvent$Response;)Lorg/spongepowered/api/event/server/ClientPingServerEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_client_ping_server_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: network_status_StatusClient, param_3: event_server_ClientPingServerEvent_Response) -> event_server_ClientPingServerEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClientPingServerEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/network/status/StatusClient;Lorg/spongepowered/api/event/server/ClientPingServerEvent$Response;)Lorg/spongepowered/api/event/server/ClientPingServerEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClientPingServerEvent was null") }
-    event_server_ClientPingServerEvent { env: self.env, object: ret }
+    event_server_ClientPingServerEvent { env: env, object: ret }
   }
 
-  pub fn create_client_ping_server_event_response_players(param_1: jobject, param_2: i32, param_3: i32) -> event_server_ClientPingServerEvent_Response_Players {
-    let ret = java_method!(self.env, "createClientPingServerEventResponsePlayers", "(Ljava/util/List;II)Lorg/spongepowered/api/event/server/ClientPingServerEvent$Response$Players;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_client_ping_server_event_response_players(env: *mut JNIEnv, param_1: jobject, param_2: i32, param_3: i32) -> event_server_ClientPingServerEvent_Response_Players {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClientPingServerEventResponsePlayers", "(Ljava/util/List;II)Lorg/spongepowered/api/event/server/ClientPingServerEvent$Response$Players;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClientPingServerEventResponsePlayers was null") }
-    event_server_ClientPingServerEvent_Response_Players { env: self.env, object: ret }
+    event_server_ClientPingServerEvent_Response_Players { env: env, object: ret }
   }
 
-  pub fn create_query_server_event_basic(param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: jobject, param_5: jobject, param_6: i32, param_7: i32, param_8: i32, param_9: i32) -> event_server_query_QueryServerEvent_Basic {
-    let ret = java_method!(self.env, "createQueryServerEventBasic", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/net/InetSocketAddress;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIII)Lorg/spongepowered/api/event/server/query/QueryServerEvent$Basic;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7, param_8);
+  pub fn create_query_server_event_basic(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: jobject, param_5: jobject, param_6: i32, param_7: i32, param_8: i32, param_9: i32) -> event_server_query_QueryServerEvent_Basic {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createQueryServerEventBasic", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/net/InetSocketAddress;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIII)Lorg/spongepowered/api/event/server/query/QueryServerEvent$Basic;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7, param_8, param_9);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createQueryServerEventBasic was null") }
-    event_server_query_QueryServerEvent_Basic { env: self.env, object: ret }
+    event_server_query_QueryServerEvent_Basic { env: env, object: ret }
   }
 
-  pub fn create_query_server_event_full(param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: jobject, param_5: jobject, param_6: jobject, param_7: jobject, param_8: jobject, param_9: jobject, param_10: jobject, param_11: i32, param_12: i32, param_13: i32, param_14: i32) -> event_server_query_QueryServerEvent_Full {
-    let ret = java_method!(self.env, "createQueryServerEventFull", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/net/InetSocketAddress;Ljava/util/Map;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;IIII)Lorg/spongepowered/api/event/server/query/QueryServerEvent$Full;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7, param_8, param_9, param_10, param_11, param_12, param_13);
+  pub fn create_query_server_event_full(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: jobject, param_5: jobject, param_6: jobject, param_7: jobject, param_8: jobject, param_9: jobject, param_10: jobject, param_11: i32, param_12: i32, param_13: i32, param_14: i32) -> event_server_query_QueryServerEvent_Full {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createQueryServerEventFull", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/net/InetSocketAddress;Ljava/util/Map;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;IIII)Lorg/spongepowered/api/event/server/query/QueryServerEvent$Full;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7, param_8, param_9, param_10, param_11, param_12, param_13, param_14);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createQueryServerEventFull was null") }
-    event_server_query_QueryServerEvent_Full { env: self.env, object: ret }
+    event_server_query_QueryServerEvent_Full { env: env, object: ret }
   }
 
-  pub fn create_change_service_provider_event(param_1: event_cause_Cause, param_2: service_ProviderRegistration, param_3: jobject) -> event_service_ChangeServiceProviderEvent {
-    let ret = java_method!(self.env, "createChangeServiceProviderEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/service/ProviderRegistration;Ljava/util/Optional;)Lorg/spongepowered/api/event/service/ChangeServiceProviderEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_change_service_provider_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: service_ProviderRegistration, param_3: jobject) -> event_service_ChangeServiceProviderEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeServiceProviderEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/service/ProviderRegistration;Ljava/util/Optional;)Lorg/spongepowered/api/event/service/ChangeServiceProviderEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeServiceProviderEvent was null") }
-    event_service_ChangeServiceProviderEvent { env: self.env, object: ret }
+    event_service_ChangeServiceProviderEvent { env: env, object: ret }
   }
 
-  pub fn create_change_statistic_event_target_player(param_1: event_cause_Cause, param_2: i64, param_3: i64, param_4: statistic_Statistic, param_5: entity_living_player_Player) -> event_statistic_ChangeStatisticEvent_TargetPlayer {
-    let ret = java_method!(self.env, "createChangeStatisticEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;JJLorg/spongepowered/api/statistic/Statistic;Lorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/statistic/ChangeStatisticEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_change_statistic_event_target_player(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i64, param_3: i64, param_4: statistic_Statistic, param_5: entity_living_player_Player) -> event_statistic_ChangeStatisticEvent_TargetPlayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeStatisticEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;JJLorg/spongepowered/api/statistic/Statistic;Lorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/statistic/ChangeStatisticEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeStatisticEventTargetPlayer was null") }
-    event_statistic_ChangeStatisticEvent_TargetPlayer { env: self.env, object: ret }
+    event_statistic_ChangeStatisticEvent_TargetPlayer { env: env, object: ret }
   }
 
-  pub fn create_ban_user_event(param_1: event_cause_Cause, param_2: util_ban_Ban_Profile, param_3: entity_living_player_User) -> event_user_BanUserEvent {
-    let ret = java_method!(self.env, "createBanUserEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Profile;Lorg/spongepowered/api/entity/living/player/User;)Lorg/spongepowered/api/event/user/BanUserEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_ban_user_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: util_ban_Ban_Profile, param_3: entity_living_player_User) -> event_user_BanUserEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createBanUserEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Profile;Lorg/spongepowered/api/entity/living/player/User;)Lorg/spongepowered/api/event/user/BanUserEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createBanUserEvent was null") }
-    event_user_BanUserEvent { env: self.env, object: ret }
+    event_user_BanUserEvent { env: env, object: ret }
   }
 
-  pub fn create_ban_user_event_target_player(param_1: event_cause_Cause, param_2: util_ban_Ban_Profile, param_3: entity_living_player_Player, param_4: entity_living_player_User) -> event_user_BanUserEvent_TargetPlayer {
-    let ret = java_method!(self.env, "createBanUserEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Profile;Lorg/spongepowered/api/entity/living/player/Player;Lorg/spongepowered/api/entity/living/player/User;)Lorg/spongepowered/api/event/user/BanUserEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_ban_user_event_target_player(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: util_ban_Ban_Profile, param_3: entity_living_player_Player, param_4: entity_living_player_User) -> event_user_BanUserEvent_TargetPlayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createBanUserEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Profile;Lorg/spongepowered/api/entity/living/player/Player;Lorg/spongepowered/api/entity/living/player/User;)Lorg/spongepowered/api/event/user/BanUserEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createBanUserEventTargetPlayer was null") }
-    event_user_BanUserEvent_TargetPlayer { env: self.env, object: ret }
+    event_user_BanUserEvent_TargetPlayer { env: env, object: ret }
   }
 
-  pub fn create_pardon_user_event(param_1: event_cause_Cause, param_2: util_ban_Ban_Profile, param_3: entity_living_player_User) -> event_user_PardonUserEvent {
-    let ret = java_method!(self.env, "createPardonUserEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Profile;Lorg/spongepowered/api/entity/living/player/User;)Lorg/spongepowered/api/event/user/PardonUserEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_pardon_user_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: util_ban_Ban_Profile, param_3: entity_living_player_User) -> event_user_PardonUserEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createPardonUserEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Profile;Lorg/spongepowered/api/entity/living/player/User;)Lorg/spongepowered/api/event/user/PardonUserEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createPardonUserEvent was null") }
-    event_user_PardonUserEvent { env: self.env, object: ret }
+    event_user_PardonUserEvent { env: env, object: ret }
   }
 
-  pub fn create_pardon_user_event_target_player(param_1: event_cause_Cause, param_2: util_ban_Ban_Profile, param_3: entity_living_player_Player, param_4: entity_living_player_Player) -> event_user_PardonUserEvent_TargetPlayer {
-    let ret = java_method!(self.env, "createPardonUserEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Profile;Lorg/spongepowered/api/entity/living/player/Player;Lorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/user/PardonUserEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn create_pardon_user_event_target_player(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: util_ban_Ban_Profile, param_3: entity_living_player_Player, param_4: entity_living_player_Player) -> event_user_PardonUserEvent_TargetPlayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createPardonUserEventTargetPlayer", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/util/ban/Ban$Profile;Lorg/spongepowered/api/entity/living/player/Player;Lorg/spongepowered/api/entity/living/player/Player;)Lorg/spongepowered/api/event/user/PardonUserEvent$TargetPlayer;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createPardonUserEventTargetPlayer was null") }
-    event_user_PardonUserEvent_TargetPlayer { env: self.env, object: ret }
+    event_user_PardonUserEvent_TargetPlayer { env: env, object: ret }
   }
 
-  pub fn create_target_user_event(param_1: event_cause_Cause, param_2: entity_living_player_User) -> event_user_TargetUserEvent {
-    let ret = java_method!(self.env, "createTargetUserEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/player/User;)Lorg/spongepowered/api/event/user/TargetUserEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_user_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_living_player_User) -> event_user_TargetUserEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetUserEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/living/player/User;)Lorg/spongepowered/api/event/user/TargetUserEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetUserEvent was null") }
-    event_user_TargetUserEvent { env: self.env, object: ret }
+    event_user_TargetUserEvent { env: env, object: ret }
   }
 
-  pub fn create_change_world_game_rule_event(param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: jobject, param_5: world_World) -> event_world_ChangeWorldGameRuleEvent {
-    let ret = java_method!(self.env, "createChangeWorldGameRuleEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/ChangeWorldGameRuleEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_change_world_game_rule_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: jobject, param_4: jobject, param_5: world_World) -> event_world_ChangeWorldGameRuleEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeWorldGameRuleEvent", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/ChangeWorldGameRuleEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeWorldGameRuleEvent was null") }
-    event_world_ChangeWorldGameRuleEvent { env: self.env, object: ret }
+    event_world_ChangeWorldGameRuleEvent { env: env, object: ret }
   }
 
-  pub fn create_change_world_weather_event(param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: world_weather_Weather, param_5: world_weather_Weather, param_6: world_weather_Weather, param_7: world_World) -> event_world_ChangeWorldWeatherEvent {
-    let ret = java_method!(self.env, "createChangeWorldWeatherEvent", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/world/weather/Weather;Lorg/spongepowered/api/world/weather/Weather;Lorg/spongepowered/api/world/weather/Weather;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/ChangeWorldWeatherEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
+  pub fn create_change_world_weather_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: i32, param_3: i32, param_4: world_weather_Weather, param_5: world_weather_Weather, param_6: world_weather_Weather, param_7: world_World) -> event_world_ChangeWorldWeatherEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeWorldWeatherEvent", "(Lorg/spongepowered/api/event/cause/Cause;IILorg/spongepowered/api/world/weather/Weather;Lorg/spongepowered/api/world/weather/Weather;Lorg/spongepowered/api/world/weather/Weather;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/ChangeWorldWeatherEvent;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6, param_7);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeWorldWeatherEvent was null") }
-    event_world_ChangeWorldWeatherEvent { env: self.env, object: ret }
+    event_world_ChangeWorldWeatherEvent { env: env, object: ret }
   }
 
-  pub fn create_construct_portal_event(param_1: event_cause_Cause, param_2: world_Location) -> event_world_ConstructPortalEvent {
-    let ret = java_method!(self.env, "createConstructPortalEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Location;)Lorg/spongepowered/api/event/world/ConstructPortalEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_construct_portal_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_Location) -> event_world_ConstructPortalEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createConstructPortalEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Location;)Lorg/spongepowered/api/event/world/ConstructPortalEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createConstructPortalEvent was null") }
-    event_world_ConstructPortalEvent { env: self.env, object: ret }
+    event_world_ConstructPortalEvent { env: env, object: ret }
   }
 
-  pub fn create_construct_world_properties_event(param_1: event_cause_Cause, param_2: world_WorldArchetype, param_3: world_storage_WorldProperties) -> event_world_ConstructWorldPropertiesEvent {
-    let ret = java_method!(self.env, "createConstructWorldPropertiesEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/WorldArchetype;Lorg/spongepowered/api/world/storage/WorldProperties;)Lorg/spongepowered/api/event/world/ConstructWorldPropertiesEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_construct_world_properties_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_WorldArchetype, param_3: world_storage_WorldProperties) -> event_world_ConstructWorldPropertiesEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createConstructWorldPropertiesEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/WorldArchetype;Lorg/spongepowered/api/world/storage/WorldProperties;)Lorg/spongepowered/api/event/world/ConstructWorldPropertiesEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createConstructWorldPropertiesEvent was null") }
-    event_world_ConstructWorldPropertiesEvent { env: self.env, object: ret }
+    event_world_ConstructWorldPropertiesEvent { env: env, object: ret }
   }
 
-  pub fn create_explosion_event_detonate(param_1: event_cause_Cause, param_2: jobject, param_3: world_explosion_Explosion, param_4: world_World, param_5: jobject) -> event_world_ExplosionEvent_Detonate {
-    let ret = java_method!(self.env, "createExplosionEventDetonate", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/explosion/Explosion;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/world/ExplosionEvent$Detonate;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn create_explosion_event_detonate(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_explosion_Explosion, param_4: world_World, param_5: jobject) -> event_world_ExplosionEvent_Detonate {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createExplosionEventDetonate", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/explosion/Explosion;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/world/ExplosionEvent$Detonate;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createExplosionEventDetonate was null") }
-    event_world_ExplosionEvent_Detonate { env: self.env, object: ret }
+    event_world_ExplosionEvent_Detonate { env: env, object: ret }
   }
 
-  pub fn create_explosion_event_post(param_1: event_cause_Cause, param_2: world_explosion_Explosion, param_3: world_World) -> event_world_ExplosionEvent_Post {
-    let ret = java_method!(self.env, "createExplosionEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/explosion/Explosion;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/ExplosionEvent$Post;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_explosion_event_post(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_explosion_Explosion, param_3: world_World) -> event_world_ExplosionEvent_Post {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createExplosionEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/explosion/Explosion;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/ExplosionEvent$Post;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createExplosionEventPost was null") }
-    event_world_ExplosionEvent_Post { env: self.env, object: ret }
+    event_world_ExplosionEvent_Post { env: env, object: ret }
   }
 
-  pub fn create_explosion_event_pre(param_1: event_cause_Cause, param_2: world_explosion_Explosion, param_3: world_World) -> event_world_ExplosionEvent_Pre {
-    let ret = java_method!(self.env, "createExplosionEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/explosion/Explosion;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/ExplosionEvent$Pre;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_explosion_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_explosion_Explosion, param_3: world_World) -> event_world_ExplosionEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createExplosionEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/explosion/Explosion;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/ExplosionEvent$Pre;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createExplosionEventPre was null") }
-    event_world_ExplosionEvent_Pre { env: self.env, object: ret }
+    event_world_ExplosionEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_generate_chunk_event_post(param_1: event_cause_Cause, param_2: world_Chunk) -> event_world_GenerateChunkEvent_Post {
-    let ret = java_method!(self.env, "createGenerateChunkEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/GenerateChunkEvent$Post;", CallStaticObjectMethodA, param_1);
+  pub fn create_generate_chunk_event_post(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_Chunk) -> event_world_GenerateChunkEvent_Post {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGenerateChunkEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/GenerateChunkEvent$Post;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGenerateChunkEventPost was null") }
-    event_world_GenerateChunkEvent_Post { env: self.env, object: ret }
+    event_world_GenerateChunkEvent_Post { env: env, object: ret }
   }
 
-  pub fn create_generate_chunk_event_pre(param_1: event_cause_Cause, param_2: world_Chunk) -> event_world_GenerateChunkEvent_Pre {
-    let ret = java_method!(self.env, "createGenerateChunkEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/GenerateChunkEvent$Pre;", CallStaticObjectMethodA, param_1);
+  pub fn create_generate_chunk_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_Chunk) -> event_world_GenerateChunkEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createGenerateChunkEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/GenerateChunkEvent$Pre;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createGenerateChunkEventPre was null") }
-    event_world_GenerateChunkEvent_Pre { env: self.env, object: ret }
+    event_world_GenerateChunkEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_load_world_event(param_1: event_cause_Cause, param_2: world_World) -> event_world_LoadWorldEvent {
-    let ret = java_method!(self.env, "createLoadWorldEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/LoadWorldEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_load_world_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World) -> event_world_LoadWorldEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createLoadWorldEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/LoadWorldEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createLoadWorldEvent was null") }
-    event_world_LoadWorldEvent { env: self.env, object: ret }
+    event_world_LoadWorldEvent { env: env, object: ret }
   }
 
-  pub fn create_save_world_event(param_1: event_cause_Cause, param_2: world_World) -> event_world_SaveWorldEvent {
-    let ret = java_method!(self.env, "createSaveWorldEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/SaveWorldEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_save_world_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World) -> event_world_SaveWorldEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSaveWorldEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/SaveWorldEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSaveWorldEvent was null") }
-    event_world_SaveWorldEvent { env: self.env, object: ret }
+    event_world_SaveWorldEvent { env: env, object: ret }
   }
 
-  pub fn create_save_world_event_post(param_1: event_cause_Cause, param_2: world_World) -> event_world_SaveWorldEvent_Post {
-    let ret = java_method!(self.env, "createSaveWorldEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/SaveWorldEvent$Post;", CallStaticObjectMethodA, param_1);
+  pub fn create_save_world_event_post(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World) -> event_world_SaveWorldEvent_Post {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSaveWorldEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/SaveWorldEvent$Post;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSaveWorldEventPost was null") }
-    event_world_SaveWorldEvent_Post { env: self.env, object: ret }
+    event_world_SaveWorldEvent_Post { env: env, object: ret }
   }
 
-  pub fn create_save_world_event_pre(param_1: event_cause_Cause, param_2: world_World) -> event_world_SaveWorldEvent_Pre {
-    let ret = java_method!(self.env, "createSaveWorldEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/SaveWorldEvent$Pre;", CallStaticObjectMethodA, param_1);
+  pub fn create_save_world_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World) -> event_world_SaveWorldEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createSaveWorldEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/SaveWorldEvent$Pre;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createSaveWorldEventPre was null") }
-    event_world_SaveWorldEvent_Pre { env: self.env, object: ret }
+    event_world_SaveWorldEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_target_world_event(param_1: event_cause_Cause, param_2: world_World) -> event_world_TargetWorldEvent {
-    let ret = java_method!(self.env, "createTargetWorldEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/TargetWorldEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_world_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World) -> event_world_TargetWorldEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetWorldEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/TargetWorldEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetWorldEvent was null") }
-    event_world_TargetWorldEvent { env: self.env, object: ret }
+    event_world_TargetWorldEvent { env: env, object: ret }
   }
 
-  pub fn create_unload_world_event(param_1: event_cause_Cause, param_2: world_World) -> event_world_UnloadWorldEvent {
-    let ret = java_method!(self.env, "createUnloadWorldEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/UnloadWorldEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_unload_world_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_World) -> event_world_UnloadWorldEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createUnloadWorldEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/event/world/UnloadWorldEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createUnloadWorldEvent was null") }
-    event_world_UnloadWorldEvent { env: self.env, object: ret }
+    event_world_UnloadWorldEvent { env: env, object: ret }
   }
 
-  pub fn create_forced_chunk_event(param_1: event_cause_Cause, param_2: jobject, param_3: world_ChunkTicketManager_LoadingTicket) -> event_world_chunk_ForcedChunkEvent {
-    let ret = java_method!(self.env, "createForcedChunkEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lcom/flowpowered/math/vector/Vector3i;Lorg/spongepowered/api/world/ChunkTicketManager$LoadingTicket;)Lorg/spongepowered/api/event/world/chunk/ForcedChunkEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_forced_chunk_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_ChunkTicketManager_LoadingTicket) -> event_world_chunk_ForcedChunkEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createForcedChunkEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lcom/flowpowered/math/vector/Vector3i;Lorg/spongepowered/api/world/ChunkTicketManager$LoadingTicket;)Lorg/spongepowered/api/event/world/chunk/ForcedChunkEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createForcedChunkEvent was null") }
-    event_world_chunk_ForcedChunkEvent { env: self.env, object: ret }
+    event_world_chunk_ForcedChunkEvent { env: env, object: ret }
   }
 
-  pub fn create_load_chunk_event(param_1: event_cause_Cause, param_2: world_Chunk) -> event_world_chunk_LoadChunkEvent {
-    let ret = java_method!(self.env, "createLoadChunkEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/LoadChunkEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_load_chunk_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_Chunk) -> event_world_chunk_LoadChunkEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createLoadChunkEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/LoadChunkEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createLoadChunkEvent was null") }
-    event_world_chunk_LoadChunkEvent { env: self.env, object: ret }
+    event_world_chunk_LoadChunkEvent { env: env, object: ret }
   }
 
-  pub fn create_populate_chunk_event_populate(param_1: event_cause_Cause, param_2: world_gen_Populator, param_3: world_Chunk) -> event_world_chunk_PopulateChunkEvent_Populate {
-    let ret = java_method!(self.env, "createPopulateChunkEventPopulate", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/gen/Populator;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/PopulateChunkEvent$Populate;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_populate_chunk_event_populate(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_gen_Populator, param_3: world_Chunk) -> event_world_chunk_PopulateChunkEvent_Populate {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createPopulateChunkEventPopulate", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/gen/Populator;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/PopulateChunkEvent$Populate;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createPopulateChunkEventPopulate was null") }
-    event_world_chunk_PopulateChunkEvent_Populate { env: self.env, object: ret }
+    event_world_chunk_PopulateChunkEvent_Populate { env: env, object: ret }
   }
 
-  pub fn create_populate_chunk_event_post(param_1: event_cause_Cause, param_2: jobject, param_3: world_Chunk) -> event_world_chunk_PopulateChunkEvent_Post {
-    let ret = java_method!(self.env, "createPopulateChunkEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/PopulateChunkEvent$Post;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_populate_chunk_event_post(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_Chunk) -> event_world_chunk_PopulateChunkEvent_Post {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createPopulateChunkEventPost", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/PopulateChunkEvent$Post;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createPopulateChunkEventPost was null") }
-    event_world_chunk_PopulateChunkEvent_Post { env: self.env, object: ret }
+    event_world_chunk_PopulateChunkEvent_Post { env: env, object: ret }
   }
 
-  pub fn create_populate_chunk_event_pre(param_1: event_cause_Cause, param_2: jobject, param_3: world_Chunk) -> event_world_chunk_PopulateChunkEvent_Pre {
-    let ret = java_method!(self.env, "createPopulateChunkEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/PopulateChunkEvent$Pre;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_populate_chunk_event_pre(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_Chunk) -> event_world_chunk_PopulateChunkEvent_Pre {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createPopulateChunkEventPre", "(Lorg/spongepowered/api/event/cause/Cause;Ljava/util/List;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/PopulateChunkEvent$Pre;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createPopulateChunkEventPre was null") }
-    event_world_chunk_PopulateChunkEvent_Pre { env: self.env, object: ret }
+    event_world_chunk_PopulateChunkEvent_Pre { env: env, object: ret }
   }
 
-  pub fn create_target_chunk_event(param_1: event_cause_Cause, param_2: world_Chunk) -> event_world_chunk_TargetChunkEvent {
-    let ret = java_method!(self.env, "createTargetChunkEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/TargetChunkEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_target_chunk_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_Chunk) -> event_world_chunk_TargetChunkEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createTargetChunkEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/TargetChunkEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createTargetChunkEvent was null") }
-    event_world_chunk_TargetChunkEvent { env: self.env, object: ret }
+    event_world_chunk_TargetChunkEvent { env: env, object: ret }
   }
 
-  pub fn create_unforced_chunk_event(param_1: event_cause_Cause, param_2: jobject, param_3: world_ChunkTicketManager_LoadingTicket) -> event_world_chunk_UnforcedChunkEvent {
-    let ret = java_method!(self.env, "createUnforcedChunkEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lcom/flowpowered/math/vector/Vector3i;Lorg/spongepowered/api/world/ChunkTicketManager$LoadingTicket;)Lorg/spongepowered/api/event/world/chunk/UnforcedChunkEvent;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_unforced_chunk_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_ChunkTicketManager_LoadingTicket) -> event_world_chunk_UnforcedChunkEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createUnforcedChunkEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lcom/flowpowered/math/vector/Vector3i;Lorg/spongepowered/api/world/ChunkTicketManager$LoadingTicket;)Lorg/spongepowered/api/event/world/chunk/UnforcedChunkEvent;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createUnforcedChunkEvent was null") }
-    event_world_chunk_UnforcedChunkEvent { env: self.env, object: ret }
+    event_world_chunk_UnforcedChunkEvent { env: env, object: ret }
   }
 
-  pub fn create_unload_chunk_event(param_1: event_cause_Cause, param_2: world_Chunk) -> event_world_chunk_UnloadChunkEvent {
-    let ret = java_method!(self.env, "createUnloadChunkEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/UnloadChunkEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_unload_chunk_event(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: world_Chunk) -> event_world_chunk_UnloadChunkEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createUnloadChunkEvent", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/world/Chunk;)Lorg/spongepowered/api/event/world/chunk/UnloadChunkEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createUnloadChunkEvent was null") }
-    event_world_chunk_UnloadChunkEvent { env: self.env, object: ret }
+    event_world_chunk_UnloadChunkEvent { env: env, object: ret }
   }
 
 }
@@ -36112,16 +36112,16 @@ impl event_SpongeEventFactoryUtils {
     event_SpongeEventFactoryUtils { env: self.env, object: ret }
   }
 
-  pub fn create_event_impl(param_1: jobject, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "createEventImpl", "(Ljava/lang/Class;Ljava/util/Map;)Ljava/lang/Object;", CallStaticObjectMethodA, param_1);
+  pub fn create_event_impl(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactoryUtils", "createEventImpl", "(Ljava/lang/Class;Ljava/util/Map;)Ljava/lang/Object;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactoryUtils#createEventImpl was null") }
     ret
   }
 
-  pub fn create_state(param_1: jobject, param_2: Game) -> event_game_state_GameStateEvent {
-    let ret = java_method!(self.env, "createState", "(Ljava/lang/Class;Lorg/spongepowered/api/Game;)Lorg/spongepowered/api/event/game/state/GameStateEvent;", CallStaticObjectMethodA, param_1);
+  pub fn create_state(env: *mut JNIEnv, param_1: jobject, param_2: Game) -> event_game_state_GameStateEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactoryUtils", "createState", "(Ljava/lang/Class;Lorg/spongepowered/api/Game;)Lorg/spongepowered/api/event/game/state/GameStateEvent;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactoryUtils#createState was null") }
-    event_game_state_GameStateEvent { env: self.env, object: ret }
+    event_game_state_GameStateEvent { env: env, object: ret }
   }
 
 }
@@ -36190,13 +36190,13 @@ impl event_TristateResult_Result {
     }
   }
 
-  pub fn values() -> &[event_TristateResult_Result] {
+  pub fn values(env: *mut JNIEnv) -> Vec<event_TristateResult_Result> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> event_TristateResult_Result {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/event/TristateResult$Result;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> event_TristateResult_Result {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/TristateResult$Result", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/event/TristateResult$Result;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/event/TristateResult$Result#valueOf was null") }
-    event_TristateResult_Result { env: self.env, object: ret }
+    event_TristateResult_Result { env: env, object: ret }
   }
 
 }
@@ -37152,10 +37152,10 @@ impl extra_fluid_FluidStack {
     }
   }
 
-  pub fn builder() -> extra_fluid_FluidStack_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/extra/fluid/FluidStack$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> extra_fluid_FluidStack_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/fluid/FluidStack", "builder", "()Lorg/spongepowered/api/extra/fluid/FluidStack$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/extra/fluid/FluidStack#builder was null") }
-    extra_fluid_FluidStack_Builder { env: self.env, object: ret }
+    extra_fluid_FluidStack_Builder { env: env, object: ret }
   }
 
   pub fn get_fluid(&self) -> extra_fluid_FluidType {
@@ -37230,10 +37230,10 @@ impl extra_fluid_FluidStackSnapshot {
     }
   }
 
-  pub fn builder() -> extra_fluid_FluidStackSnapshot_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/extra/fluid/FluidStackSnapshot$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> extra_fluid_FluidStackSnapshot_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/fluid/FluidStackSnapshot", "builder", "()Lorg/spongepowered/api/extra/fluid/FluidStackSnapshot$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/extra/fluid/FluidStackSnapshot#builder was null") }
-    extra_fluid_FluidStackSnapshot_Builder { env: self.env, object: ret }
+    extra_fluid_FluidStackSnapshot_Builder { env: env, object: ret }
   }
 
   pub fn get_fluid(&self) -> extra_fluid_FluidType {
@@ -38069,13 +38069,13 @@ impl GameState {
     }
   }
 
-  pub fn values() -> &[GameState] {
+  pub fn values(env: *mut JNIEnv) -> Vec<GameState> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> GameState {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/GameState;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> GameState {
+    let ret = static_java_method!(env, "org/spongepowered/api/GameState", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/GameState;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/GameState#valueOf was null") }
-    GameState { env: self.env, object: ret }
+    GameState { env: env, object: ret }
   }
 
 }
@@ -38182,7 +38182,7 @@ impl item_FireworkEffect_Builder {
     item_FireworkEffect_Builder { env: self.env, object: ret }
   }
 
-  pub fn colors(&self, param_1: &[util_Color]) -> item_FireworkEffect_Builder {
+  pub fn colors(&self, param_1: Vec<util_Color>) -> item_FireworkEffect_Builder {
     let ret = java_method!(self.env, self.object, "colors", "([Lorg/spongepowered/api/util/Color;)Lorg/spongepowered/api/item/FireworkEffect$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/FireworkEffect$Builder#colors was null") }
     item_FireworkEffect_Builder { env: self.env, object: ret }
@@ -38200,7 +38200,7 @@ impl item_FireworkEffect_Builder {
     item_FireworkEffect_Builder { env: self.env, object: ret }
   }
 
-  pub fn fades(&self, param_1: &[util_Color]) -> item_FireworkEffect_Builder {
+  pub fn fades(&self, param_1: Vec<util_Color>) -> item_FireworkEffect_Builder {
     let ret = java_method!(self.env, self.object, "fades", "([Lorg/spongepowered/api/util/Color;)Lorg/spongepowered/api/item/FireworkEffect$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/FireworkEffect$Builder#fades was null") }
     item_FireworkEffect_Builder { env: self.env, object: ret }
@@ -38240,10 +38240,10 @@ impl item_FireworkEffect {
     }
   }
 
-  pub fn builder() -> item_FireworkEffect_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/item/FireworkEffect$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> item_FireworkEffect_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/FireworkEffect", "builder", "()Lorg/spongepowered/api/item/FireworkEffect$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/item/FireworkEffect#builder was null") }
-    item_FireworkEffect_Builder { env: self.env, object: ret }
+    item_FireworkEffect_Builder { env: env, object: ret }
   }
 
   pub fn flickers(&self) -> bool {
@@ -38462,10 +38462,10 @@ impl item_inventory_custom_CustomInventory {
     }
   }
 
-  pub fn builder() -> item_inventory_custom_CustomInventory_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/item/inventory/custom/CustomInventory$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> item_inventory_custom_CustomInventory_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/custom/CustomInventory", "builder", "()Lorg/spongepowered/api/item/inventory/custom/CustomInventory$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/custom/CustomInventory#builder was null") }
-    item_inventory_custom_CustomInventory_Builder { env: self.env, object: ret }
+    item_inventory_custom_CustomInventory_Builder { env: env, object: ret }
   }
 
 }
@@ -38821,43 +38821,43 @@ impl item_inventory_Inventory {
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn query(&self, param_1: &[jobject]) -> item_inventory_Inventory {
+  pub fn query(&self, param_1: Vec<jobject>) -> item_inventory_Inventory {
     let ret = java_method!(self.env, self.object, "query", "([Ljava/lang/Class;)Lorg/spongepowered/api/item/inventory/Inventory;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/Inventory#query was null") }
     item_inventory_Inventory { env: self.env, object: ret }
   }
 
-  pub fn query_1(&self, param_1: &[item_ItemType]) -> item_inventory_Inventory {
+  pub fn query_1(&self, param_1: Vec<item_ItemType>) -> item_inventory_Inventory {
     let ret = java_method!(self.env, self.object, "query", "([Lorg/spongepowered/api/item/ItemType;)Lorg/spongepowered/api/item/inventory/Inventory;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/Inventory#query was null") }
     item_inventory_Inventory { env: self.env, object: ret }
   }
 
-  pub fn query_2(&self, param_1: &[item_inventory_ItemStack]) -> item_inventory_Inventory {
+  pub fn query_2(&self, param_1: Vec<item_inventory_ItemStack>) -> item_inventory_Inventory {
     let ret = java_method!(self.env, self.object, "query", "([Lorg/spongepowered/api/item/inventory/ItemStack;)Lorg/spongepowered/api/item/inventory/Inventory;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/Inventory#query was null") }
     item_inventory_Inventory { env: self.env, object: ret }
   }
 
-  pub fn query_3(&self, param_1: &[item_inventory_InventoryProperty]) -> item_inventory_Inventory {
+  pub fn query_3(&self, param_1: Vec<item_inventory_InventoryProperty>) -> item_inventory_Inventory {
     let ret = java_method!(self.env, self.object, "query", "([Lorg/spongepowered/api/item/inventory/InventoryProperty;)Lorg/spongepowered/api/item/inventory/Inventory;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/Inventory#query was null") }
     item_inventory_Inventory { env: self.env, object: ret }
   }
 
-  pub fn query_4(&self, param_1: &[text_translation_Translation]) -> item_inventory_Inventory {
+  pub fn query_4(&self, param_1: Vec<text_translation_Translation>) -> item_inventory_Inventory {
     let ret = java_method!(self.env, self.object, "query", "([Lorg/spongepowered/api/text/translation/Translation;)Lorg/spongepowered/api/item/inventory/Inventory;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/Inventory#query was null") }
     item_inventory_Inventory { env: self.env, object: ret }
   }
 
-  pub fn query_5(&self, param_1: &[jobject]) -> item_inventory_Inventory {
+  pub fn query_5(&self, param_1: Vec<jobject>) -> item_inventory_Inventory {
     let ret = java_method!(self.env, self.object, "query", "([Ljava/lang/String;)Lorg/spongepowered/api/item/inventory/Inventory;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/Inventory#query was null") }
     item_inventory_Inventory { env: self.env, object: ret }
   }
 
-  pub fn query_6(&self, param_1: &[jobject]) -> item_inventory_Inventory {
+  pub fn query_6(&self, param_1: Vec<jobject>) -> item_inventory_Inventory {
     let ret = java_method!(self.env, self.object, "query", "([Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/Inventory;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/Inventory#query was null") }
     item_inventory_Inventory { env: self.env, object: ret }
@@ -38983,16 +38983,16 @@ impl item_inventory_ItemStack {
     }
   }
 
-  pub fn builder() -> item_inventory_ItemStack_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/item/inventory/ItemStack$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> item_inventory_ItemStack_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStack", "builder", "()Lorg/spongepowered/api/item/inventory/ItemStack$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStack#builder was null") }
-    item_inventory_ItemStack_Builder { env: self.env, object: ret }
+    item_inventory_ItemStack_Builder { env: env, object: ret }
   }
 
-  pub fn of(param_1: item_ItemType, param_2: i32) -> item_inventory_ItemStack {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/item/ItemType;I)Lorg/spongepowered/api/item/inventory/ItemStack;", CallStaticObjectMethodA, param_1);
+  pub fn of(env: *mut JNIEnv, param_1: item_ItemType, param_2: i32) -> item_inventory_ItemStack {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStack", "of", "(Lorg/spongepowered/api/item/ItemType;I)Lorg/spongepowered/api/item/inventory/ItemStack;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStack#of was null") }
-    item_inventory_ItemStack { env: self.env, object: ret }
+    item_inventory_ItemStack { env: env, object: ret }
   }
 
   pub fn get_item(&self) -> item_ItemType {
@@ -39051,176 +39051,176 @@ impl item_inventory_ItemStackBuilderPopulators {
     }
   }
 
-  pub fn item_stack(param_1: item_inventory_ItemStackSnapshot) -> jobject {
-    let ret = java_method!(self.env, "itemStack", "(Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn item_stack(env: *mut JNIEnv, param_1: item_inventory_ItemStackSnapshot) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "itemStack", "(Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#itemStack was null") }
     ret
   }
 
-  pub fn item_stacks(param_1: item_inventory_ItemStackSnapshot, param_2: &[item_inventory_ItemStackSnapshot]) -> jobject {
-    let ret = java_method!(self.env, "itemStacks", "(Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;[Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn item_stacks(env: *mut JNIEnv, param_1: item_inventory_ItemStackSnapshot, param_2: Vec<item_inventory_ItemStackSnapshot>) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "itemStacks", "(Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;[Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#itemStacks was null") }
     ret
   }
 
-  pub fn item(param_1: item_ItemType) -> jobject {
-    let ret = java_method!(self.env, "item", "(Lorg/spongepowered/api/item/ItemType;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn item(env: *mut JNIEnv, param_1: item_ItemType) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "item", "(Lorg/spongepowered/api/item/ItemType;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#item was null") }
     ret
   }
 
-  pub fn item_1(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "item", "(Ljava/util/function/Supplier;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn item_1(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "item", "(Ljava/util/function/Supplier;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#item was null") }
     ret
   }
 
-  pub fn items(param_1: item_ItemType, param_2: &[item_ItemType]) -> jobject {
-    let ret = java_method!(self.env, "items", "(Lorg/spongepowered/api/item/ItemType;[Lorg/spongepowered/api/item/ItemType;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn items(env: *mut JNIEnv, param_1: item_ItemType, param_2: Vec<item_ItemType>) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "items", "(Lorg/spongepowered/api/item/ItemType;[Lorg/spongepowered/api/item/ItemType;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#items was null") }
     ret
   }
 
-  pub fn items_1(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "items", "(Ljava/util/Collection;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn items_1(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "items", "(Ljava/util/Collection;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#items was null") }
     ret
   }
 
-  pub fn quantity(param_1: util_weighted_VariableAmount) -> jobject {
-    let ret = java_method!(self.env, "quantity", "(Lorg/spongepowered/api/util/weighted/VariableAmount;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn quantity(env: *mut JNIEnv, param_1: util_weighted_VariableAmount) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "quantity", "(Lorg/spongepowered/api/util/weighted/VariableAmount;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#quantity was null") }
     ret
   }
 
-  pub fn quantity_1(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "quantity", "(Ljava/util/function/Supplier;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn quantity_1(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "quantity", "(Ljava/util/function/Supplier;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#quantity was null") }
     ret
   }
 
-  pub fn key_value(param_1: data_key_Key, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "keyValue", "(Lorg/spongepowered/api/data/key/Key;Ljava/lang/Object;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn key_value(env: *mut JNIEnv, param_1: data_key_Key, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "keyValue", "(Lorg/spongepowered/api/data/key/Key;Ljava/lang/Object;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#keyValue was null") }
     ret
   }
 
-  pub fn key_values(param_1: data_key_Key, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "keyValues", "(Lorg/spongepowered/api/data/key/Key;Ljava/lang/Iterable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn key_values(env: *mut JNIEnv, param_1: data_key_Key, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "keyValues", "(Lorg/spongepowered/api/data/key/Key;Ljava/lang/Iterable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#keyValues was null") }
     ret
   }
 
-  pub fn list_values(param_1: data_key_Key, param_2: jobject, param_3: util_weighted_VariableAmount) -> jobject {
-    let ret = java_method!(self.env, "listValues", "(Lorg/spongepowered/api/data/key/Key;Ljava/util/List;Lorg/spongepowered/api/util/weighted/VariableAmount;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn list_values(env: *mut JNIEnv, param_1: data_key_Key, param_2: jobject, param_3: util_weighted_VariableAmount) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "listValues", "(Lorg/spongepowered/api/data/key/Key;Ljava/util/List;Lorg/spongepowered/api/util/weighted/VariableAmount;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#listValues was null") }
     ret
   }
 
-  pub fn list_values_1(param_1: data_key_Key, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "listValues", "(Lorg/spongepowered/api/data/key/Key;Ljava/util/List;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn list_values_1(env: *mut JNIEnv, param_1: data_key_Key, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "listValues", "(Lorg/spongepowered/api/data/key/Key;Ljava/util/List;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#listValues was null") }
     ret
   }
 
-  pub fn list_values_2(param_1: data_key_Key, param_2: util_weighted_WeightedTable) -> jobject {
-    let ret = java_method!(self.env, "listValues", "(Lorg/spongepowered/api/data/key/Key;Lorg/spongepowered/api/util/weighted/WeightedTable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn list_values_2(env: *mut JNIEnv, param_1: data_key_Key, param_2: util_weighted_WeightedTable) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "listValues", "(Lorg/spongepowered/api/data/key/Key;Lorg/spongepowered/api/util/weighted/WeightedTable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#listValues was null") }
     ret
   }
 
-  pub fn list_value_suppliers(param_1: data_key_Key, param_2: util_weighted_WeightedTable) -> jobject {
-    let ret = java_method!(self.env, "listValueSuppliers", "(Lorg/spongepowered/api/data/key/Key;Lorg/spongepowered/api/util/weighted/WeightedTable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn list_value_suppliers(env: *mut JNIEnv, param_1: data_key_Key, param_2: util_weighted_WeightedTable) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "listValueSuppliers", "(Lorg/spongepowered/api/data/key/Key;Lorg/spongepowered/api/util/weighted/WeightedTable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#listValueSuppliers was null") }
     ret
   }
 
-  pub fn set_values(param_1: data_key_Key, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "setValues", "(Lorg/spongepowered/api/data/key/Key;Ljava/util/Set;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn set_values(env: *mut JNIEnv, param_1: data_key_Key, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "setValues", "(Lorg/spongepowered/api/data/key/Key;Ljava/util/Set;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#setValues was null") }
     ret
   }
 
-  pub fn set_values_1(param_1: data_key_Key, param_2: jobject, param_3: util_weighted_VariableAmount) -> jobject {
-    let ret = java_method!(self.env, "setValues", "(Lorg/spongepowered/api/data/key/Key;Ljava/util/Set;Lorg/spongepowered/api/util/weighted/VariableAmount;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn set_values_1(env: *mut JNIEnv, param_1: data_key_Key, param_2: jobject, param_3: util_weighted_VariableAmount) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "setValues", "(Lorg/spongepowered/api/data/key/Key;Ljava/util/Set;Lorg/spongepowered/api/util/weighted/VariableAmount;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#setValues was null") }
     ret
   }
 
-  pub fn set_values_2(param_1: data_key_Key, param_2: util_weighted_WeightedTable) -> jobject {
-    let ret = java_method!(self.env, "setValues", "(Lorg/spongepowered/api/data/key/Key;Lorg/spongepowered/api/util/weighted/WeightedTable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn set_values_2(env: *mut JNIEnv, param_1: data_key_Key, param_2: util_weighted_WeightedTable) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "setValues", "(Lorg/spongepowered/api/data/key/Key;Lorg/spongepowered/api/util/weighted/WeightedTable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#setValues was null") }
     ret
   }
 
-  pub fn value(param_1: data_value_BaseValue) -> jobject {
-    let ret = java_method!(self.env, "value", "(Lorg/spongepowered/api/data/value/BaseValue;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn value(env: *mut JNIEnv, param_1: data_value_BaseValue) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "value", "(Lorg/spongepowered/api/data/value/BaseValue;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#value was null") }
     ret
   }
 
-  pub fn values(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "values", "(Ljava/lang/Iterable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn values(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "values", "(Ljava/lang/Iterable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#values was null") }
     ret
   }
 
-  pub fn data(param_1: data_manipulator_DataManipulator) -> jobject {
-    let ret = java_method!(self.env, "data", "(Lorg/spongepowered/api/data/manipulator/DataManipulator;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn data(env: *mut JNIEnv, param_1: data_manipulator_DataManipulator) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "data", "(Lorg/spongepowered/api/data/manipulator/DataManipulator;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#data was null") }
     ret
   }
 
-  pub fn data_1(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "data", "(Ljava/util/Collection;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn data_1(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "data", "(Ljava/util/Collection;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#data was null") }
     ret
   }
 
-  pub fn data_2(param_1: jobject, param_2: util_weighted_VariableAmount) -> jobject {
-    let ret = java_method!(self.env, "data", "(Ljava/util/Collection;Lorg/spongepowered/api/util/weighted/VariableAmount;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn data_2(env: *mut JNIEnv, param_1: jobject, param_2: util_weighted_VariableAmount) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "data", "(Ljava/util/Collection;Lorg/spongepowered/api/util/weighted/VariableAmount;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#data was null") }
     ret
   }
 
-  pub fn data_3(param_1: util_weighted_WeightedTable) -> jobject {
-    let ret = java_method!(self.env, "data", "(Lorg/spongepowered/api/util/weighted/WeightedTable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn data_3(env: *mut JNIEnv, param_1: util_weighted_WeightedTable) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "data", "(Lorg/spongepowered/api/util/weighted/WeightedTable;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#data was null") }
     ret
   }
 
-  pub fn enchantment(param_1: item_Enchantment) -> jobject {
-    let ret = java_method!(self.env, "enchantment", "(Lorg/spongepowered/api/item/Enchantment;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn enchantment(env: *mut JNIEnv, param_1: item_Enchantment) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "enchantment", "(Lorg/spongepowered/api/item/Enchantment;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#enchantment was null") }
     ret
   }
 
-  pub fn enchantment_1(param_1: util_weighted_VariableAmount, param_2: item_Enchantment) -> jobject {
-    let ret = java_method!(self.env, "enchantment", "(Lorg/spongepowered/api/util/weighted/VariableAmount;Lorg/spongepowered/api/item/Enchantment;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn enchantment_1(env: *mut JNIEnv, param_1: util_weighted_VariableAmount, param_2: item_Enchantment) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "enchantment", "(Lorg/spongepowered/api/util/weighted/VariableAmount;Lorg/spongepowered/api/item/Enchantment;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#enchantment was null") }
     ret
   }
 
-  pub fn enchantments_with_vanilla_level_variance(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "enchantmentsWithVanillaLevelVariance", "(Ljava/util/Collection;)Ljava/util/function/BiConsumer;", CallStaticObjectMethod);
+  pub fn enchantments_with_vanilla_level_variance(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "enchantmentsWithVanillaLevelVariance", "(Ljava/util/Collection;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#enchantmentsWithVanillaLevelVariance was null") }
     ret
   }
 
-  pub fn enchantments_with_vanilla_level_variance_1(param_1: util_weighted_VariableAmount, param_2: item_Enchantment, param_3: &[item_Enchantment]) -> jobject {
-    let ret = java_method!(self.env, "enchantmentsWithVanillaLevelVariance", "(Lorg/spongepowered/api/util/weighted/VariableAmount;Lorg/spongepowered/api/item/Enchantment;[Lorg/spongepowered/api/item/Enchantment;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn enchantments_with_vanilla_level_variance_1(env: *mut JNIEnv, param_1: util_weighted_VariableAmount, param_2: item_Enchantment, param_3: Vec<item_Enchantment>) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "enchantmentsWithVanillaLevelVariance", "(Lorg/spongepowered/api/util/weighted/VariableAmount;Lorg/spongepowered/api/item/Enchantment;[Lorg/spongepowered/api/item/Enchantment;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#enchantmentsWithVanillaLevelVariance was null") }
     ret
   }
 
-  pub fn enchantments_with_vanilla_level_variance_2(param_1: util_weighted_VariableAmount, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "enchantmentsWithVanillaLevelVariance", "(Lorg/spongepowered/api/util/weighted/VariableAmount;Ljava/util/Collection;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn enchantments_with_vanilla_level_variance_2(env: *mut JNIEnv, param_1: util_weighted_VariableAmount, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "enchantmentsWithVanillaLevelVariance", "(Lorg/spongepowered/api/util/weighted/VariableAmount;Ljava/util/Collection;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#enchantmentsWithVanillaLevelVariance was null") }
     ret
   }
 
-  pub fn enchantments(param_1: util_weighted_VariableAmount, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "enchantments", "(Lorg/spongepowered/api/util/weighted/VariableAmount;Ljava/util/Collection;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1);
+  pub fn enchantments(env: *mut JNIEnv, param_1: util_weighted_VariableAmount, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackBuilderPopulators", "enchantments", "(Lorg/spongepowered/api/util/weighted/VariableAmount;Ljava/util/Collection;)Ljava/util/function/BiConsumer;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackBuilderPopulators#enchantments was null") }
     ret
   }
@@ -39393,10 +39393,10 @@ impl item_inventory_ItemStackGenerator {
     }
   }
 
-  pub fn builder() -> item_inventory_ItemStackGenerator_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/item/inventory/ItemStackGenerator$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> item_inventory_ItemStackGenerator_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/ItemStackGenerator", "builder", "()Lorg/spongepowered/api/item/inventory/ItemStackGenerator$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/ItemStackGenerator#builder was null") }
-    item_inventory_ItemStackGenerator_Builder { env: self.env, object: ret }
+    item_inventory_ItemStackGenerator_Builder { env: env, object: ret }
   }
 
 }
@@ -39526,10 +39526,10 @@ impl item_inventory_property_AcceptsItems {
     java_method!(self.env, self.object, "equals", "(Ljava/lang/Object;)Z", CallBooleanMethodA, param_1) == 1
   }
 
-  pub fn of(param_1: &[jobject]) -> item_inventory_property_AcceptsItems {
-    let ret = java_method!(self.env, "of", "([Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/AcceptsItems;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: Vec<jobject>) -> item_inventory_property_AcceptsItems {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/AcceptsItems", "of", "([Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/AcceptsItems;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/AcceptsItems#of was null") }
-    item_inventory_property_AcceptsItems { env: self.env, object: ret }
+    item_inventory_property_AcceptsItems { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -39570,16 +39570,16 @@ impl item_inventory_property_ArmorSlotType {
     item_inventory_property_ArmorSlotType { env: self.env, object: ret }
   }
 
-  pub fn of(param_1: jobject) -> item_inventory_property_ArmorSlotType {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/ArmorSlotType;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_ArmorSlotType {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/ArmorSlotType", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/ArmorSlotType;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/ArmorSlotType#of was null") }
-    item_inventory_property_ArmorSlotType { env: self.env, object: ret }
+    item_inventory_property_ArmorSlotType { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> item_inventory_property_ArmorSlotType {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/ArmorSlotType;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_ArmorSlotType {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/ArmorSlotType", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/ArmorSlotType;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/ArmorSlotType#not was null") }
-    item_inventory_property_ArmorSlotType { env: self.env, object: ret }
+    item_inventory_property_ArmorSlotType { env: env, object: ret }
   }
 
 }
@@ -39620,16 +39620,16 @@ impl item_inventory_property_EquipmentSlotType {
     java_method!(self.env, self.object, "compareTo", "(Lorg/spongepowered/api/data/Property;)I", CallIntMethodA, param_1)
   }
 
-  pub fn of(param_1: jobject) -> item_inventory_property_EquipmentSlotType {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/EquipmentSlotType;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_EquipmentSlotType {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/EquipmentSlotType", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/EquipmentSlotType;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/EquipmentSlotType#of was null") }
-    item_inventory_property_EquipmentSlotType { env: self.env, object: ret }
+    item_inventory_property_EquipmentSlotType { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> item_inventory_property_EquipmentSlotType {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/EquipmentSlotType;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_EquipmentSlotType {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/EquipmentSlotType", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/EquipmentSlotType;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/EquipmentSlotType#not was null") }
-    item_inventory_property_EquipmentSlotType { env: self.env, object: ret }
+    item_inventory_property_EquipmentSlotType { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -39674,40 +39674,40 @@ impl item_inventory_property_IntProperty {
     java_method!(self.env, self.object, "compareTo", "(Lorg/spongepowered/api/data/Property;)I", CallIntMethodA, param_1)
   }
 
-  pub fn of(param_1: jobject) -> item_inventory_property_IntProperty {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/IntProperty", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/IntProperty#of was null") }
-    item_inventory_property_IntProperty { env: self.env, object: ret }
+    item_inventory_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> item_inventory_property_IntProperty {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/IntProperty", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/IntProperty#not was null") }
-    item_inventory_property_IntProperty { env: self.env, object: ret }
+    item_inventory_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn greater_than(param_1: jobject) -> item_inventory_property_IntProperty {
-    let ret = java_method!(self.env, "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethod);
+  pub fn greater_than(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/IntProperty", "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/IntProperty#greaterThan was null") }
-    item_inventory_property_IntProperty { env: self.env, object: ret }
+    item_inventory_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn greater_than_or_equal(param_1: jobject) -> item_inventory_property_IntProperty {
-    let ret = java_method!(self.env, "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethod);
+  pub fn greater_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/IntProperty", "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/IntProperty#greaterThanOrEqual was null") }
-    item_inventory_property_IntProperty { env: self.env, object: ret }
+    item_inventory_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn less_than(param_1: jobject) -> item_inventory_property_IntProperty {
-    let ret = java_method!(self.env, "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethod);
+  pub fn less_than(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/IntProperty", "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/IntProperty#lessThan was null") }
-    item_inventory_property_IntProperty { env: self.env, object: ret }
+    item_inventory_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn less_than_or_equal(param_1: jobject) -> item_inventory_property_IntProperty {
-    let ret = java_method!(self.env, "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethod);
+  pub fn less_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/IntProperty", "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/IntProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/IntProperty#lessThanOrEqual was null") }
-    item_inventory_property_IntProperty { env: self.env, object: ret }
+    item_inventory_property_IntProperty { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -39772,46 +39772,46 @@ impl item_inventory_property_InventorySize {
     java_method!(self.env, self.object, "compareTo", "(Lorg/spongepowered/api/data/Property;)I", CallIntMethodA, param_1)
   }
 
-  pub fn of(param_1: jobject) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#of was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: i32, param_2: i32) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, "of", "(II)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethodA, param_1);
+  pub fn of_1(env: *mut JNIEnv, param_1: i32, param_2: i32) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "of", "(II)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#of was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#not was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
-  pub fn greater_than(param_1: jobject) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethod);
+  pub fn greater_than(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#greaterThan was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
-  pub fn greater_than_or_equal(param_1: jobject) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethod);
+  pub fn greater_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#greaterThanOrEqual was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
-  pub fn less_than(param_1: jobject) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethod);
+  pub fn less_than(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#lessThan was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
-  pub fn less_than_or_equal(param_1: jobject) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethod);
+  pub fn less_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/InventorySize;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#lessThanOrEqual was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -39856,40 +39856,40 @@ impl item_inventory_property_MappedIntProperty {
     java_method!(self.env, self.object, "compareTo", "(Lorg/spongepowered/api/data/Property;)I", CallIntMethodA, param_1)
   }
 
-  pub fn of(param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1);
+  pub fn of(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/MappedIntProperty", "of", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/MappedIntProperty#of was null") }
-    item_inventory_property_MappedIntProperty { env: self.env, object: ret }
+    item_inventory_property_MappedIntProperty { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1);
+  pub fn not(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/MappedIntProperty", "not", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/MappedIntProperty#not was null") }
-    item_inventory_property_MappedIntProperty { env: self.env, object: ret }
+    item_inventory_property_MappedIntProperty { env: env, object: ret }
   }
 
-  pub fn greater_than(param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
-    let ret = java_method!(self.env, "greaterThan", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1);
+  pub fn greater_than(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/MappedIntProperty", "greaterThan", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/MappedIntProperty#greaterThan was null") }
-    item_inventory_property_MappedIntProperty { env: self.env, object: ret }
+    item_inventory_property_MappedIntProperty { env: env, object: ret }
   }
 
-  pub fn greater_than_or_equal(param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
-    let ret = java_method!(self.env, "greaterThanOrEqual", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1);
+  pub fn greater_than_or_equal(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/MappedIntProperty", "greaterThanOrEqual", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/MappedIntProperty#greaterThanOrEqual was null") }
-    item_inventory_property_MappedIntProperty { env: self.env, object: ret }
+    item_inventory_property_MappedIntProperty { env: env, object: ret }
   }
 
-  pub fn less_than(param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
-    let ret = java_method!(self.env, "lessThan", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1);
+  pub fn less_than(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/MappedIntProperty", "lessThan", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/MappedIntProperty#lessThan was null") }
-    item_inventory_property_MappedIntProperty { env: self.env, object: ret }
+    item_inventory_property_MappedIntProperty { env: env, object: ret }
   }
 
-  pub fn less_than_or_equal(param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
-    let ret = java_method!(self.env, "lessThanOrEqual", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1);
+  pub fn less_than_or_equal(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/MappedIntProperty", "lessThanOrEqual", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/MappedIntProperty#lessThanOrEqual was null") }
-    item_inventory_property_MappedIntProperty { env: self.env, object: ret }
+    item_inventory_property_MappedIntProperty { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -39931,40 +39931,40 @@ impl item_inventory_property_SlotIndex {
     item_inventory_property_SlotIndex { env: self.env, object: ret }
   }
 
-  pub fn of(param_1: jobject) -> item_inventory_property_SlotIndex {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotIndex {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotIndex", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotIndex#of was null") }
-    item_inventory_property_SlotIndex { env: self.env, object: ret }
+    item_inventory_property_SlotIndex { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> item_inventory_property_SlotIndex {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotIndex {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotIndex", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotIndex#not was null") }
-    item_inventory_property_SlotIndex { env: self.env, object: ret }
+    item_inventory_property_SlotIndex { env: env, object: ret }
   }
 
-  pub fn greater_than(param_1: jobject) -> item_inventory_property_SlotIndex {
-    let ret = java_method!(self.env, "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethod);
+  pub fn greater_than(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotIndex {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotIndex", "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotIndex#greaterThan was null") }
-    item_inventory_property_SlotIndex { env: self.env, object: ret }
+    item_inventory_property_SlotIndex { env: env, object: ret }
   }
 
-  pub fn greater_than_or_equal(param_1: jobject) -> item_inventory_property_SlotIndex {
-    let ret = java_method!(self.env, "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethod);
+  pub fn greater_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotIndex {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotIndex", "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotIndex#greaterThanOrEqual was null") }
-    item_inventory_property_SlotIndex { env: self.env, object: ret }
+    item_inventory_property_SlotIndex { env: env, object: ret }
   }
 
-  pub fn less_than(param_1: jobject) -> item_inventory_property_SlotIndex {
-    let ret = java_method!(self.env, "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethod);
+  pub fn less_than(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotIndex {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotIndex", "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotIndex#lessThan was null") }
-    item_inventory_property_SlotIndex { env: self.env, object: ret }
+    item_inventory_property_SlotIndex { env: env, object: ret }
   }
 
-  pub fn less_than_or_equal(param_1: jobject) -> item_inventory_property_SlotIndex {
-    let ret = java_method!(self.env, "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethod);
+  pub fn less_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotIndex {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotIndex", "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotIndex;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotIndex#lessThanOrEqual was null") }
-    item_inventory_property_SlotIndex { env: self.env, object: ret }
+    item_inventory_property_SlotIndex { env: env, object: ret }
   }
 
 }
@@ -40025,46 +40025,46 @@ impl item_inventory_property_SlotPos {
     java_method!(self.env, self.object, "compareTo", "(Lorg/spongepowered/api/data/Property;)I", CallIntMethodA, param_1)
   }
 
-  pub fn of(param_1: jobject) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#of was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: i32, param_2: i32) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, "of", "(II)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethodA, param_1);
+  pub fn of_1(env: *mut JNIEnv, param_1: i32, param_2: i32) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "of", "(II)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#of was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#not was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
-  pub fn greater_than(param_1: jobject) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethod);
+  pub fn greater_than(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#greaterThan was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
-  pub fn greater_than_or_equal(param_1: jobject) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethod);
+  pub fn greater_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#greaterThanOrEqual was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
-  pub fn less_than(param_1: jobject) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethod);
+  pub fn less_than(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#lessThan was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
-  pub fn less_than_or_equal(param_1: jobject) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethod);
+  pub fn less_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotPos;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#lessThanOrEqual was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -40109,16 +40109,16 @@ impl item_inventory_property_SlotSide {
     java_method!(self.env, self.object, "compareTo", "(Lorg/spongepowered/api/data/Property;)I", CallIntMethodA, param_1)
   }
 
-  pub fn of(param_1: jobject) -> item_inventory_property_SlotSide {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotSide;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotSide {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotSide", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotSide;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotSide#of was null") }
-    item_inventory_property_SlotSide { env: self.env, object: ret }
+    item_inventory_property_SlotSide { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> item_inventory_property_SlotSide {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotSide;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotSide {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotSide", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/SlotSide;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotSide#not was null") }
-    item_inventory_property_SlotSide { env: self.env, object: ret }
+    item_inventory_property_SlotSide { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -40163,40 +40163,40 @@ impl item_inventory_property_StringProperty {
     java_method!(self.env, self.object, "compareTo", "(Lorg/spongepowered/api/data/Property;)I", CallIntMethodA, param_1)
   }
 
-  pub fn of(param_1: jobject) -> item_inventory_property_StringProperty {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_StringProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/StringProperty", "of", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/StringProperty#of was null") }
-    item_inventory_property_StringProperty { env: self.env, object: ret }
+    item_inventory_property_StringProperty { env: env, object: ret }
   }
 
-  pub fn not(param_1: jobject) -> item_inventory_property_StringProperty {
-    let ret = java_method!(self.env, "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethod);
+  pub fn not(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_StringProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/StringProperty", "not", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/StringProperty#not was null") }
-    item_inventory_property_StringProperty { env: self.env, object: ret }
+    item_inventory_property_StringProperty { env: env, object: ret }
   }
 
-  pub fn greater_than(param_1: jobject) -> item_inventory_property_StringProperty {
-    let ret = java_method!(self.env, "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethod);
+  pub fn greater_than(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_StringProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/StringProperty", "greaterThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/StringProperty#greaterThan was null") }
-    item_inventory_property_StringProperty { env: self.env, object: ret }
+    item_inventory_property_StringProperty { env: env, object: ret }
   }
 
-  pub fn greater_than_or_equal(param_1: jobject) -> item_inventory_property_StringProperty {
-    let ret = java_method!(self.env, "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethod);
+  pub fn greater_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_StringProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/StringProperty", "greaterThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/StringProperty#greaterThanOrEqual was null") }
-    item_inventory_property_StringProperty { env: self.env, object: ret }
+    item_inventory_property_StringProperty { env: env, object: ret }
   }
 
-  pub fn less_than(param_1: jobject) -> item_inventory_property_StringProperty {
-    let ret = java_method!(self.env, "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethod);
+  pub fn less_than(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_StringProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/StringProperty", "lessThan", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/StringProperty#lessThan was null") }
-    item_inventory_property_StringProperty { env: self.env, object: ret }
+    item_inventory_property_StringProperty { env: env, object: ret }
   }
 
-  pub fn less_than_or_equal(param_1: jobject) -> item_inventory_property_StringProperty {
-    let ret = java_method!(self.env, "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethod);
+  pub fn less_than_or_equal(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_StringProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/StringProperty", "lessThanOrEqual", "(Ljava/lang/Object;)Lorg/spongepowered/api/item/inventory/property/StringProperty;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/StringProperty#lessThanOrEqual was null") }
-    item_inventory_property_StringProperty { env: self.env, object: ret }
+    item_inventory_property_StringProperty { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -40366,13 +40366,13 @@ impl item_inventory_transaction_InventoryTransactionResult_Builder {
     item_inventory_transaction_InventoryTransactionResult_Builder { env: self.env, object: ret }
   }
 
-  pub fn reject(&self, param_1: &[item_inventory_ItemStack]) -> item_inventory_transaction_InventoryTransactionResult_Builder {
+  pub fn reject(&self, param_1: Vec<item_inventory_ItemStack>) -> item_inventory_transaction_InventoryTransactionResult_Builder {
     let ret = java_method!(self.env, self.object, "reject", "([Lorg/spongepowered/api/item/inventory/ItemStack;)Lorg/spongepowered/api/item/inventory/transaction/InventoryTransactionResult$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/transaction/InventoryTransactionResult$Builder#reject was null") }
     item_inventory_transaction_InventoryTransactionResult_Builder { env: self.env, object: ret }
   }
 
-  pub fn replace(&self, param_1: &[item_inventory_ItemStack]) -> item_inventory_transaction_InventoryTransactionResult_Builder {
+  pub fn replace(&self, param_1: Vec<item_inventory_ItemStack>) -> item_inventory_transaction_InventoryTransactionResult_Builder {
     let ret = java_method!(self.env, self.object, "replace", "([Lorg/spongepowered/api/item/inventory/ItemStack;)Lorg/spongepowered/api/item/inventory/transaction/InventoryTransactionResult$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/transaction/InventoryTransactionResult$Builder#replace was null") }
     item_inventory_transaction_InventoryTransactionResult_Builder { env: self.env, object: ret }
@@ -40424,13 +40424,13 @@ impl item_inventory_transaction_InventoryTransactionResult_Type {
     }
   }
 
-  pub fn values() -> &[item_inventory_transaction_InventoryTransactionResult_Type] {
+  pub fn values(env: *mut JNIEnv) -> Vec<item_inventory_transaction_InventoryTransactionResult_Type> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> item_inventory_transaction_InventoryTransactionResult_Type {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/item/inventory/transaction/InventoryTransactionResult$Type;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_transaction_InventoryTransactionResult_Type {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/transaction/InventoryTransactionResult$Type", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/item/inventory/transaction/InventoryTransactionResult$Type;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/transaction/InventoryTransactionResult$Type#valueOf was null") }
-    item_inventory_transaction_InventoryTransactionResult_Type { env: self.env, object: ret }
+    item_inventory_transaction_InventoryTransactionResult_Type { env: env, object: ret }
   }
 
 }
@@ -40449,22 +40449,22 @@ impl item_inventory_transaction_InventoryTransactionResult {
     }
   }
 
-  pub fn builder() -> item_inventory_transaction_InventoryTransactionResult_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/item/inventory/transaction/InventoryTransactionResult$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> item_inventory_transaction_InventoryTransactionResult_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/transaction/InventoryTransactionResult", "builder", "()Lorg/spongepowered/api/item/inventory/transaction/InventoryTransactionResult$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/transaction/InventoryTransactionResult#builder was null") }
-    item_inventory_transaction_InventoryTransactionResult_Builder { env: self.env, object: ret }
+    item_inventory_transaction_InventoryTransactionResult_Builder { env: env, object: ret }
   }
 
-  pub fn success_no_transactions() -> item_inventory_transaction_InventoryTransactionResult {
-    let ret = java_method!(self.env, "successNoTransactions", "()Lorg/spongepowered/api/item/inventory/transaction/InventoryTransactionResult;", CallStaticObjectMethod);
+  pub fn success_no_transactions(env: *mut JNIEnv) -> item_inventory_transaction_InventoryTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/transaction/InventoryTransactionResult", "successNoTransactions", "()Lorg/spongepowered/api/item/inventory/transaction/InventoryTransactionResult;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/transaction/InventoryTransactionResult#successNoTransactions was null") }
-    item_inventory_transaction_InventoryTransactionResult { env: self.env, object: ret }
+    item_inventory_transaction_InventoryTransactionResult { env: env, object: ret }
   }
 
-  pub fn fail_no_transactions() -> item_inventory_transaction_InventoryTransactionResult {
-    let ret = java_method!(self.env, "failNoTransactions", "()Lorg/spongepowered/api/item/inventory/transaction/InventoryTransactionResult;", CallStaticObjectMethod);
+  pub fn fail_no_transactions(env: *mut JNIEnv) -> item_inventory_transaction_InventoryTransactionResult {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/transaction/InventoryTransactionResult", "failNoTransactions", "()Lorg/spongepowered/api/item/inventory/transaction/InventoryTransactionResult;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/transaction/InventoryTransactionResult#failNoTransactions was null") }
-    item_inventory_transaction_InventoryTransactionResult { env: self.env, object: ret }
+    item_inventory_transaction_InventoryTransactionResult { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> item_inventory_transaction_InventoryTransactionResult_Type {
@@ -41062,10 +41062,10 @@ impl item_merchant_TradeOffer {
     }
   }
 
-  pub fn builder() -> item_merchant_TradeOffer_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/item/merchant/TradeOffer$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> item_merchant_TradeOffer_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/merchant/TradeOffer", "builder", "()Lorg/spongepowered/api/item/merchant/TradeOffer$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/item/merchant/TradeOffer#builder was null") }
-    item_merchant_TradeOffer_Builder { env: self.env, object: ret }
+    item_merchant_TradeOffer_Builder { env: env, object: ret }
   }
 
   pub fn get_first_buying_item(&self) -> item_inventory_ItemStackSnapshot {
@@ -41181,10 +41181,10 @@ impl item_merchant_TradeOfferGenerator {
     }
   }
 
-  pub fn builder() -> item_merchant_TradeOfferGenerator_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/item/merchant/TradeOfferGenerator$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> item_merchant_TradeOfferGenerator_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/merchant/TradeOfferGenerator", "builder", "()Lorg/spongepowered/api/item/merchant/TradeOfferGenerator$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/item/merchant/TradeOfferGenerator#builder was null") }
-    item_merchant_TradeOfferGenerator_Builder { env: self.env, object: ret }
+    item_merchant_TradeOfferGenerator_Builder { env: env, object: ret }
   }
 
   pub fn accept(&self, param_1: jobject, param_2: jobject) {
@@ -41253,7 +41253,7 @@ impl item_merchant_VillagerRegistry {
     item_merchant_VillagerRegistry { env: self.env, object: ret }
   }
 
-  pub fn add_mutators(&self, param_1: data_type_Career, param_2: i32, param_3: item_merchant_TradeOfferListMutator, param_4: &[item_merchant_TradeOfferListMutator]) -> item_merchant_VillagerRegistry {
+  pub fn add_mutators(&self, param_1: data_type_Career, param_2: i32, param_3: item_merchant_TradeOfferListMutator, param_4: Vec<item_merchant_TradeOfferListMutator>) -> item_merchant_VillagerRegistry {
     let ret = java_method!(self.env, self.object, "addMutators", "(Lorg/spongepowered/api/data/type/Career;ILorg/spongepowered/api/item/merchant/TradeOfferListMutator;[Lorg/spongepowered/api/item/merchant/TradeOfferListMutator;)Lorg/spongepowered/api/item/merchant/VillagerRegistry;", CallObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/item/merchant/VillagerRegistry#addMutators was null") }
     item_merchant_VillagerRegistry { env: self.env, object: ret }
@@ -41394,7 +41394,7 @@ impl item_recipe_ShapedRecipe_Builder {
     item_recipe_ShapedRecipe_Builder { env: self.env, object: ret }
   }
 
-  pub fn row(&self, param_1: i32, param_2: &[item_inventory_ItemStack]) -> item_recipe_ShapedRecipe_Builder {
+  pub fn row(&self, param_1: i32, param_2: Vec<item_inventory_ItemStack>) -> item_recipe_ShapedRecipe_Builder {
     let ret = java_method!(self.env, self.object, "row", "(I[Lorg/spongepowered/api/item/inventory/ItemStack;)Lorg/spongepowered/api/item/recipe/ShapedRecipe$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/recipe/ShapedRecipe$Builder#row was null") }
     item_recipe_ShapedRecipe_Builder { env: self.env, object: ret }
@@ -41500,10 +41500,10 @@ impl item_recipe_ShapelessRecipe {
     }
   }
 
-  pub fn builder() -> item_recipe_ShapelessRecipe_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/item/recipe/ShapelessRecipe$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> item_recipe_ShapelessRecipe_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/recipe/ShapelessRecipe", "builder", "()Lorg/spongepowered/api/item/recipe/ShapelessRecipe$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/item/recipe/ShapelessRecipe#builder was null") }
-    item_recipe_ShapelessRecipe_Builder { env: self.env, object: ret }
+    item_recipe_ShapelessRecipe_Builder { env: env, object: ret }
   }
 
   pub fn get_ingredients(&self) -> jobject {
@@ -41786,7 +41786,7 @@ impl network_ChannelBuf {
     network_ChannelBuf { env: self.env, object: ret }
   }
 
-  pub fn array(&self) -> &[i8] {
+  pub fn array(&self) -> Vec<i8> {
     unimplemented!();
   }
   pub fn write_boolean(&self, param_1: bool) -> network_ChannelBuf {
@@ -41853,13 +41853,12 @@ impl network_ChannelBuf {
     network_ChannelBuf { env: self.env, object: ret }
   }
 
-  pub fn read_byte_array(&self) -> &[i8] {
+  pub fn read_byte_array(&self) -> Vec<i8> {
     unimplemented!();
   }
-  pub fn read_byte_array_1(&self, param_1: i32) -> &[i8] {
-    java_method!(self.env, self.object, "readByteArray", "(I)[B", CryInsideA, param_1)
+  pub fn read_byte_array_1(&self, param_1: i32) -> Vec<i8> {
+    unimplemented!();
   }
-
   pub fn write_bytes(&self, param_1: i8) -> network_ChannelBuf {
     let ret = java_method!(self.env, self.object, "writeBytes", "([B)Lorg/spongepowered/api/network/ChannelBuf;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/network/ChannelBuf#writeBytes was null") }
@@ -41884,14 +41883,12 @@ impl network_ChannelBuf {
     network_ChannelBuf { env: self.env, object: ret }
   }
 
-  pub fn read_bytes(&self, param_1: i32) -> &[i8] {
-    java_method!(self.env, self.object, "readBytes", "(I)[B", CryInsideA, param_1)
+  pub fn read_bytes(&self, param_1: i32) -> Vec<i8> {
+    unimplemented!();
   }
-
-  pub fn read_bytes_1(&self, param_1: i32, param_2: i32) -> &[i8] {
-    java_method!(self.env, self.object, "readBytes", "(II)[B", CryInsideA, param_1, param_2)
+  pub fn read_bytes_1(&self, param_1: i32, param_2: i32) -> Vec<i8> {
+    unimplemented!();
   }
-
   pub fn write_short(&self, param_1: i16) -> network_ChannelBuf {
     let ret = java_method!(self.env, self.object, "writeShort", "(S)Lorg/spongepowered/api/network/ChannelBuf;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/network/ChannelBuf#writeShort was null") }
@@ -42476,13 +42473,13 @@ impl Platform_Type {
     }
   }
 
-  pub fn values() -> &[Platform_Type] {
+  pub fn values(env: *mut JNIEnv) -> Vec<Platform_Type> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> Platform_Type {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/Platform$Type;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> Platform_Type {
+    let ret = static_java_method!(env, "org/spongepowered/api/Platform$Type", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/Platform$Type;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/Platform$Type#valueOf was null") }
-    Platform_Type { env: self.env, object: ret }
+    Platform_Type { env: env, object: ret }
   }
 
   pub fn is_server(&self) -> bool {
@@ -42616,7 +42613,7 @@ impl plugin_Plugin {
     ret
   }
 
-  pub fn dependencies(&self) -> &[plugin_Dependency] {
+  pub fn dependencies(&self) -> Vec<plugin_Dependency> {
     unimplemented!();
   }
   pub fn description(&self) -> jobject {
@@ -42631,7 +42628,7 @@ impl plugin_Plugin {
     ret
   }
 
-  pub fn authors(&self) -> &[jobject] {
+  pub fn authors(&self) -> Vec<jobject> {
     unimplemented!();
   }
   pub fn assets(&self) -> jobject {
@@ -42785,10 +42782,10 @@ impl profile_GameProfile {
     }
   }
 
-  pub fn of(param_1: jobject, param_2: jobject) -> profile_GameProfile {
-    let ret = java_method!(self.env, "of", "(Ljava/util/UUID;Ljava/lang/String;)Lorg/spongepowered/api/profile/GameProfile;", CallStaticObjectMethodA, param_1);
+  pub fn of(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> profile_GameProfile {
+    let ret = static_java_method!(env, "org/spongepowered/api/profile/GameProfile", "of", "(Ljava/util/UUID;Ljava/lang/String;)Lorg/spongepowered/api/profile/GameProfile;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/profile/GameProfile#of was null") }
-    profile_GameProfile { env: self.env, object: ret }
+    profile_GameProfile { env: env, object: ret }
   }
 
   pub fn get_name(&self) -> Option<jobject> {
@@ -43122,16 +43119,16 @@ impl profile_property_ProfileProperty {
     }
   }
 
-  pub fn of(param_1: jobject, param_2: jobject) -> profile_property_ProfileProperty {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/String;Ljava/lang/String;)Lorg/spongepowered/api/profile/property/ProfileProperty;", CallStaticObjectMethodA, param_1);
+  pub fn of(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> profile_property_ProfileProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/profile/property/ProfileProperty", "of", "(Ljava/lang/String;Ljava/lang/String;)Lorg/spongepowered/api/profile/property/ProfileProperty;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/profile/property/ProfileProperty#of was null") }
-    profile_property_ProfileProperty { env: self.env, object: ret }
+    profile_property_ProfileProperty { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: jobject, param_2: jobject, param_3: jobject) -> profile_property_ProfileProperty {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/spongepowered/api/profile/property/ProfileProperty;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn of_1(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject) -> profile_property_ProfileProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/profile/property/ProfileProperty", "of", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/spongepowered/api/profile/property/ProfileProperty;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/profile/property/ProfileProperty#of was null") }
-    profile_property_ProfileProperty { env: self.env, object: ret }
+    profile_property_ProfileProperty { env: env, object: ret }
   }
 
   pub fn get_name(&self) -> jobject {
@@ -43331,13 +43328,13 @@ impl registry_RegistrationPhase {
     }
   }
 
-  pub fn values() -> &[registry_RegistrationPhase] {
+  pub fn values(env: *mut JNIEnv) -> Vec<registry_RegistrationPhase> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> registry_RegistrationPhase {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/registry/RegistrationPhase;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> registry_RegistrationPhase {
+    let ret = static_java_method!(env, "org/spongepowered/api/registry/RegistrationPhase", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/registry/RegistrationPhase;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/registry/RegistrationPhase#valueOf was null") }
-    registry_RegistrationPhase { env: self.env, object: ret }
+    registry_RegistrationPhase { env: env, object: ret }
   }
 
 }
@@ -43549,7 +43546,7 @@ impl registry_util_RegisterCatalog {
     ret
   }
 
-  pub fn ignored_fields(&self) -> &[jobject] {
+  pub fn ignored_fields(&self) -> Vec<jobject> {
     unimplemented!();
   }
 }
@@ -43568,7 +43565,7 @@ impl registry_util_RegistrationDependency {
     }
   }
 
-  pub fn value(&self) -> &[jobject] {
+  pub fn value(&self) -> Vec<jobject> {
     unimplemented!();
   }
 }
@@ -43662,16 +43659,16 @@ impl resourcepack_ResourcePacks {
     resourcepack_ResourcePacks { env: self.env, object: ret }
   }
 
-  pub fn from_uri(param_1: jobject) -> resourcepack_ResourcePack {
-    let ret = java_method!(self.env, "fromUri", "(Ljava/net/URI;)Lorg/spongepowered/api/resourcepack/ResourcePack;", CallStaticObjectMethod);
+  pub fn from_uri(env: *mut JNIEnv, param_1: jobject) -> resourcepack_ResourcePack {
+    let ret = static_java_method!(env, "org/spongepowered/api/resourcepack/ResourcePacks", "fromUri", "(Ljava/net/URI;)Lorg/spongepowered/api/resourcepack/ResourcePack;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/resourcepack/ResourcePacks#fromUri was null") }
-    resourcepack_ResourcePack { env: self.env, object: ret }
+    resourcepack_ResourcePack { env: env, object: ret }
   }
 
-  pub fn from_uri_unchecked(param_1: jobject) -> resourcepack_ResourcePack {
-    let ret = java_method!(self.env, "fromUriUnchecked", "(Ljava/net/URI;)Lorg/spongepowered/api/resourcepack/ResourcePack;", CallStaticObjectMethod);
+  pub fn from_uri_unchecked(env: *mut JNIEnv, param_1: jobject) -> resourcepack_ResourcePack {
+    let ret = static_java_method!(env, "org/spongepowered/api/resourcepack/ResourcePacks", "fromUriUnchecked", "(Ljava/net/URI;)Lorg/spongepowered/api/resourcepack/ResourcePack;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/resourcepack/ResourcePacks#fromUriUnchecked was null") }
-    resourcepack_ResourcePack { env: self.env, object: ret }
+    resourcepack_ResourcePack { env: env, object: ret }
   }
 
 }
@@ -43948,10 +43945,10 @@ impl scheduler_Task {
     }
   }
 
-  pub fn builder() -> scheduler_Task_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/scheduler/Task$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> scheduler_Task_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/scheduler/Task", "builder", "()Lorg/spongepowered/api/scheduler/Task$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/scheduler/Task#builder was null") }
-    scheduler_Task_Builder { env: self.env, object: ret }
+    scheduler_Task_Builder { env: env, object: ret }
   }
 
   pub fn get_name(&self) -> jobject {
@@ -44190,10 +44187,10 @@ impl scoreboard_objective_Objective {
     }
   }
 
-  pub fn builder() -> scoreboard_objective_Objective_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/scoreboard/objective/Objective$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> scoreboard_objective_Objective_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/scoreboard/objective/Objective", "builder", "()Lorg/spongepowered/api/scoreboard/objective/Objective$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/scoreboard/objective/Objective#builder was null") }
-    scoreboard_objective_Objective_Builder { env: self.env, object: ret }
+    scoreboard_objective_Objective_Builder { env: env, object: ret }
   }
 
   pub fn get_name(&self) -> jobject {
@@ -44357,10 +44354,10 @@ impl scoreboard_Scoreboard {
     }
   }
 
-  pub fn builder() -> scoreboard_Scoreboard_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/scoreboard/Scoreboard$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> scoreboard_Scoreboard_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/scoreboard/Scoreboard", "builder", "()Lorg/spongepowered/api/scoreboard/Scoreboard$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/scoreboard/Scoreboard#builder was null") }
-    scoreboard_Scoreboard_Builder { env: self.env, object: ret }
+    scoreboard_Scoreboard_Builder { env: env, object: ret }
   }
 
   pub fn get_objective(&self, param_1: jobject) -> Option<scoreboard_objective_Objective> {
@@ -44543,10 +44540,10 @@ impl scoreboard_Team {
     }
   }
 
-  pub fn builder() -> scoreboard_Team_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/scoreboard/Team$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> scoreboard_Team_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/scoreboard/Team", "builder", "()Lorg/spongepowered/api/scoreboard/Team$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/scoreboard/Team#builder was null") }
-    scoreboard_Team_Builder { env: self.env, object: ret }
+    scoreboard_Team_Builder { env: env, object: ret }
   }
 
   pub fn get_name(&self) -> jobject {
@@ -45503,13 +45500,13 @@ impl service_economy_transaction_ResultType {
     }
   }
 
-  pub fn values() -> &[service_economy_transaction_ResultType] {
+  pub fn values(env: *mut JNIEnv) -> Vec<service_economy_transaction_ResultType> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> service_economy_transaction_ResultType {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/service/economy/transaction/ResultType;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> service_economy_transaction_ResultType {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/economy/transaction/ResultType", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/service/economy/transaction/ResultType;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/service/economy/transaction/ResultType#valueOf was null") }
-    service_economy_transaction_ResultType { env: self.env, object: ret }
+    service_economy_transaction_ResultType { env: env, object: ret }
   }
 
 }
@@ -45641,7 +45638,7 @@ impl service_pagination_PaginationList_Builder {
     service_pagination_PaginationList_Builder { env: self.env, object: ret }
   }
 
-  pub fn contents_1(&self, param_1: &[text_Text]) -> service_pagination_PaginationList_Builder {
+  pub fn contents_1(&self, param_1: Vec<text_Text>) -> service_pagination_PaginationList_Builder {
     let ret = java_method!(self.env, self.object, "contents", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/service/pagination/PaginationList$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/service/pagination/PaginationList$Builder#contents was null") }
     service_pagination_PaginationList_Builder { env: self.env, object: ret }
@@ -45711,10 +45708,10 @@ impl service_pagination_PaginationList {
     }
   }
 
-  pub fn builder() -> service_pagination_PaginationList_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/service/pagination/PaginationList$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> service_pagination_PaginationList_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/pagination/PaginationList", "builder", "()Lorg/spongepowered/api/service/pagination/PaginationList$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/service/pagination/PaginationList#builder was null") }
-    service_pagination_PaginationList_Builder { env: self.env, object: ret }
+    service_pagination_PaginationList_Builder { env: env, object: ret }
   }
 
   pub fn get_contents(&self) -> jobject {
@@ -45920,16 +45917,16 @@ impl service_permission_NodeTree {
     }
   }
 
-  pub fn of(param_1: jobject) -> service_permission_NodeTree {
-    let ret = java_method!(self.env, "of", "(Ljava/util/Map;)Lorg/spongepowered/api/service/permission/NodeTree;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> service_permission_NodeTree {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/permission/NodeTree", "of", "(Ljava/util/Map;)Lorg/spongepowered/api/service/permission/NodeTree;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/service/permission/NodeTree#of was null") }
-    service_permission_NodeTree { env: self.env, object: ret }
+    service_permission_NodeTree { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: jobject, param_2: util_Tristate) -> service_permission_NodeTree {
-    let ret = java_method!(self.env, "of", "(Ljava/util/Map;Lorg/spongepowered/api/util/Tristate;)Lorg/spongepowered/api/service/permission/NodeTree;", CallStaticObjectMethodA, param_1);
+  pub fn of_1(env: *mut JNIEnv, param_1: jobject, param_2: util_Tristate) -> service_permission_NodeTree {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/permission/NodeTree", "of", "(Ljava/util/Map;Lorg/spongepowered/api/util/Tristate;)Lorg/spongepowered/api/service/permission/NodeTree;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/service/permission/NodeTree#of was null") }
-    service_permission_NodeTree { env: self.env, object: ret }
+    service_permission_NodeTree { env: env, object: ret }
   }
 
   pub fn get(&self, param_1: jobject) -> util_Tristate {
@@ -46725,86 +46722,86 @@ impl Sponge {
     Sponge { env: self.env, object: ret }
   }
 
-  pub fn get_game() -> Game {
-    let ret = java_method!(self.env, "getGame", "()Lorg/spongepowered/api/Game;", CallStaticObjectMethod);
+  pub fn get_game(env: *mut JNIEnv) -> Game {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getGame", "()Lorg/spongepowered/api/Game;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getGame was null") }
-    Game { env: self.env, object: ret }
+    Game { env: env, object: ret }
   }
 
-  pub fn get_registry() -> GameRegistry {
-    let ret = java_method!(self.env, "getRegistry", "()Lorg/spongepowered/api/GameRegistry;", CallStaticObjectMethod);
+  pub fn get_registry(env: *mut JNIEnv) -> GameRegistry {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getRegistry", "()Lorg/spongepowered/api/GameRegistry;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getRegistry was null") }
-    GameRegistry { env: self.env, object: ret }
+    GameRegistry { env: env, object: ret }
   }
 
-  pub fn get_service_manager() -> service_ServiceManager {
-    let ret = java_method!(self.env, "getServiceManager", "()Lorg/spongepowered/api/service/ServiceManager;", CallStaticObjectMethod);
+  pub fn get_service_manager(env: *mut JNIEnv) -> service_ServiceManager {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getServiceManager", "()Lorg/spongepowered/api/service/ServiceManager;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getServiceManager was null") }
-    service_ServiceManager { env: self.env, object: ret }
+    service_ServiceManager { env: env, object: ret }
   }
 
-  pub fn get_event_manager() -> event_EventManager {
-    let ret = java_method!(self.env, "getEventManager", "()Lorg/spongepowered/api/event/EventManager;", CallStaticObjectMethod);
+  pub fn get_event_manager(env: *mut JNIEnv) -> event_EventManager {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getEventManager", "()Lorg/spongepowered/api/event/EventManager;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getEventManager was null") }
-    event_EventManager { env: self.env, object: ret }
+    event_EventManager { env: env, object: ret }
   }
 
-  pub fn get_asset_manager() -> asset_AssetManager {
-    let ret = java_method!(self.env, "getAssetManager", "()Lorg/spongepowered/api/asset/AssetManager;", CallStaticObjectMethod);
+  pub fn get_asset_manager(env: *mut JNIEnv) -> asset_AssetManager {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getAssetManager", "()Lorg/spongepowered/api/asset/AssetManager;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getAssetManager was null") }
-    asset_AssetManager { env: self.env, object: ret }
+    asset_AssetManager { env: env, object: ret }
   }
 
-  pub fn get_scheduler() -> scheduler_Scheduler {
-    let ret = java_method!(self.env, "getScheduler", "()Lorg/spongepowered/api/scheduler/Scheduler;", CallStaticObjectMethod);
+  pub fn get_scheduler(env: *mut JNIEnv) -> scheduler_Scheduler {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getScheduler", "()Lorg/spongepowered/api/scheduler/Scheduler;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getScheduler was null") }
-    scheduler_Scheduler { env: self.env, object: ret }
+    scheduler_Scheduler { env: env, object: ret }
   }
 
-  pub fn get_data_manager() -> data_DataManager {
-    let ret = java_method!(self.env, "getDataManager", "()Lorg/spongepowered/api/data/DataManager;", CallStaticObjectMethod);
+  pub fn get_data_manager(env: *mut JNIEnv) -> data_DataManager {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getDataManager", "()Lorg/spongepowered/api/data/DataManager;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getDataManager was null") }
-    data_DataManager { env: self.env, object: ret }
+    data_DataManager { env: env, object: ret }
   }
 
-  pub fn get_plugin_manager() -> plugin_PluginManager {
-    let ret = java_method!(self.env, "getPluginManager", "()Lorg/spongepowered/api/plugin/PluginManager;", CallStaticObjectMethod);
+  pub fn get_plugin_manager(env: *mut JNIEnv) -> plugin_PluginManager {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getPluginManager", "()Lorg/spongepowered/api/plugin/PluginManager;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getPluginManager was null") }
-    plugin_PluginManager { env: self.env, object: ret }
+    plugin_PluginManager { env: env, object: ret }
   }
 
-  pub fn get_platform() -> Platform {
-    let ret = java_method!(self.env, "getPlatform", "()Lorg/spongepowered/api/Platform;", CallStaticObjectMethod);
+  pub fn get_platform(env: *mut JNIEnv) -> Platform {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getPlatform", "()Lorg/spongepowered/api/Platform;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getPlatform was null") }
-    Platform { env: self.env, object: ret }
+    Platform { env: env, object: ret }
   }
 
-  pub fn is_server_available() -> bool {
-    java_method!(self.env, "isServerAvailable", "()Z", CallStaticBooleanMethod) == 1
+  pub fn is_server_available(env: *mut JNIEnv) -> bool {
+    static_java_method!(env, "org/spongepowered/api/Sponge", "isServerAvailable", "()Z", CallStaticBooleanMethod) == 1
   }
 
-  pub fn get_server() -> Server {
-    let ret = java_method!(self.env, "getServer", "()Lorg/spongepowered/api/Server;", CallStaticObjectMethod);
+  pub fn get_server(env: *mut JNIEnv) -> Server {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getServer", "()Lorg/spongepowered/api/Server;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getServer was null") }
-    Server { env: self.env, object: ret }
+    Server { env: env, object: ret }
   }
 
-  pub fn get_dictionary() -> GameDictionary {
-    let ret = java_method!(self.env, "getDictionary", "()Lorg/spongepowered/api/GameDictionary;", CallStaticObjectMethod);
+  pub fn get_dictionary(env: *mut JNIEnv) -> GameDictionary {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getDictionary", "()Lorg/spongepowered/api/GameDictionary;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getDictionary was null") }
-    GameDictionary { env: self.env, object: ret }
+    GameDictionary { env: env, object: ret }
   }
 
-  pub fn get_command_manager() -> command_CommandManager {
-    let ret = java_method!(self.env, "getCommandManager", "()Lorg/spongepowered/api/command/CommandManager;", CallStaticObjectMethod);
+  pub fn get_command_manager(env: *mut JNIEnv) -> command_CommandManager {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getCommandManager", "()Lorg/spongepowered/api/command/CommandManager;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getCommandManager was null") }
-    command_CommandManager { env: self.env, object: ret }
+    command_CommandManager { env: env, object: ret }
   }
 
-  pub fn get_channel_registrar() -> network_ChannelRegistrar {
-    let ret = java_method!(self.env, "getChannelRegistrar", "()Lorg/spongepowered/api/network/ChannelRegistrar;", CallStaticObjectMethod);
+  pub fn get_channel_registrar(env: *mut JNIEnv) -> network_ChannelRegistrar {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "getChannelRegistrar", "()Lorg/spongepowered/api/network/ChannelRegistrar;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#getChannelRegistrar was null") }
-    network_ChannelRegistrar { env: self.env, object: ret }
+    network_ChannelRegistrar { env: env, object: ret }
   }
 
 }
@@ -46881,10 +46878,10 @@ impl statistic_achievement_Achievement {
     }
   }
 
-  pub fn builder() -> statistic_achievement_Achievement_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/statistic/achievement/Achievement$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> statistic_achievement_Achievement_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/statistic/achievement/Achievement", "builder", "()Lorg/spongepowered/api/statistic/achievement/Achievement$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/statistic/achievement/Achievement#builder was null") }
-    statistic_achievement_Achievement_Builder { env: self.env, object: ret }
+    statistic_achievement_Achievement_Builder { env: env, object: ret }
   }
 
   pub fn get_description(&self) -> text_translation_Translation {
@@ -47172,10 +47169,10 @@ impl statistic_Statistic {
     }
   }
 
-  pub fn builder() -> statistic_Statistic_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/statistic/Statistic$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> statistic_Statistic_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/statistic/Statistic", "builder", "()Lorg/spongepowered/api/statistic/Statistic$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/statistic/Statistic#builder was null") }
-    statistic_Statistic_Builder { env: self.env, object: ret }
+    statistic_Statistic_Builder { env: env, object: ret }
   }
 
   pub fn get_statistic_format(&self) -> Option<statistic_StatisticFormat> {
@@ -47667,82 +47664,82 @@ impl text_action_TextActions {
     }
   }
 
-  pub fn open_url(param_1: jobject) -> text_action_ClickAction_OpenUrl {
-    let ret = java_method!(self.env, "openUrl", "(Ljava/net/URL;)Lorg/spongepowered/api/text/action/ClickAction$OpenUrl;", CallStaticObjectMethod);
+  pub fn open_url(env: *mut JNIEnv, param_1: jobject) -> text_action_ClickAction_OpenUrl {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "openUrl", "(Ljava/net/URL;)Lorg/spongepowered/api/text/action/ClickAction$OpenUrl;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#openUrl was null") }
-    text_action_ClickAction_OpenUrl { env: self.env, object: ret }
+    text_action_ClickAction_OpenUrl { env: env, object: ret }
   }
 
-  pub fn run_command(param_1: jobject) -> text_action_ClickAction_RunCommand {
-    let ret = java_method!(self.env, "runCommand", "(Ljava/lang/String;)Lorg/spongepowered/api/text/action/ClickAction$RunCommand;", CallStaticObjectMethod);
+  pub fn run_command(env: *mut JNIEnv, param_1: jobject) -> text_action_ClickAction_RunCommand {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "runCommand", "(Ljava/lang/String;)Lorg/spongepowered/api/text/action/ClickAction$RunCommand;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#runCommand was null") }
-    text_action_ClickAction_RunCommand { env: self.env, object: ret }
+    text_action_ClickAction_RunCommand { env: env, object: ret }
   }
 
-  pub fn change_page(param_1: i32) -> text_action_ClickAction_ChangePage {
-    let ret = java_method!(self.env, "changePage", "(I)Lorg/spongepowered/api/text/action/ClickAction$ChangePage;", CallStaticObjectMethod);
+  pub fn change_page(env: *mut JNIEnv, param_1: i32) -> text_action_ClickAction_ChangePage {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "changePage", "(I)Lorg/spongepowered/api/text/action/ClickAction$ChangePage;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#changePage was null") }
-    text_action_ClickAction_ChangePage { env: self.env, object: ret }
+    text_action_ClickAction_ChangePage { env: env, object: ret }
   }
 
-  pub fn suggest_command(param_1: jobject) -> text_action_ClickAction_SuggestCommand {
-    let ret = java_method!(self.env, "suggestCommand", "(Ljava/lang/String;)Lorg/spongepowered/api/text/action/ClickAction$SuggestCommand;", CallStaticObjectMethod);
+  pub fn suggest_command(env: *mut JNIEnv, param_1: jobject) -> text_action_ClickAction_SuggestCommand {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "suggestCommand", "(Ljava/lang/String;)Lorg/spongepowered/api/text/action/ClickAction$SuggestCommand;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#suggestCommand was null") }
-    text_action_ClickAction_SuggestCommand { env: self.env, object: ret }
+    text_action_ClickAction_SuggestCommand { env: env, object: ret }
   }
 
-  pub fn execute_callback(param_1: jobject) -> text_action_ClickAction_ExecuteCallback {
-    let ret = java_method!(self.env, "executeCallback", "(Ljava/util/function/Consumer;)Lorg/spongepowered/api/text/action/ClickAction$ExecuteCallback;", CallStaticObjectMethod);
+  pub fn execute_callback(env: *mut JNIEnv, param_1: jobject) -> text_action_ClickAction_ExecuteCallback {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "executeCallback", "(Ljava/util/function/Consumer;)Lorg/spongepowered/api/text/action/ClickAction$ExecuteCallback;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#executeCallback was null") }
-    text_action_ClickAction_ExecuteCallback { env: self.env, object: ret }
+    text_action_ClickAction_ExecuteCallback { env: env, object: ret }
   }
 
-  pub fn show_text(param_1: text_Text) -> text_action_HoverAction_ShowText {
-    let ret = java_method!(self.env, "showText", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/action/HoverAction$ShowText;", CallStaticObjectMethod);
+  pub fn show_text(env: *mut JNIEnv, param_1: text_Text) -> text_action_HoverAction_ShowText {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "showText", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/action/HoverAction$ShowText;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#showText was null") }
-    text_action_HoverAction_ShowText { env: self.env, object: ret }
+    text_action_HoverAction_ShowText { env: env, object: ret }
   }
 
-  pub fn show_item(param_1: item_inventory_ItemStack) -> text_action_HoverAction_ShowItem {
-    let ret = java_method!(self.env, "showItem", "(Lorg/spongepowered/api/item/inventory/ItemStack;)Lorg/spongepowered/api/text/action/HoverAction$ShowItem;", CallStaticObjectMethod);
+  pub fn show_item(env: *mut JNIEnv, param_1: item_inventory_ItemStack) -> text_action_HoverAction_ShowItem {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "showItem", "(Lorg/spongepowered/api/item/inventory/ItemStack;)Lorg/spongepowered/api/text/action/HoverAction$ShowItem;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#showItem was null") }
-    text_action_HoverAction_ShowItem { env: self.env, object: ret }
+    text_action_HoverAction_ShowItem { env: env, object: ret }
   }
 
-  pub fn show_achievement(param_1: statistic_achievement_Achievement) -> text_action_HoverAction_ShowAchievement {
-    let ret = java_method!(self.env, "showAchievement", "(Lorg/spongepowered/api/statistic/achievement/Achievement;)Lorg/spongepowered/api/text/action/HoverAction$ShowAchievement;", CallStaticObjectMethod);
+  pub fn show_achievement(env: *mut JNIEnv, param_1: statistic_achievement_Achievement) -> text_action_HoverAction_ShowAchievement {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "showAchievement", "(Lorg/spongepowered/api/statistic/achievement/Achievement;)Lorg/spongepowered/api/text/action/HoverAction$ShowAchievement;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#showAchievement was null") }
-    text_action_HoverAction_ShowAchievement { env: self.env, object: ret }
+    text_action_HoverAction_ShowAchievement { env: env, object: ret }
   }
 
-  pub fn show_entity(param_1: text_action_HoverAction_ShowEntity_Ref) -> text_action_HoverAction_ShowEntity {
-    let ret = java_method!(self.env, "showEntity", "(Lorg/spongepowered/api/text/action/HoverAction$ShowEntity$Ref;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity;", CallStaticObjectMethod);
+  pub fn show_entity(env: *mut JNIEnv, param_1: text_action_HoverAction_ShowEntity_Ref) -> text_action_HoverAction_ShowEntity {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "showEntity", "(Lorg/spongepowered/api/text/action/HoverAction$ShowEntity$Ref;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#showEntity was null") }
-    text_action_HoverAction_ShowEntity { env: self.env, object: ret }
+    text_action_HoverAction_ShowEntity { env: env, object: ret }
   }
 
-  pub fn show_entity_1(param_1: jobject, param_2: jobject, param_3: entity_EntityType) -> text_action_HoverAction_ShowEntity {
-    let ret = java_method!(self.env, "showEntity", "(Ljava/util/UUID;Ljava/lang/String;Lorg/spongepowered/api/entity/EntityType;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn show_entity_1(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: entity_EntityType) -> text_action_HoverAction_ShowEntity {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "showEntity", "(Ljava/util/UUID;Ljava/lang/String;Lorg/spongepowered/api/entity/EntityType;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#showEntity was null") }
-    text_action_HoverAction_ShowEntity { env: self.env, object: ret }
+    text_action_HoverAction_ShowEntity { env: env, object: ret }
   }
 
-  pub fn show_entity_2(param_1: jobject, param_2: jobject) -> text_action_HoverAction_ShowEntity {
-    let ret = java_method!(self.env, "showEntity", "(Ljava/util/UUID;Ljava/lang/String;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity;", CallStaticObjectMethodA, param_1);
+  pub fn show_entity_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> text_action_HoverAction_ShowEntity {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "showEntity", "(Ljava/util/UUID;Ljava/lang/String;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#showEntity was null") }
-    text_action_HoverAction_ShowEntity { env: self.env, object: ret }
+    text_action_HoverAction_ShowEntity { env: env, object: ret }
   }
 
-  pub fn show_entity_3(param_1: entity_Entity, param_2: jobject) -> text_action_HoverAction_ShowEntity {
-    let ret = java_method!(self.env, "showEntity", "(Lorg/spongepowered/api/entity/Entity;Ljava/lang/String;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity;", CallStaticObjectMethodA, param_1);
+  pub fn show_entity_3(env: *mut JNIEnv, param_1: entity_Entity, param_2: jobject) -> text_action_HoverAction_ShowEntity {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "showEntity", "(Lorg/spongepowered/api/entity/Entity;Ljava/lang/String;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#showEntity was null") }
-    text_action_HoverAction_ShowEntity { env: self.env, object: ret }
+    text_action_HoverAction_ShowEntity { env: env, object: ret }
   }
 
-  pub fn insert_text(param_1: jobject) -> text_action_ShiftClickAction_InsertText {
-    let ret = java_method!(self.env, "insertText", "(Ljava/lang/String;)Lorg/spongepowered/api/text/action/ShiftClickAction$InsertText;", CallStaticObjectMethod);
+  pub fn insert_text(env: *mut JNIEnv, param_1: jobject) -> text_action_ShiftClickAction_InsertText {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/TextActions", "insertText", "(Ljava/lang/String;)Lorg/spongepowered/api/text/action/ShiftClickAction$InsertText;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/TextActions#insertText was null") }
-    text_action_ShiftClickAction_InsertText { env: self.env, object: ret }
+    text_action_ShiftClickAction_InsertText { env: env, object: ret }
   }
 
 }
@@ -47791,7 +47788,7 @@ impl text_BookView_Builder {
     text_BookView_Builder { env: self.env, object: ret }
   }
 
-  pub fn add_pages_1(&self, param_1: &[text_Text]) -> text_BookView_Builder {
+  pub fn add_pages_1(&self, param_1: Vec<text_Text>) -> text_BookView_Builder {
     let ret = java_method!(self.env, self.object, "addPages", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/BookView$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/BookView$Builder#addPages was null") }
     text_BookView_Builder { env: self.env, object: ret }
@@ -47809,7 +47806,7 @@ impl text_BookView_Builder {
     text_BookView_Builder { env: self.env, object: ret }
   }
 
-  pub fn insert_pages_1(&self, param_1: i32, param_2: &[text_Text]) -> text_BookView_Builder {
+  pub fn insert_pages_1(&self, param_1: i32, param_2: Vec<text_Text>) -> text_BookView_Builder {
     let ret = java_method!(self.env, self.object, "insertPages", "(I[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/BookView$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/BookView$Builder#insertPages was null") }
     text_BookView_Builder { env: self.env, object: ret }
@@ -47833,7 +47830,7 @@ impl text_BookView_Builder {
     text_BookView_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove_pages_1(&self, param_1: &[text_Text]) -> text_BookView_Builder {
+  pub fn remove_pages_1(&self, param_1: Vec<text_Text>) -> text_BookView_Builder {
     let ret = java_method!(self.env, self.object, "removePages", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/BookView$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/BookView$Builder#removePages was null") }
     text_BookView_Builder { env: self.env, object: ret }
@@ -47909,10 +47906,10 @@ impl text_BookView {
     ret
   }
 
-  pub fn builder() -> text_BookView_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/text/BookView$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> text_BookView_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/BookView", "builder", "()Lorg/spongepowered/api/text/BookView$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/BookView#builder was null") }
-    text_BookView_Builder { env: self.env, object: ret }
+    text_BookView_Builder { env: env, object: ret }
   }
 
   pub fn get_content_version(&self) -> i32 {
@@ -47993,7 +47990,7 @@ impl text_channel_ChatTypeMessageReceiver {
     java_method!(self.env, self.object, "sendMessage", "(Lorg/spongepowered/api/text/chat/ChatType;Lorg/spongepowered/api/text/Text;)V", CallVoidMethodA, param_1, param_2);
   }
 
-  pub fn send_messages(&self, param_1: text_chat_ChatType, param_2: &[text_Text]) {
+  pub fn send_messages(&self, param_1: text_chat_ChatType, param_2: Vec<text_Text>) {
     java_method!(self.env, self.object, "sendMessages", "(Lorg/spongepowered/api/text/chat/ChatType;[Lorg/spongepowered/api/text/Text;)V", CallVoidMethodA, param_1, param_2);
   }
 
@@ -48118,40 +48115,40 @@ impl text_channel_MessageChannel {
     }
   }
 
-  pub fn permission(param_1: jobject) -> text_channel_MessageChannel {
-    let ret = java_method!(self.env, "permission", "(Ljava/lang/String;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethod);
+  pub fn permission(env: *mut JNIEnv, param_1: jobject) -> text_channel_MessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/MessageChannel", "permission", "(Ljava/lang/String;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/MessageChannel#permission was null") }
-    text_channel_MessageChannel { env: self.env, object: ret }
+    text_channel_MessageChannel { env: env, object: ret }
   }
 
-  pub fn combined(param_1: &[text_channel_MessageChannel]) -> text_channel_MessageChannel {
-    let ret = java_method!(self.env, "combined", "([Lorg/spongepowered/api/text/channel/MessageChannel;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethod);
+  pub fn combined(env: *mut JNIEnv, param_1: Vec<text_channel_MessageChannel>) -> text_channel_MessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/MessageChannel", "combined", "([Lorg/spongepowered/api/text/channel/MessageChannel;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/MessageChannel#combined was null") }
-    text_channel_MessageChannel { env: self.env, object: ret }
+    text_channel_MessageChannel { env: env, object: ret }
   }
 
-  pub fn combined_1(param_1: jobject) -> text_channel_MessageChannel {
-    let ret = java_method!(self.env, "combined", "(Ljava/util/Collection;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethod);
+  pub fn combined_1(env: *mut JNIEnv, param_1: jobject) -> text_channel_MessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/MessageChannel", "combined", "(Ljava/util/Collection;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/MessageChannel#combined was null") }
-    text_channel_MessageChannel { env: self.env, object: ret }
+    text_channel_MessageChannel { env: env, object: ret }
   }
 
-  pub fn fixed(param_1: &[text_channel_MessageReceiver]) -> text_channel_MessageChannel {
-    let ret = java_method!(self.env, "fixed", "([Lorg/spongepowered/api/text/channel/MessageReceiver;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethod);
+  pub fn fixed(env: *mut JNIEnv, param_1: Vec<text_channel_MessageReceiver>) -> text_channel_MessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/MessageChannel", "fixed", "([Lorg/spongepowered/api/text/channel/MessageReceiver;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/MessageChannel#fixed was null") }
-    text_channel_MessageChannel { env: self.env, object: ret }
+    text_channel_MessageChannel { env: env, object: ret }
   }
 
-  pub fn fixed_1(param_1: jobject) -> text_channel_MessageChannel {
-    let ret = java_method!(self.env, "fixed", "(Ljava/util/Collection;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethod);
+  pub fn fixed_1(env: *mut JNIEnv, param_1: jobject) -> text_channel_MessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/MessageChannel", "fixed", "(Ljava/util/Collection;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/MessageChannel#fixed was null") }
-    text_channel_MessageChannel { env: self.env, object: ret }
+    text_channel_MessageChannel { env: env, object: ret }
   }
 
-  pub fn world(param_1: world_World) -> text_channel_MessageChannel {
-    let ret = java_method!(self.env, "world", "(Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethod);
+  pub fn world(env: *mut JNIEnv, param_1: world_World) -> text_channel_MessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/MessageChannel", "world", "(Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/text/channel/MessageChannel;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/MessageChannel#world was null") }
-    text_channel_MessageChannel { env: self.env, object: ret }
+    text_channel_MessageChannel { env: env, object: ret }
   }
 
   pub fn send(&self, param_1: text_Text) {
@@ -48209,7 +48206,7 @@ impl text_channel_MessageReceiver {
     java_method!(self.env, self.object, "sendMessage", "(Lorg/spongepowered/api/text/Text;)V", CallVoidMethodA, param_1);
   }
 
-  pub fn send_messages(&self, param_1: &[text_Text]) {
+  pub fn send_messages(&self, param_1: Vec<text_Text>) {
     java_method!(self.env, self.object, "sendMessages", "([Lorg/spongepowered/api/text/Text;)V", CallVoidMethodA, param_1);
   }
 
@@ -48286,7 +48283,7 @@ impl text_channel_type_CombinedMessageChannel {
     }
   }
 
-  pub fn new(&self, param_1: &[text_channel_MessageChannel]) -> text_channel_type_CombinedMessageChannel {
+  pub fn new(&self, param_1: Vec<text_channel_MessageChannel>) -> text_channel_type_CombinedMessageChannel {
     let ret = java_method!(self.env, self.object, "<init>", "([Lorg/spongepowered/api/text/channel/MessageChannel;)Lorg/spongepowered/api/text/channel/type/CombinedMessageChannel", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/type/CombinedMessageChannel#<init> was null") }
     text_channel_type_CombinedMessageChannel { env: self.env, object: ret }
@@ -48327,7 +48324,7 @@ impl text_channel_type_FixedMessageChannel {
     }
   }
 
-  pub fn new(&self, param_1: &[text_channel_MessageReceiver]) -> text_channel_type_FixedMessageChannel {
+  pub fn new(&self, param_1: Vec<text_channel_MessageReceiver>) -> text_channel_type_FixedMessageChannel {
     let ret = java_method!(self.env, self.object, "<init>", "([Lorg/spongepowered/api/text/channel/MessageReceiver;)Lorg/spongepowered/api/text/channel/type/FixedMessageChannel", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/type/FixedMessageChannel#<init> was null") }
     text_channel_type_FixedMessageChannel { env: self.env, object: ret }
@@ -48576,28 +48573,28 @@ impl text_format_TextFormat {
     }
   }
 
-  pub fn of() -> text_format_TextFormat {
-    let ret = java_method!(self.env, "of", "()Lorg/spongepowered/api/text/format/TextFormat;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv) -> text_format_TextFormat {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/format/TextFormat", "of", "()Lorg/spongepowered/api/text/format/TextFormat;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextFormat#of was null") }
-    text_format_TextFormat { env: self.env, object: ret }
+    text_format_TextFormat { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: text_format_TextStyle) -> text_format_TextFormat {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/format/TextFormat;", CallStaticObjectMethod);
+  pub fn of_1(env: *mut JNIEnv, param_1: text_format_TextStyle) -> text_format_TextFormat {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/format/TextFormat", "of", "(Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/format/TextFormat;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextFormat#of was null") }
-    text_format_TextFormat { env: self.env, object: ret }
+    text_format_TextFormat { env: env, object: ret }
   }
 
-  pub fn of_2(param_1: text_format_TextColor) -> text_format_TextFormat {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/text/format/TextColor;)Lorg/spongepowered/api/text/format/TextFormat;", CallStaticObjectMethod);
+  pub fn of_2(env: *mut JNIEnv, param_1: text_format_TextColor) -> text_format_TextFormat {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/format/TextFormat", "of", "(Lorg/spongepowered/api/text/format/TextColor;)Lorg/spongepowered/api/text/format/TextFormat;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextFormat#of was null") }
-    text_format_TextFormat { env: self.env, object: ret }
+    text_format_TextFormat { env: env, object: ret }
   }
 
-  pub fn of_3(param_1: text_format_TextColor, param_2: text_format_TextStyle) -> text_format_TextFormat {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/text/format/TextColor;Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/format/TextFormat;", CallStaticObjectMethodA, param_1);
+  pub fn of_3(env: *mut JNIEnv, param_1: text_format_TextColor, param_2: text_format_TextStyle) -> text_format_TextFormat {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/format/TextFormat", "of", "(Lorg/spongepowered/api/text/format/TextColor;Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/format/TextFormat;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextFormat#of was null") }
-    text_format_TextFormat { env: self.env, object: ret }
+    text_format_TextFormat { env: env, object: ret }
   }
 
   pub fn get_color(&self) -> text_format_TextColor {
@@ -48767,7 +48764,7 @@ impl text_format_TextStyle {
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn contains(&self, param_1: &[text_format_TextStyle]) -> bool {
+  pub fn contains(&self, param_1: Vec<text_format_TextStyle>) -> bool {
     java_method!(self.env, self.object, "contains", "([Lorg/spongepowered/api/text/format/TextStyle;)Z", CallBooleanMethodA, param_1) == 1
   }
 
@@ -48777,13 +48774,13 @@ impl text_format_TextStyle {
     text_format_TextStyle { env: self.env, object: ret }
   }
 
-  pub fn and(&self, param_1: &[text_format_TextStyle]) -> text_format_TextStyle {
+  pub fn and(&self, param_1: Vec<text_format_TextStyle>) -> text_format_TextStyle {
     let ret = java_method!(self.env, self.object, "and", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/format/TextStyle;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextStyle#and was null") }
     text_format_TextStyle { env: self.env, object: ret }
   }
 
-  pub fn and_not(&self, param_1: &[text_format_TextStyle]) -> text_format_TextStyle {
+  pub fn and_not(&self, param_1: Vec<text_format_TextStyle>) -> text_format_TextStyle {
     let ret = java_method!(self.env, self.object, "andNot", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/format/TextStyle;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextStyle#andNot was null") }
     text_format_TextStyle { env: self.env, object: ret }
@@ -48896,7 +48893,7 @@ impl text_format_TextStyles_DummyTextStyle {
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn contains(&self, param_1: &[text_format_TextStyle]) -> bool {
+  pub fn contains(&self, param_1: Vec<text_format_TextStyle>) -> bool {
     java_method!(self.env, self.object, "contains", "([Lorg/spongepowered/api/text/format/TextStyle;)Z", CallBooleanMethodA, param_1) == 1
   }
 
@@ -48906,13 +48903,13 @@ impl text_format_TextStyles_DummyTextStyle {
     text_format_TextStyle { env: self.env, object: ret }
   }
 
-  pub fn and(&self, param_1: &[text_format_TextStyle]) -> text_format_TextStyle {
+  pub fn and(&self, param_1: Vec<text_format_TextStyle>) -> text_format_TextStyle {
     let ret = java_method!(self.env, self.object, "and", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/format/TextStyle;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextStyles$DummyTextStyle#and was null") }
     text_format_TextStyle { env: self.env, object: ret }
   }
 
-  pub fn and_not(&self, param_1: &[text_format_TextStyle]) -> text_format_TextStyle {
+  pub fn and_not(&self, param_1: Vec<text_format_TextStyle>) -> text_format_TextStyle {
     let ret = java_method!(self.env, self.object, "andNot", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/format/TextStyle;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextStyles$DummyTextStyle#andNot was null") }
     text_format_TextStyle { env: self.env, object: ret }
@@ -48978,16 +48975,16 @@ impl text_format_TextStyles {
     }
   }
 
-  pub fn of() -> text_format_TextStyle {
-    let ret = java_method!(self.env, "of", "()Lorg/spongepowered/api/text/format/TextStyle;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv) -> text_format_TextStyle {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/format/TextStyles", "of", "()Lorg/spongepowered/api/text/format/TextStyle;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextStyles#of was null") }
-    text_format_TextStyle { env: self.env, object: ret }
+    text_format_TextStyle { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: &[text_format_TextStyle]) -> text_format_TextStyle {
-    let ret = java_method!(self.env, "of", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/format/TextStyle;", CallStaticObjectMethod);
+  pub fn of_1(env: *mut JNIEnv, param_1: Vec<text_format_TextStyle>) -> text_format_TextStyle {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/format/TextStyles", "of", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/format/TextStyle;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextStyles#of was null") }
-    text_format_TextStyle { env: self.env, object: ret }
+    text_format_TextStyle { env: env, object: ret }
   }
 
 }
@@ -49044,7 +49041,7 @@ impl text_LiteralText_Builder {
     text_LiteralText_Builder { env: self.env, object: ret }
   }
 
-  pub fn style(&self, param_1: &[text_format_TextStyle]) -> text_LiteralText_Builder {
+  pub fn style(&self, param_1: Vec<text_format_TextStyle>) -> text_LiteralText_Builder {
     let ret = java_method!(self.env, self.object, "style", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/LiteralText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/LiteralText$Builder#style was null") }
     text_LiteralText_Builder { env: self.env, object: ret }
@@ -49068,7 +49065,7 @@ impl text_LiteralText_Builder {
     text_LiteralText_Builder { env: self.env, object: ret }
   }
 
-  pub fn append(&self, param_1: &[text_Text]) -> text_LiteralText_Builder {
+  pub fn append(&self, param_1: Vec<text_Text>) -> text_LiteralText_Builder {
     let ret = java_method!(self.env, self.object, "append", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/LiteralText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/LiteralText$Builder#append was null") }
     text_LiteralText_Builder { env: self.env, object: ret }
@@ -49092,7 +49089,7 @@ impl text_LiteralText_Builder {
     text_LiteralText_Builder { env: self.env, object: ret }
   }
 
-  pub fn insert(&self, param_1: i32, param_2: &[text_Text]) -> text_LiteralText_Builder {
+  pub fn insert(&self, param_1: i32, param_2: Vec<text_Text>) -> text_LiteralText_Builder {
     let ret = java_method!(self.env, self.object, "insert", "(I[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/LiteralText$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/LiteralText$Builder#insert was null") }
     text_LiteralText_Builder { env: self.env, object: ret }
@@ -49116,7 +49113,7 @@ impl text_LiteralText_Builder {
     text_LiteralText_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove(&self, param_1: &[text_Text]) -> text_LiteralText_Builder {
+  pub fn remove(&self, param_1: Vec<text_Text>) -> text_LiteralText_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/LiteralText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/LiteralText$Builder#remove was null") }
     text_LiteralText_Builder { env: self.env, object: ret }
@@ -49176,7 +49173,7 @@ impl text_LiteralText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove_7(&self, param_1: &[text_Text]) -> text_Text_Builder {
+  pub fn remove_7(&self, param_1: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/LiteralText$Builder#remove was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -49200,7 +49197,7 @@ impl text_LiteralText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn insert_7(&self, param_1: i32, param_2: &[text_Text]) -> text_Text_Builder {
+  pub fn insert_7(&self, param_1: i32, param_2: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "insert", "(I[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/LiteralText$Builder#insert was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -49224,7 +49221,7 @@ impl text_LiteralText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn append_7(&self, param_1: &[text_Text]) -> text_Text_Builder {
+  pub fn append_7(&self, param_1: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "append", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/LiteralText$Builder#append was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -49248,7 +49245,7 @@ impl text_LiteralText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn style_1(&self, param_1: &[text_format_TextStyle]) -> text_Text_Builder {
+  pub fn style_1(&self, param_1: Vec<text_format_TextStyle>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "style", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/LiteralText$Builder#style was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -49376,7 +49373,7 @@ impl text_ScoreText_Builder {
     text_ScoreText_Builder { env: self.env, object: ret }
   }
 
-  pub fn style(&self, param_1: &[text_format_TextStyle]) -> text_ScoreText_Builder {
+  pub fn style(&self, param_1: Vec<text_format_TextStyle>) -> text_ScoreText_Builder {
     let ret = java_method!(self.env, self.object, "style", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/ScoreText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/ScoreText$Builder#style was null") }
     text_ScoreText_Builder { env: self.env, object: ret }
@@ -49400,7 +49397,7 @@ impl text_ScoreText_Builder {
     text_ScoreText_Builder { env: self.env, object: ret }
   }
 
-  pub fn append(&self, param_1: &[text_Text]) -> text_ScoreText_Builder {
+  pub fn append(&self, param_1: Vec<text_Text>) -> text_ScoreText_Builder {
     let ret = java_method!(self.env, self.object, "append", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/ScoreText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/ScoreText$Builder#append was null") }
     text_ScoreText_Builder { env: self.env, object: ret }
@@ -49424,7 +49421,7 @@ impl text_ScoreText_Builder {
     text_ScoreText_Builder { env: self.env, object: ret }
   }
 
-  pub fn insert(&self, param_1: i32, param_2: &[text_Text]) -> text_ScoreText_Builder {
+  pub fn insert(&self, param_1: i32, param_2: Vec<text_Text>) -> text_ScoreText_Builder {
     let ret = java_method!(self.env, self.object, "insert", "(I[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/ScoreText$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/ScoreText$Builder#insert was null") }
     text_ScoreText_Builder { env: self.env, object: ret }
@@ -49448,7 +49445,7 @@ impl text_ScoreText_Builder {
     text_ScoreText_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove(&self, param_1: &[text_Text]) -> text_ScoreText_Builder {
+  pub fn remove(&self, param_1: Vec<text_Text>) -> text_ScoreText_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/ScoreText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/ScoreText$Builder#remove was null") }
     text_ScoreText_Builder { env: self.env, object: ret }
@@ -49508,7 +49505,7 @@ impl text_ScoreText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove_7(&self, param_1: &[text_Text]) -> text_Text_Builder {
+  pub fn remove_7(&self, param_1: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/ScoreText$Builder#remove was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -49532,7 +49529,7 @@ impl text_ScoreText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn insert_7(&self, param_1: i32, param_2: &[text_Text]) -> text_Text_Builder {
+  pub fn insert_7(&self, param_1: i32, param_2: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "insert", "(I[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/ScoreText$Builder#insert was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -49556,7 +49553,7 @@ impl text_ScoreText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn append_7(&self, param_1: &[text_Text]) -> text_Text_Builder {
+  pub fn append_7(&self, param_1: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "append", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/ScoreText$Builder#append was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -49580,7 +49577,7 @@ impl text_ScoreText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn style_1(&self, param_1: &[text_format_TextStyle]) -> text_Text_Builder {
+  pub fn style_1(&self, param_1: Vec<text_format_TextStyle>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "style", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/ScoreText$Builder#style was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -49689,28 +49686,28 @@ impl text_selector_Argument {
     }
   }
 
-  pub fn create(param_1: text_selector_ArgumentType, param_2: jobject) -> text_selector_Argument {
-    let ret = java_method!(self.env, "create", "(Lorg/spongepowered/api/text/selector/ArgumentType;Ljava/lang/Object;)Lorg/spongepowered/api/text/selector/Argument;", CallStaticObjectMethodA, param_1);
+  pub fn create(env: *mut JNIEnv, param_1: text_selector_ArgumentType, param_2: jobject) -> text_selector_Argument {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/Argument", "create", "(Lorg/spongepowered/api/text/selector/ArgumentType;Ljava/lang/Object;)Lorg/spongepowered/api/text/selector/Argument;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Argument#create was null") }
-    text_selector_Argument { env: self.env, object: ret }
+    text_selector_Argument { env: env, object: ret }
   }
 
-  pub fn create_1(param_1: text_selector_ArgumentType_Invertible, param_2: jobject, param_3: bool) -> text_selector_Argument_Invertible {
-    let ret = java_method!(self.env, "create", "(Lorg/spongepowered/api/text/selector/ArgumentType$Invertible;Ljava/lang/Object;Z)Lorg/spongepowered/api/text/selector/Argument$Invertible;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn create_1(env: *mut JNIEnv, param_1: text_selector_ArgumentType_Invertible, param_2: jobject, param_3: bool) -> text_selector_Argument_Invertible {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/Argument", "create", "(Lorg/spongepowered/api/text/selector/ArgumentType$Invertible;Ljava/lang/Object;Z)Lorg/spongepowered/api/text/selector/Argument$Invertible;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Argument#create was null") }
-    text_selector_Argument_Invertible { env: self.env, object: ret }
+    text_selector_Argument_Invertible { env: env, object: ret }
   }
 
-  pub fn create_set(param_1: text_selector_ArgumentHolder, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "createSet", "(Lorg/spongepowered/api/text/selector/ArgumentHolder;Ljava/lang/Object;)Ljava/util/Set;", CallStaticObjectMethodA, param_1);
+  pub fn create_set(env: *mut JNIEnv, param_1: text_selector_ArgumentHolder, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/Argument", "createSet", "(Lorg/spongepowered/api/text/selector/ArgumentHolder;Ljava/lang/Object;)Ljava/util/Set;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Argument#createSet was null") }
     ret
   }
 
-  pub fn parse(param_1: jobject) -> text_selector_Argument {
-    let ret = java_method!(self.env, "parse", "(Ljava/lang/String;)Lorg/spongepowered/api/text/selector/Argument;", CallStaticObjectMethod);
+  pub fn parse(env: *mut JNIEnv, param_1: jobject) -> text_selector_Argument {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/Argument", "parse", "(Ljava/lang/String;)Lorg/spongepowered/api/text/selector/Argument;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Argument#parse was null") }
-    text_selector_Argument { env: self.env, object: ret }
+    text_selector_Argument { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> text_selector_ArgumentType {
@@ -49883,35 +49880,35 @@ impl text_selector_ArgumentTypes {
     }
   }
 
-  pub fn score(param_1: jobject) -> text_selector_ArgumentHolder_Limit {
-    let ret = java_method!(self.env, "score", "(Ljava/lang/String;)Lorg/spongepowered/api/text/selector/ArgumentHolder$Limit;", CallStaticObjectMethod);
+  pub fn score(env: *mut JNIEnv, param_1: jobject) -> text_selector_ArgumentHolder_Limit {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/ArgumentTypes", "score", "(Ljava/lang/String;)Lorg/spongepowered/api/text/selector/ArgumentHolder$Limit;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/ArgumentTypes#score was null") }
-    text_selector_ArgumentHolder_Limit { env: self.env, object: ret }
+    text_selector_ArgumentHolder_Limit { env: env, object: ret }
   }
 
-  pub fn value_of(param_1: jobject) -> Option<text_selector_ArgumentType> {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> Option<text_selector_ArgumentType> {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/ArgumentTypes", "valueOf", "(Ljava/lang/String;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/ArgumentTypes#valueOf was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
-    if unwrapped.is_null() { None } else { Some(text_selector_ArgumentType { env: self.env, object: unwrapped }) }
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    if unwrapped.is_null() { None } else { Some(text_selector_ArgumentType { env: env, object: unwrapped }) }
   }
 
-  pub fn values() -> jobject {
-    let ret = java_method!(self.env, "values", "()Ljava/util/Collection;", CallStaticObjectMethod);
+  pub fn values(env: *mut JNIEnv) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/ArgumentTypes", "values", "()Ljava/util/Collection;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/ArgumentTypes#values was null") }
     ret
   }
 
-  pub fn create(param_1: jobject) -> text_selector_ArgumentType {
-    let ret = java_method!(self.env, "create", "(Ljava/lang/String;)Lorg/spongepowered/api/text/selector/ArgumentType;", CallStaticObjectMethod);
+  pub fn create(env: *mut JNIEnv, param_1: jobject) -> text_selector_ArgumentType {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/ArgumentTypes", "create", "(Ljava/lang/String;)Lorg/spongepowered/api/text/selector/ArgumentType;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/ArgumentTypes#create was null") }
-    text_selector_ArgumentType { env: self.env, object: ret }
+    text_selector_ArgumentType { env: env, object: ret }
   }
 
-  pub fn create_1(param_1: jobject, param_2: jobject) -> text_selector_ArgumentType {
-    let ret = java_method!(self.env, "create", "(Ljava/lang/String;Ljava/lang/Class;)Lorg/spongepowered/api/text/selector/ArgumentType;", CallStaticObjectMethodA, param_1);
+  pub fn create_1(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> text_selector_ArgumentType {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/ArgumentTypes", "create", "(Ljava/lang/String;Ljava/lang/Class;)Lorg/spongepowered/api/text/selector/ArgumentType;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/ArgumentTypes#create was null") }
-    text_selector_ArgumentType { env: self.env, object: ret }
+    text_selector_ArgumentType { env: env, object: ret }
   }
 
 }
@@ -49937,7 +49934,7 @@ impl text_selector_Selector_Builder {
     text_selector_Selector_Builder { env: self.env, object: ret }
   }
 
-  pub fn add(&self, param_1: &[text_selector_Argument]) -> text_selector_Selector_Builder {
+  pub fn add(&self, param_1: Vec<text_selector_Argument>) -> text_selector_Selector_Builder {
     let ret = java_method!(self.env, self.object, "add", "([Lorg/spongepowered/api/text/selector/Argument;)Lorg/spongepowered/api/text/selector/Selector$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Selector$Builder#add was null") }
     text_selector_Selector_Builder { env: self.env, object: ret }
@@ -49955,7 +49952,7 @@ impl text_selector_Selector_Builder {
     text_selector_Selector_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove(&self, param_1: &[text_selector_Argument]) -> text_selector_Selector_Builder {
+  pub fn remove(&self, param_1: Vec<text_selector_Argument>) -> text_selector_Selector_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/selector/Argument;)Lorg/spongepowered/api/text/selector/Selector$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Selector$Builder#remove was null") }
     text_selector_Selector_Builder { env: self.env, object: ret }
@@ -49967,7 +49964,7 @@ impl text_selector_Selector_Builder {
     text_selector_Selector_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove_2(&self, param_1: &[text_selector_ArgumentType]) -> text_selector_Selector_Builder {
+  pub fn remove_2(&self, param_1: Vec<text_selector_ArgumentType>) -> text_selector_Selector_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/selector/ArgumentType;)Lorg/spongepowered/api/text/selector/Selector$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Selector$Builder#remove was null") }
     text_selector_Selector_Builder { env: self.env, object: ret }
@@ -49995,20 +49992,20 @@ impl text_selector_Selector {
     }
   }
 
-  pub fn builder() -> text_selector_Selector_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/text/selector/Selector$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> text_selector_Selector_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/Selector", "builder", "()Lorg/spongepowered/api/text/selector/Selector$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Selector#builder was null") }
-    text_selector_Selector_Builder { env: self.env, object: ret }
+    text_selector_Selector_Builder { env: env, object: ret }
   }
 
-  pub fn parse(param_1: jobject) -> text_selector_Selector {
-    let ret = java_method!(self.env, "parse", "(Ljava/lang/String;)Lorg/spongepowered/api/text/selector/Selector;", CallStaticObjectMethod);
+  pub fn parse(env: *mut JNIEnv, param_1: jobject) -> text_selector_Selector {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/Selector", "parse", "(Ljava/lang/String;)Lorg/spongepowered/api/text/selector/Selector;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Selector#parse was null") }
-    text_selector_Selector { env: self.env, object: ret }
+    text_selector_Selector { env: env, object: ret }
   }
 
-  pub fn complete(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "complete", "(Ljava/lang/String;)Ljava/util/List;", CallStaticObjectMethod);
+  pub fn complete(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/selector/Selector", "complete", "(Ljava/lang/String;)Ljava/util/List;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Selector#complete was null") }
     ret
   }
@@ -50060,7 +50057,7 @@ impl text_selector_Selector {
     ret
   }
 
-  pub fn resolve_1(&self, param_1: &[world_extent_Extent]) -> jobject {
+  pub fn resolve_1(&self, param_1: Vec<world_extent_Extent>) -> jobject {
     let ret = java_method!(self.env, self.object, "resolve", "([Lorg/spongepowered/api/world/extent/Extent;)Ljava/util/Set;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Selector#resolve was null") }
     ret
@@ -50084,7 +50081,7 @@ impl text_selector_Selector {
     ret
   }
 
-  pub fn resolve_force_1(&self, param_1: &[world_extent_Extent]) -> jobject {
+  pub fn resolve_force_1(&self, param_1: Vec<world_extent_Extent>) -> jobject {
     let ret = java_method!(self.env, self.object, "resolveForce", "([Lorg/spongepowered/api/world/extent/Extent;)Ljava/util/Set;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/selector/Selector#resolveForce was null") }
     ret
@@ -50289,7 +50286,7 @@ impl text_SelectorText_Builder {
     text_SelectorText_Builder { env: self.env, object: ret }
   }
 
-  pub fn style(&self, param_1: &[text_format_TextStyle]) -> text_SelectorText_Builder {
+  pub fn style(&self, param_1: Vec<text_format_TextStyle>) -> text_SelectorText_Builder {
     let ret = java_method!(self.env, self.object, "style", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/SelectorText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/SelectorText$Builder#style was null") }
     text_SelectorText_Builder { env: self.env, object: ret }
@@ -50313,7 +50310,7 @@ impl text_SelectorText_Builder {
     text_SelectorText_Builder { env: self.env, object: ret }
   }
 
-  pub fn append(&self, param_1: &[text_Text]) -> text_SelectorText_Builder {
+  pub fn append(&self, param_1: Vec<text_Text>) -> text_SelectorText_Builder {
     let ret = java_method!(self.env, self.object, "append", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/SelectorText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/SelectorText$Builder#append was null") }
     text_SelectorText_Builder { env: self.env, object: ret }
@@ -50337,7 +50334,7 @@ impl text_SelectorText_Builder {
     text_SelectorText_Builder { env: self.env, object: ret }
   }
 
-  pub fn insert(&self, param_1: i32, param_2: &[text_Text]) -> text_SelectorText_Builder {
+  pub fn insert(&self, param_1: i32, param_2: Vec<text_Text>) -> text_SelectorText_Builder {
     let ret = java_method!(self.env, self.object, "insert", "(I[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/SelectorText$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/SelectorText$Builder#insert was null") }
     text_SelectorText_Builder { env: self.env, object: ret }
@@ -50361,7 +50358,7 @@ impl text_SelectorText_Builder {
     text_SelectorText_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove(&self, param_1: &[text_Text]) -> text_SelectorText_Builder {
+  pub fn remove(&self, param_1: Vec<text_Text>) -> text_SelectorText_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/SelectorText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/SelectorText$Builder#remove was null") }
     text_SelectorText_Builder { env: self.env, object: ret }
@@ -50421,7 +50418,7 @@ impl text_SelectorText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove_7(&self, param_1: &[text_Text]) -> text_Text_Builder {
+  pub fn remove_7(&self, param_1: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/SelectorText$Builder#remove was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -50445,7 +50442,7 @@ impl text_SelectorText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn insert_7(&self, param_1: i32, param_2: &[text_Text]) -> text_Text_Builder {
+  pub fn insert_7(&self, param_1: i32, param_2: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "insert", "(I[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/SelectorText$Builder#insert was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -50469,7 +50466,7 @@ impl text_SelectorText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn append_7(&self, param_1: &[text_Text]) -> text_Text_Builder {
+  pub fn append_7(&self, param_1: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "append", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/SelectorText$Builder#append was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -50493,7 +50490,7 @@ impl text_SelectorText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn style_1(&self, param_1: &[text_format_TextStyle]) -> text_Text_Builder {
+  pub fn style_1(&self, param_1: Vec<text_format_TextStyle>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "style", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/SelectorText$Builder#style was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -50874,10 +50871,10 @@ impl text_serializer_TextSerializers {
     }
   }
 
-  pub fn formatting_code(param_1: char) -> text_serializer_FormattingCodeTextSerializer {
-    let ret = java_method!(self.env, "formattingCode", "(C)Lorg/spongepowered/api/text/serializer/FormattingCodeTextSerializer;", CallStaticObjectMethod);
+  pub fn formatting_code(env: *mut JNIEnv, param_1: char) -> text_serializer_FormattingCodeTextSerializer {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/serializer/TextSerializers", "formattingCode", "(C)Lorg/spongepowered/api/text/serializer/FormattingCodeTextSerializer;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/serializer/TextSerializers#formattingCode was null") }
-    text_serializer_FormattingCodeTextSerializer { env: self.env, object: ret }
+    text_serializer_FormattingCodeTextSerializer { env: env, object: ret }
   }
 
 }
@@ -50984,7 +50981,7 @@ impl text_Text_Builder {
     text_format_TextStyle { env: self.env, object: ret }
   }
 
-  pub fn style(&self, param_1: &[text_format_TextStyle]) -> text_Text_Builder {
+  pub fn style(&self, param_1: Vec<text_format_TextStyle>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "style", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text$Builder#style was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -51035,7 +51032,7 @@ impl text_Text_Builder {
     ret
   }
 
-  pub fn append(&self, param_1: &[text_Text]) -> text_Text_Builder {
+  pub fn append(&self, param_1: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "append", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text$Builder#append was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -51059,7 +51056,7 @@ impl text_Text_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn insert(&self, param_1: i32, param_2: &[text_Text]) -> text_Text_Builder {
+  pub fn insert(&self, param_1: i32, param_2: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "insert", "(I[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text$Builder#insert was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -51083,7 +51080,7 @@ impl text_Text_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove(&self, param_1: &[text_Text]) -> text_Text_Builder {
+  pub fn remove(&self, param_1: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text$Builder#remove was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -51274,160 +51271,160 @@ impl text_Text {
     text_Text { env: self.env, object: ret }
   }
 
-  pub fn of() -> text_Text {
-    let ret = java_method!(self.env, "of", "()Lorg/spongepowered/api/text/Text;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "of", "()Lorg/spongepowered/api/text/Text;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#of was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: jobject) -> text_LiteralText {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/String;)Lorg/spongepowered/api/text/LiteralText;", CallStaticObjectMethod);
+  pub fn of_1(env: *mut JNIEnv, param_1: jobject) -> text_LiteralText {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "of", "(Ljava/lang/String;)Lorg/spongepowered/api/text/LiteralText;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#of was null") }
-    text_LiteralText { env: self.env, object: ret }
+    text_LiteralText { env: env, object: ret }
   }
 
-  pub fn of_2(param_1: char) -> text_LiteralText {
-    let ret = java_method!(self.env, "of", "(C)Lorg/spongepowered/api/text/LiteralText;", CallStaticObjectMethod);
+  pub fn of_2(env: *mut JNIEnv, param_1: char) -> text_LiteralText {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "of", "(C)Lorg/spongepowered/api/text/LiteralText;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#of was null") }
-    text_LiteralText { env: self.env, object: ret }
+    text_LiteralText { env: env, object: ret }
   }
 
-  pub fn of_3(param_1: text_translation_Translation, param_2: &[jobject]) -> text_TranslatableText {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/text/translation/Translation;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText;", CallStaticObjectMethodA, param_1);
+  pub fn of_3(env: *mut JNIEnv, param_1: text_translation_Translation, param_2: Vec<jobject>) -> text_TranslatableText {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "of", "(Lorg/spongepowered/api/text/translation/Translation;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#of was null") }
-    text_TranslatableText { env: self.env, object: ret }
+    text_TranslatableText { env: env, object: ret }
   }
 
-  pub fn of_4(param_1: text_translation_Translatable, param_2: &[jobject]) -> text_TranslatableText {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/text/translation/Translatable;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText;", CallStaticObjectMethodA, param_1);
+  pub fn of_4(env: *mut JNIEnv, param_1: text_translation_Translatable, param_2: Vec<jobject>) -> text_TranslatableText {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "of", "(Lorg/spongepowered/api/text/translation/Translatable;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#of was null") }
-    text_TranslatableText { env: self.env, object: ret }
+    text_TranslatableText { env: env, object: ret }
   }
 
-  pub fn of_5(param_1: text_selector_Selector) -> text_SelectorText {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/text/selector/Selector;)Lorg/spongepowered/api/text/SelectorText;", CallStaticObjectMethod);
+  pub fn of_5(env: *mut JNIEnv, param_1: text_selector_Selector) -> text_SelectorText {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "of", "(Lorg/spongepowered/api/text/selector/Selector;)Lorg/spongepowered/api/text/SelectorText;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#of was null") }
-    text_SelectorText { env: self.env, object: ret }
+    text_SelectorText { env: env, object: ret }
   }
 
-  pub fn of_6(param_1: scoreboard_Score) -> text_ScoreText {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/scoreboard/Score;)Lorg/spongepowered/api/text/ScoreText;", CallStaticObjectMethod);
+  pub fn of_6(env: *mut JNIEnv, param_1: scoreboard_Score) -> text_ScoreText {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "of", "(Lorg/spongepowered/api/scoreboard/Score;)Lorg/spongepowered/api/text/ScoreText;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#of was null") }
-    text_ScoreText { env: self.env, object: ret }
+    text_ScoreText { env: env, object: ret }
   }
 
-  pub fn of_7(param_1: &[jobject]) -> text_Text {
-    let ret = java_method!(self.env, "of", "([Ljava/lang/Object;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethod);
+  pub fn of_7(env: *mut JNIEnv, param_1: Vec<jobject>) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "of", "([Ljava/lang/Object;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#of was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
-  pub fn builder() -> text_Text_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/text/Text$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> text_Text_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "()Lorg/spongepowered/api/text/Text$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_Text_Builder { env: self.env, object: ret }
+    text_Text_Builder { env: env, object: ret }
   }
 
-  pub fn builder_1(param_1: jobject) -> text_LiteralText_Builder {
-    let ret = java_method!(self.env, "builder", "(Ljava/lang/String;)Lorg/spongepowered/api/text/LiteralText$Builder;", CallStaticObjectMethod);
+  pub fn builder_1(env: *mut JNIEnv, param_1: jobject) -> text_LiteralText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(Ljava/lang/String;)Lorg/spongepowered/api/text/LiteralText$Builder;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_LiteralText_Builder { env: self.env, object: ret }
+    text_LiteralText_Builder { env: env, object: ret }
   }
 
-  pub fn builder_2(param_1: char) -> text_LiteralText_Builder {
-    let ret = java_method!(self.env, "builder", "(C)Lorg/spongepowered/api/text/LiteralText$Builder;", CallStaticObjectMethod);
+  pub fn builder_2(env: *mut JNIEnv, param_1: char) -> text_LiteralText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(C)Lorg/spongepowered/api/text/LiteralText$Builder;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_LiteralText_Builder { env: self.env, object: ret }
+    text_LiteralText_Builder { env: env, object: ret }
   }
 
-  pub fn builder_3(param_1: text_Text, param_2: jobject) -> text_LiteralText_Builder {
-    let ret = java_method!(self.env, "builder", "(Lorg/spongepowered/api/text/Text;Ljava/lang/String;)Lorg/spongepowered/api/text/LiteralText$Builder;", CallStaticObjectMethodA, param_1);
+  pub fn builder_3(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> text_LiteralText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(Lorg/spongepowered/api/text/Text;Ljava/lang/String;)Lorg/spongepowered/api/text/LiteralText$Builder;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_LiteralText_Builder { env: self.env, object: ret }
+    text_LiteralText_Builder { env: env, object: ret }
   }
 
-  pub fn builder_4(param_1: text_translation_Translation, param_2: &[jobject]) -> text_TranslatableText_Builder {
-    let ret = java_method!(self.env, "builder", "(Lorg/spongepowered/api/text/translation/Translation;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallStaticObjectMethodA, param_1);
+  pub fn builder_4(env: *mut JNIEnv, param_1: text_translation_Translation, param_2: Vec<jobject>) -> text_TranslatableText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(Lorg/spongepowered/api/text/translation/Translation;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_TranslatableText_Builder { env: self.env, object: ret }
+    text_TranslatableText_Builder { env: env, object: ret }
   }
 
-  pub fn builder_5(param_1: text_translation_Translatable, param_2: &[jobject]) -> text_TranslatableText_Builder {
-    let ret = java_method!(self.env, "builder", "(Lorg/spongepowered/api/text/translation/Translatable;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallStaticObjectMethodA, param_1);
+  pub fn builder_5(env: *mut JNIEnv, param_1: text_translation_Translatable, param_2: Vec<jobject>) -> text_TranslatableText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(Lorg/spongepowered/api/text/translation/Translatable;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_TranslatableText_Builder { env: self.env, object: ret }
+    text_TranslatableText_Builder { env: env, object: ret }
   }
 
-  pub fn builder_6(param_1: text_Text, param_2: text_translation_Translation, param_3: &[jobject]) -> text_TranslatableText_Builder {
-    let ret = java_method!(self.env, "builder", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/text/translation/Translation;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn builder_6(env: *mut JNIEnv, param_1: text_Text, param_2: text_translation_Translation, param_3: Vec<jobject>) -> text_TranslatableText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/text/translation/Translation;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_TranslatableText_Builder { env: self.env, object: ret }
+    text_TranslatableText_Builder { env: env, object: ret }
   }
 
-  pub fn builder_7(param_1: text_Text, param_2: text_translation_Translatable, param_3: &[jobject]) -> text_TranslatableText_Builder {
-    let ret = java_method!(self.env, "builder", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/text/translation/Translatable;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn builder_7(env: *mut JNIEnv, param_1: text_Text, param_2: text_translation_Translatable, param_3: Vec<jobject>) -> text_TranslatableText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/text/translation/Translatable;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_TranslatableText_Builder { env: self.env, object: ret }
+    text_TranslatableText_Builder { env: env, object: ret }
   }
 
-  pub fn builder_8(param_1: text_selector_Selector) -> text_SelectorText_Builder {
-    let ret = java_method!(self.env, "builder", "(Lorg/spongepowered/api/text/selector/Selector;)Lorg/spongepowered/api/text/SelectorText$Builder;", CallStaticObjectMethod);
+  pub fn builder_8(env: *mut JNIEnv, param_1: text_selector_Selector) -> text_SelectorText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(Lorg/spongepowered/api/text/selector/Selector;)Lorg/spongepowered/api/text/SelectorText$Builder;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_SelectorText_Builder { env: self.env, object: ret }
+    text_SelectorText_Builder { env: env, object: ret }
   }
 
-  pub fn builder_9(param_1: text_Text, param_2: text_selector_Selector) -> text_SelectorText_Builder {
-    let ret = java_method!(self.env, "builder", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/text/selector/Selector;)Lorg/spongepowered/api/text/SelectorText$Builder;", CallStaticObjectMethodA, param_1);
+  pub fn builder_9(env: *mut JNIEnv, param_1: text_Text, param_2: text_selector_Selector) -> text_SelectorText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/text/selector/Selector;)Lorg/spongepowered/api/text/SelectorText$Builder;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_SelectorText_Builder { env: self.env, object: ret }
+    text_SelectorText_Builder { env: env, object: ret }
   }
 
-  pub fn builder_1_0(param_1: scoreboard_Score) -> text_ScoreText_Builder {
-    let ret = java_method!(self.env, "builder", "(Lorg/spongepowered/api/scoreboard/Score;)Lorg/spongepowered/api/text/ScoreText$Builder;", CallStaticObjectMethod);
+  pub fn builder_1_0(env: *mut JNIEnv, param_1: scoreboard_Score) -> text_ScoreText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(Lorg/spongepowered/api/scoreboard/Score;)Lorg/spongepowered/api/text/ScoreText$Builder;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_ScoreText_Builder { env: self.env, object: ret }
+    text_ScoreText_Builder { env: env, object: ret }
   }
 
-  pub fn builder_1_1(param_1: text_Text, param_2: scoreboard_Score) -> text_ScoreText_Builder {
-    let ret = java_method!(self.env, "builder", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/scoreboard/Score;)Lorg/spongepowered/api/text/ScoreText$Builder;", CallStaticObjectMethodA, param_1);
+  pub fn builder_1_1(env: *mut JNIEnv, param_1: text_Text, param_2: scoreboard_Score) -> text_ScoreText_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "builder", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/scoreboard/Score;)Lorg/spongepowered/api/text/ScoreText$Builder;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#builder was null") }
-    text_ScoreText_Builder { env: self.env, object: ret }
+    text_ScoreText_Builder { env: env, object: ret }
   }
 
-  pub fn join(param_1: &[text_Text]) -> text_Text {
-    let ret = java_method!(self.env, "join", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethod);
+  pub fn join(env: *mut JNIEnv, param_1: Vec<text_Text>) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "join", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#join was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
-  pub fn join_1(param_1: jobject) -> text_Text {
-    let ret = java_method!(self.env, "join", "(Ljava/lang/Iterable;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethod);
+  pub fn join_1(env: *mut JNIEnv, param_1: jobject) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "join", "(Ljava/lang/Iterable;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#join was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
-  pub fn join_2(param_1: jobject) -> text_Text {
-    let ret = java_method!(self.env, "join", "(Ljava/util/Iterator;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethod);
+  pub fn join_2(env: *mut JNIEnv, param_1: jobject) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "join", "(Ljava/util/Iterator;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#join was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
-  pub fn join_with(param_1: text_Text, param_2: &[text_Text]) -> text_Text {
-    let ret = java_method!(self.env, "joinWith", "(Lorg/spongepowered/api/text/Text;[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1);
+  pub fn join_with(env: *mut JNIEnv, param_1: text_Text, param_2: Vec<text_Text>) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "joinWith", "(Lorg/spongepowered/api/text/Text;[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#joinWith was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
-  pub fn join_with_1(param_1: text_Text, param_2: jobject) -> text_Text {
-    let ret = java_method!(self.env, "joinWith", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Iterable;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1);
+  pub fn join_with_1(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "joinWith", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Iterable;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#joinWith was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
-  pub fn join_with_2(param_1: text_Text, param_2: jobject) -> text_Text {
-    let ret = java_method!(self.env, "joinWith", "(Lorg/spongepowered/api/text/Text;Ljava/util/Iterator;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1);
+  pub fn join_with_2(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/Text", "joinWith", "(Lorg/spongepowered/api/text/Text;Ljava/util/Iterator;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/Text#joinWith was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
   pub fn compare_to_1(&self, param_1: jobject) -> i32 {
@@ -51705,28 +51702,28 @@ impl text_TextTemplate {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn of(param_1: jobject, param_2: jobject, param_3: &[jobject]) -> text_TextTemplate {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TextTemplate;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn of(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: Vec<jobject>) -> text_TextTemplate {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/TextTemplate", "of", "(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TextTemplate;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/text/TextTemplate#of was null") }
-    text_TextTemplate { env: self.env, object: ret }
+    text_TextTemplate { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: &[jobject]) -> text_TextTemplate {
-    let ret = java_method!(self.env, "of", "([Ljava/lang/Object;)Lorg/spongepowered/api/text/TextTemplate;", CallStaticObjectMethod);
+  pub fn of_1(env: *mut JNIEnv, param_1: Vec<jobject>) -> text_TextTemplate {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/TextTemplate", "of", "([Ljava/lang/Object;)Lorg/spongepowered/api/text/TextTemplate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/TextTemplate#of was null") }
-    text_TextTemplate { env: self.env, object: ret }
+    text_TextTemplate { env: env, object: ret }
   }
 
-  pub fn of_2() -> text_TextTemplate {
-    let ret = java_method!(self.env, "of", "()Lorg/spongepowered/api/text/TextTemplate;", CallStaticObjectMethod);
+  pub fn of_2(env: *mut JNIEnv) -> text_TextTemplate {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/TextTemplate", "of", "()Lorg/spongepowered/api/text/TextTemplate;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/TextTemplate#of was null") }
-    text_TextTemplate { env: self.env, object: ret }
+    text_TextTemplate { env: env, object: ret }
   }
 
-  pub fn arg(param_1: jobject) -> text_TextTemplate_Arg_Builder {
-    let ret = java_method!(self.env, "arg", "(Ljava/lang/String;)Lorg/spongepowered/api/text/TextTemplate$Arg$Builder;", CallStaticObjectMethod);
+  pub fn arg(env: *mut JNIEnv, param_1: jobject) -> text_TextTemplate_Arg_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/TextTemplate", "arg", "(Ljava/lang/String;)Lorg/spongepowered/api/text/TextTemplate$Arg$Builder;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/TextTemplate#arg was null") }
-    text_TextTemplate_Arg_Builder { env: self.env, object: ret }
+    text_TextTemplate_Arg_Builder { env: env, object: ret }
   }
 
   pub fn to_text(&self) -> text_Text {
@@ -51990,46 +51987,46 @@ impl text_title_Title {
     ret
   }
 
-  pub fn of() -> text_title_Title {
-    let ret = java_method!(self.env, "of", "()Lorg/spongepowered/api/text/title/Title;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv) -> text_title_Title {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/title/Title", "of", "()Lorg/spongepowered/api/text/title/Title;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/title/Title#of was null") }
-    text_title_Title { env: self.env, object: ret }
+    text_title_Title { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: text_Text) -> text_title_Title {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/title/Title;", CallStaticObjectMethod);
+  pub fn of_1(env: *mut JNIEnv, param_1: text_Text) -> text_title_Title {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/title/Title", "of", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/title/Title;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/title/Title#of was null") }
-    text_title_Title { env: self.env, object: ret }
+    text_title_Title { env: env, object: ret }
   }
 
-  pub fn of_2(param_1: text_Text, param_2: text_Text) -> text_title_Title {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/title/Title;", CallStaticObjectMethodA, param_1);
+  pub fn of_2(env: *mut JNIEnv, param_1: text_Text, param_2: text_Text) -> text_title_Title {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/title/Title", "of", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/title/Title;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/title/Title#of was null") }
-    text_title_Title { env: self.env, object: ret }
+    text_title_Title { env: env, object: ret }
   }
 
-  pub fn clear() -> text_title_Title {
-    let ret = java_method!(self.env, "clear", "()Lorg/spongepowered/api/text/title/Title;", CallStaticObjectMethod);
+  pub fn clear(env: *mut JNIEnv) -> text_title_Title {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/title/Title", "clear", "()Lorg/spongepowered/api/text/title/Title;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/title/Title#clear was null") }
-    text_title_Title { env: self.env, object: ret }
+    text_title_Title { env: env, object: ret }
   }
 
-  pub fn reset() -> text_title_Title {
-    let ret = java_method!(self.env, "reset", "()Lorg/spongepowered/api/text/title/Title;", CallStaticObjectMethod);
+  pub fn reset(env: *mut JNIEnv) -> text_title_Title {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/title/Title", "reset", "()Lorg/spongepowered/api/text/title/Title;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/title/Title#reset was null") }
-    text_title_Title { env: self.env, object: ret }
+    text_title_Title { env: env, object: ret }
   }
 
-  pub fn builder() -> text_title_Title_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/text/title/Title$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> text_title_Title_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/title/Title", "builder", "()Lorg/spongepowered/api/text/title/Title$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/title/Title#builder was null") }
-    text_title_Title_Builder { env: self.env, object: ret }
+    text_title_Title_Builder { env: env, object: ret }
   }
 
-  pub fn update() -> text_title_Title_Builder {
-    let ret = java_method!(self.env, "update", "()Lorg/spongepowered/api/text/title/Title$Builder;", CallStaticObjectMethod);
+  pub fn update(env: *mut JNIEnv) -> text_title_Title_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/title/Title", "update", "()Lorg/spongepowered/api/text/title/Title$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/title/Title#update was null") }
-    text_title_Title_Builder { env: self.env, object: ret }
+    text_title_Title_Builder { env: env, object: ret }
   }
 
 }
@@ -52676,13 +52673,13 @@ impl text_TranslatableText_Builder {
     ret
   }
 
-  pub fn translation(&self, param_1: text_translation_Translation, param_2: &[jobject]) -> text_TranslatableText_Builder {
+  pub fn translation(&self, param_1: text_translation_Translation, param_2: Vec<jobject>) -> text_TranslatableText_Builder {
     let ret = java_method!(self.env, self.object, "translation", "(Lorg/spongepowered/api/text/translation/Translation;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/TranslatableText$Builder#translation was null") }
     text_TranslatableText_Builder { env: self.env, object: ret }
   }
 
-  pub fn translation_1(&self, param_1: text_translation_Translatable, param_2: &[jobject]) -> text_TranslatableText_Builder {
+  pub fn translation_1(&self, param_1: text_translation_Translatable, param_2: Vec<jobject>) -> text_TranslatableText_Builder {
     let ret = java_method!(self.env, self.object, "translation", "(Lorg/spongepowered/api/text/translation/Translatable;[Ljava/lang/Object;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/TranslatableText$Builder#translation was null") }
     text_TranslatableText_Builder { env: self.env, object: ret }
@@ -52714,7 +52711,7 @@ impl text_TranslatableText_Builder {
     text_TranslatableText_Builder { env: self.env, object: ret }
   }
 
-  pub fn style(&self, param_1: &[text_format_TextStyle]) -> text_TranslatableText_Builder {
+  pub fn style(&self, param_1: Vec<text_format_TextStyle>) -> text_TranslatableText_Builder {
     let ret = java_method!(self.env, self.object, "style", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/TranslatableText$Builder#style was null") }
     text_TranslatableText_Builder { env: self.env, object: ret }
@@ -52738,7 +52735,7 @@ impl text_TranslatableText_Builder {
     text_TranslatableText_Builder { env: self.env, object: ret }
   }
 
-  pub fn append(&self, param_1: &[text_Text]) -> text_TranslatableText_Builder {
+  pub fn append(&self, param_1: Vec<text_Text>) -> text_TranslatableText_Builder {
     let ret = java_method!(self.env, self.object, "append", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/TranslatableText$Builder#append was null") }
     text_TranslatableText_Builder { env: self.env, object: ret }
@@ -52762,7 +52759,7 @@ impl text_TranslatableText_Builder {
     text_TranslatableText_Builder { env: self.env, object: ret }
   }
 
-  pub fn insert(&self, param_1: i32, param_2: &[text_Text]) -> text_TranslatableText_Builder {
+  pub fn insert(&self, param_1: i32, param_2: Vec<text_Text>) -> text_TranslatableText_Builder {
     let ret = java_method!(self.env, self.object, "insert", "(I[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/TranslatableText$Builder#insert was null") }
     text_TranslatableText_Builder { env: self.env, object: ret }
@@ -52786,7 +52783,7 @@ impl text_TranslatableText_Builder {
     text_TranslatableText_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove(&self, param_1: &[text_Text]) -> text_TranslatableText_Builder {
+  pub fn remove(&self, param_1: Vec<text_Text>) -> text_TranslatableText_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/TranslatableText$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/TranslatableText$Builder#remove was null") }
     text_TranslatableText_Builder { env: self.env, object: ret }
@@ -52846,7 +52843,7 @@ impl text_TranslatableText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn remove_7(&self, param_1: &[text_Text]) -> text_Text_Builder {
+  pub fn remove_7(&self, param_1: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "remove", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/TranslatableText$Builder#remove was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -52870,7 +52867,7 @@ impl text_TranslatableText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn insert_7(&self, param_1: i32, param_2: &[text_Text]) -> text_Text_Builder {
+  pub fn insert_7(&self, param_1: i32, param_2: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "insert", "(I[Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/TranslatableText$Builder#insert was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -52894,7 +52891,7 @@ impl text_TranslatableText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn append_7(&self, param_1: &[text_Text]) -> text_Text_Builder {
+  pub fn append_7(&self, param_1: Vec<text_Text>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "append", "([Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/TranslatableText$Builder#append was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -52918,7 +52915,7 @@ impl text_TranslatableText_Builder {
     text_Text_Builder { env: self.env, object: ret }
   }
 
-  pub fn style_1(&self, param_1: &[text_format_TextStyle]) -> text_Text_Builder {
+  pub fn style_1(&self, param_1: Vec<text_format_TextStyle>) -> text_Text_Builder {
     let ret = java_method!(self.env, self.object, "style", "([Lorg/spongepowered/api/text/format/TextStyle;)Lorg/spongepowered/api/text/Text$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/TranslatableText$Builder#style was null") }
     text_Text_Builder { env: self.env, object: ret }
@@ -53018,7 +53015,7 @@ impl text_translation_FixedTranslation {
     ret
   }
 
-  pub fn get_1(&self, param_1: jobject, param_2: &[jobject]) -> jobject {
+  pub fn get_1(&self, param_1: jobject, param_2: Vec<jobject>) -> jobject {
     let ret = java_method!(self.env, self.object, "get", "(Ljava/util/Locale;[Ljava/lang/Object;)Ljava/lang/String;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/translation/FixedTranslation#get was null") }
     ret
@@ -53040,8 +53037,8 @@ impl text_translation_locale_Locales {
     }
   }
 
-  pub fn of(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/String;)Ljava/util/Locale;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/translation/locale/Locales", "of", "(Ljava/lang/String;)Ljava/util/Locale;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/translation/locale/Locales#of was null") }
     ret
   }
@@ -53098,7 +53095,7 @@ impl text_translation_ResourceBundleTranslation {
     ret
   }
 
-  pub fn get_1(&self, param_1: jobject, param_2: &[jobject]) -> jobject {
+  pub fn get_1(&self, param_1: jobject, param_2: Vec<jobject>) -> jobject {
     let ret = java_method!(self.env, self.object, "get", "(Ljava/util/Locale;[Ljava/lang/Object;)Ljava/lang/String;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/translation/ResourceBundleTranslation#get was null") }
     ret
@@ -53154,7 +53151,7 @@ impl text_translation_Translation {
     ret
   }
 
-  pub fn get_1(&self, param_1: &[jobject]) -> jobject {
+  pub fn get_1(&self, param_1: Vec<jobject>) -> jobject {
     let ret = java_method!(self.env, self.object, "get", "([Ljava/lang/Object;)Ljava/lang/String;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/translation/Translation#get was null") }
     ret
@@ -53166,7 +53163,7 @@ impl text_translation_Translation {
     ret
   }
 
-  pub fn get_3(&self, param_1: jobject, param_2: &[jobject]) -> jobject {
+  pub fn get_3(&self, param_1: jobject, param_2: Vec<jobject>) -> jobject {
     let ret = java_method!(self.env, self.object, "get", "(Ljava/util/Locale;[Ljava/lang/Object;)Ljava/lang/String;", CallObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/translation/Translation#get was null") }
     ret
@@ -53319,7 +53316,7 @@ impl util_annotation_CatalogedBy {
     }
   }
 
-  pub fn value(&self) -> &[jobject] {
+  pub fn value(&self) -> Vec<jobject> {
     unimplemented!();
   }
 }
@@ -53415,19 +53412,19 @@ impl util_Axis {
     }
   }
 
-  pub fn values() -> &[util_Axis] {
+  pub fn values(env: *mut JNIEnv) -> Vec<util_Axis> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> util_Axis {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/Axis;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> util_Axis {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Axis", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/Axis;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Axis#valueOf was null") }
-    util_Axis { env: self.env, object: ret }
+    util_Axis { env: env, object: ret }
   }
 
-  pub fn get_closest(param_1: jobject) -> util_Axis {
-    let ret = java_method!(self.env, "getClosest", "(Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/Axis;", CallStaticObjectMethod);
+  pub fn get_closest(env: *mut JNIEnv, param_1: jobject) -> util_Axis {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Axis", "getClosest", "(Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/Axis;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Axis#getClosest was null") }
-    util_Axis { env: self.env, object: ret }
+    util_Axis { env: env, object: ret }
   }
 
   pub fn is_vector_along_axis(&self, param_1: jobject) -> bool {
@@ -53484,13 +53481,13 @@ impl util_AxisDirection {
     }
   }
 
-  pub fn values() -> &[util_AxisDirection] {
+  pub fn values(env: *mut JNIEnv) -> Vec<util_AxisDirection> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> util_AxisDirection {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/AxisDirection;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> util_AxisDirection {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/AxisDirection", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/AxisDirection;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/AxisDirection#valueOf was null") }
-    util_AxisDirection { env: self.env, object: ret }
+    util_AxisDirection { env: env, object: ret }
   }
 
   pub fn get_signum(&self) -> i32 {
@@ -53627,22 +53624,22 @@ impl util_ban_Ban {
     }
   }
 
-  pub fn builder() -> util_ban_Ban_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/util/ban/Ban$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> util_ban_Ban_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/ban/Ban", "builder", "()Lorg/spongepowered/api/util/ban/Ban$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/ban/Ban#builder was null") }
-    util_ban_Ban_Builder { env: self.env, object: ret }
+    util_ban_Ban_Builder { env: env, object: ret }
   }
 
-  pub fn of(param_1: profile_GameProfile) -> util_ban_Ban {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/profile/GameProfile;)Lorg/spongepowered/api/util/ban/Ban;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: profile_GameProfile) -> util_ban_Ban {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/ban/Ban", "of", "(Lorg/spongepowered/api/profile/GameProfile;)Lorg/spongepowered/api/util/ban/Ban;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/ban/Ban#of was null") }
-    util_ban_Ban { env: self.env, object: ret }
+    util_ban_Ban { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: profile_GameProfile, param_2: text_Text) -> util_ban_Ban {
-    let ret = java_method!(self.env, "of", "(Lorg/spongepowered/api/profile/GameProfile;Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/util/ban/Ban;", CallStaticObjectMethodA, param_1);
+  pub fn of_1(env: *mut JNIEnv, param_1: profile_GameProfile, param_2: text_Text) -> util_ban_Ban {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/ban/Ban", "of", "(Lorg/spongepowered/api/profile/GameProfile;Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/util/ban/Ban;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/ban/Ban#of was null") }
-    util_ban_Ban { env: self.env, object: ret }
+    util_ban_Ban { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> util_ban_BanType {
@@ -53766,7 +53763,7 @@ impl util_blockray_BlockRay_BlockRayBuilder {
     util_blockray_BlockRay_BlockRayBuilder { env: self.env, object: ret }
   }
 
-  pub fn filter_1(&self, param_1: &[jobject]) -> util_blockray_BlockRay_BlockRayBuilder {
+  pub fn filter_1(&self, param_1: Vec<jobject>) -> util_blockray_BlockRay_BlockRayBuilder {
     let ret = java_method!(self.env, self.object, "filter", "([Ljava/util/function/Predicate;)Lorg/spongepowered/api/util/blockray/BlockRay$BlockRayBuilder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRay$BlockRayBuilder#filter was null") }
     util_blockray_BlockRay_BlockRayBuilder { env: self.env, object: ret }
@@ -53916,50 +53913,50 @@ impl util_blockray_BlockRay {
     if unwrapped.is_null() { None } else { Some(util_blockray_BlockRayHit { env: self.env, object: unwrapped }) }
   }
 
-  pub fn from_1(param_1: world_Location) -> util_blockray_BlockRay_BlockRayBuilder {
-    let ret = java_method!(self.env, "from", "(Lorg/spongepowered/api/world/Location;)Lorg/spongepowered/api/util/blockray/BlockRay$BlockRayBuilder;", CallStaticObjectMethod);
+  pub fn from_1(env: *mut JNIEnv, param_1: world_Location) -> util_blockray_BlockRay_BlockRayBuilder {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/blockray/BlockRay", "from", "(Lorg/spongepowered/api/world/Location;)Lorg/spongepowered/api/util/blockray/BlockRay$BlockRayBuilder;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRay#from was null") }
-    util_blockray_BlockRay_BlockRayBuilder { env: self.env, object: ret }
+    util_blockray_BlockRay_BlockRayBuilder { env: env, object: ret }
   }
 
-  pub fn from_2(param_1: world_extent_Extent, param_2: jobject) -> util_blockray_BlockRay_BlockRayBuilder {
-    let ret = java_method!(self.env, "from", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/blockray/BlockRay$BlockRayBuilder;", CallStaticObjectMethodA, param_1);
+  pub fn from_2(env: *mut JNIEnv, param_1: world_extent_Extent, param_2: jobject) -> util_blockray_BlockRay_BlockRayBuilder {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/blockray/BlockRay", "from", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/blockray/BlockRay$BlockRayBuilder;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRay#from was null") }
-    util_blockray_BlockRay_BlockRayBuilder { env: self.env, object: ret }
+    util_blockray_BlockRay_BlockRayBuilder { env: env, object: ret }
   }
 
-  pub fn from_3(param_1: entity_Entity) -> util_blockray_BlockRay_BlockRayBuilder {
-    let ret = java_method!(self.env, "from", "(Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/util/blockray/BlockRay$BlockRayBuilder;", CallStaticObjectMethod);
+  pub fn from_3(env: *mut JNIEnv, param_1: entity_Entity) -> util_blockray_BlockRay_BlockRayBuilder {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/blockray/BlockRay", "from", "(Lorg/spongepowered/api/entity/Entity;)Lorg/spongepowered/api/util/blockray/BlockRay$BlockRayBuilder;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRay#from was null") }
-    util_blockray_BlockRay_BlockRayBuilder { env: self.env, object: ret }
+    util_blockray_BlockRay_BlockRayBuilder { env: env, object: ret }
   }
 
-  pub fn all_filter() -> jobject {
-    let ret = java_method!(self.env, "allFilter", "()Ljava/util/function/Predicate;", CallStaticObjectMethod);
+  pub fn all_filter(env: *mut JNIEnv) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/blockray/BlockRay", "allFilter", "()Ljava/util/function/Predicate;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRay#allFilter was null") }
     ret
   }
 
-  pub fn only_air_filter() -> jobject {
-    let ret = java_method!(self.env, "onlyAirFilter", "()Ljava/util/function/Predicate;", CallStaticObjectMethod);
+  pub fn only_air_filter(env: *mut JNIEnv) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/blockray/BlockRay", "onlyAirFilter", "()Ljava/util/function/Predicate;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRay#onlyAirFilter was null") }
     ret
   }
 
-  pub fn block_type_filter(param_1: block_BlockType) -> jobject {
-    let ret = java_method!(self.env, "blockTypeFilter", "(Lorg/spongepowered/api/block/BlockType;)Ljava/util/function/Predicate;", CallStaticObjectMethod);
+  pub fn block_type_filter(env: *mut JNIEnv, param_1: block_BlockType) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/blockray/BlockRay", "blockTypeFilter", "(Lorg/spongepowered/api/block/BlockType;)Ljava/util/function/Predicate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRay#blockTypeFilter was null") }
     ret
   }
 
-  pub fn max_distance_filter(param_1: jobject, param_2: f64) -> jobject {
-    let ret = java_method!(self.env, "maxDistanceFilter", "(Lcom/flowpowered/math/vector/Vector3d;D)Ljava/util/function/Predicate;", CallStaticObjectMethodA, param_1);
+  pub fn max_distance_filter(env: *mut JNIEnv, param_1: jobject, param_2: f64) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/blockray/BlockRay", "maxDistanceFilter", "(Lcom/flowpowered/math/vector/Vector3d;D)Ljava/util/function/Predicate;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRay#maxDistanceFilter was null") }
     ret
   }
 
-  pub fn continue_after_filter(param_1: jobject, param_2: i32) -> jobject {
-    let ret = java_method!(self.env, "continueAfterFilter", "(Ljava/util/function/Predicate;I)Ljava/util/function/Predicate;", CallStaticObjectMethodA, param_1);
+  pub fn continue_after_filter(env: *mut JNIEnv, param_1: jobject, param_2: i32) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/blockray/BlockRay", "continueAfterFilter", "(Ljava/util/function/Predicate;I)Ljava/util/function/Predicate;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRay#continueAfterFilter was null") }
     ret
   }
@@ -54052,7 +54049,7 @@ impl util_blockray_BlockRayHit {
     ret
   }
 
-  pub fn get_faces(&self) -> &[util_Direction] {
+  pub fn get_faces(&self) -> Vec<util_Direction> {
     unimplemented!();
   }
   pub fn map(&self, param_1: jobject) -> jobject {
@@ -54089,146 +54086,146 @@ impl util_Coerce {
     }
   }
 
-  pub fn to_string(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "toString", "(Ljava/lang/Object;)Ljava/lang/String;", CallStaticObjectMethod);
+  pub fn to_string(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "toString", "(Ljava/lang/Object;)Ljava/lang/String;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#toString was null") }
     ret
   }
 
-  pub fn as_string(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "asString", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn as_string(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "asString", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#asString was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn to_list(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "toList", "(Ljava/lang/Object;)Ljava/util/List;", CallStaticObjectMethod);
+  pub fn to_list(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "toList", "(Ljava/lang/Object;)Ljava/util/List;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#toList was null") }
     ret
   }
 
-  pub fn as_list(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "asList", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn as_list(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "asList", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#asList was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn to_list_of(param_1: jobject, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "toListOf", "(Ljava/lang/Object;Ljava/lang/Class;)Ljava/util/List;", CallStaticObjectMethodA, param_1);
+  pub fn to_list_of(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "toListOf", "(Ljava/lang/Object;Ljava/lang/Class;)Ljava/util/List;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#toListOf was null") }
     ret
   }
 
-  pub fn to_boolean(param_1: jobject) -> bool {
-    java_method!(self.env, "toBoolean", "(Ljava/lang/Object;)Z", CallStaticBooleanMethod) == 1
+  pub fn to_boolean(env: *mut JNIEnv, param_1: jobject) -> bool {
+    static_java_method!(env, "org/spongepowered/api/util/Coerce", "toBoolean", "(Ljava/lang/Object;)Z", CallStaticBooleanMethodA, param_1) == 1
   }
 
-  pub fn as_boolean(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "asBoolean", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn as_boolean(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "asBoolean", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#asBoolean was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn to_integer(param_1: jobject) -> i32 {
-    java_method!(self.env, "toInteger", "(Ljava/lang/Object;)I", CallStaticIntMethod)
+  pub fn to_integer(env: *mut JNIEnv, param_1: jobject) -> i32 {
+    static_java_method!(env, "org/spongepowered/api/util/Coerce", "toInteger", "(Ljava/lang/Object;)I", CallStaticIntMethodA, param_1)
   }
 
-  pub fn as_integer(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "asInteger", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn as_integer(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "asInteger", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#asInteger was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn to_double(param_1: jobject) -> f64 {
-    java_method!(self.env, "toDouble", "(Ljava/lang/Object;)D", CallStaticDoubleMethod)
+  pub fn to_double(env: *mut JNIEnv, param_1: jobject) -> f64 {
+    static_java_method!(env, "org/spongepowered/api/util/Coerce", "toDouble", "(Ljava/lang/Object;)D", CallStaticDoubleMethodA, param_1)
   }
 
-  pub fn as_double(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "asDouble", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn as_double(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "asDouble", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#asDouble was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn to_float(param_1: jobject) -> f32 {
-    java_method!(self.env, "toFloat", "(Ljava/lang/Object;)F", CallStaticFloatMethod)
+  pub fn to_float(env: *mut JNIEnv, param_1: jobject) -> f32 {
+    static_java_method!(env, "org/spongepowered/api/util/Coerce", "toFloat", "(Ljava/lang/Object;)F", CallStaticFloatMethodA, param_1)
   }
 
-  pub fn as_float(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "asFloat", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn as_float(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "asFloat", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#asFloat was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn to_short(param_1: jobject) -> i16 {
-    java_method!(self.env, "toShort", "(Ljava/lang/Object;)S", CallStaticShortMethod)
+  pub fn to_short(env: *mut JNIEnv, param_1: jobject) -> i16 {
+    static_java_method!(env, "org/spongepowered/api/util/Coerce", "toShort", "(Ljava/lang/Object;)S", CallStaticShortMethodA, param_1)
   }
 
-  pub fn as_short(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "asShort", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn as_short(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "asShort", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#asShort was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn to_byte(param_1: jobject) -> i8 {
-    java_method!(self.env, "toByte", "(Ljava/lang/Object;)B", CallStaticByteMethod)
+  pub fn to_byte(env: *mut JNIEnv, param_1: jobject) -> i8 {
+    static_java_method!(env, "org/spongepowered/api/util/Coerce", "toByte", "(Ljava/lang/Object;)B", CallStaticByteMethodA, param_1)
   }
 
-  pub fn as_byte(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "asByte", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn as_byte(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "asByte", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#asByte was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn to_long(param_1: jobject) -> i64 {
-    java_method!(self.env, "toLong", "(Ljava/lang/Object;)J", CallStaticLongMethod)
+  pub fn to_long(env: *mut JNIEnv, param_1: jobject) -> i64 {
+    static_java_method!(env, "org/spongepowered/api/util/Coerce", "toLong", "(Ljava/lang/Object;)J", CallStaticLongMethodA, param_1)
   }
 
-  pub fn as_long(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "asLong", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn as_long(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "asLong", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#asLong was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn to_char(param_1: jobject) -> char {
-    java_method!(self.env, "toChar", "(Ljava/lang/Object;)C", CallStaticCharMethod) as u8 as char
+  pub fn to_char(env: *mut JNIEnv, param_1: jobject) -> char {
+    static_java_method!(env, "org/spongepowered/api/util/Coerce", "toChar", "(Ljava/lang/Object;)C", CallStaticCharMethodA, param_1) as u8 as char
   }
 
-  pub fn as_char(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "asChar", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn as_char(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "asChar", "(Ljava/lang/Object;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#asChar was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn to_enum(param_1: jobject, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "toEnum", "(Ljava/lang/Object;Ljava/lang/Class;)Ljava/lang/Enum;", CallStaticObjectMethodA, param_1);
+  pub fn to_enum(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "toEnum", "(Ljava/lang/Object;Ljava/lang/Class;)Ljava/lang/Enum;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#toEnum was null") }
     ret
   }
 
-  pub fn to_enum_1(param_1: jobject, param_2: jobject, param_3: jobject) -> jobject {
-    let ret = java_method!(self.env, "toEnum", "(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/Enum;)Ljava/lang/Enum;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn to_enum_1(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "toEnum", "(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/Enum;)Ljava/lang/Enum;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#toEnum was null") }
     ret
   }
 
-  pub fn to_pseudo_enum(param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject) -> jobject {
-    let ret = java_method!(self.env, "toPseudoEnum", "(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/Class;Ljava/lang/Object;)Ljava/lang/Object;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn to_pseudo_enum(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "toPseudoEnum", "(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/Class;Ljava/lang/Object;)Ljava/lang/Object;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#toPseudoEnum was null") }
     ret
   }
 
-  pub fn to_vector_2i(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "toVector2i", "(Ljava/lang/Object;)Lcom/flowpowered/math/vector/Vector2i;", CallStaticObjectMethod);
+  pub fn to_vector_2i(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Coerce", "toVector2i", "(Ljava/lang/Object;)Lcom/flowpowered/math/vector/Vector2i;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Coerce#toVector2i was null") }
     ret
   }
@@ -54249,8 +54246,8 @@ impl util_CollectionUtils {
     }
   }
 
-  pub fn copy_map(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "copyMap", "(Ljava/util/Map;)Ljava/util/Map;", CallStaticObjectMethod);
+  pub fn copy_map(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/CollectionUtils", "copyMap", "(Ljava/util/Map;)Ljava/util/Map;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/CollectionUtils#copyMap was null") }
     ret
   }
@@ -54293,52 +54290,52 @@ impl util_Color {
     }
   }
 
-  pub fn of_rgb(param_1: i32) -> util_Color {
-    let ret = java_method!(self.env, "ofRgb", "(I)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethod);
+  pub fn of_rgb(env: *mut JNIEnv, param_1: i32) -> util_Color {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Color", "ofRgb", "(I)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color#ofRgb was null") }
-    util_Color { env: self.env, object: ret }
+    util_Color { env: env, object: ret }
   }
 
-  pub fn of_rgb_1(param_1: i32, param_2: i32, param_3: i32) -> util_Color {
-    let ret = java_method!(self.env, "ofRgb", "(III)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn of_rgb_1(env: *mut JNIEnv, param_1: i32, param_2: i32, param_3: i32) -> util_Color {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Color", "ofRgb", "(III)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color#ofRgb was null") }
-    util_Color { env: self.env, object: ret }
+    util_Color { env: env, object: ret }
   }
 
-  pub fn of(param_1: jobject) -> util_Color {
-    let ret = java_method!(self.env, "of", "(Ljava/awt/Color;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> util_Color {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Color", "of", "(Ljava/awt/Color;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color#of was null") }
-    util_Color { env: self.env, object: ret }
+    util_Color { env: env, object: ret }
   }
 
-  pub fn of_1(param_1: jobject) -> util_Color {
-    let ret = java_method!(self.env, "of", "(Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethod);
+  pub fn of_1(env: *mut JNIEnv, param_1: jobject) -> util_Color {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Color", "of", "(Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color#of was null") }
-    util_Color { env: self.env, object: ret }
+    util_Color { env: env, object: ret }
   }
 
-  pub fn of_2(param_1: jobject) -> util_Color {
-    let ret = java_method!(self.env, "of", "(Lcom/flowpowered/math/vector/Vector3f;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethod);
+  pub fn of_2(env: *mut JNIEnv, param_1: jobject) -> util_Color {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Color", "of", "(Lcom/flowpowered/math/vector/Vector3f;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color#of was null") }
-    util_Color { env: self.env, object: ret }
+    util_Color { env: env, object: ret }
   }
 
-  pub fn of_3(param_1: jobject) -> util_Color {
-    let ret = java_method!(self.env, "of", "(Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethod);
+  pub fn of_3(env: *mut JNIEnv, param_1: jobject) -> util_Color {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Color", "of", "(Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color#of was null") }
-    util_Color { env: self.env, object: ret }
+    util_Color { env: env, object: ret }
   }
 
-  pub fn mix_dye_colors(param_1: &[data_type_DyeColor]) -> util_Color {
-    let ret = java_method!(self.env, "mixDyeColors", "([Lorg/spongepowered/api/data/type/DyeColor;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethod);
+  pub fn mix_dye_colors(env: *mut JNIEnv, param_1: Vec<data_type_DyeColor>) -> util_Color {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Color", "mixDyeColors", "([Lorg/spongepowered/api/data/type/DyeColor;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color#mixDyeColors was null") }
-    util_Color { env: self.env, object: ret }
+    util_Color { env: env, object: ret }
   }
 
-  pub fn mix_colors(param_1: &[util_Color]) -> util_Color {
-    let ret = java_method!(self.env, "mixColors", "([Lorg/spongepowered/api/util/Color;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethod);
+  pub fn mix_colors(env: *mut JNIEnv, param_1: Vec<util_Color>) -> util_Color {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Color", "mixColors", "([Lorg/spongepowered/api/util/Color;)Lorg/spongepowered/api/util/Color;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color#mixColors was null") }
-    util_Color { env: self.env, object: ret }
+    util_Color { env: env, object: ret }
   }
 
   pub fn get_red(&self) -> i32 {
@@ -54381,13 +54378,13 @@ impl util_Color {
     java_method!(self.env, self.object, "getRgb", "()I", CallIntMethod)
   }
 
-  pub fn mix_with_colors(&self, param_1: &[util_Color]) -> util_Color {
+  pub fn mix_with_colors(&self, param_1: Vec<util_Color>) -> util_Color {
     let ret = java_method!(self.env, self.object, "mixWithColors", "([Lorg/spongepowered/api/util/Color;)Lorg/spongepowered/api/util/Color;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color#mixWithColors was null") }
     util_Color { env: self.env, object: ret }
   }
 
-  pub fn mix_with_dyes(&self, param_1: &[data_type_DyeColor]) -> util_Color {
+  pub fn mix_with_dyes(&self, param_1: Vec<data_type_DyeColor>) -> util_Color {
     let ret = java_method!(self.env, self.object, "mixWithDyes", "([Lorg/spongepowered/api/data/type/DyeColor;)Lorg/spongepowered/api/util/Color;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color#mixWithDyes was null") }
     util_Color { env: self.env, object: ret }
@@ -54487,13 +54484,13 @@ impl util_Direction_Division {
     }
   }
 
-  pub fn values() -> &[util_Direction_Division] {
+  pub fn values(env: *mut JNIEnv) -> Vec<util_Direction_Division> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> util_Direction_Division {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/Direction$Division;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> util_Direction_Division {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Direction$Division", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/Direction$Division;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Direction$Division#valueOf was null") }
-    util_Direction_Division { env: self.env, object: ret }
+    util_Direction_Division { env: env, object: ret }
   }
 
 }
@@ -54512,49 +54509,49 @@ impl util_Direction {
     }
   }
 
-  pub fn values() -> &[util_Direction] {
+  pub fn values(env: *mut JNIEnv) -> Vec<util_Direction> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> util_Direction {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> util_Direction {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Direction", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Direction#valueOf was null") }
-    util_Direction { env: self.env, object: ret }
+    util_Direction { env: env, object: ret }
   }
 
-  pub fn get_closest(param_1: jobject) -> util_Direction {
-    let ret = java_method!(self.env, "getClosest", "(Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethod);
+  pub fn get_closest(env: *mut JNIEnv, param_1: jobject) -> util_Direction {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Direction", "getClosest", "(Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Direction#getClosest was null") }
-    util_Direction { env: self.env, object: ret }
+    util_Direction { env: env, object: ret }
   }
 
-  pub fn get_closest_1(param_1: jobject, param_2: util_Direction_Division) -> util_Direction {
-    let ret = java_method!(self.env, "getClosest", "(Lcom/flowpowered/math/vector/Vector3d;Lorg/spongepowered/api/util/Direction$Division;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethodA, param_1);
+  pub fn get_closest_1(env: *mut JNIEnv, param_1: jobject, param_2: util_Direction_Division) -> util_Direction {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Direction", "getClosest", "(Lcom/flowpowered/math/vector/Vector3d;Lorg/spongepowered/api/util/Direction$Division;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/Direction#getClosest was null") }
-    util_Direction { env: self.env, object: ret }
+    util_Direction { env: env, object: ret }
   }
 
-  pub fn get_closest_horizontal(param_1: jobject) -> util_Direction {
-    let ret = java_method!(self.env, "getClosestHorizontal", "(Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethod);
+  pub fn get_closest_horizontal(env: *mut JNIEnv, param_1: jobject) -> util_Direction {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Direction", "getClosestHorizontal", "(Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Direction#getClosestHorizontal was null") }
-    util_Direction { env: self.env, object: ret }
+    util_Direction { env: env, object: ret }
   }
 
-  pub fn get_closest_horizontal_1(param_1: jobject, param_2: util_Direction_Division) -> util_Direction {
-    let ret = java_method!(self.env, "getClosestHorizontal", "(Lcom/flowpowered/math/vector/Vector3d;Lorg/spongepowered/api/util/Direction$Division;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethodA, param_1);
+  pub fn get_closest_horizontal_1(env: *mut JNIEnv, param_1: jobject, param_2: util_Direction_Division) -> util_Direction {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Direction", "getClosestHorizontal", "(Lcom/flowpowered/math/vector/Vector3d;Lorg/spongepowered/api/util/Direction$Division;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/Direction#getClosestHorizontal was null") }
-    util_Direction { env: self.env, object: ret }
+    util_Direction { env: env, object: ret }
   }
 
-  pub fn get_from_axis(param_1: util_Axis) -> util_Direction {
-    let ret = java_method!(self.env, "getFromAxis", "(Lorg/spongepowered/api/util/Axis;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethod);
+  pub fn get_from_axis(env: *mut JNIEnv, param_1: util_Axis) -> util_Direction {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Direction", "getFromAxis", "(Lorg/spongepowered/api/util/Axis;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Direction#getFromAxis was null") }
-    util_Direction { env: self.env, object: ret }
+    util_Direction { env: env, object: ret }
   }
 
-  pub fn get_from_axis_1(param_1: util_Axis, param_2: util_AxisDirection) -> util_Direction {
-    let ret = java_method!(self.env, "getFromAxis", "(Lorg/spongepowered/api/util/Axis;Lorg/spongepowered/api/util/AxisDirection;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethodA, param_1);
+  pub fn get_from_axis_1(env: *mut JNIEnv, param_1: util_Axis, param_2: util_AxisDirection) -> util_Direction {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Direction", "getFromAxis", "(Lorg/spongepowered/api/util/Axis;Lorg/spongepowered/api/util/AxisDirection;)Lorg/spongepowered/api/util/Direction;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/Direction#getFromAxis was null") }
-    util_Direction { env: self.env, object: ret }
+    util_Direction { env: env, object: ret }
   }
 
   pub fn get_opposite(&self) -> util_Direction {
@@ -54723,65 +54720,65 @@ impl util_DiscreteTransform2 {
     util_DiscreteTransform2 { env: self.env, object: ret }
   }
 
-  pub fn of(param_1: jobject) -> Option<util_DiscreteTransform2> {
-    let ret = java_method!(self.env, "of", "(Lcom/flowpowered/math/matrix/Matrix3d;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> Option<util_DiscreteTransform2> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform2", "of", "(Lcom/flowpowered/math/matrix/Matrix3d;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform2#of was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
-    if unwrapped.is_null() { None } else { Some(util_DiscreteTransform2 { env: self.env, object: unwrapped }) }
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    if unwrapped.is_null() { None } else { Some(util_DiscreteTransform2 { env: env, object: unwrapped }) }
   }
 
-  pub fn from_translation(param_1: jobject) -> util_DiscreteTransform2 {
-    let ret = java_method!(self.env, "fromTranslation", "(Lcom/flowpowered/math/vector/Vector2i;)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethod);
+  pub fn from_translation(env: *mut JNIEnv, param_1: jobject) -> util_DiscreteTransform2 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform2", "fromTranslation", "(Lcom/flowpowered/math/vector/Vector2i;)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform2#fromTranslation was null") }
-    util_DiscreteTransform2 { env: self.env, object: ret }
+    util_DiscreteTransform2 { env: env, object: ret }
   }
 
-  pub fn from_translation_1(param_1: i32, param_2: i32) -> util_DiscreteTransform2 {
-    let ret = java_method!(self.env, "fromTranslation", "(II)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1);
+  pub fn from_translation_1(env: *mut JNIEnv, param_1: i32, param_2: i32) -> util_DiscreteTransform2 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform2", "fromTranslation", "(II)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform2#fromTranslation was null") }
-    util_DiscreteTransform2 { env: self.env, object: ret }
+    util_DiscreteTransform2 { env: env, object: ret }
   }
 
-  pub fn from_scale(param_1: i32) -> util_DiscreteTransform2 {
-    let ret = java_method!(self.env, "fromScale", "(I)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethod);
+  pub fn from_scale(env: *mut JNIEnv, param_1: i32) -> util_DiscreteTransform2 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform2", "fromScale", "(I)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform2#fromScale was null") }
-    util_DiscreteTransform2 { env: self.env, object: ret }
+    util_DiscreteTransform2 { env: env, object: ret }
   }
 
-  pub fn from_scale_1(param_1: jobject) -> util_DiscreteTransform2 {
-    let ret = java_method!(self.env, "fromScale", "(Lcom/flowpowered/math/vector/Vector2i;)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethod);
+  pub fn from_scale_1(env: *mut JNIEnv, param_1: jobject) -> util_DiscreteTransform2 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform2", "fromScale", "(Lcom/flowpowered/math/vector/Vector2i;)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform2#fromScale was null") }
-    util_DiscreteTransform2 { env: self.env, object: ret }
+    util_DiscreteTransform2 { env: env, object: ret }
   }
 
-  pub fn from_scale_2(param_1: i32, param_2: i32) -> util_DiscreteTransform2 {
-    let ret = java_method!(self.env, "fromScale", "(II)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1);
+  pub fn from_scale_2(env: *mut JNIEnv, param_1: i32, param_2: i32) -> util_DiscreteTransform2 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform2", "fromScale", "(II)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform2#fromScale was null") }
-    util_DiscreteTransform2 { env: self.env, object: ret }
+    util_DiscreteTransform2 { env: env, object: ret }
   }
 
-  pub fn from_rotation(param_1: i32) -> util_DiscreteTransform2 {
-    let ret = java_method!(self.env, "fromRotation", "(I)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethod);
+  pub fn from_rotation(env: *mut JNIEnv, param_1: i32) -> util_DiscreteTransform2 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform2", "fromRotation", "(I)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform2#fromRotation was null") }
-    util_DiscreteTransform2 { env: self.env, object: ret }
+    util_DiscreteTransform2 { env: env, object: ret }
   }
 
-  pub fn from_rotation_1(param_1: i32, param_2: jobject, param_3: bool) -> util_DiscreteTransform2 {
-    let ret = java_method!(self.env, "fromRotation", "(ILcom/flowpowered/math/vector/Vector2i;Z)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn from_rotation_1(env: *mut JNIEnv, param_1: i32, param_2: jobject, param_3: bool) -> util_DiscreteTransform2 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform2", "fromRotation", "(ILcom/flowpowered/math/vector/Vector2i;Z)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform2#fromRotation was null") }
-    util_DiscreteTransform2 { env: self.env, object: ret }
+    util_DiscreteTransform2 { env: env, object: ret }
   }
 
-  pub fn from_rotation_2(param_1: i32, param_2: jobject, param_3: bool, param_4: bool) -> util_DiscreteTransform2 {
-    let ret = java_method!(self.env, "fromRotation", "(ILcom/flowpowered/math/vector/Vector2i;ZZ)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn from_rotation_2(env: *mut JNIEnv, param_1: i32, param_2: jobject, param_3: bool, param_4: bool) -> util_DiscreteTransform2 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform2", "fromRotation", "(ILcom/flowpowered/math/vector/Vector2i;ZZ)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform2#fromRotation was null") }
-    util_DiscreteTransform2 { env: self.env, object: ret }
+    util_DiscreteTransform2 { env: env, object: ret }
   }
 
-  pub fn rotation_around_center(param_1: i32, param_2: jobject) -> util_DiscreteTransform2 {
-    let ret = java_method!(self.env, "rotationAroundCenter", "(ILcom/flowpowered/math/vector/Vector2i;)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1);
+  pub fn rotation_around_center(env: *mut JNIEnv, param_1: i32, param_2: jobject) -> util_DiscreteTransform2 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform2", "rotationAroundCenter", "(ILcom/flowpowered/math/vector/Vector2i;)Lorg/spongepowered/api/util/DiscreteTransform2;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform2#rotationAroundCenter was null") }
-    util_DiscreteTransform2 { env: self.env, object: ret }
+    util_DiscreteTransform2 { env: env, object: ret }
   }
 
 }
@@ -54930,65 +54927,65 @@ impl util_DiscreteTransform3 {
     util_DiscreteTransform3 { env: self.env, object: ret }
   }
 
-  pub fn of(param_1: jobject) -> Option<util_DiscreteTransform3> {
-    let ret = java_method!(self.env, "of", "(Lcom/flowpowered/math/matrix/Matrix4d;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: jobject) -> Option<util_DiscreteTransform3> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform3", "of", "(Lcom/flowpowered/math/matrix/Matrix4d;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform3#of was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
-    if unwrapped.is_null() { None } else { Some(util_DiscreteTransform3 { env: self.env, object: unwrapped }) }
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    if unwrapped.is_null() { None } else { Some(util_DiscreteTransform3 { env: env, object: unwrapped }) }
   }
 
-  pub fn from_translation(param_1: jobject) -> util_DiscreteTransform3 {
-    let ret = java_method!(self.env, "fromTranslation", "(Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethod);
+  pub fn from_translation(env: *mut JNIEnv, param_1: jobject) -> util_DiscreteTransform3 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform3", "fromTranslation", "(Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform3#fromTranslation was null") }
-    util_DiscreteTransform3 { env: self.env, object: ret }
+    util_DiscreteTransform3 { env: env, object: ret }
   }
 
-  pub fn from_translation_1(param_1: i32, param_2: i32, param_3: i32) -> util_DiscreteTransform3 {
-    let ret = java_method!(self.env, "fromTranslation", "(III)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn from_translation_1(env: *mut JNIEnv, param_1: i32, param_2: i32, param_3: i32) -> util_DiscreteTransform3 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform3", "fromTranslation", "(III)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform3#fromTranslation was null") }
-    util_DiscreteTransform3 { env: self.env, object: ret }
+    util_DiscreteTransform3 { env: env, object: ret }
   }
 
-  pub fn from_scale(param_1: i32) -> util_DiscreteTransform3 {
-    let ret = java_method!(self.env, "fromScale", "(I)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethod);
+  pub fn from_scale(env: *mut JNIEnv, param_1: i32) -> util_DiscreteTransform3 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform3", "fromScale", "(I)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform3#fromScale was null") }
-    util_DiscreteTransform3 { env: self.env, object: ret }
+    util_DiscreteTransform3 { env: env, object: ret }
   }
 
-  pub fn from_scale_1(param_1: jobject) -> util_DiscreteTransform3 {
-    let ret = java_method!(self.env, "fromScale", "(Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethod);
+  pub fn from_scale_1(env: *mut JNIEnv, param_1: jobject) -> util_DiscreteTransform3 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform3", "fromScale", "(Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform3#fromScale was null") }
-    util_DiscreteTransform3 { env: self.env, object: ret }
+    util_DiscreteTransform3 { env: env, object: ret }
   }
 
-  pub fn from_scale_2(param_1: i32, param_2: i32, param_3: i32) -> util_DiscreteTransform3 {
-    let ret = java_method!(self.env, "fromScale", "(III)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn from_scale_2(env: *mut JNIEnv, param_1: i32, param_2: i32, param_3: i32) -> util_DiscreteTransform3 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform3", "fromScale", "(III)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform3#fromScale was null") }
-    util_DiscreteTransform3 { env: self.env, object: ret }
+    util_DiscreteTransform3 { env: env, object: ret }
   }
 
-  pub fn from_rotation(param_1: i32, param_2: util_Axis) -> util_DiscreteTransform3 {
-    let ret = java_method!(self.env, "fromRotation", "(ILorg/spongepowered/api/util/Axis;)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1);
+  pub fn from_rotation(env: *mut JNIEnv, param_1: i32, param_2: util_Axis) -> util_DiscreteTransform3 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform3", "fromRotation", "(ILorg/spongepowered/api/util/Axis;)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform3#fromRotation was null") }
-    util_DiscreteTransform3 { env: self.env, object: ret }
+    util_DiscreteTransform3 { env: env, object: ret }
   }
 
-  pub fn from_rotation_1(param_1: i32, param_2: util_Axis, param_3: jobject, param_4: bool) -> util_DiscreteTransform3 {
-    let ret = java_method!(self.env, "fromRotation", "(ILorg/spongepowered/api/util/Axis;Lcom/flowpowered/math/vector/Vector3i;Z)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2, param_3);
+  pub fn from_rotation_1(env: *mut JNIEnv, param_1: i32, param_2: util_Axis, param_3: jobject, param_4: bool) -> util_DiscreteTransform3 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform3", "fromRotation", "(ILorg/spongepowered/api/util/Axis;Lcom/flowpowered/math/vector/Vector3i;Z)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform3#fromRotation was null") }
-    util_DiscreteTransform3 { env: self.env, object: ret }
+    util_DiscreteTransform3 { env: env, object: ret }
   }
 
-  pub fn from_rotation_2(param_1: i32, param_2: util_Axis, param_3: jobject, param_4: bool, param_5: bool, param_6: bool) -> util_DiscreteTransform3 {
-    let ret = java_method!(self.env, "fromRotation", "(ILorg/spongepowered/api/util/Axis;Lcom/flowpowered/math/vector/Vector3i;ZZZ)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn from_rotation_2(env: *mut JNIEnv, param_1: i32, param_2: util_Axis, param_3: jobject, param_4: bool, param_5: bool, param_6: bool) -> util_DiscreteTransform3 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform3", "fromRotation", "(ILorg/spongepowered/api/util/Axis;Lcom/flowpowered/math/vector/Vector3i;ZZZ)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform3#fromRotation was null") }
-    util_DiscreteTransform3 { env: self.env, object: ret }
+    util_DiscreteTransform3 { env: env, object: ret }
   }
 
-  pub fn rotation_around_center(param_1: i32, param_2: util_Axis, param_3: jobject) -> util_DiscreteTransform3 {
-    let ret = java_method!(self.env, "rotationAroundCenter", "(ILorg/spongepowered/api/util/Axis;Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn rotation_around_center(env: *mut JNIEnv, param_1: i32, param_2: util_Axis, param_3: jobject) -> util_DiscreteTransform3 {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/DiscreteTransform3", "rotationAroundCenter", "(ILorg/spongepowered/api/util/Axis;Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/util/DiscreteTransform3;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/DiscreteTransform3#rotationAroundCenter was null") }
-    util_DiscreteTransform3 { env: self.env, object: ret }
+    util_DiscreteTransform3 { env: env, object: ret }
   }
 
 }
@@ -55007,62 +55004,62 @@ impl util_Functional {
     }
   }
 
-  pub fn predicate_and(param_1: &[jobject]) -> jobject {
-    let ret = java_method!(self.env, "predicateAnd", "([Ljava/util/function/Predicate;)Ljava/util/function/Predicate;", CallStaticObjectMethod);
+  pub fn predicate_and(env: *mut JNIEnv, param_1: Vec<jobject>) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Functional", "predicateAnd", "([Ljava/util/function/Predicate;)Ljava/util/function/Predicate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Functional#predicateAnd was null") }
     ret
   }
 
-  pub fn predicate_and_1(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "predicateAnd", "(Ljava/lang/Iterable;)Ljava/util/function/Predicate;", CallStaticObjectMethod);
+  pub fn predicate_and_1(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Functional", "predicateAnd", "(Ljava/lang/Iterable;)Ljava/util/function/Predicate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Functional#predicateAnd was null") }
     ret
   }
 
-  pub fn bi_predicate_and(param_1: &[jobject]) -> jobject {
-    let ret = java_method!(self.env, "biPredicateAnd", "([Ljava/util/function/BiPredicate;)Ljava/util/function/BiPredicate;", CallStaticObjectMethod);
+  pub fn bi_predicate_and(env: *mut JNIEnv, param_1: Vec<jobject>) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Functional", "biPredicateAnd", "([Ljava/util/function/BiPredicate;)Ljava/util/function/BiPredicate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Functional#biPredicateAnd was null") }
     ret
   }
 
-  pub fn bi_predicate_and_1(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "biPredicateAnd", "(Ljava/lang/Iterable;)Ljava/util/function/BiPredicate;", CallStaticObjectMethod);
+  pub fn bi_predicate_and_1(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Functional", "biPredicateAnd", "(Ljava/lang/Iterable;)Ljava/util/function/BiPredicate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Functional#biPredicateAnd was null") }
     ret
   }
 
-  pub fn predicate_in(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "predicateIn", "(Ljava/util/Collection;)Ljava/util/function/Predicate;", CallStaticObjectMethod);
+  pub fn predicate_in(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Functional", "predicateIn", "(Ljava/util/Collection;)Ljava/util/function/Predicate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Functional#predicateIn was null") }
     ret
   }
 
-  pub fn java_8_to_guava(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "java8ToGuava", "(Ljava/util/function/Predicate;)Lcom/google/common/base/Predicate;", CallStaticObjectMethod);
+  pub fn java_8_to_guava(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Functional", "java8ToGuava", "(Ljava/util/function/Predicate;)Lcom/google/common/base/Predicate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Functional#java8ToGuava was null") }
     ret
   }
 
-  pub fn guava_to_java_8(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "guavaToJava8", "(Lcom/google/common/base/Predicate;)Ljava/util/function/Predicate;", CallStaticObjectMethod);
+  pub fn guava_to_java_8(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Functional", "guavaToJava8", "(Lcom/google/common/base/Predicate;)Ljava/util/function/Predicate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Functional#guavaToJava8 was null") }
     ret
   }
 
-  pub fn optional_as_set(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "optionalAsSet", "(Ljava/util/Optional;)Ljava/util/Set;", CallStaticObjectMethod);
+  pub fn optional_as_set(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Functional", "optionalAsSet", "(Ljava/util/Optional;)Ljava/util/Set;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Functional#optionalAsSet was null") }
     ret
   }
 
-  pub fn failable_future(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "failableFuture", "(Ljava/util/concurrent/Callable;)Ljava/util/concurrent/CompletableFuture;", CallStaticObjectMethod);
+  pub fn failable_future(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Functional", "failableFuture", "(Ljava/util/concurrent/Callable;)Ljava/util/concurrent/CompletableFuture;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Functional#failableFuture was null") }
     ret
   }
 
-  pub fn async_failable_future(param_1: jobject, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "asyncFailableFuture", "(Ljava/util/concurrent/Callable;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;", CallStaticObjectMethodA, param_1);
+  pub fn async_failable_future(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Functional", "asyncFailableFuture", "(Ljava/util/concurrent/Callable;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/Functional#asyncFailableFuture was null") }
     ret
   }
@@ -55089,10 +55086,9 @@ impl util_generator_dummy_DummyClassGenerator {
     util_generator_dummy_DummyClassGenerator { env: self.env, object: ret }
   }
 
-  pub fn create_class(&self, param_1: jobject, param_2: jobject, param_3: jobject) -> &[i8] {
-    java_method!(self.env, self.object, "createClass", "(Ljava/lang/Class;Ljava/lang/String;Ljava/lang/Class;)[B", CryInsideA, param_1, param_2, param_3)
+  pub fn create_class(&self, param_1: jobject, param_2: jobject, param_3: jobject) -> Vec<i8> {
+    unimplemented!();
   }
-
 }
 
 #[derive(Debug)]
@@ -55171,8 +55167,8 @@ impl util_generator_dummy_DummyObjectProvider {
     util_generator_dummy_DummyObjectProvider { env: self.env, object: ret }
   }
 
-  pub fn create_for(param_1: jobject, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "createFor", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;", CallStaticObjectMethodA, param_1);
+  pub fn create_for(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/dummy/DummyObjectProvider", "createFor", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/dummy/DummyObjectProvider#createFor was null") }
     ret
   }
@@ -55199,20 +55195,20 @@ impl util_generator_event_factory_ClassGenerator {
     util_generator_event_factory_ClassGenerator { env: self.env, object: ret }
   }
 
-  pub fn visit_boxing_method(param_1: jobject, param_2: jobject) {
-    java_method!(self.env, "visitBoxingMethod", "(Lorg/objectweb/asm/MethodVisitor;Lorg/objectweb/asm/Type;)V", CallStaticVoidMethodA, param_1);
+  pub fn visit_boxing_method(env: *mut JNIEnv, param_1: jobject, param_2: jobject) {
+    static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/ClassGenerator", "visitBoxingMethod", "(Lorg/objectweb/asm/MethodVisitor;Lorg/objectweb/asm/Type;)V", CallStaticVoidMethodA, param_1, param_2);
   }
 
-  pub fn visit_unboxing_method(param_1: jobject, param_2: jobject) {
-    java_method!(self.env, "visitUnboxingMethod", "(Lorg/objectweb/asm/MethodVisitor;Lorg/objectweb/asm/Type;)V", CallStaticVoidMethodA, param_1);
+  pub fn visit_unboxing_method(env: *mut JNIEnv, param_1: jobject, param_2: jobject) {
+    static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/ClassGenerator", "visitUnboxingMethod", "(Lorg/objectweb/asm/MethodVisitor;Lorg/objectweb/asm/Type;)V", CallStaticVoidMethodA, param_1, param_2);
   }
 
-  pub fn has_declared_method(param_1: jobject, param_2: jobject, param_3: &[jobject]) -> bool {
-    java_method!(self.env, "hasDeclaredMethod", "(Ljava/lang/Class;Ljava/lang/String;[Ljava/lang/Class;)Z", CallStaticBooleanMethodA, param_1, param_2) == 1
+  pub fn has_declared_method(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: Vec<jobject>) -> bool {
+    static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/ClassGenerator", "hasDeclaredMethod", "(Ljava/lang/Class;Ljava/lang/String;[Ljava/lang/Class;)Z", CallStaticBooleanMethodA, param_1, param_2, param_3) == 1
   }
 
-  pub fn get_field(param_1: jobject, param_2: jobject) -> jobject {
-    let ret = java_method!(self.env, "getField", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/reflect/Field;", CallStaticObjectMethodA, param_1);
+  pub fn get_field(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/ClassGenerator", "getField", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/reflect/Field;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/event/factory/ClassGenerator#getField was null") }
     ret
   }
@@ -55227,28 +55223,26 @@ impl util_generator_event_factory_ClassGenerator {
     java_method!(self.env, self.object, "setNullPolicy", "(Lorg/spongepowered/api/util/generator/event/factory/NullPolicy;)V", CallVoidMethodA, param_1);
   }
 
-  pub fn generate_field(param_1: jobject, param_2: jobject) {
-    java_method!(self.env, "generateField", "(Lorg/objectweb/asm/ClassWriter;Lorg/spongepowered/api/eventgencore/Property;)V", CallStaticVoidMethodA, param_1);
+  pub fn generate_field(env: *mut JNIEnv, param_1: jobject, param_2: jobject) {
+    static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/ClassGenerator", "generateField", "(Lorg/objectweb/asm/ClassWriter;Lorg/spongepowered/api/eventgencore/Property;)V", CallStaticVoidMethodA, param_1, param_2);
   }
 
-  pub fn generate_mutator(param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject, param_5: jobject, param_6: jobject) {
-    java_method!(self.env, "generateMutator", "(Lorg/objectweb/asm/ClassWriter;Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Class;Lorg/spongepowered/api/eventgencore/Property;)V", CallStaticVoidMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn generate_mutator(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject, param_5: jobject, param_6: jobject) {
+    static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/ClassGenerator", "generateMutator", "(Lorg/objectweb/asm/ClassWriter;Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Class;Lorg/spongepowered/api/eventgencore/Property;)V", CallStaticVoidMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
   }
 
-  pub fn get_internal_name(param_1: jobject) -> jobject {
-    let ret = java_method!(self.env, "getInternalName", "(Ljava/lang/String;)Ljava/lang/String;", CallStaticObjectMethod);
+  pub fn get_internal_name(env: *mut JNIEnv, param_1: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/ClassGenerator", "getInternalName", "(Ljava/lang/String;)Ljava/lang/String;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/event/factory/ClassGenerator#getInternalName was null") }
     ret
   }
 
-  pub fn create_class(&self, param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject) -> &[i8] {
-    java_method!(self.env, self.object, "createClass", "(Ljava/lang/Class;Ljava/lang/String;Ljava/lang/Class;Ljava/util/List;)[B", CryInsideA, param_1, param_2, param_3, param_4)
+  pub fn create_class(&self, param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject) -> Vec<i8> {
+    unimplemented!();
   }
-
-  pub fn create_factory(&self, param_1: jobject, param_2: jobject) -> &[i8] {
-    java_method!(self.env, self.object, "createFactory", "(Ljava/lang/Class;Ljava/lang/String;)[B", CryInsideA, param_1, param_2)
+  pub fn create_factory(&self, param_1: jobject, param_2: jobject) -> Vec<i8> {
+    unimplemented!();
   }
-
 }
 
 #[derive(Debug)]
@@ -55351,13 +55345,13 @@ impl util_generator_event_factory_NullPolicy {
     }
   }
 
-  pub fn values() -> &[util_generator_event_factory_NullPolicy] {
+  pub fn values(env: *mut JNIEnv) -> Vec<util_generator_event_factory_NullPolicy> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> util_generator_event_factory_NullPolicy {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/generator/event/factory/NullPolicy;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> util_generator_event_factory_NullPolicy {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/NullPolicy", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/generator/event/factory/NullPolicy;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/event/factory/NullPolicy#valueOf was null") }
-    util_generator_event_factory_NullPolicy { env: self.env, object: ret }
+    util_generator_event_factory_NullPolicy { env: env, object: ret }
   }
 
 }
@@ -55493,8 +55487,8 @@ impl util_generator_GeneratorUtils {
     }
   }
 
-  pub fn get_class_name(param_1: jobject, param_2: jobject, param_3: jobject) -> jobject {
-    let ret = java_method!(self.env, "getClassName", "(Ljava/lang/String;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn get_class_name(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/GeneratorUtils", "getClassName", "(Ljava/lang/String;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/GeneratorUtils#getClassName was null") }
     ret
   }
@@ -55515,14 +55509,14 @@ impl util_GuavaCollectors {
     }
   }
 
-  pub fn to_immutable_list() -> jobject {
-    let ret = java_method!(self.env, "toImmutableList", "()Ljava/util/stream/Collector;", CallStaticObjectMethod);
+  pub fn to_immutable_list(env: *mut JNIEnv) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/GuavaCollectors", "toImmutableList", "()Ljava/util/stream/Collector;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/GuavaCollectors#toImmutableList was null") }
     ret
   }
 
-  pub fn to_immutable_set() -> jobject {
-    let ret = java_method!(self.env, "toImmutableSet", "()Ljava/util/stream/Collector;", CallStaticObjectMethod);
+  pub fn to_immutable_set(env: *mut JNIEnv) -> jobject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/GuavaCollectors", "toImmutableSet", "()Ljava/util/stream/Collector;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/GuavaCollectors#toImmutableSet was null") }
     ret
   }
@@ -55571,8 +55565,8 @@ impl util_InformativeMain {
     util_InformativeMain { env: self.env, object: ret }
   }
 
-  pub fn main(param_1: &[jobject]) {
-    java_method!(self.env, "main", "([Ljava/lang/String;)V", CallStaticVoidMethod);
+  pub fn main(env: *mut JNIEnv, param_1: Vec<jobject>) {
+    static_java_method!(env, "org/spongepowered/api/util/InformativeMain", "main", "([Ljava/lang/String;)V", CallStaticVoidMethodA, param_1);
   }
 
 }
@@ -55591,24 +55585,24 @@ impl util_OptBool {
     }
   }
 
-  pub fn of(param_1: bool) -> Option<jobject> {
-    let ret = java_method!(self.env, "of", "(Z)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn of(env: *mut JNIEnv, param_1: bool) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/OptBool", "of", "(Z)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/OptBool#of was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn of_1(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Boolean;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn of_1(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/OptBool", "of", "(Ljava/lang/Boolean;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/OptBool#of was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
-  pub fn of_2(param_1: jobject) -> Option<jobject> {
-    let ret = java_method!(self.env, "of", "(Ljava/util/Optional;)Ljava/util/Optional;", CallStaticObjectMethod);
+  pub fn of_2(env: *mut JNIEnv, param_1: jobject) -> Option<jobject> {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/OptBool", "of", "(Ljava/util/Optional;)Ljava/util/Optional;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/OptBool#of was null") }
-    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
+    let unwrapped = java_method!(env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);
     if unwrapped.is_null() { None } else { Some(unwrapped) }
   }
 
@@ -55703,13 +55697,13 @@ impl util_RelativePositions {
     }
   }
 
-  pub fn values() -> &[util_RelativePositions] {
+  pub fn values(env: *mut JNIEnv) -> Vec<util_RelativePositions> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> util_RelativePositions {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/RelativePositions;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> util_RelativePositions {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/RelativePositions", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/RelativePositions;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/RelativePositions#valueOf was null") }
-    util_RelativePositions { env: self.env, object: ret }
+    util_RelativePositions { env: env, object: ret }
   }
 
 }
@@ -55850,10 +55844,10 @@ impl util_RespawnLocation {
     }
   }
 
-  pub fn builder() -> util_RespawnLocation_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/util/RespawnLocation$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> util_RespawnLocation_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/RespawnLocation", "builder", "()Lorg/spongepowered/api/util/RespawnLocation$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/RespawnLocation#builder was null") }
-    util_RespawnLocation_Builder { env: self.env, object: ret }
+    util_RespawnLocation_Builder { env: env, object: ret }
   }
 
   pub fn get_world_unique_id(&self) -> jobject {
@@ -55956,10 +55950,10 @@ impl util_SpongeApiTranslationHelper {
     }
   }
 
-  pub fn t(param_1: jobject, param_2: &[jobject]) -> text_Text {
-    let ret = java_method!(self.env, "t", "(Ljava/lang/String;[Ljava/lang/Object;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1);
+  pub fn t(env: *mut JNIEnv, param_1: jobject, param_2: Vec<jobject>) -> text_Text {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/SpongeApiTranslationHelper", "t", "(Ljava/lang/String;[Ljava/lang/Object;)Lorg/spongepowered/api/text/Text;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/SpongeApiTranslationHelper#t was null") }
-    text_Text { env: self.env, object: ret }
+    text_Text { env: env, object: ret }
   }
 
 }
@@ -56150,19 +56144,19 @@ impl util_Tristate {
     }
   }
 
-  pub fn values() -> &[util_Tristate] {
+  pub fn values(env: *mut JNIEnv) -> Vec<util_Tristate> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> util_Tristate {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/Tristate;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> util_Tristate {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Tristate", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/util/Tristate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Tristate#valueOf was null") }
-    util_Tristate { env: self.env, object: ret }
+    util_Tristate { env: env, object: ret }
   }
 
-  pub fn from_boolean(param_1: bool) -> util_Tristate {
-    let ret = java_method!(self.env, "fromBoolean", "(Z)Lorg/spongepowered/api/util/Tristate;", CallStaticObjectMethod);
+  pub fn from_boolean(env: *mut JNIEnv, param_1: bool) -> util_Tristate {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Tristate", "fromBoolean", "(Z)Lorg/spongepowered/api/util/Tristate;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/Tristate#fromBoolean was null") }
-    util_Tristate { env: self.env, object: ret }
+    util_Tristate { env: env, object: ret }
   }
 
   pub fn and(&self, param_1: util_Tristate) -> util_Tristate {
@@ -56197,10 +56191,10 @@ impl util_Tuple {
     }
   }
 
-  pub fn of(param_1: jobject, param_2: jobject) -> util_Tuple {
-    let ret = java_method!(self.env, "of", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/util/Tuple;", CallStaticObjectMethodA, param_1);
+  pub fn of(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> util_Tuple {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Tuple", "of", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/util/Tuple;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/Tuple#of was null") }
-    util_Tuple { env: self.env, object: ret }
+    util_Tuple { env: env, object: ret }
   }
 
   pub fn new(&self, param_1: jobject, param_2: jobject) -> util_Tuple {
@@ -56582,13 +56576,12 @@ impl util_weighted_RandomObjectTable {
     ret
   }
 
-  pub fn to_array(&self) -> &[jobject] {
+  pub fn to_array(&self) -> Vec<jobject> {
     unimplemented!();
   }
-  pub fn to_array_1(&self, param_1: &[jobject]) -> &[jobject] {
-    java_method!(self.env, self.object, "toArray", "([Ljava/lang/Object;)[Ljava/lang/Object;", CryInsideA, param_1)
+  pub fn to_array_1(&self, param_1: Vec<jobject>) -> Vec<jobject> {
+    unimplemented!();
   }
-
   pub fn add_2(&self, param_1: jobject) -> bool {
     java_method!(self.env, self.object, "add", "(Ljava/lang/Object;)Z", CallBooleanMethodA, param_1) == 1
   }
@@ -56649,16 +56642,16 @@ impl util_weighted_SeededVariableAmount {
     }
   }
 
-  pub fn fixed(param_1: f64) -> util_weighted_SeededVariableAmount {
-    let ret = java_method!(self.env, "fixed", "(D)Lorg/spongepowered/api/util/weighted/SeededVariableAmount;", CallStaticObjectMethod);
+  pub fn fixed(env: *mut JNIEnv, param_1: f64) -> util_weighted_SeededVariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/SeededVariableAmount", "fixed", "(D)Lorg/spongepowered/api/util/weighted/SeededVariableAmount;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/SeededVariableAmount#fixed was null") }
-    util_weighted_SeededVariableAmount { env: self.env, object: ret }
+    util_weighted_SeededVariableAmount { env: env, object: ret }
   }
 
-  pub fn wrapped(param_1: util_weighted_VariableAmount) -> util_weighted_SeededVariableAmount {
-    let ret = java_method!(self.env, "wrapped", "(Lorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/SeededVariableAmount;", CallStaticObjectMethod);
+  pub fn wrapped(env: *mut JNIEnv, param_1: util_weighted_VariableAmount) -> util_weighted_SeededVariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/SeededVariableAmount", "wrapped", "(Lorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/SeededVariableAmount;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/SeededVariableAmount#wrapped was null") }
-    util_weighted_SeededVariableAmount { env: self.env, object: ret }
+    util_weighted_SeededVariableAmount { env: env, object: ret }
   }
 
   pub fn get_amount(&self, param_1: jobject, param_2: jobject) -> f64 {
@@ -56887,58 +56880,58 @@ impl util_weighted_VariableAmount {
     }
   }
 
-  pub fn fixed(param_1: f64) -> util_weighted_VariableAmount {
-    let ret = java_method!(self.env, "fixed", "(D)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethod);
+  pub fn fixed(env: *mut JNIEnv, param_1: f64) -> util_weighted_VariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/VariableAmount", "fixed", "(D)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/VariableAmount#fixed was null") }
-    util_weighted_VariableAmount { env: self.env, object: ret }
+    util_weighted_VariableAmount { env: env, object: ret }
   }
 
-  pub fn base_with_variance(param_1: f64, param_2: f64) -> util_weighted_VariableAmount {
-    let ret = java_method!(self.env, "baseWithVariance", "(DD)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1);
+  pub fn base_with_variance(env: *mut JNIEnv, param_1: f64, param_2: f64) -> util_weighted_VariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/VariableAmount", "baseWithVariance", "(DD)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/VariableAmount#baseWithVariance was null") }
-    util_weighted_VariableAmount { env: self.env, object: ret }
+    util_weighted_VariableAmount { env: env, object: ret }
   }
 
-  pub fn base_with_variance_1(param_1: f64, param_2: util_weighted_VariableAmount) -> util_weighted_VariableAmount {
-    let ret = java_method!(self.env, "baseWithVariance", "(DLorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1);
+  pub fn base_with_variance_1(env: *mut JNIEnv, param_1: f64, param_2: util_weighted_VariableAmount) -> util_weighted_VariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/VariableAmount", "baseWithVariance", "(DLorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/VariableAmount#baseWithVariance was null") }
-    util_weighted_VariableAmount { env: self.env, object: ret }
+    util_weighted_VariableAmount { env: env, object: ret }
   }
 
-  pub fn base_with_random_addition(param_1: f64, param_2: f64) -> util_weighted_VariableAmount {
-    let ret = java_method!(self.env, "baseWithRandomAddition", "(DD)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1);
+  pub fn base_with_random_addition(env: *mut JNIEnv, param_1: f64, param_2: f64) -> util_weighted_VariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/VariableAmount", "baseWithRandomAddition", "(DD)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/VariableAmount#baseWithRandomAddition was null") }
-    util_weighted_VariableAmount { env: self.env, object: ret }
+    util_weighted_VariableAmount { env: env, object: ret }
   }
 
-  pub fn base_with_random_addition_1(param_1: f64, param_2: util_weighted_VariableAmount) -> util_weighted_VariableAmount {
-    let ret = java_method!(self.env, "baseWithRandomAddition", "(DLorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1);
+  pub fn base_with_random_addition_1(env: *mut JNIEnv, param_1: f64, param_2: util_weighted_VariableAmount) -> util_weighted_VariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/VariableAmount", "baseWithRandomAddition", "(DLorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/VariableAmount#baseWithRandomAddition was null") }
-    util_weighted_VariableAmount { env: self.env, object: ret }
+    util_weighted_VariableAmount { env: env, object: ret }
   }
 
-  pub fn base_with_optional_variance(param_1: f64, param_2: f64, param_3: f64) -> util_weighted_VariableAmount {
-    let ret = java_method!(self.env, "baseWithOptionalVariance", "(DDD)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn base_with_optional_variance(env: *mut JNIEnv, param_1: f64, param_2: f64, param_3: f64) -> util_weighted_VariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/VariableAmount", "baseWithOptionalVariance", "(DDD)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/VariableAmount#baseWithOptionalVariance was null") }
-    util_weighted_VariableAmount { env: self.env, object: ret }
+    util_weighted_VariableAmount { env: env, object: ret }
   }
 
-  pub fn base_with_optional_variance_1(param_1: f64, param_2: util_weighted_VariableAmount, param_3: f64) -> util_weighted_VariableAmount {
-    let ret = java_method!(self.env, "baseWithOptionalVariance", "(DLorg/spongepowered/api/util/weighted/VariableAmount;D)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn base_with_optional_variance_1(env: *mut JNIEnv, param_1: f64, param_2: util_weighted_VariableAmount, param_3: f64) -> util_weighted_VariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/VariableAmount", "baseWithOptionalVariance", "(DLorg/spongepowered/api/util/weighted/VariableAmount;D)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/VariableAmount#baseWithOptionalVariance was null") }
-    util_weighted_VariableAmount { env: self.env, object: ret }
+    util_weighted_VariableAmount { env: env, object: ret }
   }
 
-  pub fn base_with_optional_addition(param_1: f64, param_2: f64, param_3: f64) -> util_weighted_VariableAmount {
-    let ret = java_method!(self.env, "baseWithOptionalAddition", "(DDD)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn base_with_optional_addition(env: *mut JNIEnv, param_1: f64, param_2: f64, param_3: f64) -> util_weighted_VariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/VariableAmount", "baseWithOptionalAddition", "(DDD)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/VariableAmount#baseWithOptionalAddition was null") }
-    util_weighted_VariableAmount { env: self.env, object: ret }
+    util_weighted_VariableAmount { env: env, object: ret }
   }
 
-  pub fn base_with_optional_addition_1(param_1: f64, param_2: util_weighted_VariableAmount, param_3: f64) -> util_weighted_VariableAmount {
-    let ret = java_method!(self.env, "baseWithOptionalAddition", "(DLorg/spongepowered/api/util/weighted/VariableAmount;D)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2);
+  pub fn base_with_optional_addition_1(env: *mut JNIEnv, param_1: f64, param_2: util_weighted_VariableAmount, param_3: f64) -> util_weighted_VariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/VariableAmount", "baseWithOptionalAddition", "(DLorg/spongepowered/api/util/weighted/VariableAmount;D)Lorg/spongepowered/api/util/weighted/VariableAmount;", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/VariableAmount#baseWithOptionalAddition was null") }
-    util_weighted_VariableAmount { env: self.env, object: ret }
+    util_weighted_VariableAmount { env: env, object: ret }
   }
 
   pub fn get_amount(&self, param_1: jobject) -> f64 {
@@ -57384,13 +57377,13 @@ impl world_BlockChangeFlag {
     }
   }
 
-  pub fn values() -> &[world_BlockChangeFlag] {
+  pub fn values(env: *mut JNIEnv) -> Vec<world_BlockChangeFlag> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> world_BlockChangeFlag {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/world/BlockChangeFlag;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> world_BlockChangeFlag {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/BlockChangeFlag", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/world/BlockChangeFlag;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/world/BlockChangeFlag#valueOf was null") }
-    world_BlockChangeFlag { env: self.env, object: ret }
+    world_BlockChangeFlag { env: env, object: ret }
   }
 
   pub fn update_neighbors(&self) -> bool {
@@ -57549,13 +57542,13 @@ impl world_ChunkState {
     }
   }
 
-  pub fn values() -> &[world_ChunkState] {
+  pub fn values(env: *mut JNIEnv) -> Vec<world_ChunkState> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> world_ChunkState {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/world/ChunkState;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> world_ChunkState {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/ChunkState", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/world/ChunkState;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/world/ChunkState#valueOf was null") }
-    world_ChunkState { env: self.env, object: ret }
+    world_ChunkState { env: env, object: ret }
   }
 
 }
@@ -58011,10 +58004,10 @@ impl world_explosion_Explosion {
     }
   }
 
-  pub fn builder() -> world_explosion_Explosion_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/explosion/Explosion$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_explosion_Explosion_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/explosion/Explosion", "builder", "()Lorg/spongepowered/api/world/explosion/Explosion$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/explosion/Explosion#builder was null") }
-    world_explosion_Explosion_Builder { env: self.env, object: ret }
+    world_explosion_Explosion_Builder { env: env, object: ret }
   }
 
   pub fn get_source_explosive(&self) -> Option<entity_explosive_Explosive> {
@@ -59548,13 +59541,13 @@ impl world_extent_StorageType {
     }
   }
 
-  pub fn values() -> &[world_extent_StorageType] {
+  pub fn values(env: *mut JNIEnv) -> Vec<world_extent_StorageType> {
     unimplemented!();
   }
-  pub fn value_of(param_1: jobject) -> world_extent_StorageType {
-    let ret = java_method!(self.env, "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/world/extent/StorageType;", CallStaticObjectMethod);
+  pub fn value_of(env: *mut JNIEnv, param_1: jobject) -> world_extent_StorageType {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/extent/StorageType", "valueOf", "(Ljava/lang/String;)Lorg/spongepowered/api/world/extent/StorageType;", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/world/extent/StorageType#valueOf was null") }
-    world_extent_StorageType { env: self.env, object: ret }
+    world_extent_StorageType { env: env, object: ret }
   }
 
 }
@@ -60225,10 +60218,10 @@ impl world_gen_populator_BigMushroom {
     }
   }
 
-  pub fn builder() -> world_gen_populator_BigMushroom_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/BigMushroom$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_BigMushroom_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/BigMushroom", "builder", "()Lorg/spongepowered/api/world/gen/populator/BigMushroom$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/BigMushroom#builder was null") }
-    world_gen_populator_BigMushroom_Builder { env: self.env, object: ret }
+    world_gen_populator_BigMushroom_Builder { env: env, object: ret }
   }
 
   pub fn get_types(&self) -> util_weighted_WeightedTable {
@@ -60334,10 +60327,10 @@ impl world_gen_populator_BlockBlob {
     }
   }
 
-  pub fn builder() -> world_gen_populator_BlockBlob_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/BlockBlob$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_BlockBlob_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/BlockBlob", "builder", "()Lorg/spongepowered/api/world/gen/populator/BlockBlob$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/BlockBlob#builder was null") }
-    world_gen_populator_BlockBlob_Builder { env: self.env, object: ret }
+    world_gen_populator_BlockBlob_Builder { env: env, object: ret }
   }
 
   pub fn get_block(&self) -> block_BlockState {
@@ -60440,10 +60433,10 @@ impl world_gen_populator_Cactus {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Cactus_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Cactus$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Cactus_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Cactus", "builder", "()Lorg/spongepowered/api/world/gen/populator/Cactus$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Cactus#builder was null") }
-    world_gen_populator_Cactus_Builder { env: self.env, object: ret }
+    world_gen_populator_Cactus_Builder { env: env, object: ret }
   }
 
   pub fn get_cacti_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -60518,10 +60511,10 @@ impl world_gen_populator_ChorusFlower {
     }
   }
 
-  pub fn builder() -> world_gen_populator_ChorusFlower_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/ChorusFlower$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_ChorusFlower_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/ChorusFlower", "builder", "()Lorg/spongepowered/api/world/gen/populator/ChorusFlower$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/ChorusFlower#builder was null") }
-    world_gen_populator_ChorusFlower_Builder { env: self.env, object: ret }
+    world_gen_populator_ChorusFlower_Builder { env: env, object: ret }
   }
 
   pub fn get_exclusion_radius(&self) -> i32 {
@@ -60582,10 +60575,10 @@ impl world_gen_populator_DeadBush {
     }
   }
 
-  pub fn builder() -> world_gen_populator_DeadBush_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/DeadBush$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_DeadBush_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/DeadBush", "builder", "()Lorg/spongepowered/api/world/gen/populator/DeadBush$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/DeadBush#builder was null") }
-    world_gen_populator_DeadBush_Builder { env: self.env, object: ret }
+    world_gen_populator_DeadBush_Builder { env: env, object: ret }
   }
 
   pub fn get_shrubs_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -60652,10 +60645,10 @@ impl world_gen_populator_DesertWell {
     }
   }
 
-  pub fn builder() -> world_gen_populator_DesertWell_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/DesertWell$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_DesertWell_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/DesertWell", "builder", "()Lorg/spongepowered/api/world/gen/populator/DesertWell$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/DesertWell#builder was null") }
-    world_gen_populator_DesertWell_Builder { env: self.env, object: ret }
+    world_gen_populator_DesertWell_Builder { env: env, object: ret }
   }
 
   pub fn get_spawn_probability(&self) -> f64 {
@@ -60744,10 +60737,10 @@ impl world_gen_populator_DoublePlant {
     }
   }
 
-  pub fn builder() -> world_gen_populator_DoublePlant_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/DoublePlant$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_DoublePlant_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/DoublePlant", "builder", "()Lorg/spongepowered/api/world/gen/populator/DoublePlant$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/DoublePlant#builder was null") }
-    world_gen_populator_DoublePlant_Builder { env: self.env, object: ret }
+    world_gen_populator_DoublePlant_Builder { env: env, object: ret }
   }
 
   pub fn get_possible_types(&self) -> util_weighted_WeightedTable {
@@ -60889,10 +60882,10 @@ impl world_gen_populator_Dungeon {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Dungeon_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Dungeon$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Dungeon_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Dungeon", "builder", "()Lorg/spongepowered/api/world/gen/populator/Dungeon$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Dungeon#builder was null") }
-    world_gen_populator_Dungeon_Builder { env: self.env, object: ret }
+    world_gen_populator_Dungeon_Builder { env: env, object: ret }
   }
 
   pub fn get_attempts_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -60995,10 +60988,10 @@ impl world_gen_populator_EndIsland {
     }
   }
 
-  pub fn builder() -> world_gen_populator_EndIsland_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/EndIsland$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_EndIsland_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/EndIsland", "builder", "()Lorg/spongepowered/api/world/gen/populator/EndIsland$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/EndIsland#builder was null") }
-    world_gen_populator_EndIsland_Builder { env: self.env, object: ret }
+    world_gen_populator_EndIsland_Builder { env: env, object: ret }
   }
 
   pub fn get_starting_radius(&self) -> util_weighted_VariableAmount {
@@ -61115,10 +61108,10 @@ impl world_gen_populator_Flower {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Flower_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Flower$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Flower_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Flower", "builder", "()Lorg/spongepowered/api/world/gen/populator/Flower$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Flower#builder was null") }
-    world_gen_populator_Flower_Builder { env: self.env, object: ret }
+    world_gen_populator_Flower_Builder { env: env, object: ret }
   }
 
   pub fn get_flowers_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -61224,10 +61217,10 @@ impl world_gen_populator_Forest {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Forest_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Forest$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Forest_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Forest", "builder", "()Lorg/spongepowered/api/world/gen/populator/Forest$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Forest#builder was null") }
-    world_gen_populator_Forest_Builder { env: self.env, object: ret }
+    world_gen_populator_Forest_Builder { env: env, object: ret }
   }
 
   pub fn get_trees_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -61345,10 +61338,10 @@ impl world_gen_populator_Glowstone {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Glowstone_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Glowstone$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Glowstone_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Glowstone", "builder", "()Lorg/spongepowered/api/world/gen/populator/Glowstone$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Glowstone#builder was null") }
-    world_gen_populator_Glowstone_Builder { env: self.env, object: ret }
+    world_gen_populator_Glowstone_Builder { env: env, object: ret }
   }
 
   pub fn get_clusters_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -61465,10 +61458,10 @@ impl world_gen_populator_IcePath {
     }
   }
 
-  pub fn builder() -> world_gen_populator_IcePath_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/IcePath$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_IcePath_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/IcePath", "builder", "()Lorg/spongepowered/api/world/gen/populator/IcePath$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/IcePath#builder was null") }
-    world_gen_populator_IcePath_Builder { env: self.env, object: ret }
+    world_gen_populator_IcePath_Builder { env: env, object: ret }
   }
 
   pub fn get_radius(&self) -> util_weighted_VariableAmount {
@@ -61579,10 +61572,10 @@ impl world_gen_populator_IceSpike {
     }
   }
 
-  pub fn builder() -> world_gen_populator_IceSpike_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/IceSpike$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_IceSpike_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/IceSpike", "builder", "()Lorg/spongepowered/api/world/gen/populator/IceSpike$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/IceSpike#builder was null") }
-    world_gen_populator_IceSpike_Builder { env: self.env, object: ret }
+    world_gen_populator_IceSpike_Builder { env: env, object: ret }
   }
 
   pub fn get_spikes_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -61691,10 +61684,10 @@ impl world_gen_populator_Lake {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Lake_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Lake$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Lake_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Lake", "builder", "()Lorg/spongepowered/api/world/gen/populator/Lake$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Lake#builder was null") }
-    world_gen_populator_Lake_Builder { env: self.env, object: ret }
+    world_gen_populator_Lake_Builder { env: env, object: ret }
   }
 
   pub fn get_liquid_type(&self) -> block_BlockState {
@@ -61775,10 +61768,10 @@ impl world_gen_populator_Melon {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Melon_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Melon$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Melon_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Melon", "builder", "()Lorg/spongepowered/api/world/gen/populator/Melon$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Melon#builder was null") }
-    world_gen_populator_Melon_Builder { env: self.env, object: ret }
+    world_gen_populator_Melon_Builder { env: env, object: ret }
   }
 
   pub fn get_melons_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -61863,10 +61856,10 @@ impl world_gen_populator_Mushroom {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Mushroom_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Mushroom$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Mushroom_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Mushroom", "builder", "()Lorg/spongepowered/api/world/gen/populator/Mushroom$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Mushroom#builder was null") }
-    world_gen_populator_Mushroom_Builder { env: self.env, object: ret }
+    world_gen_populator_Mushroom_Builder { env: env, object: ret }
   }
 
   pub fn get_types(&self) -> util_weighted_ChanceTable {
@@ -61966,10 +61959,10 @@ impl world_gen_populator_NetherFire {
     }
   }
 
-  pub fn builder() -> world_gen_populator_NetherFire_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/NetherFire$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_NetherFire_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/NetherFire", "builder", "()Lorg/spongepowered/api/world/gen/populator/NetherFire$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/NetherFire#builder was null") }
-    world_gen_populator_NetherFire_Builder { env: self.env, object: ret }
+    world_gen_populator_NetherFire_Builder { env: env, object: ret }
   }
 
   pub fn get_clusters_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -62080,10 +62073,10 @@ impl world_gen_populator_Ore {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Ore_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Ore$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Ore_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Ore", "builder", "()Lorg/spongepowered/api/world/gen/populator/Ore$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Ore#builder was null") }
-    world_gen_populator_Ore_Builder { env: self.env, object: ret }
+    world_gen_populator_Ore_Builder { env: env, object: ret }
   }
 
   pub fn get_ore_block(&self) -> block_BlockState {
@@ -62201,10 +62194,10 @@ impl world_gen_populator_Pumpkin {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Pumpkin_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Pumpkin$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Pumpkin_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Pumpkin", "builder", "()Lorg/spongepowered/api/world/gen/populator/Pumpkin$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Pumpkin#builder was null") }
-    world_gen_populator_Pumpkin_Builder { env: self.env, object: ret }
+    world_gen_populator_Pumpkin_Builder { env: env, object: ret }
   }
 
   pub fn get_pumpkins_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -62297,10 +62290,10 @@ impl world_gen_populator_RandomBlock {
     }
   }
 
-  pub fn builder() -> world_gen_populator_RandomBlock_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/RandomBlock$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_RandomBlock_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/RandomBlock", "builder", "()Lorg/spongepowered/api/world/gen/populator/RandomBlock$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/RandomBlock#builder was null") }
-    world_gen_populator_RandomBlock_Builder { env: self.env, object: ret }
+    world_gen_populator_RandomBlock_Builder { env: env, object: ret }
   }
 
   pub fn get_block(&self) -> block_BlockState {
@@ -62415,10 +62408,10 @@ impl world_gen_populator_RandomObject {
     }
   }
 
-  pub fn builder() -> world_gen_populator_RandomObject_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/RandomObject$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_RandomObject_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/RandomObject", "builder", "()Lorg/spongepowered/api/world/gen/populator/RandomObject$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/RandomObject#builder was null") }
-    world_gen_populator_RandomObject_Builder { env: self.env, object: ret }
+    world_gen_populator_RandomObject_Builder { env: env, object: ret }
   }
 
   pub fn get_attempts_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -62519,10 +62512,10 @@ impl world_gen_populator_Reed {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Reed_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Reed$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Reed_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Reed", "builder", "()Lorg/spongepowered/api/world/gen/populator/Reed$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Reed#builder was null") }
-    world_gen_populator_Reed_Builder { env: self.env, object: ret }
+    world_gen_populator_Reed_Builder { env: env, object: ret }
   }
 
   pub fn get_reeds_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -62635,10 +62628,10 @@ impl world_gen_populator_SeaFloor {
     }
   }
 
-  pub fn builder() -> world_gen_populator_SeaFloor_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/SeaFloor$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_SeaFloor_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/SeaFloor", "builder", "()Lorg/spongepowered/api/world/gen/populator/SeaFloor$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/SeaFloor#builder was null") }
-    world_gen_populator_SeaFloor_Builder { env: self.env, object: ret }
+    world_gen_populator_SeaFloor_Builder { env: env, object: ret }
   }
 
   pub fn get_block(&self) -> block_BlockState {
@@ -62771,10 +62764,10 @@ impl world_gen_populator_Shrub {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Shrub_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Shrub$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Shrub_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Shrub", "builder", "()Lorg/spongepowered/api/world/gen/populator/Shrub$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Shrub#builder was null") }
-    world_gen_populator_Shrub_Builder { env: self.env, object: ret }
+    world_gen_populator_Shrub_Builder { env: env, object: ret }
   }
 
   pub fn get_types(&self) -> util_weighted_WeightedTable {
@@ -62862,10 +62855,10 @@ impl world_gen_populator_Vine {
     }
   }
 
-  pub fn builder() -> world_gen_populator_Vine_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/Vine$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_Vine_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/Vine", "builder", "()Lorg/spongepowered/api/world/gen/populator/Vine$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/Vine#builder was null") }
-    world_gen_populator_Vine_Builder { env: self.env, object: ret }
+    world_gen_populator_Vine_Builder { env: env, object: ret }
   }
 
   pub fn get_vines_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -62932,10 +62925,10 @@ impl world_gen_populator_WaterLily {
     }
   }
 
-  pub fn builder() -> world_gen_populator_WaterLily_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/gen/populator/WaterLily$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_gen_populator_WaterLily_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gen/populator/WaterLily", "builder", "()Lorg/spongepowered/api/world/gen/populator/WaterLily$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gen/populator/WaterLily#builder was null") }
-    world_gen_populator_WaterLily_Builder { env: self.env, object: ret }
+    world_gen_populator_WaterLily_Builder { env: env, object: ret }
   }
 
   pub fn get_water_lily_per_chunk(&self) -> util_weighted_VariableAmount {
@@ -64917,7 +64910,7 @@ impl world_WorldArchetype_Builder {
     world_WorldArchetype_Builder { env: self.env, object: ret }
   }
 
-  pub fn generator_modifiers(&self, param_1: &[world_gen_WorldGeneratorModifier]) -> world_WorldArchetype_Builder {
+  pub fn generator_modifiers(&self, param_1: Vec<world_gen_WorldGeneratorModifier>) -> world_WorldArchetype_Builder {
     let ret = java_method!(self.env, self.object, "generatorModifiers", "([Lorg/spongepowered/api/world/gen/WorldGeneratorModifier;)Lorg/spongepowered/api/world/WorldArchetype$Builder;", CallObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/world/WorldArchetype$Builder#generatorModifiers was null") }
     world_WorldArchetype_Builder { env: self.env, object: ret }
@@ -65011,10 +65004,10 @@ impl world_WorldArchetype {
     }
   }
 
-  pub fn builder() -> world_WorldArchetype_Builder {
-    let ret = java_method!(self.env, "builder", "()Lorg/spongepowered/api/world/WorldArchetype$Builder;", CallStaticObjectMethod);
+  pub fn builder(env: *mut JNIEnv) -> world_WorldArchetype_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/WorldArchetype", "builder", "()Lorg/spongepowered/api/world/WorldArchetype$Builder;", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/WorldArchetype#builder was null") }
-    world_WorldArchetype_Builder { env: self.env, object: ret }
+    world_WorldArchetype_Builder { env: env, object: ret }
   }
 
   pub fn is_enabled(&self) -> bool {

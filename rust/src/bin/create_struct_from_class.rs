@@ -105,7 +105,7 @@ fn get_return_type<'a>(return_type: &'a str) -> Option<String> {
     'J' => Some("i64".to_owned()),
     '[' => Some({
       let array_type = get_return_type(&return_type[1..]);
-      format!("&[{}]", array_type.unwrap_or("()".to_owned()))
+      format!("Vec<{}>", array_type.unwrap_or("()".to_owned()))
      }),
     'L' => Some({
       let class_name = &return_type[1..];
@@ -146,7 +146,7 @@ fn get_param_types<'a>(params: &'a str) -> Vec<String> {
         } else {
           String::from("jobject")
         };
-        format!("&[{}]", name)
+        format!("Vec<{}>", name)
       } else {
         get_rust_type(array_type).to_owned()
       };
@@ -183,7 +183,9 @@ fn sanitize_class_name<'a>(class_name: &'a str) -> String {
 
 fn create_params<'a>(descriptor: &'a str, signature: Option<String>, is_static: bool) -> String {
   let mut string = String::from("(");
-  if !is_static {
+  if is_static {
+    string.push_str("env: *mut JNIEnv");
+  } else {
     string.push_str("&self");
   }
   let split: Vec<&str> = descriptor[1..].split(')').collect();
@@ -191,11 +193,8 @@ fn create_params<'a>(descriptor: &'a str, signature: Option<String>, is_static: 
   let return_type = split.get(1).expect("no return type in descriptor");
   let mut param_num = 0;
   for param in get_param_types(params) {
-    if param_num > 0 || !is_static {
-      string.push_str(", ");
-    }
     param_num += 1;
-    string.push_str(&format!("param_{}: {}", param_num, param));
+    string.push_str(&format!(", param_{}: {}", param_num, param));
   }
   string.push(')');
   let return_type = get_return_type(return_type);
@@ -273,19 +272,19 @@ fn create_method<'a>(class_name: &'a str, method: &Method) -> String {
   string.push_str(&rust_params);
   string.push_str(" {\n");
   string.push_str("    ");
-  if call_method.ends_with("CryInside") {
+  if call_method.contains("CryInside") {
     string.push_str("unimplemented!();\n  }");
     return string;
   }
   if call_method.contains("ObjectMethod") {
     string.push_str("let ret = ");
   }
-  let possible_object = if method.is_static {
-    ""
+  let (s, macro_prefix, caller) = if method.is_static {
+    ("", "static_", format!("\"{}\"", class_name))
   } else {
-    ", self.object"
+    ("self.", "", "self.object".to_owned())
   };
-  string.push_str(&format!(r#"java_method!(self.env{}, "{}", "{}", {}"#, possible_object, method.original_name, method.descriptor, call_method));
+  string.push_str(&format!(r#"{}java_method!({}env, {}, "{}", "{}", {}"#, macro_prefix, s, caller, method.original_name, method.descriptor, call_method));
   if num_params > 0 {
     for num in 0..num_params {
       string.push_str(&format!(", param_{}", num + 1));
@@ -309,15 +308,15 @@ fn create_method<'a>(class_name: &'a str, method: &Method) -> String {
       string.push_str("    ret\n");
     } else if return_type.starts_with("Option") {
       let optional_return_type = get_optional_return_type(method.signature.clone().expect("optional return type without signature"));
-      string.push_str(r#"    let unwrapped = java_method!(self.env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);"#);
+      string.push_str(&format!(r#"    let unwrapped = java_method!({}env, ret, "orElse", "(Ljava/lang/Object;)Ljava/lang/Object;", CallObjectMethodA, ::std::ptr::null() as *const jobject);"#, s));
       string.push_str("\n    if unwrapped.is_null() { None } else { ");
       if optional_return_type == "jobject" {
         string.push_str("Some(unwrapped) }\n");
       } else {
-        string.push_str(&format!("Some({} {{ env: self.env, object: unwrapped }}) }}\n", optional_return_type));
+        string.push_str(&format!("Some({} {{ env: {}env, object: unwrapped }}) }}\n", optional_return_type, s));
       }
     } else {
-      string.push_str(&format!("    {} {{ env: self.env, object: ret }}\n", return_type));
+      string.push_str(&format!("    {} {{ env: {}env, object: ret }}\n", return_type, s));
     }
   }
   string.push_str("  }\n");

@@ -27,6 +27,30 @@ macro_rules! java_method {
     }}
 }
 
+macro_rules! static_java_method {
+    ($env:expr, $caller:expr, $method:expr, $descriptor:expr, $call_using:ident, $($args:expr),*) => {{
+      unsafe {
+        let genv = $env.as_ref().and_then(|x| x.as_ref()).unwrap();
+        let class: jclass = (genv.FindClass)($env, CString::new($caller).unwrap().as_ptr());
+        let method_id: jmethodID = (genv.GetMethodID)($env, class, CString::new($method).unwrap().as_ptr(), CString::new($descriptor).unwrap().as_ptr());
+        let args = vec![ $( jvalue { _data: &$args as *const _ as u64 } ),* ];
+        let ret = (genv.$call_using)($env, class, method_id, args.as_ptr());
+        (genv.DeleteLocalRef)($env, class);
+        ret
+      }
+    }};
+    ($env:expr, $caller:expr, $method:expr, $descriptor:expr, $call_using:ident) => {{
+      unsafe {
+        let genv = $env.as_ref().and_then(|x| x.as_ref()).unwrap();
+        let class: jclass = (genv.FindClass)($env, CString::new($caller).unwrap().as_ptr());
+        let method_id: jmethodID = (genv.GetMethodID)($env, class, CString::new($method).unwrap().as_ptr(), CString::new($descriptor).unwrap().as_ptr());
+        let ret = (genv.$call_using)($env, class, method_id);
+        (genv.DeleteLocalRef)($env, class);
+        ret
+      }
+    }}
+}
+
 macro_rules! java_field {
     ($env:expr, $caller:expr, $field:expr, $sig:expr, $call_using:ident) => {{
       unsafe {
