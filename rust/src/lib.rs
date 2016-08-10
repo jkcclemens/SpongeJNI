@@ -81,29 +81,26 @@ struct JNI {
   object: jobject
 }
 
+impl JNI {
+  fn generate_command_executor<'a, S: Into<&'a str>>(&self, fqcn: S) -> command_spec_CommandExecutor {
+    let fqcn = fqcn.into();
+    let fqcn_java = rust_string_to_java_string(self.env, fqcn);
+    let object = java_method!(self.env, self.object, "generateCommandExecutor", "(Ljava/lang/String;)Lorg/spongepowered/api/command/spec/CommandExecutor;", CallObjectMethodA, fqcn_java);
+    unsafe { command_spec_CommandExecutor::from(self.env, object) }
+  }
+
+  fn get_game(&self) -> generated_types::Game {
+    let game = java_field!(self.env, self.object, "game", "Lorg/spongepowered/api/Game;", GetObjectField);
+    unsafe { Game::from(self.env, game) }
+  }
+}
+
 fn get_jni(env: *mut JNIEnv, shim: jobject) -> JNI {
   let jni = java_method!(env, shim, "getJNI", "()Lme/kyleclemens/spongejni/SpongeJNI;", CallObjectMethod);
   JNI {
     env: env,
     object: jni
   }
-}
-
-fn get_game(env: *mut JNIEnv, shim: jobject) -> generated_types::Game {
-  let jni = get_jni(env, shim);
-  let game = java_field!(env, jni.object, "game", "Lorg/spongepowered/api/Game;", GetObjectField);
-  Game {
-    env: env,
-    object: game
-  }
-}
-
-fn generate_command_executor<'a, S: Into<&'a str>>(env: *mut JNIEnv, shim: jobject, fqcn: S) -> command_spec_CommandExecutor {
-  let fqcn = fqcn.into();
-  let jni = get_jni(env, shim);
-  let fqcn_java = rust_string_to_java_string(env, fqcn);
-  let object = java_method!(env, jni.object, "generateCommandExecutor", "(Ljava/lang/String;)Lorg/spongepowered/api/command/spec/CommandExecutor;", CallObjectMethodA, fqcn_java);
-  unsafe { command_spec_CommandExecutor::from(env, object) }
 }
 
 macro_rules! unwrap_env {
@@ -141,13 +138,9 @@ pub extern fn Java_me_kyleclemens_spongejni_SpongeJNIShim_init(env: *mut JNIEnv,
   println!("Hello from Rust!");
   let genv = unwrap_env!(env);
   let jni = get_jni(env, this);
-  let game = get_game(env, this);
+  let game = jni.get_game();
   println!("Sneakily generating a command...");
-  let executor = generate_command_executor(
-    env,
-    this,
-    "me.kyleclemens.spongejni.rust.generated.HelloCommandExecutor"
-  );
+  let executor = jni.generate_command_executor("me.kyleclemens.spongejni.rust.generated.HelloCommandExecutor");
   println!("{:#?}", executor);
   println!("Sneakily registering said command...");
   let command = command_spec_CommandSpec::builder(env)
