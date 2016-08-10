@@ -1,8 +1,5 @@
 package me.kyleclemens.spongejni;
 
-import org.spongepowered.api.event.Event;
-import org.spongepowered.api.event.Listener;
-
 public class SpongeJNIShim {
 
     private final SpongeJNI jni;
@@ -17,8 +14,5 @@ public class SpongeJNIShim {
     }
 
     native boolean init();
-
-    @Listener
-    public native void eventReceived(final Event event);
 
 }

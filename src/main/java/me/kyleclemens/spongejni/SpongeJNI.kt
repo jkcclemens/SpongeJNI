@@ -4,6 +4,8 @@ import com.google.inject.Inject
 import javassist.ClassPool
 import javassist.CtMethod
 import javassist.Modifier
+import javassist.bytecode.AnnotationsAttribute
+import javassist.bytecode.annotation.Annotation
 import ninja.leaping.configurate.commented.CommentedConfigurationNode
 import ninja.leaping.configurate.loader.ConfigurationLoader
 import org.slf4j.Logger
@@ -14,6 +16,7 @@ import org.spongepowered.api.command.CommandSource
 import org.spongepowered.api.command.args.CommandContext
 import org.spongepowered.api.command.spec.CommandExecutor
 import org.spongepowered.api.config.DefaultConfig
+import org.spongepowered.api.event.Event
 import org.spongepowered.api.event.Listener
 import org.spongepowered.api.event.Order
 import org.spongepowered.api.event.game.state.GameConstructionEvent
@@ -67,7 +70,6 @@ class SpongeJNI {
 
     @Suppress("unused")
     fun generateCommandExecutor(fqcn: String): CommandExecutor {
-        println("fqcn = [$fqcn]")
         val pool = ClassPool.getDefault()
         val cc = pool.makeClass(fqcn)
         cc.addInterface(pool.get(CommandExecutor::class.java.name))
@@ -82,5 +84,31 @@ class SpongeJNI {
         cc.addMethod(executeMethod)
         val clazz = cc.toClass()
         return clazz.newInstance() as CommandExecutor
+    }
+
+    @Suppress("unused")
+    fun generateListeners(fqcn: String, classes: List<Class<out Event>>): Any {
+        val pool = ClassPool.getDefault()
+        val cc = pool.makeClass(fqcn)
+        for (clazz in classes) {
+            val name = clazz.simpleName
+            val eventMethodName = "${name[0].toLowerCase()}${name.substring(1)}Received"
+            val eventMethod = CtMethod(
+                pool.get(Void.TYPE.name),
+                eventMethodName,
+                arrayOf(pool.get(clazz.name)),
+                cc
+            )
+            eventMethod.modifiers = Modifier.PUBLIC or Modifier.NATIVE
+            val ccFile = cc.classFile
+            val constPool = ccFile.constPool
+            val attr = AnnotationsAttribute(constPool, AnnotationsAttribute.visibleTag)
+            val annotation = Annotation(Listener::class.java.name, constPool)
+            attr.addAnnotation(annotation)
+            eventMethod.methodInfo.addAttribute(attr)
+            cc.addMethod(eventMethod)
+        }
+        val clazz = cc.toClass()
+        return clazz.newInstance()
     }
 }

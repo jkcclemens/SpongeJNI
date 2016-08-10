@@ -6,26 +6,24 @@ use std::ffi::{CString, CStr};
 macro_rules! java_method {
     ($env:expr, $caller:expr, $method:expr, $descriptor:expr, $call_using:ident, $($args:expr),*) => {{
       unsafe {
-        let genv = $env.as_ref().and_then(|x| x.as_ref()).unwrap();
-        let class: jclass = (genv.GetObjectClass)($env, $caller);
+        let class: jclass = ((**$env).GetObjectClass)($env, $caller);
         if class.is_null() { panic!("class was null"); }
-        let method_id: jmethodID = (genv.GetMethodID)($env, class, CString::new($method).unwrap().as_ptr(), CString::new($descriptor).unwrap().as_ptr());
+        let method_id: jmethodID = ((**$env).GetMethodID)($env, class, CString::new($method).unwrap().as_ptr(), CString::new($descriptor).unwrap().as_ptr());
         if method_id.is_null() { panic!("method_id was null"); }
         let args = vec![ $( jvalue { _data: $args as u64 } ),* ];
-        let ret = (genv.$call_using)($env, $caller, method_id, args.as_ptr());
-        (genv.DeleteLocalRef)($env, class);
+        let ret = ((**$env).$call_using)($env, $caller, method_id, args.as_ptr());
+        ((**$env).DeleteLocalRef)($env, class);
         ret
       }
     }};
     ($env:expr, $caller:expr, $method:expr, $descriptor:expr, $call_using:ident) => {{
       unsafe {
-        let genv = $env.as_ref().and_then(|x| x.as_ref()).unwrap();
-        let class: jclass = (genv.GetObjectClass)($env, $caller);
+        let class: jclass = ((**$env).GetObjectClass)($env, $caller);
         if class.is_null() { panic!("class was null"); }
-        let method_id: jmethodID = (genv.GetMethodID)($env, class, CString::new($method).unwrap().as_ptr(), CString::new($descriptor).unwrap().as_ptr());
+        let method_id: jmethodID = ((**$env).GetMethodID)($env, class, CString::new($method).unwrap().as_ptr(), CString::new($descriptor).unwrap().as_ptr());
         if method_id.is_null() { panic!("method_id was null"); }
-        let ret = (genv.$call_using)($env, $caller, method_id);
-        (genv.DeleteLocalRef)($env, class);
+        let ret = ((**$env).$call_using)($env, $caller, method_id);
+        ((**$env).DeleteLocalRef)($env, class);
         ret
       }
     }}
@@ -34,26 +32,24 @@ macro_rules! java_method {
 macro_rules! static_java_method {
     ($env:expr, $caller:expr, $method:expr, $descriptor:expr, $call_using:ident, $($args:expr),*) => {{
       unsafe {
-        let genv = $env.as_ref().and_then(|x| x.as_ref()).unwrap();
-        let class: jclass = (genv.FindClass)($env, CString::new($caller).unwrap().as_ptr());
+        let class: jclass = ((**$env).FindClass)($env, CString::new($caller).unwrap().as_ptr());
         if class.is_null() { panic!("class was null"); }
-        let method_id: jmethodID = (genv.GetStaticMethodID)($env, class, CString::new($method).unwrap().as_ptr(), CString::new($descriptor).unwrap().as_ptr());
+        let method_id: jmethodID = ((**$env).GetStaticMethodID)($env, class, CString::new($method).unwrap().as_ptr(), CString::new($descriptor).unwrap().as_ptr());
         if method_id.is_null() { panic!("method_id was null"); }
         let args = vec![ $( jvalue { _data: $args as u64 } ),* ];
-        let ret = (genv.$call_using)($env, class, method_id, args.as_ptr());
-        (genv.DeleteLocalRef)($env, class);
+        let ret = ((**$env).$call_using)($env, class, method_id, args.as_ptr());
+        ((**$env).DeleteLocalRef)($env, class);
         ret
       }
     }};
     ($env:expr, $caller:expr, $method:expr, $descriptor:expr, $call_using:ident) => {{
       unsafe {
-        let genv = $env.as_ref().and_then(|x| x.as_ref()).unwrap();
-        let class: jclass = (genv.FindClass)($env, CString::new($caller).unwrap().as_ptr());
+        let class: jclass = ((**$env).FindClass)($env, CString::new($caller).unwrap().as_ptr());
         if class.is_null() { panic!("class was null"); }
-        let method_id: jmethodID = (genv.GetStaticMethodID)($env, class, CString::new($method).unwrap().as_ptr(), CString::new($descriptor).unwrap().as_ptr());
+        let method_id: jmethodID = ((**$env).GetStaticMethodID)($env, class, CString::new($method).unwrap().as_ptr(), CString::new($descriptor).unwrap().as_ptr());
         if method_id.is_null() { panic!("method_id was null"); }
-        let ret = (genv.$call_using)($env, class, method_id);
-        (genv.DeleteLocalRef)($env, class);
+        let ret = ((**$env).$call_using)($env, class, method_id);
+        ((**$env).DeleteLocalRef)($env, class);
         ret
       }
     }}
@@ -62,11 +58,10 @@ macro_rules! static_java_method {
 macro_rules! java_field {
     ($env:expr, $caller:expr, $field:expr, $sig:expr, $call_using:ident) => {{
       unsafe {
-        let genv = $env.as_ref().and_then(|x| x.as_ref()).unwrap();
-        let class: jclass = (genv.GetObjectClass)($env, $caller);
-        let field_id: jfieldID = (genv.GetFieldID)($env, class, CString::new($field).unwrap().as_ptr(), CString::new($sig).unwrap().as_ptr());
-        let ret = (genv.$call_using)($env, $caller, field_id);
-        (genv.DeleteLocalRef)($env, class);
+        let class: jclass = ((**$env).GetObjectClass)($env, $caller);
+        let field_id: jfieldID = ((**$env).GetFieldID)($env, class, CString::new($field).unwrap().as_ptr(), CString::new($sig).unwrap().as_ptr());
+        let ret = ((**$env).$call_using)($env, $caller, field_id);
+        ((**$env).DeleteLocalRef)($env, class);
         ret
       }
     }}
@@ -89,10 +84,46 @@ impl JNI {
     unsafe { command_spec_CommandExecutor::from(self.env, object) }
   }
 
+  fn generate_listeners<'a, S: Into<&'a str>>(&self, fqcn: S, class_names: &'a [&'a str]) -> jobject {
+    let fqcn = fqcn.into();
+    let fqcn_java = rust_string_to_java_string(self.env, fqcn);
+    let class_list = make_list(self.env, make_array(self.env,
+      "java/lang/Class",
+      class_names.iter()
+        .map(|class_name| {
+          let class = unsafe { ((**self.env).FindClass)(self.env, CString::new(class_name.replace(".", "/")).unwrap().as_ptr()) };
+          if class.is_null() {
+            panic!("class for {} was null", class_name);
+          }
+          class
+        })
+        .collect()
+    ));
+    java_method!(self.env, self.object, "generateListeners", "(Ljava/lang/String;Ljava/util/List;)Ljava/lang/Object;", CallObjectMethodA, fqcn_java, class_list)
+  }
+
   fn get_game(&self) -> generated_types::Game {
     let game = java_field!(self.env, self.object, "game", "Lorg/spongepowered/api/Game;", GetObjectField);
     unsafe { Game::from(self.env, game) }
   }
+}
+
+fn make_array<'a>(env: *mut JNIEnv, class_name: &'a str, vec: Vec<jobject>) -> jarray {
+  unsafe {
+    let class = ((**env).FindClass)(env, CString::new(class_name).unwrap().as_ptr());
+    if class.is_null() { panic!("class {} was null", class_name); }
+    let array = ((**env).NewObjectArray)(env, vec.len() as i32, class, std::ptr::null_mut());
+    for i in 0..vec.len() {
+      let item = vec[i];
+      ((**env).SetObjectArrayElement)(env, array, i as i32, item);
+    }
+    ((**env).DeleteLocalRef)(env, class);
+    array
+  }
+}
+
+fn make_list(env: *mut JNIEnv, array: jarray) -> jobject {
+  static_java_method!(env, "java/util/Arrays", "asList", "([Ljava/lang/Object;)Ljava/util/List;", CallStaticObjectMethodA, array)
 }
 
 fn get_jni(env: *mut JNIEnv, shim: jobject) -> JNI {
@@ -103,60 +134,46 @@ fn get_jni(env: *mut JNIEnv, shim: jobject) -> JNI {
   }
 }
 
-macro_rules! unwrap_env {
-  ($env:expr) => {{
-    unsafe {
-      $env.as_ref().and_then(|x| x.as_ref()).unwrap()
-    }
-  }}
-}
-
 fn get_class_name(env: *mut JNIEnv, object: jobject) -> String {
-  let genv = unwrap_env!(env);
-  let class: jclass = unsafe { (genv.GetObjectClass)(env, object) };
+  let class: jclass = unsafe { ((**env).GetObjectClass)(env, object) };
   let class_name = java_method!(env, class, "getName", "()Ljava/lang/String;", CallObjectMethod);
   java_string_to_rust_string(env, class_name)
 }
 
 fn java_string_to_rust_string(env: *mut JNIEnv, string: jstring) -> String {
-  let genv = unwrap_env!(env);
   unsafe {
-    let pointer = (genv.GetStringUTFChars)(env, string, &mut 0u8 as *mut _);
+    let pointer = ((**env).GetStringUTFChars)(env, string, &mut 0u8 as *mut _);
     CStr::from_ptr(pointer).to_str().unwrap().to_owned()
   }
 }
 
 fn rust_string_to_java_string<'a>(env: *mut JNIEnv, string: &'a str) -> jstring {
-  let pointer = unsafe { CString::new(string).unwrap().as_ptr() };
-  let genv = unwrap_env!(env);
-  unsafe { (genv.NewStringUTF)(env, pointer) }
+  let pointer = unsafe { CString::new(string) }.unwrap().as_ptr();
+  unsafe { ((**env).NewStringUTF)(env, pointer) }
 }
 
 #[allow(non_snake_case)]
 #[no_mangle]
 pub extern fn Java_me_kyleclemens_spongejni_SpongeJNIShim_init(env: *mut JNIEnv, this: jobject) -> jboolean {
-  println!("Hello from Rust!");
-  let genv = unwrap_env!(env);
   let jni = get_jni(env, this);
   let game = jni.get_game();
-  println!("Sneakily generating a command...");
+
   let executor = jni.generate_command_executor("me.kyleclemens.spongejni.rust.generated.HelloCommandExecutor");
-  println!("{:#?}", executor);
-  println!("Sneakily registering said command...");
   let command = command_spec_CommandSpec::builder(env)
     .executor(executor)
     .build();
-  println!("{:#?}", command);
-  let list = unsafe {
-    let string_class = (genv.FindClass)(env, CString::new("java/lang/String").unwrap().as_ptr());
-    let array = (genv.NewObjectArray)(env, 1, string_class, std::ptr::null_mut());
-    (genv.SetObjectArrayElement)(env, array, 0, rust_string_to_java_string(env, "rusty"));
-    let ret = static_java_method!(env, "java/util/Arrays", "asList", "([Ljava/lang/Object;)Ljava/util/List;", CallStaticObjectMethodA, array);
-    (genv.DeleteLocalRef)(env, string_class);
-    ret
-  };
+  let list = make_list(env, make_array(env, "java/lang/String", vec![rust_string_to_java_string(env, "rusty")]));
   let callable = unsafe { command_CommandCallable::from(env, command.object) };
   game.get_command_manager().register_1(jni.object, callable, list);
+
+  let listeners = jni.generate_listeners(
+    "me.kyleclemens.spongejni.rust.generated.RustyListener",
+    &[
+      "org.spongepowered.api.event.network.ClientConnectionEvent$Join"
+    ]
+  );
+  game.get_event_manager().register_listeners(jni.object, listeners);
+
   return 1;
 }
 
@@ -197,16 +214,8 @@ pub extern fn Java_me_kyleclemens_spongejni_rust_generated_HelloCommandExecutor_
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub extern fn Java_me_kyleclemens_spongejni_SpongeJNIShim_eventReceived(env: *mut JNIEnv, this: jobject, event: jobject) {
-  let class_name = get_class_name(env, event);
-  if class_name.contains("Join") {
-    on_join(unsafe { event_entity_living_humanoid_TargetHumanoidEvent::from(env, event) });
-  } else if class_name.contains("SendCommandEvent") {
-
-  }
-}
-
-fn on_join(event: event_entity_living_humanoid_TargetHumanoidEvent) {
+pub extern fn Java_me_kyleclemens_spongejni_rust_generated_RustyListener_joinReceived(env: *mut JNIEnv, this: jobject, event: jobject) {
+  let event = unsafe { event_entity_living_humanoid_TargetHumanoidEvent::from(env, event) };
   let player = event.get_target_entity();
   let user = unsafe { entity_living_player_User::from(player.env, player.object) };
   println!("Rust knows that {} joined... :3", java_string_to_rust_string(event.env, user.get_name()));
