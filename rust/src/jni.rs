@@ -1,5 +1,5 @@
 use jni_sys::*;
-use std::ffi::{CString, CStr};
+use std::ffi::CString;
 use std;
 
 use generated_types::*;
@@ -13,14 +13,14 @@ pub struct JNI {
 impl JNI {
   fn generate_command_executor<'a, S: Into<&'a str>>(&self, fqcn: S) -> command_spec_CommandExecutor {
     let fqcn = fqcn.into();
-    let fqcn_java = rust_string_to_java_string(self.env, fqcn);
+    let fqcn_java = fqcn.into_java_string(self.env);
     let object = java_method!(self.env, self.object, "generateCommandExecutor", "(Ljava/lang/String;)Lorg/spongepowered/api/command/spec/CommandExecutor;", CallObjectMethodA, fqcn_java);
     unsafe { command_spec_CommandExecutor::from(self.env, object) }
   }
 
   fn generate_listeners<'a, S: Into<&'a str>>(&self, fqcn: S, class_names: &'a [&'a str]) -> jobject {
     let fqcn = fqcn.into();
-    let fqcn_java = rust_string_to_java_string(self.env, fqcn);
+    let fqcn_java = fqcn.into_java_string(self.env);
     let class_list = make_list(self.env, make_array(self.env,
       "java/lang/Class",
       class_names.iter()
@@ -71,19 +71,7 @@ pub fn get_jni(env: *mut JNIEnv, shim: jobject) -> JNI {
 pub fn get_class_name(env: *mut JNIEnv, object: jobject) -> String {
   let class: jclass = unsafe { ((**env).GetObjectClass)(env, object) };
   let class_name = java_method!(env, class, "getName", "()Ljava/lang/String;", CallObjectMethod);
-  java_string_to_rust_string(env, class_name)
-}
-
-pub fn java_string_to_rust_string(env: *mut JNIEnv, string: jstring) -> String {
-  unsafe {
-    let pointer = ((**env).GetStringUTFChars)(env, string, &mut 0u8 as *mut _);
-    CStr::from_ptr(pointer).to_str().unwrap().to_owned()
-  }
-}
-
-pub fn rust_string_to_java_string<'a>(env: *mut JNIEnv, string: &'a str) -> jstring {
-  let pointer = unsafe { CString::new(string) }.unwrap().as_ptr();
-  unsafe { ((**env).NewStringUTF)(env, pointer) }
+  class_name.into_rust_string(env)
 }
 
 #[allow(non_snake_case)]
@@ -96,7 +84,7 @@ pub extern fn Java_me_kyleclemens_spongejni_SpongeJNIShim_init(env: *mut JNIEnv,
   let command = command_spec_CommandSpec::builder(env)
     .executor(executor)
     .build();
-  let list = make_list(env, make_array(env, "java/lang/String", vec![rust_string_to_java_string(env, "rusty")]));
+  let list = make_list(env, make_array(env, "java/lang/String", vec!["rusty".into_java_string(env)]));
   let callable = unsafe { command_CommandCallable::from(env, command.object) };
   game.get_command_manager().register_1(jni.object, callable, list);
 
@@ -131,7 +119,7 @@ pub extern fn Java_me_kyleclemens_spongejni_rust_generated_HelloCommandExecutor_
     text_Text::of_rust(env, &format!(
       "Hello, {}!",
       // Convert the Java name String to a Rust string
-      java_string_to_rust_string(env, src.get_name())
+      src.get_name().into_rust_string(env)
     ))
   );
   // Return success
@@ -144,5 +132,5 @@ pub extern fn Java_me_kyleclemens_spongejni_rust_generated_RustyListener_joinRec
   let event = unsafe { event_entity_living_humanoid_TargetHumanoidEvent::from(env, event) };
   let player = event.get_target_entity();
   let user = unsafe { entity_living_player_User::from(player.env, player.object) };
-  println!("Rust knows that {} joined... :3", java_string_to_rust_string(event.env, user.get_name()));
+  println!("Rust knows that {} joined... :3", user.get_name().into_rust_string(env));
 }

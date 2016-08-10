@@ -1,8 +1,5 @@
 extern crate jni_sys;
 
-use jni_sys::*;
-use std::ffi::{CString, CStr};
-
 macro_rules! java_method {
     ($env:expr, $caller:expr, $method:expr, $descriptor:expr, $call_using:ident, $($args:expr),*) => {{
       unsafe {
