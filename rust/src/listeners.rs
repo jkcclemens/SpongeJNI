@@ -1,7 +1,7 @@
 use jni_sys::*;
 use std::ffi::CString;
 
-use jni::Jni;
+use plugin::Plugin;
 use generated_types::*;
 
 type CollectionValue = data_value_mutable_CollectionValue;
@@ -15,15 +15,15 @@ type Value = data_value_mutable_Value;
 pub struct Listeners;
 
 impl Listeners {
-  pub fn register(jni: &Jni) {
-    let listeners = jni.generate_listeners(
+  pub fn register(plugin: &Plugin) {
+    let listeners = plugin.generate_listeners(
       "me.kyleclemens.spongejni.rust.generated.RustyListener",
       &[
         "org.spongepowered.api.event.network.ClientConnectionEvent$Join",
         "org.spongepowered.api.event.achievement.GrantAchievementEvent"
       ]
     );
-    jni.get_game().get_event_manager().register_listeners(jni.object, listeners);
+    plugin.get_game().get_event_manager().register_listeners(plugin.object, listeners);
   }
 }
 

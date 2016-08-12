@@ -66,6 +66,6 @@ macro_rules! java_field {
 
 pub mod commands;
 pub mod listeners;
-pub mod jni;
+pub mod plugin;
 pub mod generated_types;
 pub mod extensions;

@@ -1,7 +1,7 @@
 use jni_sys::{JNIEnv, jobject};
 
 use generated_types::*;
-use jni::{Jni, JniUtils};
+use plugin::{Plugin, JavaUtils};
 use extensions::*;
 
 type CommandCallable = command_CommandCallable;
@@ -15,14 +15,14 @@ type Text = text_Text;
 pub struct Commands;
 
 impl Commands {
-  pub fn register(jni: &Jni) {
-    let executor = jni.generate_command_executor("me.kyleclemens.spongejni.rust.generated.HelloCommandExecutor");
-    let command = CommandSpec::builder(jni.env)
+  pub fn register(plugin: &Plugin) {
+    let executor = plugin.generate_command_executor("me.kyleclemens.spongejni.rust.generated.HelloCommandExecutor");
+    let command = CommandSpec::builder(plugin.env)
       .executor(executor)
       .build();
-    let list = JniUtils::make_array_list(jni.env, "java/lang/String", vec!["rusty".into_java_string(jni.env)]);
-    let callable = unsafe { CommandCallable::from(jni.env, command.object) };
-    jni.get_game().get_command_manager().register_1(jni.object, callable, list);
+    let list = JavaUtils::make_array_list(plugin.env, "java/lang/String", vec!["rusty".into_java_string(plugin.env)]);
+    let callable = unsafe { CommandCallable::from(plugin.env, command.object) };
+    plugin.get_game().get_command_manager().register_1(plugin.object, callable, list);
   }
 }
 

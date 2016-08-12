@@ -39,6 +39,7 @@ class SpongeJNI {
     @Inject
     @DefaultConfig(sharedRoot = true)
     private lateinit var configLoader: ConfigurationLoader<CommentedConfigurationNode>
+    @Suppress("unused") // used by rust
     @Inject
     private lateinit var game: Game
 
@@ -56,19 +57,26 @@ class SpongeJNI {
         val config = this.configLoader.load()
         val libName = config.getNode("lib").string
         if (libName == null) {
-            this.logger.error("lib was null. not enabling JNI")
+            this.logger.error("No library was set in the config. Set `lib` equal to the library name to load.")
         } else {
             System.loadLibrary(libName)
             val shim = SpongeJNIShim(this)
             if (!shim.init()) {
-                this.logger.warn("lib did not return true for shim")
-            } else {
-                this.game.eventManager.registerListeners(this, shim)
+                this.logger.warn("Library returned false during setup, which is indicative of an error.")
             }
         }
     }
 
-    @Suppress("unused")
+    /**
+     * Generates a [CommandExecutor] using javassist.
+     *
+     * The generated executor will contain one `public`, `native` method called `execute`, which receives a
+     * [CommandSource] and a [CommandContext] and returns a [CommandResult].
+     *
+     * @param[fqcn] The fully-qualified class name (separated with periods) of the class to generate. (example:
+     *              `com.example.generated.MyExecutor`)
+     */
+    @Suppress("unused") // rust methods
     fun generateCommandExecutor(fqcn: String): CommandExecutor {
         val pool = ClassPool.getDefault()
         val cc = pool.makeClass(fqcn)
@@ -86,7 +94,30 @@ class SpongeJNI {
         return clazz.newInstance() as CommandExecutor
     }
 
-    @Suppress("unused")
+    /**
+     * Generates an [Object] to be used as a listener. The object is generated using javassist.
+     *
+     * The generated object will contain zero or more `public`, `native` methods, depending on the contents in
+     * [classes].
+     *
+     * If [classes] contains the event GrantAchievementEvent, a method represented by the following source will be
+     * generated.
+     *
+     *
+     * ```
+     *     @Listener
+     *     public native grantAchievementEventReceived(GrantAchievementEvent event);
+     * ```
+     *
+     * A method following this pattern will be generated for every class in [classes].
+     *
+     * If [classes] is empty, an empty object will be generated.
+     *
+     * @param[fqcn] The fully-qualified class name (separated with periods) of the class to generate. (example:
+     *              `com.example.generated.MyListener`)
+     * @param[classes] The list of classes for which to generate listener methods.
+     */
+    @Suppress("unused") // rust methods
     fun generateListeners(fqcn: String, classes: List<Class<out Event>>): Any {
         val pool = ClassPool.getDefault()
         val cc = pool.makeClass(fqcn)

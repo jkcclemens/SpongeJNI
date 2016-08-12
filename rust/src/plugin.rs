@@ -7,9 +7,9 @@ use commands;
 use generated_types::*;
 use extensions::*;
 
-pub struct JniUtils;
+pub struct JavaUtils;
 
-impl JniUtils {
+impl JavaUtils {
   pub fn make_array<'a>(env: *mut JNIEnv, class_name: &'a str, vec: Vec<jobject>) -> jarray {
     unsafe {
       let class = ((**env).FindClass)(env, CString::new(class_name).unwrap().as_ptr());
@@ -29,14 +29,14 @@ impl JniUtils {
   }
 
   pub fn make_array_list<'a>(env: *mut JNIEnv, class_name: &'a str, vec: Vec<jobject>) -> jobject {
-    JniUtils::make_list(env, JniUtils::make_array(env, class_name, vec))
+    JavaUtils::make_list(env, JavaUtils::make_array(env, class_name, vec))
   }
 
-  pub fn get_jni(env: *mut JNIEnv, shim: jobject) -> Jni {
-    let jni = java_method!(env, shim, "getJNI", "()Lme/kyleclemens/spongejni/SpongeJNI;", CallObjectMethod);
-    Jni {
+  pub fn get_plugin(env: *mut JNIEnv, shim: jobject) -> Plugin {
+    let plugin = java_method!(env, shim, "getPlugin", "()Lme/kyleclemens/spongejni/SpongeJNI;", CallObjectMethod);
+    Plugin {
       env: env,
-      object: jni
+      object: plugin
     }
   }
 
@@ -47,12 +47,12 @@ impl JniUtils {
   }
 }
 
-pub struct Jni {
+pub struct Plugin {
   pub env: *mut JNIEnv,
   pub object: jobject
 }
 
-impl Jni {
+impl Plugin {
   pub fn generate_command_executor<'a, S: Into<&'a str>>(&self, fqcn: S) -> command_spec_CommandExecutor {
     let fqcn = fqcn.into();
     let fqcn_java = fqcn.into_java_string(self.env);
@@ -63,7 +63,7 @@ impl Jni {
   pub fn generate_listeners<'a, S: Into<&'a str>>(&self, fqcn: S, class_names: &'a [&'a str]) -> jobject {
     let fqcn = fqcn.into();
     let fqcn_java = fqcn.into_java_string(self.env);
-    let class_list = JniUtils::make_array_list(self.env,
+    let class_list = JavaUtils::make_array_list(self.env,
       "java/lang/Class",
       class_names.iter()
         .map(|class_name| {
@@ -87,11 +87,11 @@ impl Jni {
 #[allow(non_snake_case)]
 #[no_mangle]
 pub extern fn Java_me_kyleclemens_spongejni_SpongeJNIShim_init(env: *mut JNIEnv, this: jobject) -> jboolean {
-  let jni = JniUtils::get_jni(env, this);
+  let plugin = JavaUtils::get_plugin(env, this);
 
-  commands::Commands::register(&jni);
+  commands::Commands::register(&plugin);
 
-  listeners::Listeners::register(&jni);
+  listeners::Listeners::register(&plugin);
 
   return 1;
 }
