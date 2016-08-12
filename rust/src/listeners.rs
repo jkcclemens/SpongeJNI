@@ -47,7 +47,7 @@ pub extern fn Java_me_kyleclemens_spongejni_rust_generated_RustyListener_joinRec
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub extern fn Java_org_spongepowered_api_event_achievement_GrantAchievementEvent(env: *mut JNIEnv, this: jobject, event: jobject) {
+pub extern fn Java_me_kyleclemens_spongejni_rust_generated_RustyListener_joinReceived_grantAchievementEventReceived(env: *mut JNIEnv, this: jobject, event: jobject) {
   let raw_event = unsafe { Event::from(env, event) };
   let player_class = unsafe { ((**env).FindClass)(env, CString::new("org/spongepowered/api/entity/living/player/Player").unwrap().as_ptr()) };
   let player = match raw_event.get_cause().first(player_class) {
