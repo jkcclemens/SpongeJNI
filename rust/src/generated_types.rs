@@ -33489,54 +33489,6 @@ impl event_item_inventory_ClickInventoryEvent {
 }
 
 #[derive(Debug)]
-pub struct event_item_inventory_CreativeInventoryEvent_Click {
-  pub env: *mut JNIEnv,
-  pub object: jobject
-}
-
-impl event_item_inventory_CreativeInventoryEvent_Click {
-  pub unsafe fn from(env: *mut JNIEnv, object: jobject) -> Self {
-    event_item_inventory_CreativeInventoryEvent_Click {
-      env: env,
-      object: object
-    }
-  }
-
-}
-
-#[derive(Debug)]
-pub struct event_item_inventory_CreativeInventoryEvent_Drop {
-  pub env: *mut JNIEnv,
-  pub object: jobject
-}
-
-impl event_item_inventory_CreativeInventoryEvent_Drop {
-  pub unsafe fn from(env: *mut JNIEnv, object: jobject) -> Self {
-    event_item_inventory_CreativeInventoryEvent_Drop {
-      env: env,
-      object: object
-    }
-  }
-
-}
-
-#[derive(Debug)]
-pub struct event_item_inventory_CreativeInventoryEvent {
-  pub env: *mut JNIEnv,
-  pub object: jobject
-}
-
-impl event_item_inventory_CreativeInventoryEvent {
-  pub unsafe fn from(env: *mut JNIEnv, object: jobject) -> Self {
-    event_item_inventory_CreativeInventoryEvent {
-      env: env,
-      object: object
-    }
-  }
-
-}
-
-#[derive(Debug)]
 pub struct event_item_inventory_DropItemEvent_Custom {
   pub env: *mut JNIEnv,
   pub object: jobject
@@ -35531,8 +35483,8 @@ impl event_SpongeEventFactory {
     event_item_inventory_ChangeInventoryEvent_Held { env: env, object: ret }
   }
 
-  pub fn create_change_inventory_event_pickup(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: item_inventory_Inventory, param_3: jobject) -> event_item_inventory_ChangeInventoryEvent_Pickup {
-    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeInventoryEventPickup", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/item/inventory/Inventory;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ChangeInventoryEvent$Pickup;", CallStaticObjectMethodA, param_1.object, param_2.object, param_3);
+  pub fn create_change_inventory_event_pickup(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: entity_Item, param_3: item_inventory_Inventory, param_4: jobject) -> event_item_inventory_ChangeInventoryEvent_Pickup {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createChangeInventoryEventPickup", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/entity/Item;Lorg/spongepowered/api/item/inventory/Inventory;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ChangeInventoryEvent$Pickup;", CallStaticObjectMethodA, param_1.object, param_2.object, param_3.object, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createChangeInventoryEventPickup was null") }
     event_item_inventory_ChangeInventoryEvent_Pickup { env: env, object: ret }
   }
@@ -35625,18 +35577,6 @@ impl event_SpongeEventFactory {
     let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createClickInventoryEventShiftSecondary", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/ClickInventoryEvent$Shift$Secondary;", CallStaticObjectMethodA, param_1.object, param_2.object, param_3.object, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createClickInventoryEventShiftSecondary was null") }
     event_item_inventory_ClickInventoryEvent_Shift_Secondary { env: env, object: ret }
-  }
-
-  pub fn create_creative_inventory_event_click(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: item_inventory_Container, param_4: jobject) -> event_item_inventory_CreativeInventoryEvent_Click {
-    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createCreativeInventoryEventClick", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Lorg/spongepowered/api/item/inventory/Container;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/CreativeInventoryEvent$Click;", CallStaticObjectMethodA, param_1.object, param_2.object, param_3.object, param_4);
-    if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createCreativeInventoryEventClick was null") }
-    event_item_inventory_CreativeInventoryEvent_Click { env: env, object: ret }
-  }
-
-  pub fn create_creative_inventory_event_drop(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: data_Transaction, param_3: jobject, param_4: item_inventory_Container, param_5: world_World, param_6: jobject) -> event_item_inventory_CreativeInventoryEvent_Drop {
-    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "createCreativeInventoryEventDrop", "(Lorg/spongepowered/api/event/cause/Cause;Lorg/spongepowered/api/data/Transaction;Ljava/util/List;Lorg/spongepowered/api/item/inventory/Container;Lorg/spongepowered/api/world/World;Ljava/util/List;)Lorg/spongepowered/api/event/item/inventory/CreativeInventoryEvent$Drop;", CallStaticObjectMethodA, param_1.object, param_2.object, param_3, param_4.object, param_5.object, param_6);
-    if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#createCreativeInventoryEventDrop was null") }
-    event_item_inventory_CreativeInventoryEvent_Drop { env: env, object: ret }
   }
 
   pub fn create_drop_item_event_custom(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: jobject, param_3: world_World) -> event_item_inventory_DropItemEvent_Custom {
