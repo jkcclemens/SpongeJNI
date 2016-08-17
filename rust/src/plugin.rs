@@ -1,11 +1,14 @@
-use jni_sys::*;
-use std::ffi::CString;
 use std;
+use std::collections::HashMap;
+use std::ffi::CString;
+use std::sync::Mutex;
 
-use listeners;
+use jni_sys::*;
+
 use commands;
-use generated_types::*;
 use extensions::*;
+use generated_types::*;
+use listeners;
 
 pub struct JavaUtils;
 
@@ -82,6 +85,22 @@ impl Plugin {
     let game = java_field!(self.env, self.object, "game", "Lorg/spongepowered/api/Game;", GetObjectField);
     unsafe { Game::from(self.env, game) }
   }
+}
+
+pub struct Instance {
+  pub player_count: HashMap<String, isize>
+}
+
+impl Default for Instance {
+  fn default() -> Self {
+    Instance {
+      player_count: HashMap::new()
+    }
+  }
+}
+
+lazy_static! {
+  pub static ref INSTANCE: Mutex<Instance> = Mutex::new(Instance::default());
 }
 
 #[allow(non_snake_case)]

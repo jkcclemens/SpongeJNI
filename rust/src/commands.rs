@@ -1,7 +1,7 @@
 use jni_sys::{JNIEnv, jobject};
 
 use generated_types::*;
-use plugin::{Plugin, JavaUtils};
+use plugin::{Plugin, JavaUtils, INSTANCE};
 use extensions::*;
 
 type CommandCallable = command_CommandCallable;
@@ -40,15 +40,33 @@ pub extern fn Java_me_kyleclemens_spongejni_rust_generated_HelloCommandExecutor_
     // Move these back into scope (Rust-specific)
     (src, args, receiver)
   };
-  // Send a message to the receiver
-  receiver.send_message(
-    // Use the extension of_rust to ease some of the JNI quirks (use extensions::GoodText)
-    Text::of_rust(env, &format!(
-      "Hello, {}!",
-      // Convert the Java name String to a Rust string
-      src.get_name().into_rust_string(env)
-    ))
-  );
+  let hello_string = {
+    // Get the global singleton (very discouraged in Rust, but required to share any sort of state)
+    // This lock will drop when it goes out of scope at the end of this block. This will free it for
+    // use by other threads (listeners, for example). Other threads will block waiting for a lock,
+    // so it is important to request a lock and drop it as quickly as possible.
+    let mut instance = INSTANCE.lock().unwrap();
+    // Get the amount of times we've said hello to this player
+    // FIXME: use UUIDs
+    let hello_count = instance.player_count.entry(src.get_name().into_rust_string(env)).or_insert(0);
+    // Create a string based on hello_count
+    let string = if *hello_count == 0 {
+      "I've never said hello to you before.".to_owned()
+    } else {
+      format!("I've said hello to you {} time{} before.", hello_count, if *hello_count == 1 { "" } else { "s" })
+    };
+    // Increment the amount of times we've said hello.
+    *hello_count += 1;
+    // Return from this block with the string
+    string
+  };
+  // Send a message to the receiver using the send_rust_message extension
+  receiver.send_rust_message(&format!(
+    "Hello, {}! {}",
+    // Convert the Java name String to a Rust string
+    src.get_name().into_rust_string(env),
+    hello_string
+  ));
   // Return success
   CommandResult::success(env).object
 }

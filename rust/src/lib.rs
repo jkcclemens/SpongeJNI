@@ -1,4 +1,6 @@
 extern crate jni_sys;
+#[macro_use]
+extern crate lazy_static;
 
 macro_rules! java_method {
     ($env:expr, $caller:expr, $method:expr, $descriptor:expr, $call_using:ident, $($args:expr),*) => {{

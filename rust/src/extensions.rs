@@ -3,6 +3,9 @@ use std::ffi::{CString, CStr};
 
 use generated_types::*;
 
+type Text = text_Text;
+type MessageReceiver = text_channel_MessageReceiver;
+
 pub trait GoodText {
   fn of_rust<'a>(env: *mut JNIEnv, string: &'a str) -> text_Text {
     unsafe {
@@ -15,7 +18,7 @@ pub trait GoodText {
   }
 }
 
-impl GoodText for text_Text {}
+impl GoodText for Text {}
 
 pub trait ConvertStringToRust {
   fn into_rust_string(self, env: *mut JNIEnv) -> String;
@@ -38,5 +41,16 @@ impl<'a, S> ConvertStringToJava for S where S: Into<&'a str> {
   fn into_java_string(self, env: *mut JNIEnv) -> jstring {
     let pointer = unsafe { CString::new(self.into()) }.unwrap().as_ptr();
     unsafe { ((**env).NewStringUTF)(env, pointer) }
+  }
+}
+
+pub trait RustMessageReceiver {
+  fn send_rust_message<'a>(&self, string: &'a str);
+}
+
+impl RustMessageReceiver for MessageReceiver {
+  fn send_rust_message<'a>(&self, string: &'a str) {
+    // Use the extension of_rust to ease some of the JNI quirks (use extensions::GoodText)
+    self.send_message(Text::of_rust(self.env, string));
   }
 }
