@@ -1618,16 +1618,16 @@ impl command_args_ArgumentParseException {
     }
   }
 
-  pub fn new(&self, param_1: text_Text, param_2: jobject, param_3: i32) -> command_args_ArgumentParseException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/String;I)Lorg/spongepowered/api/command/args/ArgumentParseException", CallObjectMethodA, param_1.object, param_2, param_3);
+  pub fn new(env: *mut JNIEnv, param_1: text_Text, param_2: jobject, param_3: i32) -> command_args_ArgumentParseException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/ArgumentParseException", "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/String;I)Lorg/spongepowered/api/command/args/ArgumentParseException", CallStaticObjectMethodA, param_1.object, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/ArgumentParseException#<init> was null") }
-    command_args_ArgumentParseException { env: self.env, object: ret }
+    command_args_ArgumentParseException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: text_Text, param_2: jobject, param_3: jobject, param_4: i32) -> command_args_ArgumentParseException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;Ljava/lang/String;I)Lorg/spongepowered/api/command/args/ArgumentParseException", CallObjectMethodA, param_1.object, param_2, param_3, param_4);
+  pub fn new_1(env: *mut JNIEnv, param_1: text_Text, param_2: jobject, param_3: jobject, param_4: i32) -> command_args_ArgumentParseException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/ArgumentParseException", "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;Ljava/lang/String;I)Lorg/spongepowered/api/command/args/ArgumentParseException", CallStaticObjectMethodA, param_1.object, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/ArgumentParseException#<init> was null") }
-    command_args_ArgumentParseException { env: self.env, object: ret }
+    command_args_ArgumentParseException { env: env, object: ret }
   }
 
   pub fn get_text(&self) -> text_Text {
@@ -1690,10 +1690,10 @@ impl command_args_ChildCommandElementExecutor {
     }
   }
 
-  pub fn new(&self, param_1: command_spec_CommandExecutor) -> command_args_ChildCommandElementExecutor {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/command/spec/CommandExecutor;)Lorg/spongepowered/api/command/args/ChildCommandElementExecutor", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: command_spec_CommandExecutor) -> command_args_ChildCommandElementExecutor {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/ChildCommandElementExecutor", "<init>", "(Lorg/spongepowered/api/command/spec/CommandExecutor;)Lorg/spongepowered/api/command/args/ChildCommandElementExecutor", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/ChildCommandElementExecutor#<init> was null") }
-    command_args_ChildCommandElementExecutor { env: self.env, object: ret }
+    command_args_ChildCommandElementExecutor { env: env, object: ret }
   }
 
   pub fn register(&self, param_1: command_CommandCallable, param_2: jobject) -> Option<command_CommandMapping> {
@@ -1744,10 +1744,10 @@ impl command_args_CommandArgs {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: jobject) -> command_args_CommandArgs {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/util/List;)Lorg/spongepowered/api/command/args/CommandArgs", CallObjectMethodA, param_1, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> command_args_CommandArgs {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/CommandArgs", "<init>", "(Ljava/lang/String;Ljava/util/List;)Lorg/spongepowered/api/command/args/CommandArgs", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/CommandArgs#<init> was null") }
-    command_args_CommandArgs { env: self.env, object: ret }
+    command_args_CommandArgs { env: env, object: ret }
   }
 
   pub fn has_next(&self) -> bool {
@@ -1829,10 +1829,10 @@ impl command_args_CommandContext {
     }
   }
 
-  pub fn new(&self) -> command_args_CommandContext {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/command/args/CommandContext", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> command_args_CommandContext {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/CommandContext", "<init>", "()Lorg/spongepowered/api/command/args/CommandContext", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/CommandContext#<init> was null") }
-    command_args_CommandContext { env: self.env, object: ret }
+    command_args_CommandContext { env: env, object: ret }
   }
 
   pub fn get_all(&self, param_1: jobject) -> jobject {
@@ -2365,10 +2365,10 @@ impl command_args_GenericArguments_MarkTrueCommandElement {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> command_args_GenericArguments_MarkTrueCommandElement {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/command/args/GenericArguments$MarkTrueCommandElement", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> command_args_GenericArguments_MarkTrueCommandElement {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/GenericArguments$MarkTrueCommandElement", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/command/args/GenericArguments$MarkTrueCommandElement", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/GenericArguments$MarkTrueCommandElement#<init> was null") }
-    command_args_GenericArguments_MarkTrueCommandElement { env: self.env, object: ret }
+    command_args_GenericArguments_MarkTrueCommandElement { env: env, object: ret }
   }
 
   pub fn complete(&self, param_1: command_CommandSource, param_2: command_args_CommandArgs, param_3: command_args_CommandContext) -> jobject {
@@ -3035,10 +3035,10 @@ impl command_args_parsing_SingleArg {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: i32, param_3: i32) -> command_args_parsing_SingleArg {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;II)Lorg/spongepowered/api/command/args/parsing/SingleArg", CallObjectMethodA, param_1, param_2, param_3);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: i32, param_3: i32) -> command_args_parsing_SingleArg {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/parsing/SingleArg", "<init>", "(Ljava/lang/String;II)Lorg/spongepowered/api/command/args/parsing/SingleArg", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/parsing/SingleArg#<init> was null") }
-    command_args_parsing_SingleArg { env: self.env, object: ret }
+    command_args_parsing_SingleArg { env: env, object: ret }
   }
 
   pub fn get_value(&self) -> jobject {
@@ -3107,10 +3107,10 @@ impl command_args_parsing_TokenizerState {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: bool) -> command_args_parsing_TokenizerState {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Z)Lorg/spongepowered/api/command/args/parsing/TokenizerState", CallObjectMethodA, param_1, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: bool) -> command_args_parsing_TokenizerState {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/args/parsing/TokenizerState", "<init>", "(Ljava/lang/String;Z)Lorg/spongepowered/api/command/args/parsing/TokenizerState", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/args/parsing/TokenizerState#<init> was null") }
-    command_args_parsing_TokenizerState { env: self.env, object: ret }
+    command_args_parsing_TokenizerState { env: env, object: ret }
   }
 
   pub fn has_more(&self) -> bool {
@@ -3251,28 +3251,28 @@ impl command_CommandException {
     }
   }
 
-  pub fn new(&self, param_1: text_Text) -> command_CommandException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/CommandException", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: text_Text) -> command_CommandException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandException", "<init>", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/CommandException", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandException#<init> was null") }
-    command_CommandException { env: self.env, object: ret }
+    command_CommandException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: text_Text, param_2: jobject) -> command_CommandException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;)Lorg/spongepowered/api/command/CommandException", CallObjectMethodA, param_1.object, param_2);
+  pub fn new_1(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> command_CommandException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandException", "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;)Lorg/spongepowered/api/command/CommandException", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandException#<init> was null") }
-    command_CommandException { env: self.env, object: ret }
+    command_CommandException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: text_Text, param_2: bool) -> command_CommandException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;Z)Lorg/spongepowered/api/command/CommandException", CallObjectMethodA, param_1.object, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: text_Text, param_2: bool) -> command_CommandException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandException", "<init>", "(Lorg/spongepowered/api/text/Text;Z)Lorg/spongepowered/api/command/CommandException", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandException#<init> was null") }
-    command_CommandException { env: self.env, object: ret }
+    command_CommandException { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: text_Text, param_2: jobject, param_3: bool) -> command_CommandException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;Z)Lorg/spongepowered/api/command/CommandException", CallObjectMethodA, param_1.object, param_2, param_3);
+  pub fn new_3(env: *mut JNIEnv, param_1: text_Text, param_2: jobject, param_3: bool) -> command_CommandException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandException", "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;Z)Lorg/spongepowered/api/command/CommandException", CallStaticObjectMethodA, param_1.object, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandException#<init> was null") }
-    command_CommandException { env: self.env, object: ret }
+    command_CommandException { env: env, object: ret }
   }
 
   pub fn should_include_usage(&self) -> bool {
@@ -3432,16 +3432,16 @@ impl command_CommandNotFoundException {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> command_CommandNotFoundException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/command/CommandNotFoundException", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> command_CommandNotFoundException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandNotFoundException", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/command/CommandNotFoundException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandNotFoundException#<init> was null") }
-    command_CommandNotFoundException { env: self.env, object: ret }
+    command_CommandNotFoundException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: text_Text, param_2: jobject) -> command_CommandNotFoundException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/String;)Lorg/spongepowered/api/command/CommandNotFoundException", CallObjectMethodA, param_1.object, param_2);
+  pub fn new_1(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> command_CommandNotFoundException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandNotFoundException", "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/String;)Lorg/spongepowered/api/command/CommandNotFoundException", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandNotFoundException#<init> was null") }
-    command_CommandNotFoundException { env: self.env, object: ret }
+    command_CommandNotFoundException { env: env, object: ret }
   }
 
   pub fn get_command(&self) -> jobject {
@@ -3466,22 +3466,22 @@ impl command_CommandPermissionException {
     }
   }
 
-  pub fn new(&self) -> command_CommandPermissionException {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/command/CommandPermissionException", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> command_CommandPermissionException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandPermissionException", "<init>", "()Lorg/spongepowered/api/command/CommandPermissionException", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandPermissionException#<init> was null") }
-    command_CommandPermissionException { env: self.env, object: ret }
+    command_CommandPermissionException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: text_Text) -> command_CommandPermissionException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/CommandPermissionException", CallObjectMethodA, param_1.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: text_Text) -> command_CommandPermissionException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandPermissionException", "<init>", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/command/CommandPermissionException", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandPermissionException#<init> was null") }
-    command_CommandPermissionException { env: self.env, object: ret }
+    command_CommandPermissionException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: text_Text, param_2: jobject) -> command_CommandPermissionException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;)Lorg/spongepowered/api/command/CommandPermissionException", CallObjectMethodA, param_1.object, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> command_CommandPermissionException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/CommandPermissionException", "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;)Lorg/spongepowered/api/command/CommandPermissionException", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/CommandPermissionException#<init> was null") }
-    command_CommandPermissionException { env: self.env, object: ret }
+    command_CommandPermissionException { env: env, object: ret }
   }
 
 }
@@ -3741,16 +3741,16 @@ impl command_dispatcher_SimpleDispatcher {
     }
   }
 
-  pub fn new(&self) -> command_dispatcher_SimpleDispatcher {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/command/dispatcher/SimpleDispatcher", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> command_dispatcher_SimpleDispatcher {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/dispatcher/SimpleDispatcher", "<init>", "()Lorg/spongepowered/api/command/dispatcher/SimpleDispatcher", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/command/dispatcher/SimpleDispatcher#<init> was null") }
-    command_dispatcher_SimpleDispatcher { env: self.env, object: ret }
+    command_dispatcher_SimpleDispatcher { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: command_dispatcher_Disambiguator) -> command_dispatcher_SimpleDispatcher {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/command/dispatcher/Disambiguator;)Lorg/spongepowered/api/command/dispatcher/SimpleDispatcher", CallObjectMethodA, param_1.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: command_dispatcher_Disambiguator) -> command_dispatcher_SimpleDispatcher {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/dispatcher/SimpleDispatcher", "<init>", "(Lorg/spongepowered/api/command/dispatcher/Disambiguator;)Lorg/spongepowered/api/command/dispatcher/SimpleDispatcher", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/command/dispatcher/SimpleDispatcher#<init> was null") }
-    command_dispatcher_SimpleDispatcher { env: self.env, object: ret }
+    command_dispatcher_SimpleDispatcher { env: env, object: ret }
   }
 
   pub fn register(&self, param_1: command_CommandCallable, param_2: Vec<jobject>) -> Option<command_CommandMapping> {
@@ -3899,13 +3899,13 @@ impl command_ImmutableCommandMapping {
     }
   }
 
-  pub fn new(&self, param_1: command_CommandCallable, param_2: jobject, param_3: Vec<jobject>) -> command_ImmutableCommandMapping {
+  pub fn new(env: *mut JNIEnv, param_1: command_CommandCallable, param_2: jobject, param_3: Vec<jobject>) -> command_ImmutableCommandMapping {
     unimplemented!();
   }
-  pub fn new_1(&self, param_1: command_CommandCallable, param_2: jobject, param_3: jobject) -> command_ImmutableCommandMapping {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/command/CommandCallable;Ljava/lang/String;Ljava/util/Collection;)Lorg/spongepowered/api/command/ImmutableCommandMapping", CallObjectMethodA, param_1.object, param_2, param_3);
+  pub fn new_1(env: *mut JNIEnv, param_1: command_CommandCallable, param_2: jobject, param_3: jobject) -> command_ImmutableCommandMapping {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/ImmutableCommandMapping", "<init>", "(Lorg/spongepowered/api/command/CommandCallable;Ljava/lang/String;Ljava/util/Collection;)Lorg/spongepowered/api/command/ImmutableCommandMapping", CallStaticObjectMethodA, param_1.object, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/command/ImmutableCommandMapping#<init> was null") }
-    command_ImmutableCommandMapping { env: self.env, object: ret }
+    command_ImmutableCommandMapping { env: env, object: ret }
   }
 
   pub fn get_primary_alias(&self) -> jobject {
@@ -3948,10 +3948,10 @@ impl command_InvocationCommandException {
     }
   }
 
-  pub fn new(&self, param_1: text_Text, param_2: jobject) -> command_InvocationCommandException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;)Lorg/spongepowered/api/command/InvocationCommandException", CallObjectMethodA, param_1.object, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> command_InvocationCommandException {
+    let ret = static_java_method!(env, "org/spongepowered/api/command/InvocationCommandException", "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;)Lorg/spongepowered/api/command/InvocationCommandException", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/command/InvocationCommandException#<init> was null") }
-    command_InvocationCommandException { env: self.env, object: ret }
+    command_InvocationCommandException { env: env, object: ret }
   }
 
 }
@@ -14319,10 +14319,10 @@ impl data_MemoryDataContainer {
     }
   }
 
-  pub fn new(&self) -> data_MemoryDataContainer {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/data/MemoryDataContainer", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> data_MemoryDataContainer {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/MemoryDataContainer", "<init>", "()Lorg/spongepowered/api/data/MemoryDataContainer", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/data/MemoryDataContainer#<init> was null") }
-    data_MemoryDataContainer { env: self.env, object: ret }
+    data_MemoryDataContainer { env: env, object: ret }
   }
 
   pub fn get_parent(&self) -> Option<data_DataView> {
@@ -14798,10 +14798,10 @@ impl data_meta_ItemEnchantment {
     }
   }
 
-  pub fn new(&self, param_1: item_Enchantment, param_2: i32) -> data_meta_ItemEnchantment {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/item/Enchantment;I)Lorg/spongepowered/api/data/meta/ItemEnchantment", CallObjectMethodA, param_1.object, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: item_Enchantment, param_2: i32) -> data_meta_ItemEnchantment {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/meta/ItemEnchantment", "<init>", "(Lorg/spongepowered/api/item/Enchantment;I)Lorg/spongepowered/api/data/meta/ItemEnchantment", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/data/meta/ItemEnchantment#<init> was null") }
-    data_meta_ItemEnchantment { env: self.env, object: ret }
+    data_meta_ItemEnchantment { env: env, object: ret }
   }
 
   pub fn get_enchantment(&self) -> item_Enchantment {
@@ -15099,28 +15099,28 @@ impl data_persistence_InvalidDataException {
     }
   }
 
-  pub fn new(&self) -> data_persistence_InvalidDataException {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/data/persistence/InvalidDataException", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> data_persistence_InvalidDataException {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/persistence/InvalidDataException", "<init>", "()Lorg/spongepowered/api/data/persistence/InvalidDataException", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/data/persistence/InvalidDataException#<init> was null") }
-    data_persistence_InvalidDataException { env: self.env, object: ret }
+    data_persistence_InvalidDataException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject) -> data_persistence_InvalidDataException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/data/persistence/InvalidDataException", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject) -> data_persistence_InvalidDataException {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/persistence/InvalidDataException", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/data/persistence/InvalidDataException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/persistence/InvalidDataException#<init> was null") }
-    data_persistence_InvalidDataException { env: self.env, object: ret }
+    data_persistence_InvalidDataException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: jobject) -> data_persistence_InvalidDataException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/data/persistence/InvalidDataException", CallObjectMethodA, param_1, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> data_persistence_InvalidDataException {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/persistence/InvalidDataException", "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/data/persistence/InvalidDataException", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/data/persistence/InvalidDataException#<init> was null") }
-    data_persistence_InvalidDataException { env: self.env, object: ret }
+    data_persistence_InvalidDataException { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: jobject) -> data_persistence_InvalidDataException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/data/persistence/InvalidDataException", CallObjectMethodA, param_1);
+  pub fn new_3(env: *mut JNIEnv, param_1: jobject) -> data_persistence_InvalidDataException {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/persistence/InvalidDataException", "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/data/persistence/InvalidDataException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/persistence/InvalidDataException#<init> was null") }
-    data_persistence_InvalidDataException { env: self.env, object: ret }
+    data_persistence_InvalidDataException { env: env, object: ret }
   }
 
 }
@@ -15139,28 +15139,28 @@ impl data_persistence_InvalidDataFormatException {
     }
   }
 
-  pub fn new(&self) -> data_persistence_InvalidDataFormatException {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/data/persistence/InvalidDataFormatException", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> data_persistence_InvalidDataFormatException {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/persistence/InvalidDataFormatException", "<init>", "()Lorg/spongepowered/api/data/persistence/InvalidDataFormatException", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/data/persistence/InvalidDataFormatException#<init> was null") }
-    data_persistence_InvalidDataFormatException { env: self.env, object: ret }
+    data_persistence_InvalidDataFormatException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject) -> data_persistence_InvalidDataFormatException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/data/persistence/InvalidDataFormatException", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject) -> data_persistence_InvalidDataFormatException {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/persistence/InvalidDataFormatException", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/data/persistence/InvalidDataFormatException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/persistence/InvalidDataFormatException#<init> was null") }
-    data_persistence_InvalidDataFormatException { env: self.env, object: ret }
+    data_persistence_InvalidDataFormatException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: jobject) -> data_persistence_InvalidDataFormatException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/data/persistence/InvalidDataFormatException", CallObjectMethodA, param_1, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> data_persistence_InvalidDataFormatException {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/persistence/InvalidDataFormatException", "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/data/persistence/InvalidDataFormatException", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/data/persistence/InvalidDataFormatException#<init> was null") }
-    data_persistence_InvalidDataFormatException { env: self.env, object: ret }
+    data_persistence_InvalidDataFormatException { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: jobject) -> data_persistence_InvalidDataFormatException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/data/persistence/InvalidDataFormatException", CallObjectMethodA, param_1);
+  pub fn new_3(env: *mut JNIEnv, param_1: jobject) -> data_persistence_InvalidDataFormatException {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/persistence/InvalidDataFormatException", "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/data/persistence/InvalidDataFormatException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/persistence/InvalidDataFormatException#<init> was null") }
-    data_persistence_InvalidDataFormatException { env: self.env, object: ret }
+    data_persistence_InvalidDataFormatException { env: env, object: ret }
   }
 
 }
@@ -15232,16 +15232,16 @@ impl data_property_block_BlastResistanceProperty {
     }
   }
 
-  pub fn new(&self, param_1: f64) -> data_property_block_BlastResistanceProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(D)Lorg/spongepowered/api/data/property/block/BlastResistanceProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: f64) -> data_property_block_BlastResistanceProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/BlastResistanceProperty", "<init>", "(D)Lorg/spongepowered/api/data/property/block/BlastResistanceProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/BlastResistanceProperty#<init> was null") }
-    data_property_block_BlastResistanceProperty { env: self.env, object: ret }
+    data_property_block_BlastResistanceProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: f64, param_2: data_Property_Operator) -> data_property_block_BlastResistanceProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/BlastResistanceProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: f64, param_2: data_Property_Operator) -> data_property_block_BlastResistanceProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/BlastResistanceProperty", "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/BlastResistanceProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/BlastResistanceProperty#<init> was null") }
-    data_property_block_BlastResistanceProperty { env: self.env, object: ret }
+    data_property_block_BlastResistanceProperty { env: env, object: ret }
   }
 
 }
@@ -15260,10 +15260,10 @@ impl data_property_block_CollectiveProperty {
     }
   }
 
-  pub fn new(&self) -> data_property_block_CollectiveProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/data/property/block/CollectiveProperty", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> data_property_block_CollectiveProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/CollectiveProperty", "<init>", "()Lorg/spongepowered/api/data/property/block/CollectiveProperty", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/CollectiveProperty#<init> was null") }
-    data_property_block_CollectiveProperty { env: self.env, object: ret }
+    data_property_block_CollectiveProperty { env: env, object: ret }
   }
 
 }
@@ -15282,16 +15282,16 @@ impl data_property_block_FlammableProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_FlammableProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/FlammableProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_FlammableProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/FlammableProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/FlammableProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/FlammableProperty#<init> was null") }
-    data_property_block_FlammableProperty { env: self.env, object: ret }
+    data_property_block_FlammableProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_FlammableProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/FlammableProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_FlammableProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/FlammableProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/FlammableProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/FlammableProperty#<init> was null") }
-    data_property_block_FlammableProperty { env: self.env, object: ret }
+    data_property_block_FlammableProperty { env: env, object: ret }
   }
 
 }
@@ -15310,16 +15310,16 @@ impl data_property_block_FullBlockSelectionBoxProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_FullBlockSelectionBoxProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/FullBlockSelectionBoxProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_FullBlockSelectionBoxProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/FullBlockSelectionBoxProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/FullBlockSelectionBoxProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/FullBlockSelectionBoxProperty#<init> was null") }
-    data_property_block_FullBlockSelectionBoxProperty { env: self.env, object: ret }
+    data_property_block_FullBlockSelectionBoxProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_FullBlockSelectionBoxProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/FullBlockSelectionBoxProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_FullBlockSelectionBoxProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/FullBlockSelectionBoxProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/FullBlockSelectionBoxProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/FullBlockSelectionBoxProperty#<init> was null") }
-    data_property_block_FullBlockSelectionBoxProperty { env: self.env, object: ret }
+    data_property_block_FullBlockSelectionBoxProperty { env: env, object: ret }
   }
 
 }
@@ -15338,16 +15338,16 @@ impl data_property_block_GravityAffectedProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_GravityAffectedProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/GravityAffectedProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_GravityAffectedProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/GravityAffectedProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/GravityAffectedProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/GravityAffectedProperty#<init> was null") }
-    data_property_block_GravityAffectedProperty { env: self.env, object: ret }
+    data_property_block_GravityAffectedProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_GravityAffectedProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/GravityAffectedProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_GravityAffectedProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/GravityAffectedProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/GravityAffectedProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/GravityAffectedProperty#<init> was null") }
-    data_property_block_GravityAffectedProperty { env: self.env, object: ret }
+    data_property_block_GravityAffectedProperty { env: env, object: ret }
   }
 
 }
@@ -15366,22 +15366,22 @@ impl data_property_block_GroundLuminanceProperty {
     }
   }
 
-  pub fn new(&self, param_1: f64) -> data_property_block_GroundLuminanceProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(D)Lorg/spongepowered/api/data/property/block/GroundLuminanceProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: f64) -> data_property_block_GroundLuminanceProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/GroundLuminanceProperty", "<init>", "(D)Lorg/spongepowered/api/data/property/block/GroundLuminanceProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/GroundLuminanceProperty#<init> was null") }
-    data_property_block_GroundLuminanceProperty { env: self.env, object: ret }
+    data_property_block_GroundLuminanceProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: f64, param_2: data_Property_Operator) -> data_property_block_GroundLuminanceProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/GroundLuminanceProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: f64, param_2: data_Property_Operator) -> data_property_block_GroundLuminanceProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/GroundLuminanceProperty", "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/GroundLuminanceProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/GroundLuminanceProperty#<init> was null") }
-    data_property_block_GroundLuminanceProperty { env: self.env, object: ret }
+    data_property_block_GroundLuminanceProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_block_GroundLuminanceProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/GroundLuminanceProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_block_GroundLuminanceProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/GroundLuminanceProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/GroundLuminanceProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/GroundLuminanceProperty#<init> was null") }
-    data_property_block_GroundLuminanceProperty { env: self.env, object: ret }
+    data_property_block_GroundLuminanceProperty { env: env, object: ret }
   }
 
 }
@@ -15400,16 +15400,16 @@ impl data_property_block_HardnessProperty {
     }
   }
 
-  pub fn new(&self, param_1: f64) -> data_property_block_HardnessProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(D)Lorg/spongepowered/api/data/property/block/HardnessProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: f64) -> data_property_block_HardnessProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/HardnessProperty", "<init>", "(D)Lorg/spongepowered/api/data/property/block/HardnessProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/HardnessProperty#<init> was null") }
-    data_property_block_HardnessProperty { env: self.env, object: ret }
+    data_property_block_HardnessProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: f64, param_2: data_Property_Operator) -> data_property_block_HardnessProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/HardnessProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: f64, param_2: data_Property_Operator) -> data_property_block_HardnessProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/HardnessProperty", "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/HardnessProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/HardnessProperty#<init> was null") }
-    data_property_block_HardnessProperty { env: self.env, object: ret }
+    data_property_block_HardnessProperty { env: env, object: ret }
   }
 
 }
@@ -15428,16 +15428,16 @@ impl data_property_block_HeldItemProperty {
     }
   }
 
-  pub fn new(&self, param_1: item_ItemType) -> data_property_block_HeldItemProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/item/ItemType;)Lorg/spongepowered/api/data/property/block/HeldItemProperty", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: item_ItemType) -> data_property_block_HeldItemProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/HeldItemProperty", "<init>", "(Lorg/spongepowered/api/item/ItemType;)Lorg/spongepowered/api/data/property/block/HeldItemProperty", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/HeldItemProperty#<init> was null") }
-    data_property_block_HeldItemProperty { env: self.env, object: ret }
+    data_property_block_HeldItemProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: item_ItemType, param_2: data_Property_Operator) -> data_property_block_HeldItemProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/item/ItemType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/HeldItemProperty", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: item_ItemType, param_2: data_Property_Operator) -> data_property_block_HeldItemProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/HeldItemProperty", "<init>", "(Lorg/spongepowered/api/item/ItemType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/HeldItemProperty", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/HeldItemProperty#<init> was null") }
-    data_property_block_HeldItemProperty { env: self.env, object: ret }
+    data_property_block_HeldItemProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -15464,16 +15464,16 @@ impl data_property_block_IndirectlyPoweredProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_IndirectlyPoweredProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/IndirectlyPoweredProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_IndirectlyPoweredProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/IndirectlyPoweredProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/IndirectlyPoweredProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/IndirectlyPoweredProperty#<init> was null") }
-    data_property_block_IndirectlyPoweredProperty { env: self.env, object: ret }
+    data_property_block_IndirectlyPoweredProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_IndirectlyPoweredProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/IndirectlyPoweredProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_IndirectlyPoweredProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/IndirectlyPoweredProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/IndirectlyPoweredProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/IndirectlyPoweredProperty#<init> was null") }
-    data_property_block_IndirectlyPoweredProperty { env: self.env, object: ret }
+    data_property_block_IndirectlyPoweredProperty { env: env, object: ret }
   }
 
 }
@@ -15492,22 +15492,22 @@ impl data_property_block_LightEmissionProperty {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> data_property_block_LightEmissionProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/data/property/block/LightEmissionProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> data_property_block_LightEmissionProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/LightEmissionProperty", "<init>", "(I)Lorg/spongepowered/api/data/property/block/LightEmissionProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/LightEmissionProperty#<init> was null") }
-    data_property_block_LightEmissionProperty { env: self.env, object: ret }
+    data_property_block_LightEmissionProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: data_Property_Operator) -> data_property_block_LightEmissionProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/LightEmissionProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: data_Property_Operator) -> data_property_block_LightEmissionProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/LightEmissionProperty", "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/LightEmissionProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/LightEmissionProperty#<init> was null") }
-    data_property_block_LightEmissionProperty { env: self.env, object: ret }
+    data_property_block_LightEmissionProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_block_LightEmissionProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/LightEmissionProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_block_LightEmissionProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/LightEmissionProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/LightEmissionProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/LightEmissionProperty#<init> was null") }
-    data_property_block_LightEmissionProperty { env: self.env, object: ret }
+    data_property_block_LightEmissionProperty { env: env, object: ret }
   }
 
 }
@@ -15551,16 +15551,16 @@ impl data_property_block_MatterProperty {
     }
   }
 
-  pub fn new(&self, param_1: data_property_block_MatterProperty_Matter) -> data_property_block_MatterProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/data/property/block/MatterProperty$Matter;)Lorg/spongepowered/api/data/property/block/MatterProperty", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: data_property_block_MatterProperty_Matter) -> data_property_block_MatterProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/MatterProperty", "<init>", "(Lorg/spongepowered/api/data/property/block/MatterProperty$Matter;)Lorg/spongepowered/api/data/property/block/MatterProperty", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/MatterProperty#<init> was null") }
-    data_property_block_MatterProperty { env: self.env, object: ret }
+    data_property_block_MatterProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: data_property_block_MatterProperty_Matter, param_2: data_Property_Operator) -> data_property_block_MatterProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/data/property/block/MatterProperty$Matter;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/MatterProperty", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: data_property_block_MatterProperty_Matter, param_2: data_Property_Operator) -> data_property_block_MatterProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/MatterProperty", "<init>", "(Lorg/spongepowered/api/data/property/block/MatterProperty$Matter;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/MatterProperty", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/MatterProperty#<init> was null") }
-    data_property_block_MatterProperty { env: self.env, object: ret }
+    data_property_block_MatterProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -15588,16 +15588,16 @@ impl data_property_block_PassableProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_PassableProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/PassableProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_PassableProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/PassableProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/PassableProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/PassableProperty#<init> was null") }
-    data_property_block_PassableProperty { env: self.env, object: ret }
+    data_property_block_PassableProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_PassableProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/PassableProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_PassableProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/PassableProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/PassableProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/PassableProperty#<init> was null") }
-    data_property_block_PassableProperty { env: self.env, object: ret }
+    data_property_block_PassableProperty { env: env, object: ret }
   }
 
 }
@@ -15616,16 +15616,16 @@ impl data_property_block_PoweredProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_PoweredProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/PoweredProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_PoweredProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/PoweredProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/PoweredProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/PoweredProperty#<init> was null") }
-    data_property_block_PoweredProperty { env: self.env, object: ret }
+    data_property_block_PoweredProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_PoweredProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/PoweredProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_PoweredProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/PoweredProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/PoweredProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/PoweredProperty#<init> was null") }
-    data_property_block_PoweredProperty { env: self.env, object: ret }
+    data_property_block_PoweredProperty { env: env, object: ret }
   }
 
 }
@@ -15644,16 +15644,16 @@ impl data_property_block_ReplaceableProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_ReplaceableProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/ReplaceableProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_ReplaceableProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/ReplaceableProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/ReplaceableProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/ReplaceableProperty#<init> was null") }
-    data_property_block_ReplaceableProperty { env: self.env, object: ret }
+    data_property_block_ReplaceableProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_ReplaceableProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/ReplaceableProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_ReplaceableProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/ReplaceableProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/ReplaceableProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/ReplaceableProperty#<init> was null") }
-    data_property_block_ReplaceableProperty { env: self.env, object: ret }
+    data_property_block_ReplaceableProperty { env: env, object: ret }
   }
 
 }
@@ -15672,22 +15672,22 @@ impl data_property_block_SkyLuminanceProperty {
     }
   }
 
-  pub fn new(&self, param_1: f64) -> data_property_block_SkyLuminanceProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(D)Lorg/spongepowered/api/data/property/block/SkyLuminanceProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: f64) -> data_property_block_SkyLuminanceProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/SkyLuminanceProperty", "<init>", "(D)Lorg/spongepowered/api/data/property/block/SkyLuminanceProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/SkyLuminanceProperty#<init> was null") }
-    data_property_block_SkyLuminanceProperty { env: self.env, object: ret }
+    data_property_block_SkyLuminanceProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: f64, param_2: data_Property_Operator) -> data_property_block_SkyLuminanceProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/SkyLuminanceProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: f64, param_2: data_Property_Operator) -> data_property_block_SkyLuminanceProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/SkyLuminanceProperty", "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/SkyLuminanceProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/SkyLuminanceProperty#<init> was null") }
-    data_property_block_SkyLuminanceProperty { env: self.env, object: ret }
+    data_property_block_SkyLuminanceProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_block_SkyLuminanceProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/SkyLuminanceProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_block_SkyLuminanceProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/SkyLuminanceProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/SkyLuminanceProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/SkyLuminanceProperty#<init> was null") }
-    data_property_block_SkyLuminanceProperty { env: self.env, object: ret }
+    data_property_block_SkyLuminanceProperty { env: env, object: ret }
   }
 
 }
@@ -15706,16 +15706,16 @@ impl data_property_block_SolidCubeProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_SolidCubeProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/SolidCubeProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_SolidCubeProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/SolidCubeProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/SolidCubeProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/SolidCubeProperty#<init> was null") }
-    data_property_block_SolidCubeProperty { env: self.env, object: ret }
+    data_property_block_SolidCubeProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_SolidCubeProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/SolidCubeProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_SolidCubeProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/SolidCubeProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/SolidCubeProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/SolidCubeProperty#<init> was null") }
-    data_property_block_SolidCubeProperty { env: self.env, object: ret }
+    data_property_block_SolidCubeProperty { env: env, object: ret }
   }
 
 }
@@ -15734,16 +15734,16 @@ impl data_property_block_StatisticsTrackedProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_StatisticsTrackedProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/StatisticsTrackedProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_StatisticsTrackedProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/StatisticsTrackedProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/StatisticsTrackedProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/StatisticsTrackedProperty#<init> was null") }
-    data_property_block_StatisticsTrackedProperty { env: self.env, object: ret }
+    data_property_block_StatisticsTrackedProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_StatisticsTrackedProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/StatisticsTrackedProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_StatisticsTrackedProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/StatisticsTrackedProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/StatisticsTrackedProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/StatisticsTrackedProperty#<init> was null") }
-    data_property_block_StatisticsTrackedProperty { env: self.env, object: ret }
+    data_property_block_StatisticsTrackedProperty { env: env, object: ret }
   }
 
 }
@@ -15762,16 +15762,16 @@ impl data_property_block_SurrogateBlockProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_SurrogateBlockProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/SurrogateBlockProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_SurrogateBlockProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/SurrogateBlockProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/SurrogateBlockProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/SurrogateBlockProperty#<init> was null") }
-    data_property_block_SurrogateBlockProperty { env: self.env, object: ret }
+    data_property_block_SurrogateBlockProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_SurrogateBlockProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/SurrogateBlockProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_SurrogateBlockProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/SurrogateBlockProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/SurrogateBlockProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/SurrogateBlockProperty#<init> was null") }
-    data_property_block_SurrogateBlockProperty { env: self.env, object: ret }
+    data_property_block_SurrogateBlockProperty { env: env, object: ret }
   }
 
 }
@@ -15790,16 +15790,16 @@ impl data_property_block_TemperatureProperty {
     }
   }
 
-  pub fn new(&self, param_1: f64) -> data_property_block_TemperatureProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(D)Lorg/spongepowered/api/data/property/block/TemperatureProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: f64) -> data_property_block_TemperatureProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/TemperatureProperty", "<init>", "(D)Lorg/spongepowered/api/data/property/block/TemperatureProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/TemperatureProperty#<init> was null") }
-    data_property_block_TemperatureProperty { env: self.env, object: ret }
+    data_property_block_TemperatureProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: f64, param_2: data_Property_Operator) -> data_property_block_TemperatureProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/TemperatureProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: f64, param_2: data_Property_Operator) -> data_property_block_TemperatureProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/TemperatureProperty", "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/TemperatureProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/TemperatureProperty#<init> was null") }
-    data_property_block_TemperatureProperty { env: self.env, object: ret }
+    data_property_block_TemperatureProperty { env: env, object: ret }
   }
 
 }
@@ -15818,16 +15818,16 @@ impl data_property_block_UnbreakableProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_block_UnbreakableProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/block/UnbreakableProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_block_UnbreakableProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/UnbreakableProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/block/UnbreakableProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/UnbreakableProperty#<init> was null") }
-    data_property_block_UnbreakableProperty { env: self.env, object: ret }
+    data_property_block_UnbreakableProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_block_UnbreakableProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/UnbreakableProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_block_UnbreakableProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/block/UnbreakableProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/block/UnbreakableProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/block/UnbreakableProperty#<init> was null") }
-    data_property_block_UnbreakableProperty { env: self.env, object: ret }
+    data_property_block_UnbreakableProperty { env: env, object: ret }
   }
 
 }
@@ -15846,22 +15846,22 @@ impl data_property_BooleanProperty {
     }
   }
 
-  pub fn new(&self, param_1: bool) -> data_property_BooleanProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Z)Lorg/spongepowered/api/data/property/BooleanProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: bool) -> data_property_BooleanProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/BooleanProperty", "<init>", "(Z)Lorg/spongepowered/api/data/property/BooleanProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/BooleanProperty#<init> was null") }
-    data_property_BooleanProperty { env: self.env, object: ret }
+    data_property_BooleanProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: bool, param_2: data_Property_Operator) -> data_property_BooleanProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/BooleanProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: bool, param_2: data_Property_Operator) -> data_property_BooleanProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/BooleanProperty", "<init>", "(ZLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/BooleanProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/BooleanProperty#<init> was null") }
-    data_property_BooleanProperty { env: self.env, object: ret }
+    data_property_BooleanProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_BooleanProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/BooleanProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_BooleanProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/BooleanProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/BooleanProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/BooleanProperty#<init> was null") }
-    data_property_BooleanProperty { env: self.env, object: ret }
+    data_property_BooleanProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -15947,16 +15947,16 @@ impl data_property_DisplacementProperty {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> data_property_DisplacementProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Set;)Lorg/spongepowered/api/data/property/DisplacementProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> data_property_DisplacementProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DisplacementProperty", "<init>", "(Ljava/util/Set;)Lorg/spongepowered/api/data/property/DisplacementProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DisplacementProperty#<init> was null") }
-    data_property_DisplacementProperty { env: self.env, object: ret }
+    data_property_DisplacementProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_DisplacementProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Set;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/DisplacementProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_DisplacementProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DisplacementProperty", "<init>", "(Ljava/util/Set;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/DisplacementProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DisplacementProperty#<init> was null") }
-    data_property_DisplacementProperty { env: self.env, object: ret }
+    data_property_DisplacementProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -15983,22 +15983,22 @@ impl data_property_DoubleProperty {
     }
   }
 
-  pub fn new(&self, param_1: f64) -> data_property_DoubleProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(D)Lorg/spongepowered/api/data/property/DoubleProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: f64) -> data_property_DoubleProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DoubleProperty", "<init>", "(D)Lorg/spongepowered/api/data/property/DoubleProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DoubleProperty#<init> was null") }
-    data_property_DoubleProperty { env: self.env, object: ret }
+    data_property_DoubleProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: f64, param_2: data_Property_Operator) -> data_property_DoubleProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/DoubleProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: f64, param_2: data_Property_Operator) -> data_property_DoubleProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DoubleProperty", "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/DoubleProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DoubleProperty#<init> was null") }
-    data_property_DoubleProperty { env: self.env, object: ret }
+    data_property_DoubleProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_DoubleProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/DoubleProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_DoubleProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/DoubleProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/DoubleProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/DoubleProperty#<init> was null") }
-    data_property_DoubleProperty { env: self.env, object: ret }
+    data_property_DoubleProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -16061,16 +16061,16 @@ impl data_property_entity_DominantHandProperty {
     }
   }
 
-  pub fn new(&self, param_1: data_type_HandType) -> data_property_entity_DominantHandProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/data/type/HandType;)Lorg/spongepowered/api/data/property/entity/DominantHandProperty", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: data_type_HandType) -> data_property_entity_DominantHandProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/entity/DominantHandProperty", "<init>", "(Lorg/spongepowered/api/data/type/HandType;)Lorg/spongepowered/api/data/property/entity/DominantHandProperty", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/entity/DominantHandProperty#<init> was null") }
-    data_property_entity_DominantHandProperty { env: self.env, object: ret }
+    data_property_entity_DominantHandProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: data_type_HandType, param_2: data_Property_Operator) -> data_property_entity_DominantHandProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/data/type/HandType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/entity/DominantHandProperty", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: data_type_HandType, param_2: data_Property_Operator) -> data_property_entity_DominantHandProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/entity/DominantHandProperty", "<init>", "(Lorg/spongepowered/api/data/type/HandType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/entity/DominantHandProperty", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/entity/DominantHandProperty#<init> was null") }
-    data_property_entity_DominantHandProperty { env: self.env, object: ret }
+    data_property_entity_DominantHandProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -16097,16 +16097,16 @@ impl data_property_entity_EyeHeightProperty {
     }
   }
 
-  pub fn new(&self, param_1: f64) -> data_property_entity_EyeHeightProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(D)Lorg/spongepowered/api/data/property/entity/EyeHeightProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: f64) -> data_property_entity_EyeHeightProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/entity/EyeHeightProperty", "<init>", "(D)Lorg/spongepowered/api/data/property/entity/EyeHeightProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/entity/EyeHeightProperty#<init> was null") }
-    data_property_entity_EyeHeightProperty { env: self.env, object: ret }
+    data_property_entity_EyeHeightProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: f64, param_2: data_Property_Operator) -> data_property_entity_EyeHeightProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/entity/EyeHeightProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: f64, param_2: data_Property_Operator) -> data_property_entity_EyeHeightProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/entity/EyeHeightProperty", "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/entity/EyeHeightProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/entity/EyeHeightProperty#<init> was null") }
-    data_property_entity_EyeHeightProperty { env: self.env, object: ret }
+    data_property_entity_EyeHeightProperty { env: env, object: ret }
   }
 
 }
@@ -16125,16 +16125,16 @@ impl data_property_entity_EyeLocationProperty {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> data_property_entity_EyeLocationProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/data/property/entity/EyeLocationProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> data_property_entity_EyeLocationProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/entity/EyeLocationProperty", "<init>", "(Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/data/property/entity/EyeLocationProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/entity/EyeLocationProperty#<init> was null") }
-    data_property_entity_EyeLocationProperty { env: self.env, object: ret }
+    data_property_entity_EyeLocationProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_entity_EyeLocationProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vector3d;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/entity/EyeLocationProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_entity_EyeLocationProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/entity/EyeLocationProperty", "<init>", "(Lcom/flowpowered/math/vector/Vector3d;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/entity/EyeLocationProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/entity/EyeLocationProperty#<init> was null") }
-    data_property_entity_EyeLocationProperty { env: self.env, object: ret }
+    data_property_entity_EyeLocationProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -16161,22 +16161,22 @@ impl data_property_IntProperty {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> data_property_IntProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/data/property/IntProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> data_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/IntProperty", "<init>", "(I)Lorg/spongepowered/api/data/property/IntProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/IntProperty#<init> was null") }
-    data_property_IntProperty { env: self.env, object: ret }
+    data_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: data_Property_Operator) -> data_property_IntProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/IntProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: data_Property_Operator) -> data_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/IntProperty", "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/IntProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/IntProperty#<init> was null") }
-    data_property_IntProperty { env: self.env, object: ret }
+    data_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_IntProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/IntProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/IntProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/IntProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/IntProperty#<init> was null") }
-    data_property_IntProperty { env: self.env, object: ret }
+    data_property_IntProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -16239,16 +16239,16 @@ impl data_property_item_ApplicableEffectProperty {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> data_property_item_ApplicableEffectProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Set;)Lorg/spongepowered/api/data/property/item/ApplicableEffectProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> data_property_item_ApplicableEffectProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/ApplicableEffectProperty", "<init>", "(Ljava/util/Set;)Lorg/spongepowered/api/data/property/item/ApplicableEffectProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/ApplicableEffectProperty#<init> was null") }
-    data_property_item_ApplicableEffectProperty { env: self.env, object: ret }
+    data_property_item_ApplicableEffectProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_ApplicableEffectProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Set;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/ApplicableEffectProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_ApplicableEffectProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/ApplicableEffectProperty", "<init>", "(Ljava/util/Set;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/ApplicableEffectProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/ApplicableEffectProperty#<init> was null") }
-    data_property_item_ApplicableEffectProperty { env: self.env, object: ret }
+    data_property_item_ApplicableEffectProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -16275,16 +16275,16 @@ impl data_property_item_ArmorTypeProperty {
     }
   }
 
-  pub fn new(&self, param_1: data_type_ArmorType) -> data_property_item_ArmorTypeProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/data/type/ArmorType;)Lorg/spongepowered/api/data/property/item/ArmorTypeProperty", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: data_type_ArmorType) -> data_property_item_ArmorTypeProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/ArmorTypeProperty", "<init>", "(Lorg/spongepowered/api/data/type/ArmorType;)Lorg/spongepowered/api/data/property/item/ArmorTypeProperty", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/ArmorTypeProperty#<init> was null") }
-    data_property_item_ArmorTypeProperty { env: self.env, object: ret }
+    data_property_item_ArmorTypeProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: data_type_ArmorType, param_2: data_Property_Operator) -> data_property_item_ArmorTypeProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/data/type/ArmorType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/ArmorTypeProperty", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: data_type_ArmorType, param_2: data_Property_Operator) -> data_property_item_ArmorTypeProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/ArmorTypeProperty", "<init>", "(Lorg/spongepowered/api/data/type/ArmorType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/ArmorTypeProperty", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/ArmorTypeProperty#<init> was null") }
-    data_property_item_ArmorTypeProperty { env: self.env, object: ret }
+    data_property_item_ArmorTypeProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -16311,16 +16311,16 @@ impl data_property_item_BurningFuelProperty {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> data_property_item_BurningFuelProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/data/property/item/BurningFuelProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> data_property_item_BurningFuelProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/BurningFuelProperty", "<init>", "(I)Lorg/spongepowered/api/data/property/item/BurningFuelProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/BurningFuelProperty#<init> was null") }
-    data_property_item_BurningFuelProperty { env: self.env, object: ret }
+    data_property_item_BurningFuelProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: data_Property_Operator) -> data_property_item_BurningFuelProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/BurningFuelProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: data_Property_Operator) -> data_property_item_BurningFuelProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/BurningFuelProperty", "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/BurningFuelProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/BurningFuelProperty#<init> was null") }
-    data_property_item_BurningFuelProperty { env: self.env, object: ret }
+    data_property_item_BurningFuelProperty { env: env, object: ret }
   }
 
 }
@@ -16339,22 +16339,22 @@ impl data_property_item_DamageAbsorptionProperty {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> data_property_item_DamageAbsorptionProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/data/property/item/DamageAbsorptionProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> data_property_item_DamageAbsorptionProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/DamageAbsorptionProperty", "<init>", "(I)Lorg/spongepowered/api/data/property/item/DamageAbsorptionProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/DamageAbsorptionProperty#<init> was null") }
-    data_property_item_DamageAbsorptionProperty { env: self.env, object: ret }
+    data_property_item_DamageAbsorptionProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: data_Property_Operator) -> data_property_item_DamageAbsorptionProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/DamageAbsorptionProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: data_Property_Operator) -> data_property_item_DamageAbsorptionProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/DamageAbsorptionProperty", "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/DamageAbsorptionProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/DamageAbsorptionProperty#<init> was null") }
-    data_property_item_DamageAbsorptionProperty { env: self.env, object: ret }
+    data_property_item_DamageAbsorptionProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_DamageAbsorptionProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/DamageAbsorptionProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_DamageAbsorptionProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/DamageAbsorptionProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/DamageAbsorptionProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/DamageAbsorptionProperty#<init> was null") }
-    data_property_item_DamageAbsorptionProperty { env: self.env, object: ret }
+    data_property_item_DamageAbsorptionProperty { env: env, object: ret }
   }
 
 }
@@ -16373,22 +16373,22 @@ impl data_property_item_EfficiencyProperty {
     }
   }
 
-  pub fn new(&self, param_1: f64) -> data_property_item_EfficiencyProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(D)Lorg/spongepowered/api/data/property/item/EfficiencyProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: f64) -> data_property_item_EfficiencyProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/EfficiencyProperty", "<init>", "(D)Lorg/spongepowered/api/data/property/item/EfficiencyProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/EfficiencyProperty#<init> was null") }
-    data_property_item_EfficiencyProperty { env: self.env, object: ret }
+    data_property_item_EfficiencyProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: f64, param_2: data_Property_Operator) -> data_property_item_EfficiencyProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/EfficiencyProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: f64, param_2: data_Property_Operator) -> data_property_item_EfficiencyProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/EfficiencyProperty", "<init>", "(DLorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/EfficiencyProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/EfficiencyProperty#<init> was null") }
-    data_property_item_EfficiencyProperty { env: self.env, object: ret }
+    data_property_item_EfficiencyProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_EfficiencyProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/EfficiencyProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_EfficiencyProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/EfficiencyProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/EfficiencyProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/EfficiencyProperty#<init> was null") }
-    data_property_item_EfficiencyProperty { env: self.env, object: ret }
+    data_property_item_EfficiencyProperty { env: env, object: ret }
   }
 
 }
@@ -16407,22 +16407,22 @@ impl data_property_item_EquipmentProperty {
     }
   }
 
-  pub fn new(&self, param_1: item_inventory_equipment_EquipmentType) -> data_property_item_EquipmentProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentType;)Lorg/spongepowered/api/data/property/item/EquipmentProperty", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: item_inventory_equipment_EquipmentType) -> data_property_item_EquipmentProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/EquipmentProperty", "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentType;)Lorg/spongepowered/api/data/property/item/EquipmentProperty", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/EquipmentProperty#<init> was null") }
-    data_property_item_EquipmentProperty { env: self.env, object: ret }
+    data_property_item_EquipmentProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: item_inventory_equipment_EquipmentType, param_2: data_Property_Operator) -> data_property_item_EquipmentProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/EquipmentProperty", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: item_inventory_equipment_EquipmentType, param_2: data_Property_Operator) -> data_property_item_EquipmentProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/EquipmentProperty", "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/EquipmentProperty", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/EquipmentProperty#<init> was null") }
-    data_property_item_EquipmentProperty { env: self.env, object: ret }
+    data_property_item_EquipmentProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_EquipmentProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/EquipmentProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_EquipmentProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/EquipmentProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/EquipmentProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/EquipmentProperty#<init> was null") }
-    data_property_item_EquipmentProperty { env: self.env, object: ret }
+    data_property_item_EquipmentProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -16449,22 +16449,22 @@ impl data_property_item_FoodRestorationProperty {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> data_property_item_FoodRestorationProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/data/property/item/FoodRestorationProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> data_property_item_FoodRestorationProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/FoodRestorationProperty", "<init>", "(I)Lorg/spongepowered/api/data/property/item/FoodRestorationProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/FoodRestorationProperty#<init> was null") }
-    data_property_item_FoodRestorationProperty { env: self.env, object: ret }
+    data_property_item_FoodRestorationProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: data_Property_Operator) -> data_property_item_FoodRestorationProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/FoodRestorationProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: data_Property_Operator) -> data_property_item_FoodRestorationProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/FoodRestorationProperty", "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/FoodRestorationProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/FoodRestorationProperty#<init> was null") }
-    data_property_item_FoodRestorationProperty { env: self.env, object: ret }
+    data_property_item_FoodRestorationProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_FoodRestorationProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/FoodRestorationProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_FoodRestorationProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/FoodRestorationProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/FoodRestorationProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/FoodRestorationProperty#<init> was null") }
-    data_property_item_FoodRestorationProperty { env: self.env, object: ret }
+    data_property_item_FoodRestorationProperty { env: env, object: ret }
   }
 
 }
@@ -16483,16 +16483,16 @@ impl data_property_item_HarvestingProperty {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> data_property_item_HarvestingProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Set;)Lorg/spongepowered/api/data/property/item/HarvestingProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> data_property_item_HarvestingProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/HarvestingProperty", "<init>", "(Ljava/util/Set;)Lorg/spongepowered/api/data/property/item/HarvestingProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/HarvestingProperty#<init> was null") }
-    data_property_item_HarvestingProperty { env: self.env, object: ret }
+    data_property_item_HarvestingProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_HarvestingProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Set;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/HarvestingProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_HarvestingProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/HarvestingProperty", "<init>", "(Ljava/util/Set;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/HarvestingProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/HarvestingProperty#<init> was null") }
-    data_property_item_HarvestingProperty { env: self.env, object: ret }
+    data_property_item_HarvestingProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -16520,16 +16520,16 @@ impl data_property_item_SaturationProperty {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> data_property_item_SaturationProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Double;)Lorg/spongepowered/api/data/property/item/SaturationProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> data_property_item_SaturationProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/SaturationProperty", "<init>", "(Ljava/lang/Double;)Lorg/spongepowered/api/data/property/item/SaturationProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/SaturationProperty#<init> was null") }
-    data_property_item_SaturationProperty { env: self.env, object: ret }
+    data_property_item_SaturationProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_SaturationProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Double;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/SaturationProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_SaturationProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/SaturationProperty", "<init>", "(Ljava/lang/Double;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/SaturationProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/SaturationProperty#<init> was null") }
-    data_property_item_SaturationProperty { env: self.env, object: ret }
+    data_property_item_SaturationProperty { env: env, object: ret }
   }
 
 }
@@ -16548,16 +16548,16 @@ impl data_property_item_ToolTypeProperty {
     }
   }
 
-  pub fn new(&self, param_1: data_type_ToolType) -> data_property_item_ToolTypeProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/data/type/ToolType;)Lorg/spongepowered/api/data/property/item/ToolTypeProperty", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: data_type_ToolType) -> data_property_item_ToolTypeProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/ToolTypeProperty", "<init>", "(Lorg/spongepowered/api/data/type/ToolType;)Lorg/spongepowered/api/data/property/item/ToolTypeProperty", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/ToolTypeProperty#<init> was null") }
-    data_property_item_ToolTypeProperty { env: self.env, object: ret }
+    data_property_item_ToolTypeProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: data_type_ToolType, param_2: data_Property_Operator) -> data_property_item_ToolTypeProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/data/type/ToolType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/ToolTypeProperty", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: data_type_ToolType, param_2: data_Property_Operator) -> data_property_item_ToolTypeProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/ToolTypeProperty", "<init>", "(Lorg/spongepowered/api/data/type/ToolType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/ToolTypeProperty", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/ToolTypeProperty#<init> was null") }
-    data_property_item_ToolTypeProperty { env: self.env, object: ret }
+    data_property_item_ToolTypeProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -16584,22 +16584,22 @@ impl data_property_item_UseLimitProperty {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> data_property_item_UseLimitProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/data/property/item/UseLimitProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> data_property_item_UseLimitProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/UseLimitProperty", "<init>", "(I)Lorg/spongepowered/api/data/property/item/UseLimitProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/UseLimitProperty#<init> was null") }
-    data_property_item_UseLimitProperty { env: self.env, object: ret }
+    data_property_item_UseLimitProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: data_Property_Operator) -> data_property_item_UseLimitProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/UseLimitProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: data_Property_Operator) -> data_property_item_UseLimitProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/UseLimitProperty", "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/UseLimitProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/UseLimitProperty#<init> was null") }
-    data_property_item_UseLimitProperty { env: self.env, object: ret }
+    data_property_item_UseLimitProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_UseLimitProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/UseLimitProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> data_property_item_UseLimitProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/property/item/UseLimitProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/data/property/item/UseLimitProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/property/item/UseLimitProperty#<init> was null") }
-    data_property_item_UseLimitProperty { env: self.env, object: ret }
+    data_property_item_UseLimitProperty { env: env, object: ret }
   }
 
 }
@@ -17001,10 +17001,10 @@ impl data_Transaction {
     }
   }
 
-  pub fn new(&self, param_1: data_DataSerializable, param_2: data_DataSerializable) -> data_Transaction {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/data/DataSerializable;Lorg/spongepowered/api/data/DataSerializable;)Lorg/spongepowered/api/data/Transaction", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new(env: *mut JNIEnv, param_1: data_DataSerializable, param_2: data_DataSerializable) -> data_Transaction {
+    let ret = static_java_method!(env, "org/spongepowered/api/data/Transaction", "<init>", "(Lorg/spongepowered/api/data/DataSerializable;Lorg/spongepowered/api/data/DataSerializable;)Lorg/spongepowered/api/data/Transaction", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/data/Transaction#<init> was null") }
-    data_Transaction { env: self.env, object: ret }
+    data_Transaction { env: env, object: ret }
   }
 
   pub fn get_original(&self) -> data_DataSerializable {
@@ -21461,10 +21461,10 @@ impl entity_ai_task_AbstractAITask {
     }
   }
 
-  pub fn new(&self, param_1: entity_ai_task_AITaskType) -> entity_ai_task_AbstractAITask {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/entity/ai/task/AITaskType;)Lorg/spongepowered/api/entity/ai/task/AbstractAITask", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: entity_ai_task_AITaskType) -> entity_ai_task_AbstractAITask {
+    let ret = static_java_method!(env, "org/spongepowered/api/entity/ai/task/AbstractAITask", "<init>", "(Lorg/spongepowered/api/entity/ai/task/AITaskType;)Lorg/spongepowered/api/entity/ai/task/AbstractAITask", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/entity/ai/task/AbstractAITask#<init> was null") }
-    entity_ai_task_AbstractAITask { env: self.env, object: ret }
+    entity_ai_task_AbstractAITask { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> entity_ai_task_AITaskType {
@@ -25227,40 +25227,40 @@ impl entity_Transform {
     }
   }
 
-  pub fn new(&self, param_1: world_Location) -> entity_Transform {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/Location;)Lorg/spongepowered/api/entity/Transform", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: world_Location) -> entity_Transform {
+    let ret = static_java_method!(env, "org/spongepowered/api/entity/Transform", "<init>", "(Lorg/spongepowered/api/world/Location;)Lorg/spongepowered/api/entity/Transform", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/entity/Transform#<init> was null") }
-    entity_Transform { env: self.env, object: ret }
+    entity_Transform { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: world_extent_Extent) -> entity_Transform {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/extent/Extent;)Lorg/spongepowered/api/entity/Transform", CallObjectMethodA, param_1.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: world_extent_Extent) -> entity_Transform {
+    let ret = static_java_method!(env, "org/spongepowered/api/entity/Transform", "<init>", "(Lorg/spongepowered/api/world/extent/Extent;)Lorg/spongepowered/api/entity/Transform", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/entity/Transform#<init> was null") }
-    entity_Transform { env: self.env, object: ret }
+    entity_Transform { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: world_extent_Extent, param_2: jobject) -> entity_Transform {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/entity/Transform", CallObjectMethodA, param_1.object, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: world_extent_Extent, param_2: jobject) -> entity_Transform {
+    let ret = static_java_method!(env, "org/spongepowered/api/entity/Transform", "<init>", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/entity/Transform", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/entity/Transform#<init> was null") }
-    entity_Transform { env: self.env, object: ret }
+    entity_Transform { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: world_extent_Extent, param_2: jobject, param_3: jobject) -> entity_Transform {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/entity/Transform", CallObjectMethodA, param_1.object, param_2, param_3);
+  pub fn new_3(env: *mut JNIEnv, param_1: world_extent_Extent, param_2: jobject, param_3: jobject) -> entity_Transform {
+    let ret = static_java_method!(env, "org/spongepowered/api/entity/Transform", "<init>", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/entity/Transform", CallStaticObjectMethodA, param_1.object, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/entity/Transform#<init> was null") }
-    entity_Transform { env: self.env, object: ret }
+    entity_Transform { env: env, object: ret }
   }
 
-  pub fn new_4(&self, param_1: world_Location, param_2: jobject, param_3: jobject) -> entity_Transform {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/Location;Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/entity/Transform", CallObjectMethodA, param_1.object, param_2, param_3);
+  pub fn new_4(env: *mut JNIEnv, param_1: world_Location, param_2: jobject, param_3: jobject) -> entity_Transform {
+    let ret = static_java_method!(env, "org/spongepowered/api/entity/Transform", "<init>", "(Lorg/spongepowered/api/world/Location;Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/entity/Transform", CallStaticObjectMethodA, param_1.object, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/entity/Transform#<init> was null") }
-    entity_Transform { env: self.env, object: ret }
+    entity_Transform { env: env, object: ret }
   }
 
-  pub fn new_5(&self, param_1: world_extent_Extent, param_2: jobject, param_3: jobject, param_4: jobject) -> entity_Transform {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/entity/Transform", CallObjectMethodA, param_1.object, param_2, param_3, param_4);
+  pub fn new_5(env: *mut JNIEnv, param_1: world_extent_Extent, param_2: jobject, param_3: jobject, param_4: jobject) -> entity_Transform {
+    let ret = static_java_method!(env, "org/spongepowered/api/entity/Transform", "<init>", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/entity/Transform", CallStaticObjectMethodA, param_1.object, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/entity/Transform#<init> was null") }
-    entity_Transform { env: self.env, object: ret }
+    entity_Transform { env: env, object: ret }
   }
 
   pub fn get_location(&self) -> world_Location {
@@ -27413,10 +27413,10 @@ impl event_cause_entity_damage_source_common_AbstractDamageSourceBuilder {
     }
   }
 
-  pub fn new(&self) -> event_cause_entity_damage_source_common_AbstractDamageSourceBuilder {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/cause/entity/damage/source/common/AbstractDamageSourceBuilder", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_cause_entity_damage_source_common_AbstractDamageSourceBuilder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/damage/source/common/AbstractDamageSourceBuilder", "<init>", "()Lorg/spongepowered/api/event/cause/entity/damage/source/common/AbstractDamageSourceBuilder", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/damage/source/common/AbstractDamageSourceBuilder#<init> was null") }
-    event_cause_entity_damage_source_common_AbstractDamageSourceBuilder { env: self.env, object: ret }
+    event_cause_entity_damage_source_common_AbstractDamageSourceBuilder { env: env, object: ret }
   }
 
   pub fn scales_with_difficulty(&self) -> event_cause_entity_damage_source_DamageSource_DamageSourceBuilder {
@@ -27501,10 +27501,10 @@ impl event_cause_entity_damage_source_common_AbstractEntityDamageSource_Abstract
     }
   }
 
-  pub fn new(&self) -> event_cause_entity_damage_source_common_AbstractEntityDamageSource_AbstractEntityDamageSourceBuilder {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/cause/entity/damage/source/common/AbstractEntityDamageSource$AbstractEntityDamageSourceBuilder", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_cause_entity_damage_source_common_AbstractEntityDamageSource_AbstractEntityDamageSourceBuilder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/damage/source/common/AbstractEntityDamageSource$AbstractEntityDamageSourceBuilder", "<init>", "()Lorg/spongepowered/api/event/cause/entity/damage/source/common/AbstractEntityDamageSource$AbstractEntityDamageSourceBuilder", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/damage/source/common/AbstractEntityDamageSource$AbstractEntityDamageSourceBuilder#<init> was null") }
-    event_cause_entity_damage_source_common_AbstractEntityDamageSource_AbstractEntityDamageSourceBuilder { env: self.env, object: ret }
+    event_cause_entity_damage_source_common_AbstractEntityDamageSource_AbstractEntityDamageSourceBuilder { env: env, object: ret }
   }
 
   pub fn entity(&self, param_1: entity_Entity) -> event_cause_entity_damage_source_EntityDamageSource_EntityDamageSourceBuilder {
@@ -27599,10 +27599,10 @@ impl event_cause_entity_damage_source_common_AbstractIndirectEntityDamageSource_
     }
   }
 
-  pub fn new(&self) -> event_cause_entity_damage_source_common_AbstractIndirectEntityDamageSource_AbstractIndirectEntityDamageSourceBuilder {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/cause/entity/damage/source/common/AbstractIndirectEntityDamageSource$AbstractIndirectEntityDamageSourceBuilder", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_cause_entity_damage_source_common_AbstractIndirectEntityDamageSource_AbstractIndirectEntityDamageSourceBuilder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/damage/source/common/AbstractIndirectEntityDamageSource$AbstractIndirectEntityDamageSourceBuilder", "<init>", "()Lorg/spongepowered/api/event/cause/entity/damage/source/common/AbstractIndirectEntityDamageSource$AbstractIndirectEntityDamageSourceBuilder", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/damage/source/common/AbstractIndirectEntityDamageSource$AbstractIndirectEntityDamageSourceBuilder#<init> was null") }
-    event_cause_entity_damage_source_common_AbstractIndirectEntityDamageSource_AbstractIndirectEntityDamageSourceBuilder { env: self.env, object: ret }
+    event_cause_entity_damage_source_common_AbstractIndirectEntityDamageSource_AbstractIndirectEntityDamageSourceBuilder { env: env, object: ret }
   }
 
   pub fn entity(&self, param_1: entity_Entity) -> event_cause_entity_damage_source_IndirectEntityDamageSource_AbstractBuilder {
@@ -28364,10 +28364,10 @@ impl event_cause_entity_health_source_common_AbstractEntityHealingSource {
     }
   }
 
-  pub fn new(&self, param_1: event_cause_entity_health_source_common_AbstractEntityHealingSourceBuilder) -> event_cause_entity_health_source_common_AbstractEntityHealingSource {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/event/cause/entity/health/source/common/AbstractEntityHealingSourceBuilder;)Lorg/spongepowered/api/event/cause/entity/health/source/common/AbstractEntityHealingSource", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: event_cause_entity_health_source_common_AbstractEntityHealingSourceBuilder) -> event_cause_entity_health_source_common_AbstractEntityHealingSource {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/health/source/common/AbstractEntityHealingSource", "<init>", "(Lorg/spongepowered/api/event/cause/entity/health/source/common/AbstractEntityHealingSourceBuilder;)Lorg/spongepowered/api/event/cause/entity/health/source/common/AbstractEntityHealingSource", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/health/source/common/AbstractEntityHealingSource#<init> was null") }
-    event_cause_entity_health_source_common_AbstractEntityHealingSource { env: self.env, object: ret }
+    event_cause_entity_health_source_common_AbstractEntityHealingSource { env: env, object: ret }
   }
 
   pub fn get_source(&self) -> entity_Entity {
@@ -28392,10 +28392,10 @@ impl event_cause_entity_health_source_common_AbstractEntityHealingSourceBuilder 
     }
   }
 
-  pub fn new(&self) -> event_cause_entity_health_source_common_AbstractEntityHealingSourceBuilder {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/cause/entity/health/source/common/AbstractEntityHealingSourceBuilder", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_cause_entity_health_source_common_AbstractEntityHealingSourceBuilder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/health/source/common/AbstractEntityHealingSourceBuilder", "<init>", "()Lorg/spongepowered/api/event/cause/entity/health/source/common/AbstractEntityHealingSourceBuilder", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/health/source/common/AbstractEntityHealingSourceBuilder#<init> was null") }
-    event_cause_entity_health_source_common_AbstractEntityHealingSourceBuilder { env: self.env, object: ret }
+    event_cause_entity_health_source_common_AbstractEntityHealingSourceBuilder { env: env, object: ret }
   }
 
   pub fn from_1(&self, param_1: event_cause_entity_health_source_EntityHealingSource) -> event_cause_entity_health_source_EntityHealingSource_EntityHealingSourceBuilder {
@@ -28486,10 +28486,10 @@ impl event_cause_entity_health_source_common_AbstractHealingSourceBuilder {
     }
   }
 
-  pub fn new(&self) -> event_cause_entity_health_source_common_AbstractHealingSourceBuilder {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/cause/entity/health/source/common/AbstractHealingSourceBuilder", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_cause_entity_health_source_common_AbstractHealingSourceBuilder {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/health/source/common/AbstractHealingSourceBuilder", "<init>", "()Lorg/spongepowered/api/event/cause/entity/health/source/common/AbstractHealingSourceBuilder", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/health/source/common/AbstractHealingSourceBuilder#<init> was null") }
-    event_cause_entity_health_source_common_AbstractHealingSourceBuilder { env: self.env, object: ret }
+    event_cause_entity_health_source_common_AbstractHealingSourceBuilder { env: env, object: ret }
   }
 
   pub fn scales_with_difficulty(&self) -> event_cause_entity_health_source_HealingSource_HealingSourceBuilder {
@@ -28550,10 +28550,10 @@ impl event_cause_entity_health_source_common_AbstractIndirectEntityHealingSource
     }
   }
 
-  pub fn new(&self) -> event_cause_entity_health_source_common_AbstractIndirectEntityHealingSource {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/cause/entity/health/source/common/AbstractIndirectEntityHealingSource", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_cause_entity_health_source_common_AbstractIndirectEntityHealingSource {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/cause/entity/health/source/common/AbstractIndirectEntityHealingSource", "<init>", "()Lorg/spongepowered/api/event/cause/entity/health/source/common/AbstractIndirectEntityHealingSource", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/cause/entity/health/source/common/AbstractIndirectEntityHealingSource#<init> was null") }
-    event_cause_entity_health_source_common_AbstractIndirectEntityHealingSource { env: self.env, object: ret }
+    event_cause_entity_health_source_common_AbstractIndirectEntityHealingSource { env: env, object: ret }
   }
 
 }
@@ -32735,10 +32735,10 @@ impl event_impl_AbstractAttackEntityEvent {
     }
   }
 
-  pub fn new(&self) -> event_impl_AbstractAttackEntityEvent {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/impl/AbstractAttackEntityEvent", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_impl_AbstractAttackEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/impl/AbstractAttackEntityEvent", "<init>", "()Lorg/spongepowered/api/event/impl/AbstractAttackEntityEvent", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/impl/AbstractAttackEntityEvent#<init> was null") }
-    event_impl_AbstractAttackEntityEvent { env: self.env, object: ret }
+    event_impl_AbstractAttackEntityEvent { env: env, object: ret }
   }
 
   pub fn get_original_modifier_damage(&self, param_1: event_cause_entity_damage_DamageModifier) -> f64 {
@@ -32803,10 +32803,10 @@ impl event_impl_AbstractDamageEntityEvent {
     }
   }
 
-  pub fn new(&self) -> event_impl_AbstractDamageEntityEvent {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/impl/AbstractDamageEntityEvent", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_impl_AbstractDamageEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/impl/AbstractDamageEntityEvent", "<init>", "()Lorg/spongepowered/api/event/impl/AbstractDamageEntityEvent", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/impl/AbstractDamageEntityEvent#<init> was null") }
-    event_impl_AbstractDamageEntityEvent { env: self.env, object: ret }
+    event_impl_AbstractDamageEntityEvent { env: env, object: ret }
   }
 
   pub fn get_original_modifier_damage(&self, param_1: event_cause_entity_damage_DamageModifier) -> f64 {
@@ -32875,10 +32875,10 @@ impl event_impl_AbstractEvent {
     }
   }
 
-  pub fn new(&self) -> event_impl_AbstractEvent {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/impl/AbstractEvent", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_impl_AbstractEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/impl/AbstractEvent", "<init>", "()Lorg/spongepowered/api/event/impl/AbstractEvent", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/impl/AbstractEvent#<init> was null") }
-    event_impl_AbstractEvent { env: self.env, object: ret }
+    event_impl_AbstractEvent { env: env, object: ret }
   }
 
 }
@@ -32897,10 +32897,10 @@ impl event_impl_AbstractHealEntityEvent {
     }
   }
 
-  pub fn new(&self) -> event_impl_AbstractHealEntityEvent {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/impl/AbstractHealEntityEvent", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_impl_AbstractHealEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/impl/AbstractHealEntityEvent", "<init>", "()Lorg/spongepowered/api/event/impl/AbstractHealEntityEvent", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/impl/AbstractHealEntityEvent#<init> was null") }
-    event_impl_AbstractHealEntityEvent { env: self.env, object: ret }
+    event_impl_AbstractHealEntityEvent { env: env, object: ret }
   }
 
   pub fn get_original_healing_modifier_amount(&self, param_1: event_cause_entity_health_HealthModifier) -> f64 {
@@ -32957,10 +32957,10 @@ impl event_impl_AbstractMessageEvent {
     }
   }
 
-  pub fn new(&self) -> event_impl_AbstractMessageEvent {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/impl/AbstractMessageEvent", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_impl_AbstractMessageEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/impl/AbstractMessageEvent", "<init>", "()Lorg/spongepowered/api/event/impl/AbstractMessageEvent", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/impl/AbstractMessageEvent#<init> was null") }
-    event_impl_AbstractMessageEvent { env: self.env, object: ret }
+    event_impl_AbstractMessageEvent { env: env, object: ret }
   }
 
 }
@@ -32979,10 +32979,10 @@ impl event_impl_AbstractModifierEvent {
     }
   }
 
-  pub fn new(&self) -> event_impl_AbstractModifierEvent {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/impl/AbstractModifierEvent", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_impl_AbstractModifierEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/impl/AbstractModifierEvent", "<init>", "()Lorg/spongepowered/api/event/impl/AbstractModifierEvent", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/impl/AbstractModifierEvent#<init> was null") }
-    event_impl_AbstractModifierEvent { env: self.env, object: ret }
+    event_impl_AbstractModifierEvent { env: env, object: ret }
   }
 
   pub fn get_modifiers(&self) -> jobject {
@@ -33007,10 +33007,10 @@ impl event_impl_AbstractSpawnEntityEvent {
     }
   }
 
-  pub fn new(&self) -> event_impl_AbstractSpawnEntityEvent {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/impl/AbstractSpawnEntityEvent", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_impl_AbstractSpawnEntityEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/impl/AbstractSpawnEntityEvent", "<init>", "()Lorg/spongepowered/api/event/impl/AbstractSpawnEntityEvent", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/impl/AbstractSpawnEntityEvent#<init> was null") }
-    event_impl_AbstractSpawnEntityEvent { env: self.env, object: ret }
+    event_impl_AbstractSpawnEntityEvent { env: env, object: ret }
   }
 
 }
@@ -33029,10 +33029,10 @@ impl event_impl_AbstractValueChangeEvent {
     }
   }
 
-  pub fn new(&self) -> event_impl_AbstractValueChangeEvent {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/impl/AbstractValueChangeEvent", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_impl_AbstractValueChangeEvent {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/impl/AbstractValueChangeEvent", "<init>", "()Lorg/spongepowered/api/event/impl/AbstractValueChangeEvent", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/impl/AbstractValueChangeEvent#<init> was null") }
-    event_impl_AbstractValueChangeEvent { env: self.env, object: ret }
+    event_impl_AbstractValueChangeEvent { env: env, object: ret }
   }
 
   pub fn propose_changes(&self, param_1: data_DataTransactionResult) -> event_data_ChangeDataHolderEvent_ValueChange {
@@ -33916,10 +33916,10 @@ impl event_message_MessageEvent_DefaultBodyApplier {
     }
   }
 
-  pub fn new(&self, param_1: text_TextRepresentable) -> event_message_MessageEvent_DefaultBodyApplier {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/TextRepresentable;)Lorg/spongepowered/api/event/message/MessageEvent$DefaultBodyApplier", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: text_TextRepresentable) -> event_message_MessageEvent_DefaultBodyApplier {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/message/MessageEvent$DefaultBodyApplier", "<init>", "(Lorg/spongepowered/api/text/TextRepresentable;)Lorg/spongepowered/api/event/message/MessageEvent$DefaultBodyApplier", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/event/message/MessageEvent$DefaultBodyApplier#<init> was null") }
-    event_message_MessageEvent_DefaultBodyApplier { env: self.env, object: ret }
+    event_message_MessageEvent_DefaultBodyApplier { env: env, object: ret }
   }
 
 }
@@ -33938,10 +33938,10 @@ impl event_message_MessageEvent_DefaultHeaderApplier {
     }
   }
 
-  pub fn new(&self, param_1: text_TextRepresentable) -> event_message_MessageEvent_DefaultHeaderApplier {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/TextRepresentable;)Lorg/spongepowered/api/event/message/MessageEvent$DefaultHeaderApplier", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: text_TextRepresentable) -> event_message_MessageEvent_DefaultHeaderApplier {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/message/MessageEvent$DefaultHeaderApplier", "<init>", "(Lorg/spongepowered/api/text/TextRepresentable;)Lorg/spongepowered/api/event/message/MessageEvent$DefaultHeaderApplier", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/event/message/MessageEvent$DefaultHeaderApplier#<init> was null") }
-    event_message_MessageEvent_DefaultHeaderApplier { env: self.env, object: ret }
+    event_message_MessageEvent_DefaultHeaderApplier { env: env, object: ret }
   }
 
 }
@@ -33960,22 +33960,22 @@ impl event_message_MessageEvent_MessageFormatter {
     }
   }
 
-  pub fn new(&self) -> event_message_MessageEvent_MessageFormatter {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_message_MessageEvent_MessageFormatter {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/message/MessageEvent$MessageFormatter", "<init>", "()Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/message/MessageEvent$MessageFormatter#<init> was null") }
-    event_message_MessageEvent_MessageFormatter { env: self.env, object: ret }
+    event_message_MessageEvent_MessageFormatter { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: text_Text, param_2: text_Text) -> event_message_MessageEvent_MessageFormatter {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: text_Text, param_2: text_Text) -> event_message_MessageEvent_MessageFormatter {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/message/MessageEvent$MessageFormatter", "<init>", "(Lorg/spongepowered/api/text/Text;Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/event/message/MessageEvent$MessageFormatter#<init> was null") }
-    event_message_MessageEvent_MessageFormatter { env: self.env, object: ret }
+    event_message_MessageEvent_MessageFormatter { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: text_Text) -> event_message_MessageEvent_MessageFormatter {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter", CallObjectMethodA, param_1.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: text_Text) -> event_message_MessageEvent_MessageFormatter {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/message/MessageEvent$MessageFormatter", "<init>", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/event/message/MessageEvent$MessageFormatter", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/event/message/MessageEvent$MessageFormatter#<init> was null") }
-    event_message_MessageEvent_MessageFormatter { env: self.env, object: ret }
+    event_message_MessageEvent_MessageFormatter { env: env, object: ret }
   }
 
   pub fn get_header(&self) -> text_transform_SimpleTextFormatter {
@@ -34691,10 +34691,10 @@ impl event_SpongeEventFactory {
     }
   }
 
-  pub fn new(&self) -> event_SpongeEventFactory {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/SpongeEventFactory", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_SpongeEventFactory {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactory", "<init>", "()Lorg/spongepowered/api/event/SpongeEventFactory", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactory#<init> was null") }
-    event_SpongeEventFactory { env: self.env, object: ret }
+    event_SpongeEventFactory { env: env, object: ret }
   }
 
   pub fn create_grant_achievement_event_target_player(env: *mut JNIEnv, param_1: event_cause_Cause, param_2: text_channel_MessageChannel, param_3: jobject, param_4: statistic_achievement_Achievement, param_5: event_message_MessageEvent_MessageFormatter, param_6: entity_living_player_Player, param_7: bool) -> event_achievement_GrantAchievementEvent_TargetPlayer {
@@ -35989,10 +35989,10 @@ impl event_SpongeEventFactoryUtils {
     }
   }
 
-  pub fn new(&self) -> event_SpongeEventFactoryUtils {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/event/SpongeEventFactoryUtils", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> event_SpongeEventFactoryUtils {
+    let ret = static_java_method!(env, "org/spongepowered/api/event/SpongeEventFactoryUtils", "<init>", "()Lorg/spongepowered/api/event/SpongeEventFactoryUtils", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/event/SpongeEventFactoryUtils#<init> was null") }
-    event_SpongeEventFactoryUtils { env: self.env, object: ret }
+    event_SpongeEventFactoryUtils { env: env, object: ret }
   }
 
   pub fn create_event_impl(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> jobject {
@@ -36902,16 +36902,16 @@ impl extra_fluid_data_property_FluidTemperatureProperty {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> extra_fluid_data_property_FluidTemperatureProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/extra/fluid/data/property/FluidTemperatureProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> extra_fluid_data_property_FluidTemperatureProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/fluid/data/property/FluidTemperatureProperty", "<init>", "(I)Lorg/spongepowered/api/extra/fluid/data/property/FluidTemperatureProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/extra/fluid/data/property/FluidTemperatureProperty#<init> was null") }
-    extra_fluid_data_property_FluidTemperatureProperty { env: self.env, object: ret }
+    extra_fluid_data_property_FluidTemperatureProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: data_Property_Operator) -> extra_fluid_data_property_FluidTemperatureProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/extra/fluid/data/property/FluidTemperatureProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: data_Property_Operator) -> extra_fluid_data_property_FluidTemperatureProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/fluid/data/property/FluidTemperatureProperty", "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/extra/fluid/data/property/FluidTemperatureProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/extra/fluid/data/property/FluidTemperatureProperty#<init> was null") }
-    extra_fluid_data_property_FluidTemperatureProperty { env: self.env, object: ret }
+    extra_fluid_data_property_FluidTemperatureProperty { env: env, object: ret }
   }
 
 }
@@ -36930,16 +36930,16 @@ impl extra_fluid_data_property_FluidViscosityProperty {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> extra_fluid_data_property_FluidViscosityProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/extra/fluid/data/property/FluidViscosityProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> extra_fluid_data_property_FluidViscosityProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/fluid/data/property/FluidViscosityProperty", "<init>", "(I)Lorg/spongepowered/api/extra/fluid/data/property/FluidViscosityProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/extra/fluid/data/property/FluidViscosityProperty#<init> was null") }
-    extra_fluid_data_property_FluidViscosityProperty { env: self.env, object: ret }
+    extra_fluid_data_property_FluidViscosityProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: data_Property_Operator) -> extra_fluid_data_property_FluidViscosityProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/extra/fluid/data/property/FluidViscosityProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: data_Property_Operator) -> extra_fluid_data_property_FluidViscosityProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/fluid/data/property/FluidViscosityProperty", "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/extra/fluid/data/property/FluidViscosityProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/extra/fluid/data/property/FluidViscosityProperty#<init> was null") }
-    extra_fluid_data_property_FluidViscosityProperty { env: self.env, object: ret }
+    extra_fluid_data_property_FluidViscosityProperty { env: env, object: ret }
   }
 
 }
@@ -37191,10 +37191,10 @@ impl extra_modifier_empty_VoidWorldGeneratorModifier {
     }
   }
 
-  pub fn new(&self) -> extra_modifier_empty_VoidWorldGeneratorModifier {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/extra/modifier/empty/VoidWorldGeneratorModifier", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> extra_modifier_empty_VoidWorldGeneratorModifier {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/modifier/empty/VoidWorldGeneratorModifier", "<init>", "()Lorg/spongepowered/api/extra/modifier/empty/VoidWorldGeneratorModifier", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/extra/modifier/empty/VoidWorldGeneratorModifier#<init> was null") }
-    extra_modifier_empty_VoidWorldGeneratorModifier { env: self.env, object: ret }
+    extra_modifier_empty_VoidWorldGeneratorModifier { env: env, object: ret }
   }
 
   pub fn modify_world_generator(&self, param_1: world_storage_WorldProperties, param_2: data_DataContainer, param_3: world_gen_WorldGenerator) {
@@ -37230,10 +37230,10 @@ impl extra_modifier_skylands_SkylandsBiomeGenerator {
     }
   }
 
-  pub fn new(&self) -> extra_modifier_skylands_SkylandsBiomeGenerator {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/extra/modifier/skylands/SkylandsBiomeGenerator", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> extra_modifier_skylands_SkylandsBiomeGenerator {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/modifier/skylands/SkylandsBiomeGenerator", "<init>", "()Lorg/spongepowered/api/extra/modifier/skylands/SkylandsBiomeGenerator", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/extra/modifier/skylands/SkylandsBiomeGenerator#<init> was null") }
-    extra_modifier_skylands_SkylandsBiomeGenerator { env: self.env, object: ret }
+    extra_modifier_skylands_SkylandsBiomeGenerator { env: env, object: ret }
   }
 
   pub fn generate_biomes(&self, param_1: world_extent_MutableBiomeArea) {
@@ -37296,10 +37296,10 @@ impl extra_modifier_skylands_SkylandsGrassPopulator {
     }
   }
 
-  pub fn new(&self) -> extra_modifier_skylands_SkylandsGrassPopulator {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/extra/modifier/skylands/SkylandsGrassPopulator", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> extra_modifier_skylands_SkylandsGrassPopulator {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/modifier/skylands/SkylandsGrassPopulator", "<init>", "()Lorg/spongepowered/api/extra/modifier/skylands/SkylandsGrassPopulator", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/extra/modifier/skylands/SkylandsGrassPopulator#<init> was null") }
-    extra_modifier_skylands_SkylandsGrassPopulator { env: self.env, object: ret }
+    extra_modifier_skylands_SkylandsGrassPopulator { env: env, object: ret }
   }
 
   pub fn populate(&self, param_1: world_World, param_2: world_extent_MutableBlockVolume, param_3: world_extent_ImmutableBiomeArea) {
@@ -37386,10 +37386,10 @@ impl extra_modifier_skylands_SkylandsGroundCoverPopulator {
     }
   }
 
-  pub fn new(&self) -> extra_modifier_skylands_SkylandsGroundCoverPopulator {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/extra/modifier/skylands/SkylandsGroundCoverPopulator", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> extra_modifier_skylands_SkylandsGroundCoverPopulator {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/modifier/skylands/SkylandsGroundCoverPopulator", "<init>", "()Lorg/spongepowered/api/extra/modifier/skylands/SkylandsGroundCoverPopulator", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/extra/modifier/skylands/SkylandsGroundCoverPopulator#<init> was null") }
-    extra_modifier_skylands_SkylandsGroundCoverPopulator { env: self.env, object: ret }
+    extra_modifier_skylands_SkylandsGroundCoverPopulator { env: env, object: ret }
   }
 
   pub fn populate(&self, param_1: world_World, param_2: world_extent_MutableBlockVolume, param_3: world_extent_ImmutableBiomeArea) {
@@ -37452,10 +37452,10 @@ impl extra_modifier_skylands_SkylandsTerrainGenerator {
     }
   }
 
-  pub fn new(&self) -> extra_modifier_skylands_SkylandsTerrainGenerator {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/extra/modifier/skylands/SkylandsTerrainGenerator", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> extra_modifier_skylands_SkylandsTerrainGenerator {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/modifier/skylands/SkylandsTerrainGenerator", "<init>", "()Lorg/spongepowered/api/extra/modifier/skylands/SkylandsTerrainGenerator", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/extra/modifier/skylands/SkylandsTerrainGenerator#<init> was null") }
-    extra_modifier_skylands_SkylandsTerrainGenerator { env: self.env, object: ret }
+    extra_modifier_skylands_SkylandsTerrainGenerator { env: env, object: ret }
   }
 
   pub fn populate(&self, param_1: world_World, param_2: world_extent_MutableBlockVolume, param_3: world_extent_ImmutableBiomeArea) {
@@ -37494,10 +37494,10 @@ impl extra_modifier_skylands_SkylandsWorldGeneratorModifier {
     }
   }
 
-  pub fn new(&self) -> extra_modifier_skylands_SkylandsWorldGeneratorModifier {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/extra/modifier/skylands/SkylandsWorldGeneratorModifier", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> extra_modifier_skylands_SkylandsWorldGeneratorModifier {
+    let ret = static_java_method!(env, "org/spongepowered/api/extra/modifier/skylands/SkylandsWorldGeneratorModifier", "<init>", "()Lorg/spongepowered/api/extra/modifier/skylands/SkylandsWorldGeneratorModifier", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/extra/modifier/skylands/SkylandsWorldGeneratorModifier#<init> was null") }
-    extra_modifier_skylands_SkylandsWorldGeneratorModifier { env: self.env, object: ret }
+    extra_modifier_skylands_SkylandsWorldGeneratorModifier { env: env, object: ret }
   }
 
   pub fn modify_world_generator(&self, param_1: world_storage_WorldProperties, param_2: data_DataContainer, param_3: world_gen_WorldGenerator) {
@@ -39347,22 +39347,22 @@ impl item_inventory_property_AcceptsItems {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> item_inventory_property_AcceptsItems {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Collection;)Lorg/spongepowered/api/item/inventory/property/AcceptsItems", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_AcceptsItems {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/AcceptsItems", "<init>", "(Ljava/util/Collection;)Lorg/spongepowered/api/item/inventory/property/AcceptsItems", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/AcceptsItems#<init> was null") }
-    item_inventory_property_AcceptsItems { env: self.env, object: ret }
+    item_inventory_property_AcceptsItems { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_AcceptsItems {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Collection;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/AcceptsItems", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_AcceptsItems {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/AcceptsItems", "<init>", "(Ljava/util/Collection;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/AcceptsItems", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/AcceptsItems#<init> was null") }
-    item_inventory_property_AcceptsItems { env: self.env, object: ret }
+    item_inventory_property_AcceptsItems { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_AcceptsItems {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/AcceptsItems", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_AcceptsItems {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/AcceptsItems", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/AcceptsItems", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/AcceptsItems#<init> was null") }
-    item_inventory_property_AcceptsItems { env: self.env, object: ret }
+    item_inventory_property_AcceptsItems { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -39396,22 +39396,22 @@ impl item_inventory_property_ArmorSlotType {
     }
   }
 
-  pub fn new(&self, param_1: item_inventory_equipment_EquipmentTypeWorn) -> item_inventory_property_ArmorSlotType {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentTypeWorn;)Lorg/spongepowered/api/item/inventory/property/ArmorSlotType", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: item_inventory_equipment_EquipmentTypeWorn) -> item_inventory_property_ArmorSlotType {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/ArmorSlotType", "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentTypeWorn;)Lorg/spongepowered/api/item/inventory/property/ArmorSlotType", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/ArmorSlotType#<init> was null") }
-    item_inventory_property_ArmorSlotType { env: self.env, object: ret }
+    item_inventory_property_ArmorSlotType { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: item_inventory_equipment_EquipmentTypeWorn, param_2: data_Property_Operator) -> item_inventory_property_ArmorSlotType {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentTypeWorn;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/ArmorSlotType", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: item_inventory_equipment_EquipmentTypeWorn, param_2: data_Property_Operator) -> item_inventory_property_ArmorSlotType {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/ArmorSlotType", "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentTypeWorn;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/ArmorSlotType", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/ArmorSlotType#<init> was null") }
-    item_inventory_property_ArmorSlotType { env: self.env, object: ret }
+    item_inventory_property_ArmorSlotType { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_ArmorSlotType {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/ArmorSlotType", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_ArmorSlotType {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/ArmorSlotType", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/ArmorSlotType", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/ArmorSlotType#<init> was null") }
-    item_inventory_property_ArmorSlotType { env: self.env, object: ret }
+    item_inventory_property_ArmorSlotType { env: env, object: ret }
   }
 
   pub fn of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_ArmorSlotType {
@@ -39442,22 +39442,22 @@ impl item_inventory_property_EquipmentSlotType {
     }
   }
 
-  pub fn new(&self, param_1: item_inventory_equipment_EquipmentType) -> item_inventory_property_EquipmentSlotType {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentType;)Lorg/spongepowered/api/item/inventory/property/EquipmentSlotType", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: item_inventory_equipment_EquipmentType) -> item_inventory_property_EquipmentSlotType {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/EquipmentSlotType", "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentType;)Lorg/spongepowered/api/item/inventory/property/EquipmentSlotType", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/EquipmentSlotType#<init> was null") }
-    item_inventory_property_EquipmentSlotType { env: self.env, object: ret }
+    item_inventory_property_EquipmentSlotType { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: item_inventory_equipment_EquipmentType, param_2: data_Property_Operator) -> item_inventory_property_EquipmentSlotType {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/EquipmentSlotType", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: item_inventory_equipment_EquipmentType, param_2: data_Property_Operator) -> item_inventory_property_EquipmentSlotType {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/EquipmentSlotType", "<init>", "(Lorg/spongepowered/api/item/inventory/equipment/EquipmentType;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/EquipmentSlotType", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/EquipmentSlotType#<init> was null") }
-    item_inventory_property_EquipmentSlotType { env: self.env, object: ret }
+    item_inventory_property_EquipmentSlotType { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_EquipmentSlotType {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/EquipmentSlotType", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_EquipmentSlotType {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/EquipmentSlotType", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/EquipmentSlotType", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/EquipmentSlotType#<init> was null") }
-    item_inventory_property_EquipmentSlotType { env: self.env, object: ret }
+    item_inventory_property_EquipmentSlotType { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -39496,22 +39496,22 @@ impl item_inventory_property_IntProperty {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> item_inventory_property_IntProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/item/inventory/property/IntProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> item_inventory_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/IntProperty", "<init>", "(I)Lorg/spongepowered/api/item/inventory/property/IntProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/IntProperty#<init> was null") }
-    item_inventory_property_IntProperty { env: self.env, object: ret }
+    item_inventory_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: data_Property_Operator) -> item_inventory_property_IntProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/IntProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: data_Property_Operator) -> item_inventory_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/IntProperty", "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/IntProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/IntProperty#<init> was null") }
-    item_inventory_property_IntProperty { env: self.env, object: ret }
+    item_inventory_property_IntProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_IntProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/IntProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_IntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/IntProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/IntProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/IntProperty#<init> was null") }
-    item_inventory_property_IntProperty { env: self.env, object: ret }
+    item_inventory_property_IntProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -39574,34 +39574,34 @@ impl item_inventory_property_InventorySize {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vector2i;)Lorg/spongepowered/api/item/inventory/property/InventorySize", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "<init>", "(Lcom/flowpowered/math/vector/Vector2i;)Lorg/spongepowered/api/item/inventory/property/InventorySize", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#<init> was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: i32) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, self.object, "<init>", "(II)Lorg/spongepowered/api/item/inventory/property/InventorySize", CallObjectMethodA, param_1, param_2);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: i32) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "<init>", "(II)Lorg/spongepowered/api/item/inventory/property/InventorySize", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#<init> was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vector2i;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/InventorySize", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "<init>", "(Lcom/flowpowered/math/vector/Vector2i;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/InventorySize", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#<init> was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: i32, param_2: i32, param_3: data_Property_Operator) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, self.object, "<init>", "(IILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/InventorySize", CallObjectMethodA, param_1, param_2, param_3.object);
+  pub fn new_3(env: *mut JNIEnv, param_1: i32, param_2: i32, param_3: data_Property_Operator) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "<init>", "(IILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/InventorySize", CallStaticObjectMethodA, param_1, param_2, param_3.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#<init> was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
-  pub fn new_4(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_InventorySize {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/InventorySize", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_4(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_InventorySize {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/InventorySize", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/InventorySize", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/InventorySize#<init> was null") }
-    item_inventory_property_InventorySize { env: self.env, object: ret }
+    item_inventory_property_InventorySize { env: env, object: ret }
   }
 
   pub fn get_columns(&self) -> i32 {
@@ -39678,22 +39678,22 @@ impl item_inventory_property_MappedIntProperty {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Integer;Ljava/lang/Integer;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty", CallObjectMethodA, param_1, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> item_inventory_property_MappedIntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/MappedIntProperty", "<init>", "(Ljava/lang/Integer;Ljava/lang/Integer;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/MappedIntProperty#<init> was null") }
-    item_inventory_property_MappedIntProperty { env: self.env, object: ret }
+    item_inventory_property_MappedIntProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: jobject, param_3: data_Property_Operator) -> item_inventory_property_MappedIntProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Integer;Ljava/lang/Integer;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty", CallObjectMethodA, param_1, param_2, param_3.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: data_Property_Operator) -> item_inventory_property_MappedIntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/MappedIntProperty", "<init>", "(Ljava/lang/Integer;Ljava/lang/Integer;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty", CallStaticObjectMethodA, param_1, param_2, param_3.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/MappedIntProperty#<init> was null") }
-    item_inventory_property_MappedIntProperty { env: self.env, object: ret }
+    item_inventory_property_MappedIntProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: jobject, param_3: data_Property_Operator) -> item_inventory_property_MappedIntProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty", CallObjectMethodA, param_1, param_2, param_3.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: data_Property_Operator) -> item_inventory_property_MappedIntProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/MappedIntProperty", "<init>", "(Ljava/lang/Object;Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/MappedIntProperty", CallStaticObjectMethodA, param_1, param_2, param_3.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/MappedIntProperty#<init> was null") }
-    item_inventory_property_MappedIntProperty { env: self.env, object: ret }
+    item_inventory_property_MappedIntProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -39757,22 +39757,22 @@ impl item_inventory_property_SlotIndex {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> item_inventory_property_SlotIndex {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/item/inventory/property/SlotIndex", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> item_inventory_property_SlotIndex {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotIndex", "<init>", "(I)Lorg/spongepowered/api/item/inventory/property/SlotIndex", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotIndex#<init> was null") }
-    item_inventory_property_SlotIndex { env: self.env, object: ret }
+    item_inventory_property_SlotIndex { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: data_Property_Operator) -> item_inventory_property_SlotIndex {
-    let ret = java_method!(self.env, self.object, "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotIndex", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: data_Property_Operator) -> item_inventory_property_SlotIndex {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotIndex", "<init>", "(ILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotIndex", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotIndex#<init> was null") }
-    item_inventory_property_SlotIndex { env: self.env, object: ret }
+    item_inventory_property_SlotIndex { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_SlotIndex {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotIndex", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_SlotIndex {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotIndex", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotIndex", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotIndex#<init> was null") }
-    item_inventory_property_SlotIndex { env: self.env, object: ret }
+    item_inventory_property_SlotIndex { env: env, object: ret }
   }
 
   pub fn of(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotIndex {
@@ -39827,34 +39827,34 @@ impl item_inventory_property_SlotPos {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vector2i;)Lorg/spongepowered/api/item/inventory/property/SlotPos", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "<init>", "(Lcom/flowpowered/math/vector/Vector2i;)Lorg/spongepowered/api/item/inventory/property/SlotPos", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#<init> was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32, param_2: i32) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, self.object, "<init>", "(II)Lorg/spongepowered/api/item/inventory/property/SlotPos", CallObjectMethodA, param_1, param_2);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32, param_2: i32) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "<init>", "(II)Lorg/spongepowered/api/item/inventory/property/SlotPos", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#<init> was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vector2i;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotPos", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "<init>", "(Lcom/flowpowered/math/vector/Vector2i;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotPos", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#<init> was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: i32, param_2: i32, param_3: data_Property_Operator) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, self.object, "<init>", "(IILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotPos", CallObjectMethodA, param_1, param_2, param_3.object);
+  pub fn new_3(env: *mut JNIEnv, param_1: i32, param_2: i32, param_3: data_Property_Operator) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "<init>", "(IILorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotPos", CallStaticObjectMethodA, param_1, param_2, param_3.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#<init> was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
-  pub fn new_4(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_SlotPos {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotPos", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_4(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_SlotPos {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotPos", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotPos", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotPos#<init> was null") }
-    item_inventory_property_SlotPos { env: self.env, object: ret }
+    item_inventory_property_SlotPos { env: env, object: ret }
   }
 
   pub fn get_x(&self) -> i32 {
@@ -39931,22 +39931,22 @@ impl item_inventory_property_SlotSide {
     }
   }
 
-  pub fn new(&self, param_1: util_Direction) -> item_inventory_property_SlotSide {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/item/inventory/property/SlotSide", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: util_Direction) -> item_inventory_property_SlotSide {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotSide", "<init>", "(Lorg/spongepowered/api/util/Direction;)Lorg/spongepowered/api/item/inventory/property/SlotSide", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotSide#<init> was null") }
-    item_inventory_property_SlotSide { env: self.env, object: ret }
+    item_inventory_property_SlotSide { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: util_Direction, param_2: data_Property_Operator) -> item_inventory_property_SlotSide {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/util/Direction;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotSide", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: util_Direction, param_2: data_Property_Operator) -> item_inventory_property_SlotSide {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotSide", "<init>", "(Lorg/spongepowered/api/util/Direction;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotSide", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotSide#<init> was null") }
-    item_inventory_property_SlotSide { env: self.env, object: ret }
+    item_inventory_property_SlotSide { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_SlotSide {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotSide", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_SlotSide {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/SlotSide", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/SlotSide", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/SlotSide#<init> was null") }
-    item_inventory_property_SlotSide { env: self.env, object: ret }
+    item_inventory_property_SlotSide { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -39985,22 +39985,22 @@ impl item_inventory_property_StringProperty {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> item_inventory_property_StringProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/item/inventory/property/StringProperty", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> item_inventory_property_StringProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/StringProperty", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/item/inventory/property/StringProperty", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/StringProperty#<init> was null") }
-    item_inventory_property_StringProperty { env: self.env, object: ret }
+    item_inventory_property_StringProperty { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_StringProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/StringProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_StringProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/StringProperty", "<init>", "(Ljava/lang/String;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/StringProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/StringProperty#<init> was null") }
-    item_inventory_property_StringProperty { env: self.env, object: ret }
+    item_inventory_property_StringProperty { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_StringProperty {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/StringProperty", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: data_Property_Operator) -> item_inventory_property_StringProperty {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/property/StringProperty", "<init>", "(Ljava/lang/Object;Lorg/spongepowered/api/data/Property$Operator;)Lorg/spongepowered/api/item/inventory/property/StringProperty", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/property/StringProperty#<init> was null") }
-    item_inventory_property_StringProperty { env: self.env, object: ret }
+    item_inventory_property_StringProperty { env: env, object: ret }
   }
 
   pub fn compare_to(&self, param_1: data_Property) -> i32 {
@@ -40340,10 +40340,10 @@ impl item_inventory_transaction_SlotTransaction {
     }
   }
 
-  pub fn new(&self, param_1: item_inventory_Slot, param_2: item_inventory_ItemStackSnapshot, param_3: item_inventory_ItemStackSnapshot) -> item_inventory_transaction_SlotTransaction {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/item/inventory/Slot;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/item/inventory/transaction/SlotTransaction", CallObjectMethodA, param_1.object, param_2.object, param_3.object);
+  pub fn new(env: *mut JNIEnv, param_1: item_inventory_Slot, param_2: item_inventory_ItemStackSnapshot, param_3: item_inventory_ItemStackSnapshot) -> item_inventory_transaction_SlotTransaction {
+    let ret = static_java_method!(env, "org/spongepowered/api/item/inventory/transaction/SlotTransaction", "<init>", "(Lorg/spongepowered/api/item/inventory/Slot;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;Lorg/spongepowered/api/item/inventory/ItemStackSnapshot;)Lorg/spongepowered/api/item/inventory/transaction/SlotTransaction", CallStaticObjectMethodA, param_1.object, param_2.object, param_3.object);
     if ret.is_null() { panic!("org/spongepowered/api/item/inventory/transaction/SlotTransaction#<init> was null") }
-    item_inventory_transaction_SlotTransaction { env: self.env, object: ret }
+    item_inventory_transaction_SlotTransaction { env: env, object: ret }
   }
 
   pub fn set_custom(&self, param_1: item_inventory_ItemStack) {
@@ -42015,28 +42015,28 @@ impl network_ChannelRegistrationException {
     }
   }
 
-  pub fn new(&self) -> network_ChannelRegistrationException {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/network/ChannelRegistrationException", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> network_ChannelRegistrationException {
+    let ret = static_java_method!(env, "org/spongepowered/api/network/ChannelRegistrationException", "<init>", "()Lorg/spongepowered/api/network/ChannelRegistrationException", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/network/ChannelRegistrationException#<init> was null") }
-    network_ChannelRegistrationException { env: self.env, object: ret }
+    network_ChannelRegistrationException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject) -> network_ChannelRegistrationException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/network/ChannelRegistrationException", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject) -> network_ChannelRegistrationException {
+    let ret = static_java_method!(env, "org/spongepowered/api/network/ChannelRegistrationException", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/network/ChannelRegistrationException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/network/ChannelRegistrationException#<init> was null") }
-    network_ChannelRegistrationException { env: self.env, object: ret }
+    network_ChannelRegistrationException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: jobject) -> network_ChannelRegistrationException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/network/ChannelRegistrationException", CallObjectMethodA, param_1, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> network_ChannelRegistrationException {
+    let ret = static_java_method!(env, "org/spongepowered/api/network/ChannelRegistrationException", "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/network/ChannelRegistrationException", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/network/ChannelRegistrationException#<init> was null") }
-    network_ChannelRegistrationException { env: self.env, object: ret }
+    network_ChannelRegistrationException { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: jobject) -> network_ChannelRegistrationException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/network/ChannelRegistrationException", CallObjectMethodA, param_1);
+  pub fn new_3(env: *mut JNIEnv, param_1: jobject) -> network_ChannelRegistrationException {
+    let ret = static_java_method!(env, "org/spongepowered/api/network/ChannelRegistrationException", "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/network/ChannelRegistrationException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/network/ChannelRegistrationException#<init> was null") }
-    network_ChannelRegistrationException { env: self.env, object: ret }
+    network_ChannelRegistrationException { env: env, object: ret }
   }
 
 }
@@ -42910,28 +42910,28 @@ impl profile_ProfileNotFoundException {
     }
   }
 
-  pub fn new(&self) -> profile_ProfileNotFoundException {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/profile/ProfileNotFoundException", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> profile_ProfileNotFoundException {
+    let ret = static_java_method!(env, "org/spongepowered/api/profile/ProfileNotFoundException", "<init>", "()Lorg/spongepowered/api/profile/ProfileNotFoundException", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/profile/ProfileNotFoundException#<init> was null") }
-    profile_ProfileNotFoundException { env: self.env, object: ret }
+    profile_ProfileNotFoundException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject) -> profile_ProfileNotFoundException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/profile/ProfileNotFoundException", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject) -> profile_ProfileNotFoundException {
+    let ret = static_java_method!(env, "org/spongepowered/api/profile/ProfileNotFoundException", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/profile/ProfileNotFoundException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/profile/ProfileNotFoundException#<init> was null") }
-    profile_ProfileNotFoundException { env: self.env, object: ret }
+    profile_ProfileNotFoundException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject) -> profile_ProfileNotFoundException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/profile/ProfileNotFoundException", CallObjectMethodA, param_1);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject) -> profile_ProfileNotFoundException {
+    let ret = static_java_method!(env, "org/spongepowered/api/profile/ProfileNotFoundException", "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/profile/ProfileNotFoundException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/profile/ProfileNotFoundException#<init> was null") }
-    profile_ProfileNotFoundException { env: self.env, object: ret }
+    profile_ProfileNotFoundException { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: jobject, param_2: jobject) -> profile_ProfileNotFoundException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/profile/ProfileNotFoundException", CallObjectMethodA, param_1, param_2);
+  pub fn new_3(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> profile_ProfileNotFoundException {
+    let ret = static_java_method!(env, "org/spongepowered/api/profile/ProfileNotFoundException", "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/profile/ProfileNotFoundException", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/profile/ProfileNotFoundException#<init> was null") }
-    profile_ProfileNotFoundException { env: self.env, object: ret }
+    profile_ProfileNotFoundException { env: env, object: ret }
   }
 
 }
@@ -43073,10 +43073,10 @@ impl registry_CatalogTypeAlreadyRegisteredException {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> registry_CatalogTypeAlreadyRegisteredException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/registry/CatalogTypeAlreadyRegisteredException", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> registry_CatalogTypeAlreadyRegisteredException {
+    let ret = static_java_method!(env, "org/spongepowered/api/registry/CatalogTypeAlreadyRegisteredException", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/registry/CatalogTypeAlreadyRegisteredException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/registry/CatalogTypeAlreadyRegisteredException#<init> was null") }
-    registry_CatalogTypeAlreadyRegisteredException { env: self.env, object: ret }
+    registry_CatalogTypeAlreadyRegisteredException { env: env, object: ret }
   }
 
   pub fn get_already_registered_id(&self) -> jobject {
@@ -43185,28 +43185,28 @@ impl registry_RegistryException {
     }
   }
 
-  pub fn new(&self) -> registry_RegistryException {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/registry/RegistryException", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> registry_RegistryException {
+    let ret = static_java_method!(env, "org/spongepowered/api/registry/RegistryException", "<init>", "()Lorg/spongepowered/api/registry/RegistryException", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/registry/RegistryException#<init> was null") }
-    registry_RegistryException { env: self.env, object: ret }
+    registry_RegistryException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject) -> registry_RegistryException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/registry/RegistryException", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject) -> registry_RegistryException {
+    let ret = static_java_method!(env, "org/spongepowered/api/registry/RegistryException", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/registry/RegistryException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/registry/RegistryException#<init> was null") }
-    registry_RegistryException { env: self.env, object: ret }
+    registry_RegistryException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: jobject) -> registry_RegistryException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/registry/RegistryException", CallObjectMethodA, param_1, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> registry_RegistryException {
+    let ret = static_java_method!(env, "org/spongepowered/api/registry/RegistryException", "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/registry/RegistryException", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/registry/RegistryException#<init> was null") }
-    registry_RegistryException { env: self.env, object: ret }
+    registry_RegistryException { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: jobject) -> registry_RegistryException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/registry/RegistryException", CallObjectMethodA, param_1);
+  pub fn new_3(env: *mut JNIEnv, param_1: jobject) -> registry_RegistryException {
+    let ret = static_java_method!(env, "org/spongepowered/api/registry/RegistryException", "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/registry/RegistryException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/registry/RegistryException#<init> was null") }
-    registry_RegistryException { env: self.env, object: ret }
+    registry_RegistryException { env: env, object: ret }
   }
 
 }
@@ -43245,10 +43245,10 @@ impl registry_RegistryModuleAlreadyRegisteredException {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: registry_RegistryModule) -> registry_RegistryModuleAlreadyRegisteredException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Lorg/spongepowered/api/registry/RegistryModule;)Lorg/spongepowered/api/registry/RegistryModuleAlreadyRegisteredException", CallObjectMethodA, param_1, param_2.object);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: registry_RegistryModule) -> registry_RegistryModuleAlreadyRegisteredException {
+    let ret = static_java_method!(env, "org/spongepowered/api/registry/RegistryModuleAlreadyRegisteredException", "<init>", "(Ljava/lang/String;Lorg/spongepowered/api/registry/RegistryModule;)Lorg/spongepowered/api/registry/RegistryModuleAlreadyRegisteredException", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/registry/RegistryModuleAlreadyRegisteredException#<init> was null") }
-    registry_RegistryModuleAlreadyRegisteredException { env: self.env, object: ret }
+    registry_RegistryModuleAlreadyRegisteredException { env: env, object: ret }
   }
 
   pub fn get_module(&self) -> registry_RegistryModule {
@@ -43485,10 +43485,10 @@ impl resourcepack_ResourcePacks {
     }
   }
 
-  pub fn new(&self) -> resourcepack_ResourcePacks {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/resourcepack/ResourcePacks", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> resourcepack_ResourcePacks {
+    let ret = static_java_method!(env, "org/spongepowered/api/resourcepack/ResourcePacks", "<init>", "()Lorg/spongepowered/api/resourcepack/ResourcePacks", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/resourcepack/ResourcePacks#<init> was null") }
-    resourcepack_ResourcePacks { env: self.env, object: ret }
+    resourcepack_ResourcePacks { env: env, object: ret }
   }
 
   pub fn from_uri(env: *mut JNIEnv, param_1: jobject) -> resourcepack_ResourcePack {
@@ -44885,10 +44885,10 @@ impl service_context_Context {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: jobject) -> service_context_Context {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/String;)Lorg/spongepowered/api/service/context/Context", CallObjectMethodA, param_1, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> service_context_Context {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/context/Context", "<init>", "(Ljava/lang/String;Ljava/lang/String;)Lorg/spongepowered/api/service/context/Context", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/service/context/Context#<init> was null") }
-    service_context_Context { env: self.env, object: ret }
+    service_context_Context { env: env, object: ret }
   }
 
   pub fn get_type(&self) -> jobject {
@@ -45626,10 +45626,10 @@ impl service_permission_MemorySubjectData {
     }
   }
 
-  pub fn new(&self, param_1: service_permission_PermissionService) -> service_permission_MemorySubjectData {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/service/permission/PermissionService;)Lorg/spongepowered/api/service/permission/MemorySubjectData", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: service_permission_PermissionService) -> service_permission_MemorySubjectData {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/permission/MemorySubjectData", "<init>", "(Lorg/spongepowered/api/service/permission/PermissionService;)Lorg/spongepowered/api/service/permission/MemorySubjectData", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/service/permission/MemorySubjectData#<init> was null") }
-    service_permission_MemorySubjectData { env: self.env, object: ret }
+    service_permission_MemorySubjectData { env: env, object: ret }
   }
 
   pub fn get_all_permissions(&self) -> jobject {
@@ -46216,28 +46216,28 @@ impl service_ProvisioningException {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> service_ProvisioningException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Class;)Lorg/spongepowered/api/service/ProvisioningException", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> service_ProvisioningException {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/ProvisioningException", "<init>", "(Ljava/lang/Class;)Lorg/spongepowered/api/service/ProvisioningException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/service/ProvisioningException#<init> was null") }
-    service_ProvisioningException { env: self.env, object: ret }
+    service_ProvisioningException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: jobject) -> service_ProvisioningException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/Class;)Lorg/spongepowered/api/service/ProvisioningException", CallObjectMethodA, param_1, param_2);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> service_ProvisioningException {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/ProvisioningException", "<init>", "(Ljava/lang/String;Ljava/lang/Class;)Lorg/spongepowered/api/service/ProvisioningException", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/service/ProvisioningException#<init> was null") }
-    service_ProvisioningException { env: self.env, object: ret }
+    service_ProvisioningException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: jobject, param_3: jobject) -> service_ProvisioningException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/Class;)Lorg/spongepowered/api/service/ProvisioningException", CallObjectMethodA, param_1, param_2, param_3);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject) -> service_ProvisioningException {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/ProvisioningException", "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/Class;)Lorg/spongepowered/api/service/ProvisioningException", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/service/ProvisioningException#<init> was null") }
-    service_ProvisioningException { env: self.env, object: ret }
+    service_ProvisioningException { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: jobject, param_2: jobject) -> service_ProvisioningException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Throwable;Ljava/lang/Class;)Lorg/spongepowered/api/service/ProvisioningException", CallObjectMethodA, param_1, param_2);
+  pub fn new_3(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> service_ProvisioningException {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/ProvisioningException", "<init>", "(Ljava/lang/Throwable;Ljava/lang/Class;)Lorg/spongepowered/api/service/ProvisioningException", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/service/ProvisioningException#<init> was null") }
-    service_ProvisioningException { env: self.env, object: ret }
+    service_ProvisioningException { env: env, object: ret }
   }
 
   pub fn get_service(&self) -> jobject {
@@ -46366,10 +46366,10 @@ impl service_SimpleServiceManager {
     }
   }
 
-  pub fn new(&self, param_1: plugin_PluginManager) -> service_SimpleServiceManager {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/plugin/PluginManager;)Lorg/spongepowered/api/service/SimpleServiceManager", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: plugin_PluginManager) -> service_SimpleServiceManager {
+    let ret = static_java_method!(env, "org/spongepowered/api/service/SimpleServiceManager", "<init>", "(Lorg/spongepowered/api/plugin/PluginManager;)Lorg/spongepowered/api/service/SimpleServiceManager", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/service/SimpleServiceManager#<init> was null") }
-    service_SimpleServiceManager { env: self.env, object: ret }
+    service_SimpleServiceManager { env: env, object: ret }
   }
 
   pub fn set_provider(&self, param_1: jobject, param_2: jobject, param_3: jobject) {
@@ -46545,10 +46545,10 @@ impl Sponge {
     }
   }
 
-  pub fn new(&self) -> Sponge {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/Sponge", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> Sponge {
+    let ret = static_java_method!(env, "org/spongepowered/api/Sponge", "<init>", "()Lorg/spongepowered/api/Sponge", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/Sponge#<init> was null") }
-    Sponge { env: self.env, object: ret }
+    Sponge { env: env, object: ret }
   }
 
   pub fn get_game(env: *mut JNIEnv) -> Game {
@@ -47285,22 +47285,22 @@ impl text_action_HoverAction_ShowEntity_Ref {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: jobject, param_3: entity_EntityType) -> text_action_HoverAction_ShowEntity_Ref {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/UUID;Ljava/lang/String;Lorg/spongepowered/api/entity/EntityType;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity$Ref", CallObjectMethodA, param_1, param_2, param_3.object);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: entity_EntityType) -> text_action_HoverAction_ShowEntity_Ref {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/HoverAction$ShowEntity$Ref", "<init>", "(Ljava/util/UUID;Ljava/lang/String;Lorg/spongepowered/api/entity/EntityType;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity$Ref", CallStaticObjectMethodA, param_1, param_2, param_3.object);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/HoverAction$ShowEntity$Ref#<init> was null") }
-    text_action_HoverAction_ShowEntity_Ref { env: self.env, object: ret }
+    text_action_HoverAction_ShowEntity_Ref { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: jobject) -> text_action_HoverAction_ShowEntity_Ref {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/UUID;Ljava/lang/String;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity$Ref", CallObjectMethodA, param_1, param_2);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> text_action_HoverAction_ShowEntity_Ref {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/HoverAction$ShowEntity$Ref", "<init>", "(Ljava/util/UUID;Ljava/lang/String;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity$Ref", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/HoverAction$ShowEntity$Ref#<init> was null") }
-    text_action_HoverAction_ShowEntity_Ref { env: self.env, object: ret }
+    text_action_HoverAction_ShowEntity_Ref { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: entity_Entity, param_2: jobject) -> text_action_HoverAction_ShowEntity_Ref {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/entity/Entity;Ljava/lang/String;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity$Ref", CallObjectMethodA, param_1.object, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: entity_Entity, param_2: jobject) -> text_action_HoverAction_ShowEntity_Ref {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/action/HoverAction$ShowEntity$Ref", "<init>", "(Lorg/spongepowered/api/entity/Entity;Ljava/lang/String;)Lorg/spongepowered/api/text/action/HoverAction$ShowEntity$Ref", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/action/HoverAction$ShowEntity$Ref#<init> was null") }
-    text_action_HoverAction_ShowEntity_Ref { env: self.env, object: ret }
+    text_action_HoverAction_ShowEntity_Ref { env: env, object: ret }
   }
 
   pub fn get_unique_id(&self) -> jobject {
@@ -47587,10 +47587,10 @@ impl text_BookView_Builder {
     }
   }
 
-  pub fn new(&self) -> text_BookView_Builder {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/BookView$Builder", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> text_BookView_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/BookView$Builder", "<init>", "()Lorg/spongepowered/api/text/BookView$Builder", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/BookView$Builder#<init> was null") }
-    text_BookView_Builder { env: self.env, object: ret }
+    text_BookView_Builder { env: env, object: ret }
   }
 
   pub fn title(&self, param_1: text_Text) -> text_BookView_Builder {
@@ -47841,10 +47841,10 @@ impl text_channel_impl_DelegateMessageChannel {
     }
   }
 
-  pub fn new(&self, param_1: text_channel_MessageChannel) -> text_channel_impl_DelegateMessageChannel {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/channel/MessageChannel;)Lorg/spongepowered/api/text/channel/impl/DelegateMessageChannel", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: text_channel_MessageChannel) -> text_channel_impl_DelegateMessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/impl/DelegateMessageChannel", "<init>", "(Lorg/spongepowered/api/text/channel/MessageChannel;)Lorg/spongepowered/api/text/channel/impl/DelegateMessageChannel", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/impl/DelegateMessageChannel#<init> was null") }
-    text_channel_impl_DelegateMessageChannel { env: self.env, object: ret }
+    text_channel_impl_DelegateMessageChannel { env: env, object: ret }
   }
 
   pub fn transform_message(&self, param_1: jobject, param_2: text_channel_MessageReceiver, param_3: text_Text, param_4: text_chat_ChatType) -> Option<text_Text> {
@@ -47876,10 +47876,10 @@ impl text_channel_impl_DelegateMutableMessageChannel {
     }
   }
 
-  pub fn new(&self, param_1: text_channel_MessageChannel) -> text_channel_impl_DelegateMutableMessageChannel {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/channel/MessageChannel;)Lorg/spongepowered/api/text/channel/impl/DelegateMutableMessageChannel", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: text_channel_MessageChannel) -> text_channel_impl_DelegateMutableMessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/impl/DelegateMutableMessageChannel", "<init>", "(Lorg/spongepowered/api/text/channel/MessageChannel;)Lorg/spongepowered/api/text/channel/impl/DelegateMutableMessageChannel", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/impl/DelegateMutableMessageChannel#<init> was null") }
-    text_channel_impl_DelegateMutableMessageChannel { env: self.env, object: ret }
+    text_channel_impl_DelegateMutableMessageChannel { env: env, object: ret }
   }
 
   pub fn transform_message(&self, param_1: jobject, param_2: text_channel_MessageReceiver, param_3: text_Text, param_4: text_chat_ChatType) -> Option<text_Text> {
@@ -47906,16 +47906,16 @@ impl text_channel_impl_SimpleMutableMessageChannel {
     }
   }
 
-  pub fn new(&self) -> text_channel_impl_SimpleMutableMessageChannel {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/channel/impl/SimpleMutableMessageChannel", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> text_channel_impl_SimpleMutableMessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/impl/SimpleMutableMessageChannel", "<init>", "()Lorg/spongepowered/api/text/channel/impl/SimpleMutableMessageChannel", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/impl/SimpleMutableMessageChannel#<init> was null") }
-    text_channel_impl_SimpleMutableMessageChannel { env: self.env, object: ret }
+    text_channel_impl_SimpleMutableMessageChannel { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject) -> text_channel_impl_SimpleMutableMessageChannel {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Collection;)Lorg/spongepowered/api/text/channel/impl/SimpleMutableMessageChannel", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject) -> text_channel_impl_SimpleMutableMessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/impl/SimpleMutableMessageChannel", "<init>", "(Ljava/util/Collection;)Lorg/spongepowered/api/text/channel/impl/SimpleMutableMessageChannel", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/impl/SimpleMutableMessageChannel#<init> was null") }
-    text_channel_impl_SimpleMutableMessageChannel { env: self.env, object: ret }
+    text_channel_impl_SimpleMutableMessageChannel { env: env, object: ret }
   }
 
 }
@@ -48095,13 +48095,13 @@ impl text_channel_type_CombinedMessageChannel {
     }
   }
 
-  pub fn new(&self, param_1: Vec<text_channel_MessageChannel>) -> text_channel_type_CombinedMessageChannel {
+  pub fn new(env: *mut JNIEnv, param_1: Vec<text_channel_MessageChannel>) -> text_channel_type_CombinedMessageChannel {
     unimplemented!();
   }
-  pub fn new_1(&self, param_1: jobject) -> text_channel_type_CombinedMessageChannel {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Collection;)Lorg/spongepowered/api/text/channel/type/CombinedMessageChannel", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject) -> text_channel_type_CombinedMessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/type/CombinedMessageChannel", "<init>", "(Ljava/util/Collection;)Lorg/spongepowered/api/text/channel/type/CombinedMessageChannel", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/type/CombinedMessageChannel#<init> was null") }
-    text_channel_type_CombinedMessageChannel { env: self.env, object: ret }
+    text_channel_type_CombinedMessageChannel { env: env, object: ret }
   }
 
   pub fn transform_message(&self, param_1: jobject, param_2: text_channel_MessageReceiver, param_3: text_Text, param_4: text_chat_ChatType) -> Option<text_Text> {
@@ -48133,13 +48133,13 @@ impl text_channel_type_FixedMessageChannel {
     }
   }
 
-  pub fn new(&self, param_1: Vec<text_channel_MessageReceiver>) -> text_channel_type_FixedMessageChannel {
+  pub fn new(env: *mut JNIEnv, param_1: Vec<text_channel_MessageReceiver>) -> text_channel_type_FixedMessageChannel {
     unimplemented!();
   }
-  pub fn new_1(&self, param_1: jobject) -> text_channel_type_FixedMessageChannel {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/Collection;)Lorg/spongepowered/api/text/channel/type/FixedMessageChannel", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject) -> text_channel_type_FixedMessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/type/FixedMessageChannel", "<init>", "(Ljava/util/Collection;)Lorg/spongepowered/api/text/channel/type/FixedMessageChannel", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/type/FixedMessageChannel#<init> was null") }
-    text_channel_type_FixedMessageChannel { env: self.env, object: ret }
+    text_channel_type_FixedMessageChannel { env: env, object: ret }
   }
 
   pub fn get_members(&self) -> jobject {
@@ -48165,10 +48165,10 @@ impl text_channel_type_PermissionMessageChannel {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> text_channel_type_PermissionMessageChannel {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/text/channel/type/PermissionMessageChannel", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> text_channel_type_PermissionMessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/type/PermissionMessageChannel", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/text/channel/type/PermissionMessageChannel", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/type/PermissionMessageChannel#<init> was null") }
-    text_channel_type_PermissionMessageChannel { env: self.env, object: ret }
+    text_channel_type_PermissionMessageChannel { env: env, object: ret }
   }
 
   pub fn get_permission(&self) -> jobject {
@@ -48199,10 +48199,10 @@ impl text_channel_type_WorldMessageChannel {
     }
   }
 
-  pub fn new(&self, param_1: world_World) -> text_channel_type_WorldMessageChannel {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/text/channel/type/WorldMessageChannel", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: world_World) -> text_channel_type_WorldMessageChannel {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/channel/type/WorldMessageChannel", "<init>", "(Lorg/spongepowered/api/world/World;)Lorg/spongepowered/api/text/channel/type/WorldMessageChannel", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/text/channel/type/WorldMessageChannel#<init> was null") }
-    text_channel_type_WorldMessageChannel { env: self.env, object: ret }
+    text_channel_type_WorldMessageChannel { env: env, object: ret }
   }
 
   pub fn get_members(&self) -> jobject {
@@ -48491,10 +48491,10 @@ impl text_format_TextStyle {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject, param_5: jobject) -> text_format_TextStyle {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lorg/spongepowered/api/text/format/TextStyle", CallObjectMethodA, param_1, param_2, param_3, param_4, param_5);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject, param_5: jobject) -> text_format_TextStyle {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/format/TextStyle", "<init>", "(Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lorg/spongepowered/api/text/format/TextStyle", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5);
     if ret.is_null() { panic!("org/spongepowered/api/text/format/TextStyle#<init> was null") }
-    text_format_TextStyle { env: self.env, object: ret }
+    text_format_TextStyle { env: env, object: ret }
   }
 
   pub fn is_composite(&self) -> bool {
@@ -50284,10 +50284,10 @@ impl text_serializer_BookViewDataBuilder {
     }
   }
 
-  pub fn new(&self) -> text_serializer_BookViewDataBuilder {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/serializer/BookViewDataBuilder", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> text_serializer_BookViewDataBuilder {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/serializer/BookViewDataBuilder", "<init>", "()Lorg/spongepowered/api/text/serializer/BookViewDataBuilder", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/serializer/BookViewDataBuilder#<init> was null") }
-    text_serializer_BookViewDataBuilder { env: self.env, object: ret }
+    text_serializer_BookViewDataBuilder { env: env, object: ret }
   }
 
   pub fn deserialize(&self, param_1: jobject, param_2: jobject) -> text_BookView {
@@ -50393,10 +50393,10 @@ impl text_serializer_TextConfigSerializer {
     }
   }
 
-  pub fn new(&self) -> text_serializer_TextConfigSerializer {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/serializer/TextConfigSerializer", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> text_serializer_TextConfigSerializer {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/serializer/TextConfigSerializer", "<init>", "()Lorg/spongepowered/api/text/serializer/TextConfigSerializer", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/serializer/TextConfigSerializer#<init> was null") }
-    text_serializer_TextConfigSerializer { env: self.env, object: ret }
+    text_serializer_TextConfigSerializer { env: env, object: ret }
   }
 
   pub fn deserialize(&self, param_1: jobject, param_2: jobject) -> text_Text {
@@ -50435,10 +50435,10 @@ impl text_serializer_TextFormatConfigSerializer {
     }
   }
 
-  pub fn new(&self) -> text_serializer_TextFormatConfigSerializer {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/serializer/TextFormatConfigSerializer", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> text_serializer_TextFormatConfigSerializer {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/serializer/TextFormatConfigSerializer", "<init>", "()Lorg/spongepowered/api/text/serializer/TextFormatConfigSerializer", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/serializer/TextFormatConfigSerializer#<init> was null") }
-    text_serializer_TextFormatConfigSerializer { env: self.env, object: ret }
+    text_serializer_TextFormatConfigSerializer { env: env, object: ret }
   }
 
   pub fn deserialize(&self, param_1: jobject, param_2: jobject) -> text_format_TextFormat {
@@ -50477,28 +50477,28 @@ impl text_serializer_TextParseException {
     }
   }
 
-  pub fn new(&self) -> text_serializer_TextParseException {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/serializer/TextParseException", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> text_serializer_TextParseException {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/serializer/TextParseException", "<init>", "()Lorg/spongepowered/api/text/serializer/TextParseException", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/serializer/TextParseException#<init> was null") }
-    text_serializer_TextParseException { env: self.env, object: ret }
+    text_serializer_TextParseException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject) -> text_serializer_TextParseException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/text/serializer/TextParseException", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject) -> text_serializer_TextParseException {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/serializer/TextParseException", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/text/serializer/TextParseException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/serializer/TextParseException#<init> was null") }
-    text_serializer_TextParseException { env: self.env, object: ret }
+    text_serializer_TextParseException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: jobject) -> text_serializer_TextParseException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/text/serializer/TextParseException", CallObjectMethodA, param_1, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> text_serializer_TextParseException {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/serializer/TextParseException", "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/text/serializer/TextParseException", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/serializer/TextParseException#<init> was null") }
-    text_serializer_TextParseException { env: self.env, object: ret }
+    text_serializer_TextParseException { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: jobject) -> text_serializer_TextParseException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/text/serializer/TextParseException", CallObjectMethodA, param_1);
+  pub fn new_3(env: *mut JNIEnv, param_1: jobject) -> text_serializer_TextParseException {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/serializer/TextParseException", "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/text/serializer/TextParseException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/serializer/TextParseException#<init> was null") }
-    text_serializer_TextParseException { env: self.env, object: ret }
+    text_serializer_TextParseException { env: env, object: ret }
   }
 
 }
@@ -50611,10 +50611,10 @@ impl text_serializer_TextTemplateConfigSerializer {
     }
   }
 
-  pub fn new(&self) -> text_serializer_TextTemplateConfigSerializer {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/serializer/TextTemplateConfigSerializer", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> text_serializer_TextTemplateConfigSerializer {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/serializer/TextTemplateConfigSerializer", "<init>", "()Lorg/spongepowered/api/text/serializer/TextTemplateConfigSerializer", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/serializer/TextTemplateConfigSerializer#<init> was null") }
-    text_serializer_TextTemplateConfigSerializer { env: self.env, object: ret }
+    text_serializer_TextTemplateConfigSerializer { env: env, object: ret }
   }
 
   pub fn deserialize(&self, param_1: jobject, param_2: jobject) -> text_TextTemplate {
@@ -51425,10 +51425,10 @@ impl text_TextTemplateArgumentException {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> text_TextTemplateArgumentException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/text/TextTemplateArgumentException", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> text_TextTemplateArgumentException {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/TextTemplateArgumentException", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/text/TextTemplateArgumentException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/TextTemplateArgumentException#<init> was null") }
-    text_TextTemplateArgumentException { env: self.env, object: ret }
+    text_TextTemplateArgumentException { env: env, object: ret }
   }
 
 }
@@ -51702,16 +51702,16 @@ impl text_transform_DynamicPartitionedTextFormatter {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> text_transform_DynamicPartitionedTextFormatter {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/text/transform/DynamicPartitionedTextFormatter", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> text_transform_DynamicPartitionedTextFormatter {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/transform/DynamicPartitionedTextFormatter", "<init>", "(I)Lorg/spongepowered/api/text/transform/DynamicPartitionedTextFormatter", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/transform/DynamicPartitionedTextFormatter#<init> was null") }
-    text_transform_DynamicPartitionedTextFormatter { env: self.env, object: ret }
+    text_transform_DynamicPartitionedTextFormatter { env: env, object: ret }
   }
 
-  pub fn new_1(&self) -> text_transform_DynamicPartitionedTextFormatter {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/transform/DynamicPartitionedTextFormatter", CallObjectMethod);
+  pub fn new_1(env: *mut JNIEnv) -> text_transform_DynamicPartitionedTextFormatter {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/transform/DynamicPartitionedTextFormatter", "<init>", "()Lorg/spongepowered/api/text/transform/DynamicPartitionedTextFormatter", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/transform/DynamicPartitionedTextFormatter#<init> was null") }
-    text_transform_DynamicPartitionedTextFormatter { env: self.env, object: ret }
+    text_transform_DynamicPartitionedTextFormatter { env: env, object: ret }
   }
 
   pub fn get_all(&self) -> jobject {
@@ -51820,16 +51820,16 @@ impl text_transform_FixedPartitionedTextFormatter {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> text_transform_FixedPartitionedTextFormatter {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/text/transform/FixedPartitionedTextFormatter", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> text_transform_FixedPartitionedTextFormatter {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/transform/FixedPartitionedTextFormatter", "<init>", "(I)Lorg/spongepowered/api/text/transform/FixedPartitionedTextFormatter", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/transform/FixedPartitionedTextFormatter#<init> was null") }
-    text_transform_FixedPartitionedTextFormatter { env: self.env, object: ret }
+    text_transform_FixedPartitionedTextFormatter { env: env, object: ret }
   }
 
-  pub fn new_1(&self) -> text_transform_FixedPartitionedTextFormatter {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/transform/FixedPartitionedTextFormatter", CallObjectMethod);
+  pub fn new_1(env: *mut JNIEnv) -> text_transform_FixedPartitionedTextFormatter {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/transform/FixedPartitionedTextFormatter", "<init>", "()Lorg/spongepowered/api/text/transform/FixedPartitionedTextFormatter", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/transform/FixedPartitionedTextFormatter#<init> was null") }
-    text_transform_FixedPartitionedTextFormatter { env: self.env, object: ret }
+    text_transform_FixedPartitionedTextFormatter { env: env, object: ret }
   }
 
   pub fn get_all(&self) -> jobject {
@@ -51954,16 +51954,16 @@ impl text_transform_SimpleTextFormatter {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> text_transform_SimpleTextFormatter {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/text/transform/SimpleTextFormatter", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> text_transform_SimpleTextFormatter {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/transform/SimpleTextFormatter", "<init>", "(I)Lorg/spongepowered/api/text/transform/SimpleTextFormatter", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/transform/SimpleTextFormatter#<init> was null") }
-    text_transform_SimpleTextFormatter { env: self.env, object: ret }
+    text_transform_SimpleTextFormatter { env: env, object: ret }
   }
 
-  pub fn new_1(&self) -> text_transform_SimpleTextFormatter {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/transform/SimpleTextFormatter", CallObjectMethod);
+  pub fn new_1(env: *mut JNIEnv) -> text_transform_SimpleTextFormatter {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/transform/SimpleTextFormatter", "<init>", "()Lorg/spongepowered/api/text/transform/SimpleTextFormatter", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/transform/SimpleTextFormatter#<init> was null") }
-    text_transform_SimpleTextFormatter { env: self.env, object: ret }
+    text_transform_SimpleTextFormatter { env: env, object: ret }
   }
 
   pub fn get_all(&self) -> jobject {
@@ -52072,16 +52072,16 @@ impl text_transform_SimpleTextTemplateApplier {
     }
   }
 
-  pub fn new(&self, param_1: text_TextTemplate) -> text_transform_SimpleTextTemplateApplier {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/TextTemplate;)Lorg/spongepowered/api/text/transform/SimpleTextTemplateApplier", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: text_TextTemplate) -> text_transform_SimpleTextTemplateApplier {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/transform/SimpleTextTemplateApplier", "<init>", "(Lorg/spongepowered/api/text/TextTemplate;)Lorg/spongepowered/api/text/transform/SimpleTextTemplateApplier", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/text/transform/SimpleTextTemplateApplier#<init> was null") }
-    text_transform_SimpleTextTemplateApplier { env: self.env, object: ret }
+    text_transform_SimpleTextTemplateApplier { env: env, object: ret }
   }
 
-  pub fn new_1(&self) -> text_transform_SimpleTextTemplateApplier {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/text/transform/SimpleTextTemplateApplier", CallObjectMethod);
+  pub fn new_1(env: *mut JNIEnv) -> text_transform_SimpleTextTemplateApplier {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/transform/SimpleTextTemplateApplier", "<init>", "()Lorg/spongepowered/api/text/transform/SimpleTextTemplateApplier", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/text/transform/SimpleTextTemplateApplier#<init> was null") }
-    text_transform_SimpleTextTemplateApplier { env: self.env, object: ret }
+    text_transform_SimpleTextTemplateApplier { env: env, object: ret }
   }
 
   pub fn get_parameters(&self) -> jobject {
@@ -52624,10 +52624,10 @@ impl text_translation_FixedTranslation {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> text_translation_FixedTranslation {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/text/translation/FixedTranslation", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> text_translation_FixedTranslation {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/translation/FixedTranslation", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/text/translation/FixedTranslation", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/text/translation/FixedTranslation#<init> was null") }
-    text_translation_FixedTranslation { env: self.env, object: ret }
+    text_translation_FixedTranslation { env: env, object: ret }
   }
 
   pub fn get_id(&self) -> jobject {
@@ -52701,10 +52701,10 @@ impl text_translation_ResourceBundleTranslation {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: jobject) -> text_translation_ResourceBundleTranslation {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/util/function/Function;)Lorg/spongepowered/api/text/translation/ResourceBundleTranslation", CallObjectMethodA, param_1, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> text_translation_ResourceBundleTranslation {
+    let ret = static_java_method!(env, "org/spongepowered/api/text/translation/ResourceBundleTranslation", "<init>", "(Ljava/lang/String;Ljava/util/function/Function;)Lorg/spongepowered/api/text/translation/ResourceBundleTranslation", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/text/translation/ResourceBundleTranslation#<init> was null") }
-    text_translation_ResourceBundleTranslation { env: self.env, object: ret }
+    text_translation_ResourceBundleTranslation { env: env, object: ret }
   }
 
   pub fn get_id(&self) -> jobject {
@@ -52800,22 +52800,22 @@ impl util_AABB {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: jobject) -> util_AABB {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vector3i;Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/util/AABB", CallObjectMethodA, param_1, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> util_AABB {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/AABB", "<init>", "(Lcom/flowpowered/math/vector/Vector3i;Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/util/AABB", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/AABB#<init> was null") }
-    util_AABB { env: self.env, object: ret }
+    util_AABB { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: f64, param_2: f64, param_3: f64, param_4: f64, param_5: f64, param_6: f64) -> util_AABB {
-    let ret = java_method!(self.env, self.object, "<init>", "(DDDDDD)Lorg/spongepowered/api/util/AABB", CallObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
+  pub fn new_1(env: *mut JNIEnv, param_1: f64, param_2: f64, param_3: f64, param_4: f64, param_5: f64, param_6: f64) -> util_AABB {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/AABB", "<init>", "(DDDDDD)Lorg/spongepowered/api/util/AABB", CallStaticObjectMethodA, param_1, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/util/AABB#<init> was null") }
-    util_AABB { env: self.env, object: ret }
+    util_AABB { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: jobject) -> util_AABB {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/AABB", CallObjectMethodA, param_1, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> util_AABB {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/AABB", "<init>", "(Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/AABB", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/AABB#<init> was null") }
-    util_AABB { env: self.env, object: ret }
+    util_AABB { env: env, object: ret }
   }
 
   pub fn get_min(&self) -> jobject {
@@ -53446,10 +53446,10 @@ impl util_blockray_BlockRay_ContinueAfterFilter {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: i32) -> util_blockray_BlockRay_ContinueAfterFilter {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/function/Predicate;I)Lorg/spongepowered/api/util/blockray/BlockRay$ContinueAfterFilter", CallObjectMethodA, param_1, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: i32) -> util_blockray_BlockRay_ContinueAfterFilter {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/blockray/BlockRay$ContinueAfterFilter", "<init>", "(Ljava/util/function/Predicate;I)Lorg/spongepowered/api/util/blockray/BlockRay$ContinueAfterFilter", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRay$ContinueAfterFilter#<init> was null") }
-    util_blockray_BlockRay_ContinueAfterFilter { env: self.env, object: ret }
+    util_blockray_BlockRay_ContinueAfterFilter { env: env, object: ret }
   }
 
   pub fn test(&self, param_1: util_blockray_BlockRayHit) -> bool {
@@ -53595,10 +53595,10 @@ impl util_blockray_BlockRayHit {
     }
   }
 
-  pub fn new(&self, param_1: world_extent_Extent, param_2: f64, param_3: f64, param_4: f64, param_5: jobject, param_6: jobject) -> util_blockray_BlockRayHit {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/extent/Extent;DDDLcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/blockray/BlockRayHit", CallObjectMethodA, param_1.object, param_2, param_3, param_4, param_5, param_6);
+  pub fn new(env: *mut JNIEnv, param_1: world_extent_Extent, param_2: f64, param_3: f64, param_4: f64, param_5: jobject, param_6: jobject) -> util_blockray_BlockRayHit {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/blockray/BlockRayHit", "<init>", "(Lorg/spongepowered/api/world/extent/Extent;DDDLcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/util/blockray/BlockRayHit", CallStaticObjectMethodA, param_1.object, param_2, param_3, param_4, param_5, param_6);
     if ret.is_null() { panic!("org/spongepowered/api/util/blockray/BlockRayHit#<init> was null") }
-    util_blockray_BlockRayHit { env: self.env, object: ret }
+    util_blockray_BlockRayHit { env: env, object: ret }
   }
 
   pub fn get_extent(&self) -> world_extent_Extent {
@@ -53880,10 +53880,10 @@ impl util_Color_Builder {
     }
   }
 
-  pub fn new(&self) -> util_Color_Builder {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/Color$Builder", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_Color_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Color$Builder", "<init>", "()Lorg/spongepowered/api/util/Color$Builder", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/Color$Builder#<init> was null") }
-    util_Color_Builder { env: self.env, object: ret }
+    util_Color_Builder { env: env, object: ret }
   }
 
 }
@@ -54674,10 +54674,10 @@ impl util_generator_dummy_DummyClassGenerator {
     }
   }
 
-  pub fn new(&self) -> util_generator_dummy_DummyClassGenerator {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/generator/dummy/DummyClassGenerator", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_generator_dummy_DummyClassGenerator {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/dummy/DummyClassGenerator", "<init>", "()Lorg/spongepowered/api/util/generator/dummy/DummyClassGenerator", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/dummy/DummyClassGenerator#<init> was null") }
-    util_generator_dummy_DummyClassGenerator { env: self.env, object: ret }
+    util_generator_dummy_DummyClassGenerator { env: env, object: ret }
   }
 
   pub fn create_class(&self, param_1: jobject, param_2: jobject, param_3: jobject) -> Vec<i8> {
@@ -54699,10 +54699,10 @@ impl util_generator_dummy_DummyClassGeneratorProvider {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> util_generator_dummy_DummyClassGeneratorProvider {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/util/generator/dummy/DummyClassGeneratorProvider", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> util_generator_dummy_DummyClassGeneratorProvider {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/dummy/DummyClassGeneratorProvider", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/util/generator/dummy/DummyClassGeneratorProvider", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/dummy/DummyClassGeneratorProvider#<init> was null") }
-    util_generator_dummy_DummyClassGeneratorProvider { env: self.env, object: ret }
+    util_generator_dummy_DummyClassGeneratorProvider { env: env, object: ret }
   }
 
   pub fn create(&self, param_1: jobject, param_2: jobject) -> jobject {
@@ -54755,10 +54755,10 @@ impl util_generator_dummy_DummyObjectProvider {
     }
   }
 
-  pub fn new(&self) -> util_generator_dummy_DummyObjectProvider {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/generator/dummy/DummyObjectProvider", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_generator_dummy_DummyObjectProvider {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/dummy/DummyObjectProvider", "<init>", "()Lorg/spongepowered/api/util/generator/dummy/DummyObjectProvider", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/dummy/DummyObjectProvider#<init> was null") }
-    util_generator_dummy_DummyObjectProvider { env: self.env, object: ret }
+    util_generator_dummy_DummyObjectProvider { env: env, object: ret }
   }
 
   pub fn create_for(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> jobject {
@@ -54783,10 +54783,10 @@ impl util_generator_event_factory_ClassGenerator {
     }
   }
 
-  pub fn new(&self) -> util_generator_event_factory_ClassGenerator {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/generator/event/factory/ClassGenerator", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_generator_event_factory_ClassGenerator {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/ClassGenerator", "<init>", "()Lorg/spongepowered/api/util/generator/event/factory/ClassGenerator", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/event/factory/ClassGenerator#<init> was null") }
-    util_generator_event_factory_ClassGenerator { env: self.env, object: ret }
+    util_generator_event_factory_ClassGenerator { env: env, object: ret }
   }
 
   pub fn visit_boxing_method(env: *mut JNIEnv, param_1: jobject, param_2: jobject) {
@@ -54852,10 +54852,10 @@ impl util_generator_event_factory_ClassGeneratorProvider {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> util_generator_event_factory_ClassGeneratorProvider {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/util/generator/event/factory/ClassGeneratorProvider", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> util_generator_event_factory_ClassGeneratorProvider {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/ClassGeneratorProvider", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/util/generator/event/factory/ClassGeneratorProvider", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/event/factory/ClassGeneratorProvider#<init> was null") }
-    util_generator_event_factory_ClassGeneratorProvider { env: self.env, object: ret }
+    util_generator_event_factory_ClassGeneratorProvider { env: env, object: ret }
   }
 
   pub fn get_null_policy(&self) -> util_generator_event_factory_NullPolicy {
@@ -54964,10 +54964,10 @@ impl util_generator_event_factory_plugin_AccessorModifierEventFactoryPlugin_Meth
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject) -> util_generator_event_factory_plugin_AccessorModifierEventFactoryPlugin_MethodPair {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lorg/spongepowered/api/eventgencore/Property;)Lorg/spongepowered/api/util/generator/event/factory/plugin/AccessorModifierEventFactoryPlugin$MethodPair", CallObjectMethodA, param_1, param_2, param_3, param_4);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject) -> util_generator_event_factory_plugin_AccessorModifierEventFactoryPlugin_MethodPair {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/plugin/AccessorModifierEventFactoryPlugin$MethodPair", "<init>", "(Ljava/lang/String;Ljava/lang/reflect/Method;Ljava/lang/reflect/Method;Lorg/spongepowered/api/eventgencore/Property;)Lorg/spongepowered/api/util/generator/event/factory/plugin/AccessorModifierEventFactoryPlugin$MethodPair", CallStaticObjectMethodA, param_1, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/event/factory/plugin/AccessorModifierEventFactoryPlugin$MethodPair#<init> was null") }
-    util_generator_event_factory_plugin_AccessorModifierEventFactoryPlugin_MethodPair { env: self.env, object: ret }
+    util_generator_event_factory_plugin_AccessorModifierEventFactoryPlugin_MethodPair { env: env, object: ret }
   }
 
   pub fn get_name(&self) -> jobject {
@@ -55004,10 +55004,10 @@ impl util_generator_event_factory_plugin_AccessorModifierEventFactoryPlugin {
     }
   }
 
-  pub fn new(&self) -> util_generator_event_factory_plugin_AccessorModifierEventFactoryPlugin {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/generator/event/factory/plugin/AccessorModifierEventFactoryPlugin", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_generator_event_factory_plugin_AccessorModifierEventFactoryPlugin {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/event/factory/plugin/AccessorModifierEventFactoryPlugin", "<init>", "()Lorg/spongepowered/api/util/generator/event/factory/plugin/AccessorModifierEventFactoryPlugin", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/event/factory/plugin/AccessorModifierEventFactoryPlugin#<init> was null") }
-    util_generator_event_factory_plugin_AccessorModifierEventFactoryPlugin { env: self.env, object: ret }
+    util_generator_event_factory_plugin_AccessorModifierEventFactoryPlugin { env: env, object: ret }
   }
 
   pub fn contribute_property(&self, param_1: jobject, param_2: jobject, param_3: jobject, param_4: jobject) -> bool {
@@ -55052,10 +55052,10 @@ impl util_generator_GeneratorUtils_LocalClassLoader {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> util_generator_GeneratorUtils_LocalClassLoader {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/ClassLoader;)Lorg/spongepowered/api/util/generator/GeneratorUtils$LocalClassLoader", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> util_generator_GeneratorUtils_LocalClassLoader {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/generator/GeneratorUtils$LocalClassLoader", "<init>", "(Ljava/lang/ClassLoader;)Lorg/spongepowered/api/util/generator/GeneratorUtils$LocalClassLoader", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/generator/GeneratorUtils$LocalClassLoader#<init> was null") }
-    util_generator_GeneratorUtils_LocalClassLoader { env: self.env, object: ret }
+    util_generator_GeneratorUtils_LocalClassLoader { env: env, object: ret }
   }
 
   pub fn define_class(&self, param_1: jobject, param_2: i8) -> jobject {
@@ -55152,10 +55152,10 @@ impl util_InformativeMain {
     }
   }
 
-  pub fn new(&self) -> util_InformativeMain {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/InformativeMain", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_InformativeMain {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/InformativeMain", "<init>", "()Lorg/spongepowered/api/util/InformativeMain", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/InformativeMain#<init> was null") }
-    util_InformativeMain { env: self.env, object: ret }
+    util_InformativeMain { env: env, object: ret }
   }
 
   pub fn main(env: *mut JNIEnv, param_1: Vec<jobject>) {
@@ -55215,28 +55215,28 @@ impl util_PEBKACException {
     }
   }
 
-  pub fn new(&self) -> util_PEBKACException {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/PEBKACException", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_PEBKACException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/PEBKACException", "<init>", "()Lorg/spongepowered/api/util/PEBKACException", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/PEBKACException#<init> was null") }
-    util_PEBKACException { env: self.env, object: ret }
+    util_PEBKACException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject) -> util_PEBKACException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/util/PEBKACException", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject) -> util_PEBKACException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/PEBKACException", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/util/PEBKACException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/PEBKACException#<init> was null") }
-    util_PEBKACException { env: self.env, object: ret }
+    util_PEBKACException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: jobject) -> util_PEBKACException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/util/PEBKACException", CallObjectMethodA, param_1, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> util_PEBKACException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/PEBKACException", "<init>", "(Ljava/lang/String;Ljava/lang/Throwable;)Lorg/spongepowered/api/util/PEBKACException", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/PEBKACException#<init> was null") }
-    util_PEBKACException { env: self.env, object: ret }
+    util_PEBKACException { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: jobject) -> util_PEBKACException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/util/PEBKACException", CallObjectMethodA, param_1);
+  pub fn new_3(env: *mut JNIEnv, param_1: jobject) -> util_PEBKACException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/PEBKACException", "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/util/PEBKACException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/PEBKACException#<init> was null") }
-    util_PEBKACException { env: self.env, object: ret }
+    util_PEBKACException { env: env, object: ret }
   }
 
 }
@@ -55255,22 +55255,22 @@ impl util_PositionOutOfBoundsException {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: jobject, param_3: jobject) -> util_PositionOutOfBoundsException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vectori;Lcom/flowpowered/math/vector/Vectori;Lcom/flowpowered/math/vector/Vectori;)Lorg/spongepowered/api/util/PositionOutOfBoundsException", CallObjectMethodA, param_1, param_2, param_3);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject) -> util_PositionOutOfBoundsException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/PositionOutOfBoundsException", "<init>", "(Lcom/flowpowered/math/vector/Vectori;Lcom/flowpowered/math/vector/Vectori;Lcom/flowpowered/math/vector/Vectori;)Lorg/spongepowered/api/util/PositionOutOfBoundsException", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/PositionOutOfBoundsException#<init> was null") }
-    util_PositionOutOfBoundsException { env: self.env, object: ret }
+    util_PositionOutOfBoundsException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: jobject, param_3: jobject) -> util_PositionOutOfBoundsException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vectorf;Lcom/flowpowered/math/vector/Vectorf;Lcom/flowpowered/math/vector/Vectorf;)Lorg/spongepowered/api/util/PositionOutOfBoundsException", CallObjectMethodA, param_1, param_2, param_3);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject) -> util_PositionOutOfBoundsException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/PositionOutOfBoundsException", "<init>", "(Lcom/flowpowered/math/vector/Vectorf;Lcom/flowpowered/math/vector/Vectorf;Lcom/flowpowered/math/vector/Vectorf;)Lorg/spongepowered/api/util/PositionOutOfBoundsException", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/PositionOutOfBoundsException#<init> was null") }
-    util_PositionOutOfBoundsException { env: self.env, object: ret }
+    util_PositionOutOfBoundsException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: jobject, param_2: jobject, param_3: jobject) -> util_PositionOutOfBoundsException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lcom/flowpowered/math/vector/Vectord;Lcom/flowpowered/math/vector/Vectord;Lcom/flowpowered/math/vector/Vectord;)Lorg/spongepowered/api/util/PositionOutOfBoundsException", CallObjectMethodA, param_1, param_2, param_3);
+  pub fn new_2(env: *mut JNIEnv, param_1: jobject, param_2: jobject, param_3: jobject) -> util_PositionOutOfBoundsException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/PositionOutOfBoundsException", "<init>", "(Lcom/flowpowered/math/vector/Vectord;Lcom/flowpowered/math/vector/Vectord;Lcom/flowpowered/math/vector/Vectord;)Lorg/spongepowered/api/util/PositionOutOfBoundsException", CallStaticObjectMethodA, param_1, param_2, param_3);
     if ret.is_null() { panic!("org/spongepowered/api/util/PositionOutOfBoundsException#<init> was null") }
-    util_PositionOutOfBoundsException { env: self.env, object: ret }
+    util_PositionOutOfBoundsException { env: env, object: ret }
   }
 
 }
@@ -55342,10 +55342,10 @@ impl util_RespawnLocation_Builder {
     }
   }
 
-  pub fn new(&self) -> util_RespawnLocation_Builder {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/RespawnLocation$Builder", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_RespawnLocation_Builder {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/RespawnLocation$Builder", "<init>", "()Lorg/spongepowered/api/util/RespawnLocation$Builder", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/RespawnLocation$Builder#<init> was null") }
-    util_RespawnLocation_Builder { env: self.env, object: ret }
+    util_RespawnLocation_Builder { env: env, object: ret }
   }
 
   pub fn world(&self, param_1: world_World) -> util_RespawnLocation_Builder {
@@ -55561,10 +55561,10 @@ impl util_StartsWithPredicate {
     }
   }
 
-  pub fn new(&self, param_1: jobject) -> util_StartsWithPredicate {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/util/StartsWithPredicate", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: jobject) -> util_StartsWithPredicate {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/StartsWithPredicate", "<init>", "(Ljava/lang/String;)Lorg/spongepowered/api/util/StartsWithPredicate", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/StartsWithPredicate#<init> was null") }
-    util_StartsWithPredicate { env: self.env, object: ret }
+    util_StartsWithPredicate { env: env, object: ret }
   }
 
   pub fn test(&self, param_1: jobject) -> bool {
@@ -55591,28 +55591,28 @@ impl util_TextMessageException {
     }
   }
 
-  pub fn new(&self) -> util_TextMessageException {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/TextMessageException", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_TextMessageException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/TextMessageException", "<init>", "()Lorg/spongepowered/api/util/TextMessageException", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/TextMessageException#<init> was null") }
-    util_TextMessageException { env: self.env, object: ret }
+    util_TextMessageException { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: text_Text) -> util_TextMessageException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/util/TextMessageException", CallObjectMethodA, param_1.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: text_Text) -> util_TextMessageException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/TextMessageException", "<init>", "(Lorg/spongepowered/api/text/Text;)Lorg/spongepowered/api/util/TextMessageException", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/util/TextMessageException#<init> was null") }
-    util_TextMessageException { env: self.env, object: ret }
+    util_TextMessageException { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: text_Text, param_2: jobject) -> util_TextMessageException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;)Lorg/spongepowered/api/util/TextMessageException", CallObjectMethodA, param_1.object, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: text_Text, param_2: jobject) -> util_TextMessageException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/TextMessageException", "<init>", "(Lorg/spongepowered/api/text/Text;Ljava/lang/Throwable;)Lorg/spongepowered/api/util/TextMessageException", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/TextMessageException#<init> was null") }
-    util_TextMessageException { env: self.env, object: ret }
+    util_TextMessageException { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: jobject) -> util_TextMessageException {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/util/TextMessageException", CallObjectMethodA, param_1);
+  pub fn new_3(env: *mut JNIEnv, param_1: jobject) -> util_TextMessageException {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/TextMessageException", "<init>", "(Ljava/lang/Throwable;)Lorg/spongepowered/api/util/TextMessageException", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/TextMessageException#<init> was null") }
-    util_TextMessageException { env: self.env, object: ret }
+    util_TextMessageException { env: env, object: ret }
   }
 
   pub fn get_message(&self) -> jobject {
@@ -55786,10 +55786,10 @@ impl util_Tuple {
     util_Tuple { env: env, object: ret }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: jobject) -> util_Tuple {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/util/Tuple", CallObjectMethodA, param_1, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: jobject) -> util_Tuple {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/Tuple", "<init>", "(Ljava/lang/Object;Ljava/lang/Object;)Lorg/spongepowered/api/util/Tuple", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/Tuple#<init> was null") }
-    util_Tuple { env: self.env, object: ret }
+    util_Tuple { env: env, object: ret }
   }
 
   pub fn get_first(&self) -> jobject {
@@ -55864,16 +55864,16 @@ impl util_weighted_ChanceTable {
     }
   }
 
-  pub fn new(&self) -> util_weighted_ChanceTable {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/weighted/ChanceTable", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_weighted_ChanceTable {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/ChanceTable", "<init>", "()Lorg/spongepowered/api/util/weighted/ChanceTable", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/ChanceTable#<init> was null") }
-    util_weighted_ChanceTable { env: self.env, object: ret }
+    util_weighted_ChanceTable { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32) -> util_weighted_ChanceTable {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/util/weighted/ChanceTable", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32) -> util_weighted_ChanceTable {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/ChanceTable", "<init>", "(I)Lorg/spongepowered/api/util/weighted/ChanceTable", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/ChanceTable#<init> was null") }
-    util_weighted_ChanceTable { env: self.env, object: ret }
+    util_weighted_ChanceTable { env: env, object: ret }
   }
 
   pub fn get(&self, param_1: jobject) -> jobject {
@@ -55912,10 +55912,10 @@ impl util_weighted_EmptyObject {
     }
   }
 
-  pub fn new(&self, param_1: f64) -> util_weighted_EmptyObject {
-    let ret = java_method!(self.env, self.object, "<init>", "(D)Lorg/spongepowered/api/util/weighted/EmptyObject", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: f64) -> util_weighted_EmptyObject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/EmptyObject", "<init>", "(D)Lorg/spongepowered/api/util/weighted/EmptyObject", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/EmptyObject#<init> was null") }
-    util_weighted_EmptyObject { env: self.env, object: ret }
+    util_weighted_EmptyObject { env: env, object: ret }
   }
 
   pub fn get_content_version(&self) -> i32 {
@@ -55958,10 +55958,10 @@ impl util_weighted_LootTable {
     }
   }
 
-  pub fn new(&self) -> util_weighted_LootTable {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/weighted/LootTable", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_weighted_LootTable {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/LootTable", "<init>", "()Lorg/spongepowered/api/util/weighted/LootTable", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/LootTable#<init> was null") }
-    util_weighted_LootTable { env: self.env, object: ret }
+    util_weighted_LootTable { env: env, object: ret }
   }
 
   pub fn add_table(&self, param_1: util_weighted_RandomObjectTable) {
@@ -56022,10 +56022,10 @@ impl util_weighted_NestedTableEntry {
     }
   }
 
-  pub fn new(&self, param_1: f64, param_2: util_weighted_RandomObjectTable) -> util_weighted_NestedTableEntry {
-    let ret = java_method!(self.env, self.object, "<init>", "(DLorg/spongepowered/api/util/weighted/RandomObjectTable;)Lorg/spongepowered/api/util/weighted/NestedTableEntry", CallObjectMethodA, param_1, param_2.object);
+  pub fn new(env: *mut JNIEnv, param_1: f64, param_2: util_weighted_RandomObjectTable) -> util_weighted_NestedTableEntry {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/NestedTableEntry", "<init>", "(DLorg/spongepowered/api/util/weighted/RandomObjectTable;)Lorg/spongepowered/api/util/weighted/NestedTableEntry", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/NestedTableEntry#<init> was null") }
-    util_weighted_NestedTableEntry { env: self.env, object: ret }
+    util_weighted_NestedTableEntry { env: env, object: ret }
   }
 
   pub fn get(&self, param_1: jobject) -> jobject {
@@ -56065,16 +56065,16 @@ impl util_weighted_RandomObjectTable {
     }
   }
 
-  pub fn new(&self, param_1: i32) -> util_weighted_RandomObjectTable {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/util/weighted/RandomObjectTable", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: i32) -> util_weighted_RandomObjectTable {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/RandomObjectTable", "<init>", "(I)Lorg/spongepowered/api/util/weighted/RandomObjectTable", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/RandomObjectTable#<init> was null") }
-    util_weighted_RandomObjectTable { env: self.env, object: ret }
+    util_weighted_RandomObjectTable { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: util_weighted_VariableAmount) -> util_weighted_RandomObjectTable {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/RandomObjectTable", CallObjectMethodA, param_1.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: util_weighted_VariableAmount) -> util_weighted_RandomObjectTable {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/RandomObjectTable", "<init>", "(Lorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/RandomObjectTable", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/RandomObjectTable#<init> was null") }
-    util_weighted_RandomObjectTable { env: self.env, object: ret }
+    util_weighted_RandomObjectTable { env: env, object: ret }
   }
 
   pub fn get_rolls(&self) -> util_weighted_VariableAmount {
@@ -56191,10 +56191,10 @@ impl util_weighted_SeededVariableAmount_WrappedVariableAmount {
     }
   }
 
-  pub fn new(&self, param_1: util_weighted_VariableAmount) -> util_weighted_SeededVariableAmount_WrappedVariableAmount {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/SeededVariableAmount$WrappedVariableAmount", CallObjectMethodA, param_1.object);
+  pub fn new(env: *mut JNIEnv, param_1: util_weighted_VariableAmount) -> util_weighted_SeededVariableAmount_WrappedVariableAmount {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/SeededVariableAmount$WrappedVariableAmount", "<init>", "(Lorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/SeededVariableAmount$WrappedVariableAmount", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/SeededVariableAmount$WrappedVariableAmount#<init> was null") }
-    util_weighted_SeededVariableAmount_WrappedVariableAmount { env: self.env, object: ret }
+    util_weighted_SeededVariableAmount_WrappedVariableAmount { env: env, object: ret }
   }
 
   pub fn get_amount(&self, param_1: jobject, param_2: jobject) -> f64 {
@@ -56267,10 +56267,10 @@ impl util_weighted_TableEntry {
     }
   }
 
-  pub fn new(&self, param_1: f64) -> util_weighted_TableEntry {
-    let ret = java_method!(self.env, self.object, "<init>", "(D)Lorg/spongepowered/api/util/weighted/TableEntry", CallObjectMethodA, param_1);
+  pub fn new(env: *mut JNIEnv, param_1: f64) -> util_weighted_TableEntry {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/TableEntry", "<init>", "(D)Lorg/spongepowered/api/util/weighted/TableEntry", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/TableEntry#<init> was null") }
-    util_weighted_TableEntry { env: self.env, object: ret }
+    util_weighted_TableEntry { env: env, object: ret }
   }
 
   pub fn get_weight(&self) -> f64 {
@@ -56557,10 +56557,10 @@ impl util_weighted_WeightedObject {
     }
   }
 
-  pub fn new(&self, param_1: jobject, param_2: f64) -> util_weighted_WeightedObject {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/lang/Object;D)Lorg/spongepowered/api/util/weighted/WeightedObject", CallObjectMethodA, param_1, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: jobject, param_2: f64) -> util_weighted_WeightedObject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/WeightedObject", "<init>", "(Ljava/lang/Object;D)Lorg/spongepowered/api/util/weighted/WeightedObject", CallStaticObjectMethodA, param_1, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/WeightedObject#<init> was null") }
-    util_weighted_WeightedObject { env: self.env, object: ret }
+    util_weighted_WeightedObject { env: env, object: ret }
   }
 
   pub fn get(&self) -> jobject {
@@ -56599,10 +56599,10 @@ impl util_weighted_WeightedSerializableObject {
     }
   }
 
-  pub fn new(&self, param_1: data_DataSerializable, param_2: i32) -> util_weighted_WeightedSerializableObject {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/data/DataSerializable;I)Lorg/spongepowered/api/util/weighted/WeightedSerializableObject", CallObjectMethodA, param_1.object, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: data_DataSerializable, param_2: i32) -> util_weighted_WeightedSerializableObject {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/WeightedSerializableObject", "<init>", "(Lorg/spongepowered/api/data/DataSerializable;I)Lorg/spongepowered/api/util/weighted/WeightedSerializableObject", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/WeightedSerializableObject#<init> was null") }
-    util_weighted_WeightedSerializableObject { env: self.env, object: ret }
+    util_weighted_WeightedSerializableObject { env: env, object: ret }
   }
 
   pub fn to_string(&self) -> jobject {
@@ -56677,22 +56677,22 @@ impl util_weighted_WeightedTable {
     }
   }
 
-  pub fn new(&self) -> util_weighted_WeightedTable {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/util/weighted/WeightedTable", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> util_weighted_WeightedTable {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/WeightedTable", "<init>", "()Lorg/spongepowered/api/util/weighted/WeightedTable", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/WeightedTable#<init> was null") }
-    util_weighted_WeightedTable { env: self.env, object: ret }
+    util_weighted_WeightedTable { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: i32) -> util_weighted_WeightedTable {
-    let ret = java_method!(self.env, self.object, "<init>", "(I)Lorg/spongepowered/api/util/weighted/WeightedTable", CallObjectMethodA, param_1);
+  pub fn new_1(env: *mut JNIEnv, param_1: i32) -> util_weighted_WeightedTable {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/WeightedTable", "<init>", "(I)Lorg/spongepowered/api/util/weighted/WeightedTable", CallStaticObjectMethodA, param_1);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/WeightedTable#<init> was null") }
-    util_weighted_WeightedTable { env: self.env, object: ret }
+    util_weighted_WeightedTable { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: util_weighted_VariableAmount) -> util_weighted_WeightedTable {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/WeightedTable", CallObjectMethodA, param_1.object);
+  pub fn new_2(env: *mut JNIEnv, param_1: util_weighted_VariableAmount) -> util_weighted_WeightedTable {
+    let ret = static_java_method!(env, "org/spongepowered/api/util/weighted/WeightedTable", "<init>", "(Lorg/spongepowered/api/util/weighted/VariableAmount;)Lorg/spongepowered/api/util/weighted/WeightedTable", CallStaticObjectMethodA, param_1.object);
     if ret.is_null() { panic!("org/spongepowered/api/util/weighted/WeightedTable#<init> was null") }
-    util_weighted_WeightedTable { env: self.env, object: ret }
+    util_weighted_WeightedTable { env: env, object: ret }
   }
 
   pub fn add(&self, param_1: util_weighted_TableEntry) -> bool {
@@ -56875,16 +56875,16 @@ impl world_biome_GroundCoverLayer {
     }
   }
 
-  pub fn new(&self, param_1: block_BlockState, param_2: util_weighted_SeededVariableAmount) -> world_biome_GroundCoverLayer {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/block/BlockState;Lorg/spongepowered/api/util/weighted/SeededVariableAmount;)Lorg/spongepowered/api/world/biome/GroundCoverLayer", CallObjectMethodA, param_1.object, param_2.object);
+  pub fn new(env: *mut JNIEnv, param_1: block_BlockState, param_2: util_weighted_SeededVariableAmount) -> world_biome_GroundCoverLayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/biome/GroundCoverLayer", "<init>", "(Lorg/spongepowered/api/block/BlockState;Lorg/spongepowered/api/util/weighted/SeededVariableAmount;)Lorg/spongepowered/api/world/biome/GroundCoverLayer", CallStaticObjectMethodA, param_1.object, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/world/biome/GroundCoverLayer#<init> was null") }
-    world_biome_GroundCoverLayer { env: self.env, object: ret }
+    world_biome_GroundCoverLayer { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: jobject, param_2: util_weighted_SeededVariableAmount) -> world_biome_GroundCoverLayer {
-    let ret = java_method!(self.env, self.object, "<init>", "(Ljava/util/function/Function;Lorg/spongepowered/api/util/weighted/SeededVariableAmount;)Lorg/spongepowered/api/world/biome/GroundCoverLayer", CallObjectMethodA, param_1, param_2.object);
+  pub fn new_1(env: *mut JNIEnv, param_1: jobject, param_2: util_weighted_SeededVariableAmount) -> world_biome_GroundCoverLayer {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/biome/GroundCoverLayer", "<init>", "(Ljava/util/function/Function;Lorg/spongepowered/api/util/weighted/SeededVariableAmount;)Lorg/spongepowered/api/world/biome/GroundCoverLayer", CallStaticObjectMethodA, param_1, param_2.object);
     if ret.is_null() { panic!("org/spongepowered/api/world/biome/GroundCoverLayer#<init> was null") }
-    world_biome_GroundCoverLayer { env: self.env, object: ret }
+    world_biome_GroundCoverLayer { env: env, object: ret }
   }
 
   pub fn get_block_state(&self) -> jobject {
@@ -57859,10 +57859,10 @@ impl world_extent_EntityUniverse_EntityHit {
     }
   }
 
-  pub fn new(&self, param_1: entity_Entity, param_2: jobject, param_3: jobject, param_4: f64) -> world_extent_EntityUniverse_EntityHit {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/entity/Entity;Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;D)Lorg/spongepowered/api/world/extent/EntityUniverse$EntityHit", CallObjectMethodA, param_1.object, param_2, param_3, param_4);
+  pub fn new(env: *mut JNIEnv, param_1: entity_Entity, param_2: jobject, param_3: jobject, param_4: f64) -> world_extent_EntityUniverse_EntityHit {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/extent/EntityUniverse$EntityHit", "<init>", "(Lorg/spongepowered/api/entity/Entity;Lcom/flowpowered/math/vector/Vector3d;Lcom/flowpowered/math/vector/Vector3d;D)Lorg/spongepowered/api/world/extent/EntityUniverse$EntityHit", CallStaticObjectMethodA, param_1.object, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/world/extent/EntityUniverse$EntityHit#<init> was null") }
-    world_extent_EntityUniverse_EntityHit { env: self.env, object: ret }
+    world_extent_EntityUniverse_EntityHit { env: env, object: ret }
   }
 
   pub fn get_entity(&self) -> entity_Entity {
@@ -59691,10 +59691,10 @@ impl world_gamerule_DefaultGameRules {
     }
   }
 
-  pub fn new(&self) -> world_gamerule_DefaultGameRules {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/world/gamerule/DefaultGameRules", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> world_gamerule_DefaultGameRules {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/gamerule/DefaultGameRules", "<init>", "()Lorg/spongepowered/api/world/gamerule/DefaultGameRules", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/gamerule/DefaultGameRules#<init> was null") }
-    world_gamerule_DefaultGameRules { env: self.env, object: ret }
+    world_gamerule_DefaultGameRules { env: env, object: ret }
   }
 
 }
@@ -62922,28 +62922,28 @@ impl world_Location {
     }
   }
 
-  pub fn new(&self, param_1: world_extent_Extent, param_2: jobject) -> world_Location {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/world/Location", CallObjectMethodA, param_1.object, param_2);
+  pub fn new(env: *mut JNIEnv, param_1: world_extent_Extent, param_2: jobject) -> world_Location {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/Location", "<init>", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3d;)Lorg/spongepowered/api/world/Location", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/world/Location#<init> was null") }
-    world_Location { env: self.env, object: ret }
+    world_Location { env: env, object: ret }
   }
 
-  pub fn new_1(&self, param_1: world_extent_Extent, param_2: f64, param_3: f64, param_4: f64) -> world_Location {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/extent/Extent;DDD)Lorg/spongepowered/api/world/Location", CallObjectMethodA, param_1.object, param_2, param_3, param_4);
+  pub fn new_1(env: *mut JNIEnv, param_1: world_extent_Extent, param_2: f64, param_3: f64, param_4: f64) -> world_Location {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/Location", "<init>", "(Lorg/spongepowered/api/world/extent/Extent;DDD)Lorg/spongepowered/api/world/Location", CallStaticObjectMethodA, param_1.object, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/world/Location#<init> was null") }
-    world_Location { env: self.env, object: ret }
+    world_Location { env: env, object: ret }
   }
 
-  pub fn new_2(&self, param_1: world_extent_Extent, param_2: jobject) -> world_Location {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/world/Location", CallObjectMethodA, param_1.object, param_2);
+  pub fn new_2(env: *mut JNIEnv, param_1: world_extent_Extent, param_2: jobject) -> world_Location {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/Location", "<init>", "(Lorg/spongepowered/api/world/extent/Extent;Lcom/flowpowered/math/vector/Vector3i;)Lorg/spongepowered/api/world/Location", CallStaticObjectMethodA, param_1.object, param_2);
     if ret.is_null() { panic!("org/spongepowered/api/world/Location#<init> was null") }
-    world_Location { env: self.env, object: ret }
+    world_Location { env: env, object: ret }
   }
 
-  pub fn new_3(&self, param_1: world_extent_Extent, param_2: i32, param_3: i32, param_4: i32) -> world_Location {
-    let ret = java_method!(self.env, self.object, "<init>", "(Lorg/spongepowered/api/world/extent/Extent;III)Lorg/spongepowered/api/world/Location", CallObjectMethodA, param_1.object, param_2, param_3, param_4);
+  pub fn new_3(env: *mut JNIEnv, param_1: world_extent_Extent, param_2: i32, param_3: i32, param_4: i32) -> world_Location {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/Location", "<init>", "(Lorg/spongepowered/api/world/extent/Extent;III)Lorg/spongepowered/api/world/Location", CallStaticObjectMethodA, param_1.object, param_2, param_3, param_4);
     if ret.is_null() { panic!("org/spongepowered/api/world/Location#<init> was null") }
-    world_Location { env: self.env, object: ret }
+    world_Location { env: env, object: ret }
   }
 
   pub fn get_extent(&self) -> world_extent_Extent {
@@ -63536,10 +63536,10 @@ impl world_SerializationBehaviors {
     }
   }
 
-  pub fn new(&self) -> world_SerializationBehaviors {
-    let ret = java_method!(self.env, self.object, "<init>", "()Lorg/spongepowered/api/world/SerializationBehaviors", CallObjectMethod);
+  pub fn new(env: *mut JNIEnv) -> world_SerializationBehaviors {
+    let ret = static_java_method!(env, "org/spongepowered/api/world/SerializationBehaviors", "<init>", "()Lorg/spongepowered/api/world/SerializationBehaviors", CallStaticObjectMethod);
     if ret.is_null() { panic!("org/spongepowered/api/world/SerializationBehaviors#<init> was null") }
-    world_SerializationBehaviors { env: self.env, object: ret }
+    world_SerializationBehaviors { env: env, object: ret }
   }
 
 }
