@@ -63,7 +63,7 @@ fn generate_class() -> Class {
       })
       .flat_map(|x| x)
       .nth(0)
-      .map(|x| Some(x))
+      .map(Some)
       .unwrap_or(None);
     Method {
       original_name: name.clone(),
