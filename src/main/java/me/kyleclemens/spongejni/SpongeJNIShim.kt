@@ -1,18 +1,6 @@
 package me.kyleclemens.spongejni;
 
-public class SpongeJNIShim {
-
-    private final SpongeJNI plugin;
-
-    SpongeJNIShim(final SpongeJNI plugin) {
-        this.plugin = plugin;
-    }
-
-    @SuppressWarnings("unused") // rust method
-    private SpongeJNI getPlugin() {
-        return this.plugin;
-    }
-
+class SpongeJNIShim(val plugin: SpongeJNI) {
     /**
      * Native method called when the shim is ready for external code.
      *
@@ -20,6 +8,6 @@ public class SpongeJNIShim {
      *
      * @return true if the native library was set up successfully, false if there was an error
      */
-    native boolean init();
+    external fun init(): Boolean
 
 }
