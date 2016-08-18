@@ -9,5 +9,4 @@ class SpongeJNIShim(val plugin: SpongeJNI) {
      * @return true if the native library was set up successfully, false if there was an error
      */
     external fun init(): Boolean
-
 }
