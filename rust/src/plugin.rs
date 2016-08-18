@@ -13,13 +13,13 @@ use listeners;
 pub struct JavaUtils;
 
 impl JavaUtils {
-  pub fn make_array<'a>(env: *mut JNIEnv, class_name: &'a str, vec: Vec<jobject>) -> jarray {
+  pub fn make_array(env: *mut JNIEnv, class_name: &str, vec: Vec<jobject>) -> jarray {
     unsafe {
-      let class = ((**env).FindClass)(env, CString::new(class_name).unwrap().as_ptr());
+      let class_name_string = CString::new(class_name).unwrap();
+      let class = ((**env).FindClass)(env, class_name_string.as_ptr());
       if class.is_null() { panic!("class {} was null", class_name); }
       let array = ((**env).NewObjectArray)(env, vec.len() as i32, class, std::ptr::null_mut());
-      for i in 0..vec.len() {
-        let item = vec[i];
+      for (i, item) in vec.into_iter().enumerate() {
         ((**env).SetObjectArrayElement)(env, array, i as i32, item);
       }
       ((**env).DeleteLocalRef)(env, class);
@@ -31,7 +31,7 @@ impl JavaUtils {
     static_java_method!(env, "java/util/Arrays", "asList", "([Ljava/lang/Object;)Ljava/util/List;", CallStaticObjectMethodA, array)
   }
 
-  pub fn make_array_list<'a>(env: *mut JNIEnv, class_name: &'a str, vec: Vec<jobject>) -> jobject {
+  pub fn make_array_list(env: *mut JNIEnv, class_name: &str, vec: Vec<jobject>) -> jobject {
     JavaUtils::make_list(env, JavaUtils::make_array(env, class_name, vec))
   }
 
@@ -70,7 +70,8 @@ impl Plugin {
       "java/lang/Class",
       class_names.iter()
         .map(|class_name| {
-          let class = unsafe { ((**self.env).FindClass)(self.env, CString::new(class_name.replace(".", "/")).unwrap().as_ptr()) };
+          let class_string = CString::new(class_name.replace(".", "/")).unwrap();
+          let class = unsafe { ((**self.env).FindClass)(self.env, class_string.as_ptr()) };
           if class.is_null() {
             panic!("class for {} was null", class_name);
           }
@@ -112,5 +113,5 @@ pub extern fn Java_me_kyleclemens_spongejni_SpongeJNIShim_init(env: *mut JNIEnv,
 
   listeners::Listeners::register(&plugin);
 
-  return 1;
+  1
 }

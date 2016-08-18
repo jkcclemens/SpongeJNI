@@ -1,3 +1,7 @@
+#![cfg_attr(feature="clippy", feature(plugin))]
+#![cfg_attr(feature="clippy", plugin(clippy))]
+#![allow(not_unsafe_ptr_arg_deref)]
+
 extern crate jni_sys;
 #[macro_use]
 extern crate lazy_static;

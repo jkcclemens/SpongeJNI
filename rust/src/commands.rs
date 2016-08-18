@@ -28,17 +28,15 @@ impl Commands {
 
 #[allow(non_snake_case)]
 #[no_mangle]
-pub extern fn Java_me_kyleclemens_spongejni_rust_generated_HelloCommandExecutor_execute(env: *mut JNIEnv, this: jobject, src: jobject, args: jobject) -> jobject {
+pub extern fn Java_me_kyleclemens_spongejni_rust_generated_HelloCommandExecutor_execute(env: *mut JNIEnv, _: jobject, src: jobject, _: jobject) -> jobject {
   // Here we use the static from method, which is inherently unsafe (no checks – can crash JVM)
-  let (src, args, receiver) = unsafe {
+  let (src, receiver) = unsafe {
     // Convert the src jobject to a CommandSource
     let src = CommandSource::from(env, src);
-    // Convert the args jobject to a CommandContext
-    let args = CommandContext::from(env, args);
     // Wrap the src jobject in a MessageReceiver struct
     let receiver = MessageReceiver::from(env, src.object);
     // Move these back into scope (Rust-specific)
-    (src, args, receiver)
+    (src, receiver)
   };
   let hello_string = {
     // Get the global singleton (very discouraged in Rust, but required to share any sort of state)
