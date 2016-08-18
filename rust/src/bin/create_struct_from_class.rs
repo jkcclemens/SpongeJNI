@@ -373,6 +373,7 @@ fn create_struct(class: Class) -> String {
   for method in methods.iter_mut() {
     if method.name == "<init>" {
       method.name = String::from("new");
+      method.is_static = true;
       method.descriptor = format!("{}L{}", &method.descriptor[..method.descriptor.len() - 1], class.name);
     }
     if method.name == "type" {
